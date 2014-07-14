@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AirSeatRS Version="2.0.0" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stl="http://services.sabre.com/STL/v01">
+	<!--Mandatory-->
+	<!--Repeat Factor=0-->
+	<stl:ApplicationResults status="Complete">
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<stl:Success timeStamp="2011-10-27T15:30:00-06:00">
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<stl:SystemSpecificResults>
+				<!--Optional-->
+				<!--Repeat Factor=0-99-->
+				<!--"HostCommand" is used to return the command associated with the request transaction if applicable.-->
+				<!--"LNIATA" is used to return the line address associated with the particular host command.-->
+				<stl:HostCommand LNIATA="ABC123">TEST</stl:HostCommand>
+			</stl:SystemSpecificResults>
+		</stl:Success>
+		<!--Optional-->
+		<!--Repeat Factor=0-99-->
+		<!--"type" is used to return the error type.  Values are limited to: "Application," or "BusinessLogic." "Transport" and "Validation" type errors are returned as soap-fault content.-->
+		<stl:Error type="BusinessLogic" timeStamp="2011-10-27T15:30:00-06:00">
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<stl:SystemSpecificResults>
+				<!--Optional-->
+				<!--Repeat Factor=0-99-->
+				<!--"HostCommand" is used to return the command associated with the request transaction if applicable.-->
+				<!--"LNIATA" is used to return the line address associated with the particular host command.-->
+				<stl:HostCommand LNIATA="ABC123">TEST</stl:HostCommand>
+				<!--Optional-->
+				<!--Repeat Factor=0-99-->
+				<!--"code" is used to return the error code.-->
+				<!--"Message" is used to return the error message.-->
+				<stl:Message code="0">TEST</stl:Message>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<!--"ShortText" is used to return additional error message-related information.-->
+				<stl:ShortText>TEST</stl:ShortText>
+			</stl:SystemSpecificResults>
+		</stl:Error>
+		<!--Optional-->
+		<!--Repeat Factor=0-99-->
+		<!--"type" is used to return the warning type.  Values are limited to: "BusinessLogic." No other types are currently supported.-->
+		<stl:Warning type="BusinessLogic">
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<stl:SystemSpecificResults>
+				<!--Optional-->
+				<!--Repeat Factor=0-99-->
+				<!--"HostCommand" is used to return the command associated with the request transaction if applicable.-->
+				<!--"LNIATA" is used to return the line address associated with the particular host command.-->
+				<stl:HostCommand LNIATA="ABC123">TEST</stl:HostCommand>
+				<!--Optional-->
+				<!--Repeat Factor=0-99-->
+				<!--"code" is used to return the warning code.-->
+				<!--"Message" is used to return the warning message.-->
+				<stl:Message code="0">TEST</stl:Message>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<!--"ShortText" is used to return additional warning message-related information. -->
+				<stl:ShortText>TEST</stl:ShortText>
+			</stl:SystemSpecificResults>
+		</stl:Warning>
+	</stl:ApplicationResults>
+	<!--Optional-->
+	<!--Repeat Factor=0-->
+	<Seats>
+		<!--Mandatory-->
+		<!--Repeat Factor=0-->
+		<!--"Number" is used to return the seat number.-->
+		<Seat Number="23B">
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<!--"DepartureDateTime" is used to return the time and date of flight departure.-->
+			<!--"DepartureDateTime" follows this format: MM-DD-->
+			<!--"ResBookDesigCode" is used to return the booking class of service.-->
+			<FlightSegment DepartureDateTime="12-21" FlightNumber="1234" ResBookDesigCode="Y">
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<!--"LocationCode" is used to return the arrival airport code.-->
+				<DestinationLocation LocationCode="DBM"/>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<!--"Code" is used to return the marketing airline code.-->
+				<!--"FlightNumber" is used to return the marketing airline flight number.-->
+				<MarketingAirline Code="XX" FlightNumber="1234"/>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<!--"LocationCode" is used to return the departure airport code.-->
+				<OriginLocation LocationCode="FSG"/>
+			</FlightSegment>
+		</Seat>
+	</Seats>
+</AirSeatRS>

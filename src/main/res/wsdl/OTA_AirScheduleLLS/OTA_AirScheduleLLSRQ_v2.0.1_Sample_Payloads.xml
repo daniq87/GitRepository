@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SamplePayloads>
+	<SampleRequests>
+		<!--Make a basic air schedule request.-->
+		<!--Equivalent Sabre host command: S21DECDFWLHR-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21">
+					<DestinationLocation LocationCode="LHR"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify a departure time.-->
+		<!--Equivalent Sabre host command: S21DECDFWFRA1800-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21T18:00">
+					<DestinationLocation LocationCode="FRA"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify an arrival time.-->
+		<!--Equivalent Sabre host command: S21DECDFWFRA/0700-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OriginDestinationInformation>
+				<FlightSegment ArrivalDateTime="12-21T07:00">
+					<DestinationLocation LocationCode="FRA"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify a preferred carrier.-->
+		<!--Equivalent Sabre host command: S21DECDFWLHR‡UA-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OptionalQualifiers>
+				<FlightQualifiers>
+					<VendorPrefs>
+						<Airline Code="UA"/>
+					</VendorPrefs>
+				</FlightQualifiers>
+			</OptionalQualifiers>
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21">
+					<DestinationLocation LocationCode="LHR"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify a carrier to exclude.-->
+		<!--Equivalent Sabre host command: S21DECDFWLHR‡*AA-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OptionalQualifiers>
+				<FlightQualifiers>
+					<VendorPrefs Exclude="true">
+						<Airline Code="AA"/>
+					</VendorPrefs>
+				</FlightQualifiers>
+			</OptionalQualifiers>
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21">
+					<DestinationLocation LocationCode="LHR"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify charter flights.-->
+		<!--Equivalent Sabre host command: S21DECMIANAU-CHR-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OptionalQualifiers>
+				<FlightQualifiers Charters="true"/>
+			</OptionalQualifiers>
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21">
+					<DestinationLocation LocationCode="NAU"/>
+					<OriginLocation LocationCode="MIA"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify direct flights.-->
+		<!--Equivalent Sabre host command: S21DECDFWFRA/D-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OptionalQualifiers>
+				<FlightQualifiers DirectOnly="true"/>
+			</OptionalQualifiers>
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21">
+					<DestinationLocation LocationCode="FRA"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify to exclude codeshare flights.-->
+		<!--Equivalent Sabre host command: S21DECDFWSYD.-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OptionalQualifiers>
+				<FlightQualifiers ExcludeCodeshares="true"/>
+			</OptionalQualifiers>
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21">
+					<DestinationLocation LocationCode="SYD"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify to perform an extended search.-->
+		<!--Equivalent Sabre host command: S21DECDFWSYD/ES-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OptionalQualifiers>
+				<FlightQualifiers ExtendedSearch="true"/>
+			</OptionalQualifiers>
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21">
+					<DestinationLocation LocationCode="SYD"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify an arrival window.-->
+		<!--Equivalent Sabre host command: S21DECDFWFRA/1700-1900-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OptionalQualifiers>
+				<TimeQualifiers>
+					<ArrivalTime WindowAfter="1700" WindowBefore="1900"/>
+				</TimeQualifiers>
+			</OptionalQualifiers>
+			<OriginDestinationInformation>
+				<FlightSegment ArrivalDateTime="12-21">
+					<DestinationLocation LocationCode="FRA"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify a departure window.-->
+		<!--Equivalent Sabre host command: S21DECDFWFRA1700-1900-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OptionalQualifiers>
+				<TimeQualifiers>
+					<DepartureTime WindowAfter="1700" WindowBefore="1900"/>
+				</TimeQualifiers>
+			</OptionalQualifiers>
+			<OriginDestinationInformation>
+				<FlightSegment ArrivalDateTime="12-21">
+					<DestinationLocation LocationCode="FRA"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify a preferred connection location.-->
+		<!--Equivalent Sabre host command: S21DECDFWSYD1800LAX-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21T18:00">
+					<ConnectionLocations>
+						<ConnectionLocation LocationCode="LAX"/>
+					</ConnectionLocations>
+					<DestinationLocation LocationCode="SYD"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify a preferred connection location with preferred vendors.-->
+		<!--Equivalent Sabre host command: S21DECDFWSYD1800LAX‡AABA‡AABA-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21T18:00">
+					<ConnectionLocations>
+						<CarrierSpecificDisplay>
+							<LegOne>
+								<VendorPrefs>
+									<Airline Code="AA"/>
+									<Airline Code="BA"/>
+								</VendorPrefs>
+							</LegOne>
+							<LegTwo>
+								<VendorPrefs>
+									<Airline Code="AA"/>
+									<Airline Code="BA"/>
+								</VendorPrefs>
+							</LegTwo>
+						</CarrierSpecificDisplay>
+						<ConnectionLocation LocationCode="LAX"/>
+					</ConnectionLocations>
+					<DestinationLocation LocationCode="SYD"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify a preferred connection location along with carriers to exclude.-->
+		<!--Equivalent Sabre host command: S21DECDFWSYD1800LAX‡*AABA‡*AABA-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21T18:00">
+					<ConnectionLocations>
+						<CarrierSpecificDisplay>
+							<LegOne>
+								<VendorPrefs Exclude="true">
+									<Airline Code="AA"/>
+									<Airline Code="BA"/>
+								</VendorPrefs>
+							</LegOne>
+							<LegTwo>
+								<VendorPrefs Exclude="true">
+									<Airline Code="AA"/>
+									<Airline Code="BA"/>
+								</VendorPrefs>
+							</LegTwo>
+						</CarrierSpecificDisplay>
+						<ConnectionLocation LocationCode="LAX"/>
+					</ConnectionLocations>
+					<DestinationLocation LocationCode="SYD"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify a preferred connection location, with preferred vendors, and also excluding codeshare flights.-->
+		<!--Equivalent Sabre host command: S21DECDFWSYD1800LAX‡.AABA‡.AABA-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21T18:00">
+					<ConnectionLocations>
+						<CarrierSpecificDisplay>
+							<LegOne>
+								<VendorPrefs ExcludeCodeshares="true">
+									<Airline Code="AA"/>
+									<Airline Code="BA"/>
+								</VendorPrefs>
+							</LegOne>
+							<LegTwo>
+								<VendorPrefs ExcludeCodeshares="true">
+									<Airline Code="AA"/>
+									<Airline Code="BA"/>
+								</VendorPrefs>
+							</LegTwo>
+						</CarrierSpecificDisplay>
+						<ConnectionLocation LocationCode="LAX"/>
+					</ConnectionLocations>
+					<DestinationLocation LocationCode="SYD"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify two preferred connection locations, with preferred vendors, and also excluding codeshare flights.-->
+		<!--Equivalent Sabre host command: S21DECDFWSYD1800LAX/NRT‡.AABA‡.AABA‡.JLCX-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21T18:00">
+					<ConnectionLocations>
+						<CarrierSpecificDisplay>
+							<LegOne>
+								<VendorPrefs ExcludeCodeshares="true">
+									<Airline Code="AA"/>
+									<Airline Code="BA"/>
+								</VendorPrefs>
+							</LegOne>
+							<LegThree>
+								<VendorPrefs ExcludeCodeshares="true">
+									<Airline Code="JL"/>
+									<Airline Code="CX"/>
+								</VendorPrefs>
+							</LegThree>
+							<LegTwo>
+								<VendorPrefs ExcludeCodeshares="true">
+									<Airline Code="AA"/>
+									<Airline Code="BA"/>
+								</VendorPrefs>
+							</LegTwo>
+						</CarrierSpecificDisplay>
+						<ConnectionLocation LocationCode="LAX"/>
+						<ConnectionLocation LocationCode="TYO"/>
+					</ConnectionLocations>
+					<DestinationLocation LocationCode="SYD"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make an air schedule request and specify to override connection times.-->
+		<!--Equivalent Sabre host command: S21DECDFWKRK1800CDG60-120-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OriginDestinationInformation>
+				<FlightSegment DepartureDateTime="12-21T18:00">
+					<ConnectionLocations>
+						<ConnectionLocation LocationCode="CDG"/>
+						<ConnectTimeOverrides Max="120" Min="60"/>
+					</ConnectionLocations>
+					<DestinationLocation LocationCode="KRK"/>
+					<OriginLocation LocationCode="DFW"/>
+				</FlightSegment>
+			</OriginDestinationInformation>
+		</OTA_AirScheduleRQ>
+		<!--Make a follow-on air schedules request from a successful OTA_AirAvailLLSRQ response.-->
+		<!--Equivalent Sabre host command: S*-->
+		<OTA_AirScheduleRQ Version="2.0.1" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<OptionalQualifiers>
+				<AdditionalAvailability Ind="true"/>
+			</OptionalQualifiers>
+		</OTA_AirScheduleRQ>
+	</SampleRequests>
+	<SampleResponses>
+		<OTA_AirScheduleRS xmlns="http://webservices.sabre.com/sabreXML/2011/10" Version="2.0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stl="http://services.sabre.com/STL/v01">
+			<stl:ApplicationResults status="Complete">
+				<stl:Success timeStamp="2011-12-07T15:17:50-06:00"/>
+				<stl:Warning type="BusinessLogic">
+					<stl:SystemSpecificResults>
+						<stl:Message>NO MORE</stl:Message>
+						<stl:ShortText>WARN.SWS.HOST.WARNING_RESPONSE</stl:ShortText>
+					</stl:SystemSpecificResults>
+				</stl:Warning>
+			</stl:ApplicationResults>
+			<OriginDestinationOptions OriginTimeZone="CST">
+				<OriginDestinationOption RPH="1">
+					<FlightSegment ArrivalDateTime="12-21T10:10" DepartureDateTime="12-21T08:45" FlightNumber="2411" RPH="1" SmokingAllowed="false" StopQuantity="0" eTicket="true">
+						<BookingClassAvail RPH="1" ResBookDesigCode="F"/>
+						<BookingClassAvail RPH="2" ResBookDesigCode="Y"/>
+						<BookingClassAvail RPH="3" ResBookDesigCode="B"/>
+						<BookingClassAvail RPH="4" ResBookDesigCode="M"/>
+						<BookingClassAvail RPH="5" ResBookDesigCode="H"/>
+						<BookingClassAvail RPH="6" ResBookDesigCode="V"/>
+						<BookingClassAvail RPH="7" ResBookDesigCode="K"/>
+						<BookingClassAvail RPH="8" ResBookDesigCode="Q"/>
+						<DaysOfOperation>
+							<OperationSchedule>
+								<OperationTimes>
+									<OperationTime Fri="true" Mon="true" Sat="false" Sun="false" Thur="true" Tue="true" Weds="true"/>
+								</OperationTimes>
+							</OperationSchedule>
+						</DaysOfOperation>
+						<DestinationLocation LocationCode="LAX"/>
+						<Equipment AirEquipType="757"/>
+						<FlightDetails Canceled="false" Charter="false"/>
+						<MarketingAirline Code="AA" FlightNumber="2411" ParticipationLevel="DC"/>
+						<Meal MealCode="B"/>
+						<Meal MealCode="B"/>
+						<OriginLocation LocationCode="DFW"/>
+					</FlightSegment>
+					<FlightSegment ArrivalDateTime="12-22T15:50" ConnectionInd="Y" DepartureDateTime="12-21T10:55" FlightNumber="169" RPH="2" SmokingAllowed="false" StopQuantity="0" eTicket="true">
+						<BookingClassAvail RPH="1" ResBookDesigCode="F"/>
+						<BookingClassAvail RPH="2" ResBookDesigCode="C"/>
+						<BookingClassAvail RPH="3" ResBookDesigCode="Y"/>
+						<BookingClassAvail RPH="4" ResBookDesigCode="B"/>
+						<BookingClassAvail RPH="5" ResBookDesigCode="M"/>
+						<BookingClassAvail RPH="6" ResBookDesigCode="V"/>
+						<BookingClassAvail RPH="7" ResBookDesigCode="K"/>
+						<BookingClassAvail RPH="8" ResBookDesigCode="Q"/>
+						<DaysOfOperation>
+							<OperationSchedule>
+								<OperationTimes>
+									<OperationTime Fri="true" Mon="true" Sat="true" Sun="true" Thur="true" Tue="true" Weds="true"/>
+								</OperationTimes>
+							</OperationSchedule>
+						</DaysOfOperation>
+						<DestinationLocation LocationCode="NRT"/>
+						<Equipment AirEquipType="777"/>
+						<FlightDetails Canceled="false" Charter="false"/>
+						<MarketingAirline Code="AA" FlightNumber="169" ParticipationLevel="DC"/>
+						<Meal MealCode="LD"/>
+						<OriginLocation LocationCode="LAX"/>
+					</FlightSegment>
+					<FlightSegment ArrivalDateTime="12-22T07:35" ConnectionInd="Y" DepartureDateTime="12-22T19:50" FlightNumber="771" RPH="3" SmokingAllowed="false" StopQuantity="0" eTicket="true">
+						<BookingClassAvail RPH="1" ResBookDesigCode="J"/>
+						<BookingClassAvail RPH="2" ResBookDesigCode="C"/>
+						<BookingClassAvail RPH="3" ResBookDesigCode="D"/>
+						<BookingClassAvail RPH="4" ResBookDesigCode="X"/>
+						<BookingClassAvail RPH="5" ResBookDesigCode="I"/>
+						<BookingClassAvail RPH="6" ResBookDesigCode="W"/>
+						<BookingClassAvail RPH="7" ResBookDesigCode="E"/>
+						<BookingClassAvail RPH="8" ResBookDesigCode="Y"/>
+						<BookingClassAvail RPH="9" ResBookDesigCode="B"/>
+						<BookingClassAvail RPH="10" ResBookDesigCode="H"/>
+						<BookingClassAvail RPH="11" ResBookDesigCode="K"/>
+						<BookingClassAvail RPH="12" ResBookDesigCode="M"/>
+						<BookingClassAvail RPH="13" ResBookDesigCode="L"/>
+						<BookingClassAvail RPH="14" ResBookDesigCode="V"/>
+						<BookingClassAvail RPH="15" ResBookDesigCode="S"/>
+						<BookingClassAvail RPH="16" ResBookDesigCode="N"/>
+						<BookingClassAvail RPH="17" ResBookDesigCode="Q"/>
+						<BookingClassAvail RPH="18" ResBookDesigCode="O"/>
+						<BookingClassAvail RPH="19" ResBookDesigCode="G"/>
+						<DaysOfOperation>
+							<OperationSchedule>
+								<OperationTimes>
+									<OperationTime Fri="true" Mon="true" Sat="true" Sun="true" Thur="true" Tue="true" Weds="true"/>
+								</OperationTimes>
+							</OperationSchedule>
+						</DaysOfOperation>
+						<DestinationLocation LocationCode="SYD"/>
+						<Equipment AirEquipType="777"/>
+						<FlightDetails Canceled="false" Charter="false"/>
+						<MarketingAirline Code="JL" FlightNumber="771" ParticipationLevel="DC"/>
+						<Meal MealCode="MS"/>
+						<OriginLocation LocationCode="NRT"/>
+					</FlightSegment>
+				</OriginDestinationOption>
+				<OriginDestinationOption RPH="2">
+					<FlightSegment ArrivalDateTime="12-21T09:05" DepartureDateTime="12-21T07:45" FlightNumber="2407" RPH="4" SmokingAllowed="false" StopQuantity="0" eTicket="true">
+						<BookingClassAvail RPH="1" ResBookDesigCode="F"/>
+						<BookingClassAvail RPH="2" ResBookDesigCode="Y"/>
+						<BookingClassAvail RPH="3" ResBookDesigCode="B"/>
+						<BookingClassAvail RPH="4" ResBookDesigCode="M"/>
+						<BookingClassAvail RPH="5" ResBookDesigCode="H"/>
+						<BookingClassAvail RPH="6" ResBookDesigCode="V"/>
+						<BookingClassAvail RPH="7" ResBookDesigCode="K"/>
+						<BookingClassAvail RPH="8" ResBookDesigCode="Q"/>
+						<DaysOfOperation>
+							<OperationSchedule>
+								<OperationTimes>
+									<OperationTime Fri="true" Mon="true" Sat="true" Sun="true" Thur="true" Tue="true" Weds="true"/>
+								</OperationTimes>
+							</OperationSchedule>
+						</DaysOfOperation>
+						<DestinationLocation LocationCode="LAX"/>
+						<Equipment AirEquipType="757"/>
+						<FlightDetails Canceled="false" Charter="false"/>
+						<MarketingAirline Code="AA" FlightNumber="2407" ParticipationLevel="DC"/>
+						<Meal MealCode="B"/>
+						<Meal MealCode="B"/>
+						<OriginLocation LocationCode="DFW"/>
+					</FlightSegment>
+					<FlightSegment ArrivalDateTime="12-22T15:50" ConnectionInd="Y" DepartureDateTime="12-21T10:55" FlightNumber="169" RPH="5" SmokingAllowed="false" StopQuantity="0" eTicket="true">
+						<BookingClassAvail RPH="1" ResBookDesigCode="F"/>
+						<BookingClassAvail RPH="2" ResBookDesigCode="C"/>
+						<BookingClassAvail RPH="3" ResBookDesigCode="Y"/>
+						<BookingClassAvail RPH="4" ResBookDesigCode="B"/>
+						<BookingClassAvail RPH="5" ResBookDesigCode="M"/>
+						<BookingClassAvail RPH="6" ResBookDesigCode="V"/>
+						<BookingClassAvail RPH="7" ResBookDesigCode="K"/>
+						<BookingClassAvail RPH="8" ResBookDesigCode="Q"/>
+						<DaysOfOperation>
+							<OperationSchedule>
+								<OperationTimes>
+									<OperationTime Fri="true" Mon="true" Sat="true" Sun="true" Thur="true" Tue="true" Weds="true"/>
+								</OperationTimes>
+							</OperationSchedule>
+						</DaysOfOperation>
+						<DestinationLocation LocationCode="NRT"/>
+						<Equipment AirEquipType="777"/>
+						<FlightDetails Canceled="false" Charter="false"/>
+						<MarketingAirline Code="AA" FlightNumber="169" ParticipationLevel="DC"/>
+						<Meal MealCode="LD"/>
+						<OriginLocation LocationCode="LAX"/>
+					</FlightSegment>
+					<FlightSegment ArrivalDateTime="12-22T07:35" ConnectionInd="Y" DepartureDateTime="12-22T19:50" FlightNumber="771" RPH="6" SmokingAllowed="false" StopQuantity="0" eTicket="true">
+						<BookingClassAvail RPH="1" ResBookDesigCode="J"/>
+						<BookingClassAvail RPH="2" ResBookDesigCode="C"/>
+						<BookingClassAvail RPH="3" ResBookDesigCode="D"/>
+						<BookingClassAvail RPH="4" ResBookDesigCode="X"/>
+						<BookingClassAvail RPH="5" ResBookDesigCode="I"/>
+						<BookingClassAvail RPH="6" ResBookDesigCode="W"/>
+						<BookingClassAvail RPH="7" ResBookDesigCode="E"/>
+						<BookingClassAvail RPH="8" ResBookDesigCode="Y"/>
+						<BookingClassAvail RPH="9" ResBookDesigCode="B"/>
+						<BookingClassAvail RPH="10" ResBookDesigCode="H"/>
+						<BookingClassAvail RPH="11" ResBookDesigCode="K"/>
+						<BookingClassAvail RPH="12" ResBookDesigCode="M"/>
+						<BookingClassAvail RPH="13" ResBookDesigCode="L"/>
+						<BookingClassAvail RPH="14" ResBookDesigCode="V"/>
+						<BookingClassAvail RPH="15" ResBookDesigCode="S"/>
+						<BookingClassAvail RPH="16" ResBookDesigCode="N"/>
+						<BookingClassAvail RPH="17" ResBookDesigCode="Q"/>
+						<BookingClassAvail RPH="18" ResBookDesigCode="O"/>
+						<BookingClassAvail RPH="19" ResBookDesigCode="G"/>
+						<DaysOfOperation>
+							<OperationSchedule>
+								<OperationTimes>
+									<OperationTime Fri="true" Mon="true" Sat="true" Sun="true" Thur="true" Tue="true" Weds="true"/>
+								</OperationTimes>
+							</OperationSchedule>
+						</DaysOfOperation>
+						<DestinationLocation LocationCode="SYD"/>
+						<Equipment AirEquipType="777"/>
+						<FlightDetails Canceled="false" Charter="false"/>
+						<MarketingAirline Code="JL" FlightNumber="771" ParticipationLevel="DC"/>
+						<Meal MealCode="MS"/>
+						<OriginLocation LocationCode="NRT"/>
+					</FlightSegment>
+				</OriginDestinationOption>
+				<OriginDestinationOption RPH="3">
+					<FlightSegment ArrivalDateTime="12-21T08:10" DepartureDateTime="12-21T06:40" FlightNumber="2401" RPH="7" SmokingAllowed="false" StopQuantity="0" eTicket="true">
+						<BookingClassAvail RPH="1" ResBookDesigCode="F"/>
+						<BookingClassAvail RPH="2" ResBookDesigCode="Y"/>
+						<BookingClassAvail RPH="3" ResBookDesigCode="B"/>
+						<BookingClassAvail RPH="4" ResBookDesigCode="M"/>
+						<BookingClassAvail RPH="5" ResBookDesigCode="H"/>
+						<BookingClassAvail RPH="6" ResBookDesigCode="V"/>
+						<BookingClassAvail RPH="7" ResBookDesigCode="K"/>
+						<BookingClassAvail RPH="8" ResBookDesigCode="Q"/>
+						<DaysOfOperation>
+							<OperationSchedule>
+								<OperationTimes>
+									<OperationTime Fri="true" Mon="true" Sat="true" Sun="true" Thur="true" Tue="true" Weds="true"/>
+								</OperationTimes>
+							</OperationSchedule>
+						</DaysOfOperation>
+						<DestinationLocation LocationCode="LAX"/>
+						<Equipment AirEquipType="S80"/>
+						<FlightDetails Canceled="false" Charter="false"/>
+						<MarketingAirline Code="AA" FlightNumber="2401" ParticipationLevel="DC"/>
+						<Meal MealCode="B"/>
+						<Meal MealCode="B"/>
+						<OriginLocation LocationCode="DFW"/>
+					</FlightSegment>
+					<FlightSegment ArrivalDateTime="12-22T15:50" ConnectionInd="Y" DepartureDateTime="12-21T10:55" FlightNumber="169" RPH="8" SmokingAllowed="false" StopQuantity="0" eTicket="true">
+						<BookingClassAvail RPH="1" ResBookDesigCode="F"/>
+						<BookingClassAvail RPH="2" ResBookDesigCode="C"/>
+						<BookingClassAvail RPH="3" ResBookDesigCode="Y"/>
+						<BookingClassAvail RPH="4" ResBookDesigCode="B"/>
+						<BookingClassAvail RPH="5" ResBookDesigCode="M"/>
+						<BookingClassAvail RPH="6" ResBookDesigCode="V"/>
+						<BookingClassAvail RPH="7" ResBookDesigCode="K"/>
+						<BookingClassAvail RPH="8" ResBookDesigCode="Q"/>
+						<DaysOfOperation>
+							<OperationSchedule>
+								<OperationTimes>
+									<OperationTime Fri="true" Mon="true" Sat="true" Sun="true" Thur="true" Tue="true" Weds="true"/>
+								</OperationTimes>
+							</OperationSchedule>
+						</DaysOfOperation>
+						<DestinationLocation LocationCode="NRT"/>
+						<Equipment AirEquipType="777"/>
+						<FlightDetails Canceled="false" Charter="false"/>
+						<MarketingAirline Code="AA" FlightNumber="169" ParticipationLevel="DC"/>
+						<Meal MealCode="LD"/>
+						<OriginLocation LocationCode="LAX"/>
+					</FlightSegment>
+					<FlightSegment ArrivalDateTime="12-22T07:35" ConnectionInd="Y" DepartureDateTime="12-22T19:50" FlightNumber="771" RPH="9" SmokingAllowed="false" StopQuantity="0" eTicket="true">
+						<BookingClassAvail RPH="1" ResBookDesigCode="J"/>
+						<BookingClassAvail RPH="2" ResBookDesigCode="C"/>
+						<BookingClassAvail RPH="3" ResBookDesigCode="D"/>
+						<BookingClassAvail RPH="4" ResBookDesigCode="X"/>
+						<BookingClassAvail RPH="5" ResBookDesigCode="I"/>
+						<BookingClassAvail RPH="6" ResBookDesigCode="W"/>
+						<BookingClassAvail RPH="7" ResBookDesigCode="E"/>
+						<BookingClassAvail RPH="8" ResBookDesigCode="Y"/>
+						<BookingClassAvail RPH="9" ResBookDesigCode="B"/>
+						<BookingClassAvail RPH="10" ResBookDesigCode="H"/>
+						<BookingClassAvail RPH="11" ResBookDesigCode="K"/>
+						<BookingClassAvail RPH="12" ResBookDesigCode="M"/>
+						<BookingClassAvail RPH="13" ResBookDesigCode="L"/>
+						<BookingClassAvail RPH="14" ResBookDesigCode="V"/>
+						<BookingClassAvail RPH="15" ResBookDesigCode="S"/>
+						<BookingClassAvail RPH="16" ResBookDesigCode="N"/>
+						<BookingClassAvail RPH="17" ResBookDesigCode="Q"/>
+						<BookingClassAvail RPH="18" ResBookDesigCode="O"/>
+						<BookingClassAvail RPH="19" ResBookDesigCode="G"/>
+						<DaysOfOperation>
+							<OperationSchedule>
+								<OperationTimes>
+									<OperationTime Fri="true" Mon="true" Sat="true" Sun="true" Thur="true" Tue="true" Weds="true"/>
+								</OperationTimes>
+							</OperationSchedule>
+						</DaysOfOperation>
+						<DestinationLocation LocationCode="SYD"/>
+						<Equipment AirEquipType="777"/>
+						<FlightDetails Canceled="false" Charter="false"/>
+						<MarketingAirline Code="JL" FlightNumber="771" ParticipationLevel="DC"/>
+						<Meal MealCode="MS"/>
+						<OriginLocation LocationCode="NRT"/>
+					</FlightSegment>
+				</OriginDestinationOption>
+				<OriginDestinationOption RPH="4">
+					<FlightSegment ArrivalDateTime="12-21T23:50" DepartureDateTime="12-21T22:30" FlightNumber="2495" RPH="10" SmokingAllowed="false" StopQuantity="0" eTicket="true">
+						<BookingClassAvail RPH="1" ResBookDesigCode="F"/>
+						<BookingClassAvail RPH="2" ResBookDesigCode="Y"/>
+						<BookingClassAvail RPH="3" ResBookDesigCode="B"/>
+						<BookingClassAvail RPH="4" ResBookDesigCode="M"/>
+						<BookingClassAvail RPH="5" ResBookDesigCode="H"/>
+						<BookingClassAvail RPH="6" ResBookDesigCode="V"/>
+						<BookingClassAvail RPH="7" ResBookDesigCode="K"/>
+						<BookingClassAvail RPH="8" ResBookDesigCode="Q"/>
+						<DaysOfOperation>
+							<OperationSchedule>
+								<OperationTimes>
+									<OperationTime Fri="true" Mon="true" Sat="true" Sun="true" Thur="true" Tue="true" Weds="true"/>
+								</OperationTimes>
+							</OperationSchedule>
+						</DaysOfOperation>
+						<DestinationLocation LocationCode="LAX"/>
+						<Equipment AirEquipType="738"/>
+						<FlightDetails Canceled="false" Charter="false"/>
+						<MarketingAirline Code="AA" FlightNumber="2495" ParticipationLevel="DC"/>
+						<Meal MealCode="R"/>
+						<Meal MealCode="R"/>
+						<OriginLocation LocationCode="DFW"/>
+					</FlightSegment>
+					<FlightSegment ArrivalDateTime="12-22T15:50" ConnectionInd="Y" DepartureDateTime="12-22T10:55" FlightNumber="169" RPH="11" SmokingAllowed="false" StopQuantity="0" eTicket="true">
+						<BookingClassAvail RPH="1" ResBookDesigCode="F"/>
+						<BookingClassAvail RPH="2" ResBookDesigCode="C"/>
+						<BookingClassAvail RPH="3" ResBookDesigCode="Y"/>
+						<BookingClassAvail RPH="4" ResBookDesigCode="B"/>
+						<BookingClassAvail RPH="5" ResBookDesigCode="M"/>
+						<BookingClassAvail RPH="6" ResBookDesigCode="V"/>
+						<BookingClassAvail RPH="7" ResBookDesigCode="K"/>
+						<BookingClassAvail RPH="8" ResBookDesigCode="Q"/>
+						<DaysOfOperation>
+							<OperationSchedule>
+								<OperationTimes>
+									<OperationTime Fri="true" Mon="true" Sat="true" Sun="true" Thur="true" Tue="true" Weds="true"/>
+								</OperationTimes>
+							</OperationSchedule>
+						</DaysOfOperation>
+						<DestinationLocation LocationCode="NRT"/>
+						<Equipment AirEquipType="777"/>
+						<FlightDetails Canceled="false" Charter="false"/>
+						<MarketingAirline Code="AA" FlightNumber="169" ParticipationLevel="DC"/>
+						<Meal MealCode="LD"/>
+						<OriginLocation LocationCode="LAX"/>
+					</FlightSegment>
+					<FlightSegment ArrivalDateTime="12-22T07:35" ConnectionInd="Y" DepartureDateTime="12-23T19:50" FlightNumber="771" RPH="12" SmokingAllowed="false" StopQuantity="0" eTicket="true">
+						<BookingClassAvail RPH="1" ResBookDesigCode="J"/>
+						<BookingClassAvail RPH="2" ResBookDesigCode="C"/>
+						<BookingClassAvail RPH="3" ResBookDesigCode="D"/>
+						<BookingClassAvail RPH="4" ResBookDesigCode="X"/>
+						<BookingClassAvail RPH="5" ResBookDesigCode="I"/>
+						<BookingClassAvail RPH="6" ResBookDesigCode="W"/>
+						<BookingClassAvail RPH="7" ResBookDesigCode="E"/>
+						<BookingClassAvail RPH="8" ResBookDesigCode="Y"/>
+						<BookingClassAvail RPH="9" ResBookDesigCode="B"/>
+						<BookingClassAvail RPH="10" ResBookDesigCode="H"/>
+						<BookingClassAvail RPH="11" ResBookDesigCode="K"/>
+						<BookingClassAvail RPH="12" ResBookDesigCode="M"/>
+						<BookingClassAvail RPH="13" ResBookDesigCode="L"/>
+						<BookingClassAvail RPH="14" ResBookDesigCode="V"/>
+						<BookingClassAvail RPH="15" ResBookDesigCode="S"/>
+						<BookingClassAvail RPH="16" ResBookDesigCode="N"/>
+						<BookingClassAvail RPH="17" ResBookDesigCode="Q"/>
+						<BookingClassAvail RPH="18" ResBookDesigCode="O"/>
+						<BookingClassAvail RPH="19" ResBookDesigCode="G"/>
+						<DaysOfOperation>
+							<OperationSchedule>
+								<OperationTimes>
+									<OperationTime Fri="true" Mon="true" Sat="true" Sun="true" Thur="true" Tue="true" Weds="true"/>
+								</OperationTimes>
+							</OperationSchedule>
+						</DaysOfOperation>
+						<DestinationLocation LocationCode="SYD"/>
+						<Equipment AirEquipType="777"/>
+						<FlightDetails Canceled="false" Charter="false"/>
+						<MarketingAirline Code="JL" FlightNumber="771" ParticipationLevel="DC"/>
+						<Meal MealCode="MS"/>
+						<OriginLocation LocationCode="NRT"/>
+					</FlightSegment>
+				</OriginDestinationOption>
+			</OriginDestinationOptions>
+		</OTA_AirScheduleRS>
+	</SampleResponses>
+</SamplePayloads>

@@ -1,0 +1,18 @@
+package com.sabre.sws.tools.wsdl.wrappers;
+
+import com.sabre.sws.tools.wsdl.stubs.OTA_AirAvailServiceStub;
+import org.apache.axis2.AxisFault;
+import org.apache.axis2.context.ConfigurationContext;
+
+/**
+ * Created by SG0221139 on 7/11/2014.
+ */
+public class AirAvailWrapper extends OTA_AirAvailServiceStub {
+    public AirAvailWrapper(String targetEndpoint) throws AxisFault {
+        super(targetEndpoint);
+    }
+
+    public AirAvailWrapper(ConfigurationContext configurationContext, String targetEndpoint) throws AxisFault {
+        super(configurationContext, targetEndpoint);
+    }
+}

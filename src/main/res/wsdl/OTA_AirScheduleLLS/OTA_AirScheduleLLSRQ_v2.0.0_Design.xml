@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--"ReturnHostCommand" is used to specify whether or not to return the native host command in the response message.-->
+<OTA_AirScheduleRQ ReturnHostCommand="false" TimeStamp="2011-07-05T13:45:00-06:00" Version="2.0.0" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!--Optional-->
+	<!--Repeat Factor=0-->
+	<OptionalQualifiers>
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<!--"Ind" is used to instruct the system to query for additional availability from a successful OTA_AirScheduleLLSRQ response.-->
+		<!--.../AdditionalAvailability cannot combine with .../FlightQualifiers, .../TimeQualifiers, or .../OriginDestinationInformation.-->
+		<!--Equivalent Sabre host command: S*-->
+		<AdditionalAvailability Ind="true"/>
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<!--"Charters" is used to instruct the system to query availability for charter flights.-->
+		<!--"DirectOnly" is used to instruct the system to query availability for direct flights.-->
+		<!--"ExcludeCodeshares" is used to specify to exclude codeshare flights.-->
+		<!--"ExtendedSearch" is used to instruct the system to conduct an extended search.-->
+		<!--.../FlightQualifiers cannot combine with .../AdditionalAvailability.-->
+		<!--Charters="true" equivalent Sabre host command: S21DECDFWSYD1800-CHR-->
+		<!--DirectOnly="true" equivalent Sabre host command: S21DECDFWSYD1800‡XX/D-->
+		<!--ExcludeCodeshares="true" equivalent Sabre host command: S21DECDFWSYD.-->
+		<!--ExtendedSearch="true" equivalent Sabre host command: S21DECFSGDBM1800‡XX/ES-->
+		<FlightQualifiers Charters="true" DirectOnly="true" ExcludeCodeshares="true" ExtendedSearch="false">
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<!--"VendorPrefs" cannot combine with .../OriginDestinationInformation/FlightSegment/ConnectionLocations/CarrierSpecificDisplay.-->
+			<!--"Exclude" is used to specify to exclude a particular vendor or vendors.-->
+			<!--Exclude="true" equivalent Sabre host command: S21DECDFWSYD‡*XX-->
+			<!--Exclude="false" equivalent Sabre host command: S21DECDFWSYD‡XX-->
+			<VendorPrefs Exclude="true">
+				<!--Optional-->
+				<!--Repeat Factor=0-20-->
+				<!--"Code" is used to specify a particular vendor code to include or exclude depending on the value set via .../VendorPrefs@Exclude.-->
+				<!--Equivalent Sabre host command: S21DECDFWSYD1800‡XXYY-->
+				<Airline Code="XX"/>
+				<Airline Code="YY"/>
+			</VendorPrefs>
+		</FlightQualifiers>
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<!--TimeQualifiers cannot combine with .../OriginDestinationInformation/FlightSegment@ArrivalDateTime or .../OriginDestinationInformation/FlightSegment@DepartureDateTime.-->
+		<TimeQualifiers>
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<!--"WindowAfter" is used to specify the later portion of the search range.-->
+			<!--"WindowAfter" follows this format: HH:MM-->
+			<!--"WindowBefore" is used to specify the early portion of the search range.-->
+			<!--"WindowBefore" follows this format: HH:MM-->
+			<!--ArrivalTime and DepartureTime cannot combine.-->
+			<!--Equivalent Sabre host command: S21DECDFWSYD/1700-1900-->
+			<ArrivalTime WindowAfter="17:00" WindowBefore="19:00"/>
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<!--"WindowAfter" is used to specify the later portion of the search range.-->
+			<!--"WindowAfter" follows this format: HH:MM-->
+			<!--"WindowBefore" is used to specify the early portion of the search range.-->
+			<!--"WindowBefore" follows this format: HH:MM-->
+			<!--DepartureTime and ArrivalTime cannot combine.-->
+			<!--Equivalent Sabre host command: S21DECDFWSYD1800-2200-->
+			<DepartureTime WindowAfter="18:00" WindowBefore="22:00"/>
+		</TimeQualifiers>
+	</OptionalQualifiers>
+	<!--Optional-->
+	<!--Repeat Factor=0-->
+	<!--.../OriginDestinationInformation cannot combine with .../OptionalQualifiers/AdditionalAvailability.-->
+	<OriginDestinationInformation>
+		<!--Mandatory-->
+		<!--Repeat Factor=0-->
+		<!--"ArrivalDateTime" is used to instruct the system to query for flights based upon the specified arrival time.-->
+		<!--"ArrivalDateTime" follows this format: MM-DDTHH:MM-->
+		<!-- If ArrivalDateTime is used in conjunction with .../OptionalQualifiers/TimeQualifers/ArrivalTime the client needs to just specify the arrival date via .../FlightSegment@ArrivalDateTime.  The time values should be omitted.-->
+		<!--ArrivalDateTime cannot combine with DepartureDateTime.-->
+		<!--"DepartureDateTime" is used to instruct the system to query for flights based upon the specified departure time.-->
+		<!--"DepartureDateTime" follows this format: MM-DDTHH:MM-->
+		<!-- If DepartureDateTime is used in conjunction with .../OptionalQualifiers/TimeQualifers/DepartureTime the client needs to just specify the departure date via .../FlightSegment@DepartureDateTime.  The time values should be omitted.-->
+		<!--DepartureDateTime cannot combine with ArrivalDateTime.-->
+		<!--ArrivalDateTime equivalent Sabre host command: S21DECDFWSYD/1900-->
+		<!--DepartureDateTime equivalent Sabre host command: S21DECDFWSYD1800-->
+		<FlightSegment ArrivalDateTime="12-21T19:00" DepartureDateTime="12-21T18:00">
+			<!--Mandatory-->
+			<!--Repeat Factor=0-->
+			<!--"LocationCode" is used to specify the destination city code.-->
+			<DestinationLocation LocationCode="SYD"/>
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<ConnectionLocations>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<!--"CarrierSpecificDisplay" is utilized to specify carrier by leg related information.-->
+				<!--"CarrierSpecificDisplay" cannot combine with .../OptionalQualifiers/FlightQualifiers/VendorPrefs.-->
+				<CarrierSpecificDisplay>
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<LegOne>
+						<!--Optional-->
+						<!--Repeat Factor=0-->
+						<!--"Any" is used to instruct the system to include any carrier originating out of the specified connection location.-->
+						<!--@Any cannot combine with .../VendorPrefs/Airline, .../VendorPrefs@Exclude, or .../VendorPrefs@ExcludeCodeshares.-->
+						<!--"Exclude" is used to to instruct the system to exclude specified carriers from the results.-->
+						<!--"ExcludeCodeshares" is used to to instruct the system to exclude codeshare flights originating out of the specified connection location.-->
+						<!--Any="true" equivalent Sabre host command: S21DECDFWSYD1800LAX‡-->
+						<!--Exclude="true" equivalent Sabre host command: S21DECDFWSYD1800LAX‡*XXYY-->
+						<!--ExcludeCodeshares="true" equivalent Sabre host command: S21DECDFWSYD1800LAX‡.XXYY-->
+						<VendorPrefs Exclude="true" ExcludeCodeshares="true" Any="true">
+							<!--Optional-->
+							<!--Repeat Factor=0-20-->
+							<!--"Code" is used to specify a particular vendor code to include or exclude depending on the value set via @Exclude.-->
+							<Airline Code="XX"/>
+							<Airline Code="YY"/>
+						</VendorPrefs>
+					</LegOne>
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<LegTwo>
+						<!--Optional-->
+						<!--Repeat Factor=0-->
+						<!--"Any" is used to instruct the system to include any carrier originating out of the specified connection location.-->
+						<!--@Any cannot combine with .../VendorPrefs/Airline, .../VendorPrefs@Exclude, or .../VendorPrefs@ExcludeCodeshares.-->
+						<!--"Exclude" is used to to instruct the system to exclude specified carriers from the results.-->
+						<!--"ExcludeCodeshares" is used to to instruct the system to exclude codeshare flights originating out of the specified connection location.-->
+						<!--Any="true" equivalent Sabre host command: S21DECDFWSYD1800LAX‡‡-->
+						<!--Exclude="true" equivalent Sabre host command: S21DECDFWSYD1800LAX‡‡*XXYY-->
+						<!--ExcludeCodeshares="true" equivalent Sabre host command: S21DECDFWSYD1800LAX‡‡.XXYY-->
+						<VendorPrefs Exclude="true" ExcludeCodeshares="true" Any="true">
+							<!--Optional-->
+							<!--Repeat Factor=0-20-->
+							<!--"Code" is used to specify a particular vendor code to include or exclude depending on the value set via @Exclude.-->
+							<Airline Code="XX"/>
+							<Airline Code="YY"/>
+						</VendorPrefs>
+					</LegTwo>
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<LegThree>
+						<!--Optional-->
+						<!--Repeat Factor=0-->
+						<!--"Any" is used to instruct the system to include any carrier originating out of the specified connection location.-->
+						<!--@Any cannot combine with .../VendorPrefs/Airline, .../VendorPrefs@Exclude, or .../VendorPrefs@ExcludeCodeshares.-->
+						<!--"Exclude" is used to to instruct the system to exclude specified carriers from the results.-->
+						<!--"ExcludeCodeshares" is used to to instruct the system to exclude codeshare flights originating out of the specified connection location.-->
+						<!--Any="true" equivalent Sabre host command: S21DECDFWSYD1800LAX‡‡‡-->
+						<!--Exclude="true" equivalent Sabre host command: S21DECDFWSYD1800LAX‡‡*XXYY-->
+						<!--ExcludeCodeshares="true" equivalent Sabre host command: S21DECDFWSYD1800LAX‡‡.XXYY-->
+						<VendorPrefs Exclude="true" ExcludeCodeshares="true" Any="true">
+							<!--Optional-->
+							<!--Repeat Factor=0-20-->
+							<!--"Code" is used to specify a particular vendor code to include or exclude depending on the value set via @Exclude.-->
+							<Airline Code="XX"/>
+							<Airline Code="YY"/>
+						</VendorPrefs>
+					</LegThree>
+				</CarrierSpecificDisplay>
+				<!--Mandatory-->
+				<!--Repeat Factor=0-2-->
+				<!--"LocationCode" is used to specify a connection location.-->
+				<!--Equivalent Sabre host command: S21DECDFWSYD1800LAX-->
+				<ConnectionLocation LocationCode="LAX"/>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<!--"Max" is used to override maximum connecting time.-->
+				<!--"Min" is used to override minimum connecting time.-->
+				<!--Please note that .../ConnectTimeOverrides can only be used in conjunction with one .../ConnectionLocation.-->
+				<!--Min equivalent Sabre host command: 121DECDFWSYD1800LAX060-->
+				<!--Min and Max equivalent Sabre host command: 121DECDFWSYD1800LAX60-120-->
+				<ConnectTimeOverrides Max="120" Min="60"/>
+			</ConnectionLocations>
+			<!--Mandatory-->
+			<!--Repeat Factor=0-->
+			<!--"LocationCode" is used to specify the origin city code.-->
+			<OriginLocation LocationCode="DFW"/>
+		</FlightSegment>
+	</OriginDestinationInformation>
+</OTA_AirScheduleRQ>

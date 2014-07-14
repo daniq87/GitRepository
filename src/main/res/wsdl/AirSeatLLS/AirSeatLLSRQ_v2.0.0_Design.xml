@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--"ReturnHostCommand" is used to specify whether or not to return the native host command in the response message.-->
+<AirSeatRQ ReturnHostCommand="false" TimeStamp="2011-10-27T15:30:00-06:00" Version="2.0.0" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!--Mandatory-->
+	<!--Repeat Factor=0-->
+	<Seats>
+		<!--Mandatory-->
+		<!--Repeat Factor=0-->
+		<!--"BoardingPass" is used to specify for the system to assign a seat and issue a boarding pass.-->
+		<!--"ChangeOfGauge" is used to specify a change of gauge of flight.-->
+		<!--"NameNumber" is used to specify a passenger name number.-->
+		<!--"Number" is used to specify a seat number.-->
+		<!--"Preference" is used to specify a seat preference.-->
+		<!--Preference & Quantity cannot combine with Number.-->
+		<!--"SegmentNumber" is used to specify a segment number.-->
+		<!--Equivalent Sabre host command: 4G1/23B-->
+		<!--BoardingPass equivalent Sabre host command: 4G1/23B‡BP-->
+		<!--ChangeOfGauge equivalent Sabre host command: 4G1C/23B-->
+		<!--NameNumber equivalent Sabre host command: 4G1/23B-1.1-->
+		<!--Preference & Quantity equivalent Sabre host command: 4G1/AN1-->
+		<Seat BoardingPass="true" ChangeOfGauge="true" NameNumber="1.1" Number="21A" Preference="AN" SegmentNumber="1"/>
+	</Seats>
+</AirSeatRQ>
