@@ -67,7 +67,22 @@
                 <version>1.6.2</version>
                 <executions>
 
-                    <!--AirSeatLLS-->
+                    <!-- TravelItineraryLLS -->
+                    <execution>
+                        <id>TravelItineraryReadLLS</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
+                            <wsdlFile>src/main/res/wsdl/TravelItineraryReadLLS/TravelItineraryReadLLS2.0.0RQ.wsdl</wsdlFile>
+                            <databindingName>adb</databindingName>
+                            <outputDirectory>src/main/java</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
+                    <!-- AirSeatLLS -->
                     <execution>
                         <id>AirSeat</id>
                         <goals>
@@ -82,7 +97,7 @@
                         </configuration>
                     </execution>
 
-                    <!--OTA_AirAvailLLS-->
+                    <!-- OTA_AirAvailLLS -->
                     <execution>
                         <id>AirAvail</id>
                         <goals>
@@ -97,7 +112,7 @@
                         </configuration>
                     </execution>
 
-                    <!--OTA_AirScheduleLLS-->
+                    <!-- OTA_AirScheduleLLS -->
                     <execution>
                         <id>AirSchedule</id>
                         <goals>
@@ -108,11 +123,11 @@
                             <wsdlFile>src/main/res/wsdl/OTA_AirScheduleLLS/OTA_AirScheduleLLS2.0.0RQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>src/main/java</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
+                            <flattenFiles>false</flattenFiles>
                         </configuration>
                     </execution>
 
-                    <!--SessionCloseRQ-->
+                    <!-- SessionCloseRQ -->
                     <execution>
                         <id>SessionClose</id>
                         <goals>
@@ -127,7 +142,7 @@
                         </configuration>
                     </execution>
 
-                    <!--SessionCreateRQ-->
+                    <!-- SessionCreateRQ -->
                     <execution>
                         <id>SessionCreate</id>
                         <goals>

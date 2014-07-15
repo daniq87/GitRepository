@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SamplePayloads>
+	<SampleRequests>
+		<!--Display a PNR based upon record locator.  Please note that a valid record locator must be specified.-->
+		<!--Equivalent Sabre host command: JX PNR*ABC123-->
+		<TravelItineraryReadRQ Version="2.2.0" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<MessagingDetails>
+				<Transaction Code="PNR"/>
+			</MessagingDetails>
+			<UniqueID ID="ABC123"/>
+		</TravelItineraryReadRQ>
+		<!--Redisplay a PNR in the current work area/session.-->
+		<!--Equivalent Sabre host command: JX PNR-->
+		<TravelItineraryReadRQ Version="2.2.0" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<MessagingDetails>
+				<Transaction Code="PNR"/>
+			</MessagingDetails>
+		</TravelItineraryReadRQ>
+	</SampleRequests>
+	<SampleResponses>
+<TravelItineraryReadRS xmlns="http://webservices.sabre.com/sabreXML/2011/10" Version="2.2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stl="http://services.sabre.com/STL/v01">
+	<stl:ApplicationResults status="Complete">
+		<stl:Success timeStamp="2012-10-31T10:15:50-05:00"/>
+	</stl:ApplicationResults>
+	<TravelItinerary>
+		<CustomerInfo>
+			<ContactNumbers>
+				<ContactNumber LocationCode="DFW" Phone="817-555-1212-A" RPH="001"/>
+				<ContactNumber LocationCode="DFW" Phone="817-555-1212-H" RPH="002"/>
+			</ContactNumbers>
+			<PersonName WithInfant="false" NameNumber="01.01" PassengerType="ADT" RPH="1">
+				<Email>&#135;WEBSERVICES.SUPPORT@SABRE.COM&#135;</Email>
+				<GivenName>SWS</GivenName>
+				<Surname>TEST</Surname>
+			</PersonName>
+		</CustomerInfo>
+		<ItineraryInfo>
+			<ItineraryPricing>
+				<PriceQuote RPH="1">
+					<MiscInformation>
+						<BaggageFees>
+							<Text>BAG ALLOWANCE     -DFWLAS-02P/AA/EACH PIECE UP TO 50 POUNDS/23</Text>
+							<Text>KILOGRAMS AND UP TO 62 LINEAR INCHES/158 LINEAR CENTIMETERS</Text>
+							<Text>BAG ALLOWANCE     -LASDFW-02P/AA/EACH PIECE UP TO 50 POUNDS/23</Text>
+							<Text>KILOGRAMS AND UP TO 62 LINEAR INCHES/158 LINEAR CENTIMETERS</Text>
+							<Text>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY DEPENDING ON</Text>
+							<Text>FLYER-SPECIFIC FACTORS /E.G. FREQUENT FLYER STATUS/MILITARY/</Text>
+							<Text>CREDIT CARDFORM OF PAYMENT/EARLY PURCHASE OVER INTERNET,ETC/</Text>
+						</BaggageFees>
+						<SignatureLine ExpirationDateTime="00:00" Source="SYS" Status="EXPIRED">
+							<Text>7TZA 7TZA*AW3 1015/31OCT</Text>
+						</SignatureLine>
+					</MiscInformation>
+					<PricedItinerary DisplayOnly="false" InputMessage="WPRQ" RPH="1" StatusCode="A" TaxExempt="false" ValidatingCarrier="AA">
+						<AirItineraryPricingInfo>
+							<ItinTotalFare>
+								<BaseFare Amount="1750.70" CurrencyCode="USD"/>
+								<Taxes>
+									<Tax Amount="152.90" TaxCode="XT"/>
+									<TaxBreakdownCode>131.30US</TaxBreakdownCode>
+									<TaxBreakdownCode>7.60ZP</TaxBreakdownCode>
+									<TaxBreakdownCode>5.00AY</TaxBreakdownCode>
+									<TaxBreakdownCode>9.00XF</TaxBreakdownCode>
+								</Taxes>
+								<TotalFare Amount="1903.60" CurrencyCode="USD"/>
+								<Totals>
+									<BaseFare Amount="1750.70"/>
+									<Taxes>
+										<Tax Amount="152.90"/>
+									</Taxes>
+									<TotalFare Amount="1903.60"/>
+								</Totals>
+							</ItinTotalFare>
+							<PassengerTypeQuantity Code="ADT" Quantity="01"/>
+							<PTC_FareBreakdown>
+								<FareBasis Code="YA2AA/YA2AA"/>
+								<FareCalculation>
+									<Text>DFW AA LAS Q27.91 847.44YA2AA AA DFW Q27.91 847.44YA2AA USD1750.70END ZPDFWLAS XFDFW4.5LAS4.5</Text>
+								</FareCalculation>
+								<FlightSegment ConnectionInd="O" DepartureDateTime="11-22T07:45" FlightNumber="887" ResBookDesigCode="Y" SegmentNumber="1" Status="OK">
+									<BaggageAllowance Number="02P"/>
+									<FareBasis Code="YA2AA"/>
+									<MarketingAirline Code="AA" FlightNumber="887"/>
+									<OriginLocation LocationCode="DFW"/>
+									<ValidityDates>
+										<NotValidAfter>11-22</NotValidAfter>
+									</ValidityDates>
+								</FlightSegment>
+								<FlightSegment ConnectionInd="O" DepartureDateTime="11-29T06:00" FlightNumber="1868" ResBookDesigCode="Y" SegmentNumber="2" Status="OK">
+									<BaggageAllowance Number="02P"/>
+									<FareBasis Code="YA2AA"/>
+									<MarketingAirline Code="AA" FlightNumber="1868"/>
+									<OriginLocation LocationCode="LAS"/>
+									<ValidityDates>
+										<NotValidAfter>11-22</NotValidAfter>
+									</ValidityDates>
+								</FlightSegment>
+								<FlightSegment>
+									<OriginLocation LocationCode="DFW"/>
+								</FlightSegment>
+								<ResTicketingRestrictions>LAST DAY TO PURCHASE 22NOV/0715</ResTicketingRestrictions>
+								<ResTicketingRestrictions>GUARANTEED FARE APPL IF PURCHASED BEFORE 22NOV</ResTicketingRestrictions>
+							</PTC_FareBreakdown>
+						</AirItineraryPricingInfo>
+					</PricedItinerary>
+					<ResponseHeader>
+						<Text>FARE - PRICE RETAINED</Text>
+						<Text>FARE USED TO CALCULATE DISCOUNT</Text>
+						<Text>FARE SUBJECT TO CHANGE</Text>
+					</ResponseHeader>
+				</PriceQuote>
+			</ItineraryPricing>
+			<ReservationItems>
+				<Item RPH="1">
+					<FlightSegment AirMilesFlown="1050" ArrivalDateTime="11-22T08:50" DayOfWeekInd="4" DepartureDateTime="2012-11-22T07:45" ElapsedTime="03.05" FlightNumber="0887" NumberInParty="01" ResBookDesigCode="Y" SegmentNumber="0001" SmokingAllowed="false" SpecialMeal="false" Status="HK" StopQuantity="00" eTicket="true">
+						<DestinationLocation LocationCode="LAS" Terminal="TERMINAL 1" TerminalCode="1"/>
+						<Equipment AirEquipType="S80"/>
+						<MarketingAirline Code="AA" FlightNumber="0887"/>
+						<Meal Code="F"/>
+						<OriginLocation LocationCode="DFW"/>
+						<SupplierRef ID="DCAA*APEWOG"/>
+						<UpdatedArrivalTime>11-22T08:50</UpdatedArrivalTime>
+						<UpdatedDepartureTime>11-22T07:45</UpdatedDepartureTime>
+					</FlightSegment>
+				</Item>
+				<Item RPH="2">
+					<FlightSegment AirMilesFlown="1050" ArrivalDateTime="11-29T10:45" DayOfWeekInd="4" DepartureDateTime="2012-11-29T06:00" ElapsedTime="02.45" FlightNumber="1868" NumberInParty="01" ResBookDesigCode="Y" SegmentNumber="0002" SmokingAllowed="false" SpecialMeal="false" Status="HK" StopQuantity="00" eTicket="true">
+						<DestinationLocation LocationCode="DFW"/>
+						<Equipment AirEquipType="S80"/>
+						<MarketingAirline Code="AA" FlightNumber="1868"/>
+						<Meal Code="F"/>
+						<OriginLocation LocationCode="LAS" Terminal="TERMINAL 1" TerminalCode="1"/>
+						<SupplierRef ID="DCAA*APEWOG"/>
+						<UpdatedArrivalTime>11-29T10:45</UpdatedArrivalTime>
+						<UpdatedDepartureTime>11-29T06:00</UpdatedDepartureTime>
+					</FlightSegment>
+				</Item>
+			</ReservationItems>
+			<Ticketing RPH="01" TicketTimeLimit="T-"/>
+		</ItineraryInfo>
+		<ItineraryRef AirExtras="false" ID="APEWOG" InhibitCode="U" PartitionID="AA" PrimeHostID="1S">
+			<Source AAA_PseudoCityCode="7TZA" CreateDateTime="2012-10-31T10:15" CreationAgent="AW3" HomePseudoCityCode="7TZA" PseudoCityCode="7TZA" ReceivedFrom="P"/>
+		</ItineraryRef>
+	</TravelItinerary>
+</TravelItineraryReadRS>
+
+	</SampleResponses>
+</SamplePayloads>

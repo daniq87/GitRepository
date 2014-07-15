@@ -8,7 +8,6 @@ import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.engine.Handler;
 import org.apache.axis2.handlers.AbstractHandler;
-import org.jdom2.input.StAXStreamBuilder;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
@@ -38,8 +37,8 @@ public class MustUnderstandHandler extends AbstractHandler {
 
         Iterator headerBlocks = header.getHeadersToProcess( rolePlayer );
 
-        XMLStreamReader parser = envelope.getXMLStreamReader();
-        StAXStreamBuilder builder = new StAXStreamBuilder();
+        // XMLStreamReader parser = envelope.getXMLStreamReader();
+        // StAXStreamBuilder builder = new StAXStreamBuilder();
 
         while( headerBlocks.hasNext() ) {
             SOAPHeaderBlock headerBlock = (SOAPHeaderBlock) headerBlocks.next();

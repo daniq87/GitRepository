@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--"ReturnHostCommand" is used to specify whether or not to return the native host command in the response message.-->
+<TravelItineraryReadRQ ReturnHostCommand="false" TimeStamp="2012-02-24T17:00:00-06:00" Version="2.1.0" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!--Mandatory-->
+	<!--Repeat Factor=0-->
+	<MessagingDetails>
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<!--"ApplicationID" is not applicable for external SWS subscribers.-->
+		<ApplicationID>DEF456</ApplicationID>
+		<!--Mandatory-->
+		<!--Repeat Factor=0-99-->
+		<!--"Code" is used to specify SDS transaction code definitions-->
+		<!--Acceptable values for Code: GEN, PAX, FNR, FFT, PHN, AFD, GFD, ADR, CDR, ACR, PPT, HRM, FQP, GRM, BSD, AIT, HOT, CAR, TIN, AX1, AX2, TRM, TFS, FOP, WSR, PH4, FPL, FBL, ACC, ITN, ITR, INV, DDR, PTD, SIP.-->
+		<!--Note: to redisplay the contents of a work area (AAA) please pass "PNR".-->
+		<!--Equivalent Sabre host command: JX PNR/ACR*ABCDEF-->
+		<Transaction Code="PNR"/>
+		<Transaction Code="ACR"/>
+	</MessagingDetails>
+	<!--Optional-->
+	<!--Repeat Factor=0-->
+	<!--"ID" is used to specify the record locator.-->
+	<!--Equivalent Sabre host command: JX PNR*ABCDEF-->
+	<UniqueID ID="ABCDEF"/>
+</TravelItineraryReadRQ>

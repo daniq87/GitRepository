@@ -4,6 +4,7 @@ import com.sabre.sws.tools.wsdl.exceptions.WorldIsGoingToEndException;
 import com.sabre.sws.tools.wsdl.stubs.SessionCreateRQServiceStub;
 import com.sabre.sws.tools.wsdl.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.utils.MustUnderstandHandler;
+import com.sabre.sws.tools.wsdl.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.wrappers.helpers.SessionCreateHelper;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
@@ -62,6 +63,8 @@ public class SessionCreateWrapper extends SessionCreateRQServiceStub {
         cfg.setInFaultPhases( list );
 
         SessionCreateRS responseBody = sessionCreateRQ( messageBody, header, security );
+
+        LOGGER.log( Level.INFO, "Token: " + SessionManager.getInstance().getToken() );
 
         return responseBody;
 

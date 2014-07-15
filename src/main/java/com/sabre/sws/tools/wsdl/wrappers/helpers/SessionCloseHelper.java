@@ -1,6 +1,5 @@
 package com.sabre.sws.tools.wsdl.wrappers.helpers;
 
-import com.sabre.sws.tools.wsdl.stubs.SessionCloseRQServiceStub;
 import com.sabre.sws.tools.wsdl.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.utils.SessionManager;
 import org.apache.axis2.databinding.types.NonNegativeInteger;
@@ -71,7 +70,7 @@ public class SessionCloseHelper {
         return instance;
     }
 
-    public SessionCloseRQServiceStub.MessageHeader getMessageHeaderInstance( IConfigurationProvider configuration ) {
+    public MessageHeader getMessageHeaderInstance( IConfigurationProvider configuration ) {
 
         MessageHeader instance = new MessageHeader();
 
