@@ -3,19 +3,16 @@ package com.sabre.sws.tools.wsdl.wrappers;
 import com.sabre.sws.tools.wsdl.exceptions.WorldIsGoingToEndException;
 import com.sabre.sws.tools.wsdl.stubs.SessionCreateRQServiceStub;
 import com.sabre.sws.tools.wsdl.utils.IConfigurationProvider;
-import com.sabre.sws.tools.wsdl.utils.MustUnderstandHandler;
+import com.sabre.sws.tools.wsdl.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.wrappers.helpers.SessionCreateHelper;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
-import org.apache.axis2.engine.AxisConfiguration;
 
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,11 +30,13 @@ public class SessionCreateWrapper extends SessionCreateRQServiceStub {
     public SessionCreateWrapper( ConfigurationContext configurationContext, IConfigurationProvider configuration ) throws AxisFault {
         super( configurationContext, configuration.getEndpoint() );
         this.configuration = configuration;
+        MessageHandlerManager.addStub(this);
     }
 
     public SessionCreateWrapper( IConfigurationProvider configuration ) throws AxisFault {
         super( ConfigurationContextFactory.createConfigurationContextFromFileSystem( null, null ), configuration.getEndpoint() );
         this.configuration = configuration;
+        MessageHandlerManager.addStub( this );
     }
 
     public SessionCreateRS openSession() throws RemoteException {
@@ -55,12 +54,6 @@ public class SessionCreateWrapper extends SessionCreateRQServiceStub {
         SessionCreateRQ messageBody = helper.getSessionCreateRQInstance( configuration );
         Security security = helper.getSecurityInstance( configuration );
         MessageHeader header = helper.getMessageHeaderInstance( configuration );
-
-        AxisConfiguration cfg = _getServiceClient().getAxisConfiguration();
-        List list = new ArrayList();        // TODO: Can we do anything with it?
-        list.add( new MustUnderstandHandler());
-        cfg.setInPhasesUptoAndIncludingPostDispatch( list );
-        cfg.setInFaultPhases( list );
 
         SessionCreateRS responseBody = sessionCreateRQ( messageBody, header, security );
 

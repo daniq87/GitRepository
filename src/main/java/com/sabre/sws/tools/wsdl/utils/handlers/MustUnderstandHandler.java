@@ -1,5 +1,6 @@
-package com.sabre.sws.tools.wsdl.utils;
+package com.sabre.sws.tools.wsdl.utils.handlers;
 
+import com.sabre.sws.tools.wsdl.utils.SessionManager;
 import org.apache.axiom.soap.RolePlayer;
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axiom.soap.SOAPHeader;

@@ -1,13 +1,18 @@
 package com.sabre.sws.tools.wsdl.client;
 
-import com.sabre.sws.tools.wsdl.stubs.OTA_AirAvailServiceStub;
 import com.sabre.sws.tools.wsdl.stubs.SessionCloseRQServiceStub;
 import com.sabre.sws.tools.wsdl.stubs.SessionCreateRQServiceStub;
+import com.sabre.sws.tools.wsdl.stubs.TravelItineraryReadServiceStub;
 import com.sabre.sws.tools.wsdl.utils.IConfigurationProvider;
+import com.sabre.sws.tools.wsdl.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.utils.PropertiesFileConfigurationSource;
+import com.sabre.sws.tools.wsdl.utils.handlers.ErrorHandler;
+import com.sabre.sws.tools.wsdl.utils.handlers.MustUnderstandHandler;
+import com.sabre.sws.tools.wsdl.utils.handlers.OutputHandler;
 import com.sabre.sws.tools.wsdl.wrappers.AirAvailWrapper;
 import com.sabre.sws.tools.wsdl.wrappers.SessionCloseWrapper;
 import com.sabre.sws.tools.wsdl.wrappers.SessionCreateWrapper;
+import com.sabre.sws.tools.wsdl.wrappers.TravelItineraryReadWrapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,9 +39,19 @@ public class SwsClient {
 
         LOGGER.log(Level.INFO, "Starting client action");
 
+        MessageHandlerManager.addHandler( new MustUnderstandHandler() );
+        MessageHandlerManager.addHandler( new ErrorHandler() );
+        MessageHandlerManager.addHandler( new OutputHandler() );
+
+        SessionCreateWrapper sessionCreate = null;
+        SessionCloseWrapper sessionClose = null;
+        AirAvailWrapper airAvail = null;
+        TravelItineraryReadWrapper travelItinerary = null;
+
         try {
             configFile = new File( configFileLocation );
             configuration = new PropertiesFileConfigurationSource( configFile );
+            LOGGER.log( Level.INFO, "Configuration loaded" );
         } catch( IOException e ) {
             LOGGER.log(Level.SEVERE, "Error reading configuration from a file", e);
             e.printStackTrace();
@@ -44,24 +59,52 @@ public class SwsClient {
         }
 
         try {
-            SessionCreateWrapper sessionCreate = new SessionCreateWrapper( configuration );
+            sessionCreate = new SessionCreateWrapper( configuration );
+
+            /*  Debugging
+
+                List list = new ArrayList();
+                AxisConfiguration cfg = sessionCreate._getServiceClient().getAxisConfiguration().getAxisConfiguration();
+                list.add( new MustUnderstandHandler() );
+                list.add( new ErrorHandler() );
+                cfg.setInFaultPhases( list );
+                cfg.setInPhasesUptoAndIncludingPostDispatch( list );
+
+                 */
+
+            // Create Session
             SessionCreateRQServiceStub.SessionCreateRS sessionCreateRS = sessionCreate.openSession();
             LOGGER.log(Level.INFO, "\nSession was Created");
 
+            // Execute and process OTA_AirAvailRequest
             LOGGER.log( Level.INFO, "Executing AirAvail Request..." );
-            AirAvailWrapper airAvail = new AirAvailWrapper( configuration );
-            OTA_AirAvailServiceStub.OTA_AirAvailRS airAvailRS = airAvail.executeExampleRequest();
+            airAvail = new AirAvailWrapper( configuration );
 
+            OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 0 );
             processAirAvailInfo( airAvailRS );
 
-            LOGGER.log(Level.INFO, "\nClosing session...");
-            SessionCloseWrapper sessionClose = new SessionCloseWrapper( configuration );
-            SessionCloseRQServiceStub.SessionCloseRS sessionCloseRS = sessionClose.closeSession();
+            airAvailRS = airAvail.executeSampleRequest( 1 );
+            processAirAvailInfo( airAvailRS );
 
+            // Execute and process TravelItinerary request
+            LOGGER.log( Level.INFO, "Executing TravelItineraryRead request..." );
+            travelItinerary = new TravelItineraryReadWrapper( configuration );
+            TravelItineraryReadServiceStub.TravelItineraryReadRS travelItineraryReadRS = travelItinerary.executeSampleRequest();
 
         } catch ( RemoteException e ) {
             LOGGER.log(Level.SEVERE, "Error connecting to web service", e);
+            System.out.println(  );
             e.printStackTrace();
+        } finally {
+            // Close session
+            LOGGER.log(Level.INFO, "\nClosing session...");
+            try {
+                sessionClose = new SessionCloseWrapper(configuration);
+                SessionCloseRQServiceStub.SessionCloseRS sessionCloseRS = sessionClose.closeSession();
+
+            } catch ( RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
 

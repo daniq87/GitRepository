@@ -142,7 +142,7 @@
 
                             public  com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.AirSeatRS airSeatRQ(
 
-                            com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.AirSeatRQ airSeatRQ0,com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.MessageHeader messageHeader1,com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security1 security2)
+                            com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.AirSeatRQ airSeatRQ0,com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.MessageHeader messageHeader1,com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security3 security2)
                         
 
                     throws java.rmi.RemoteException
@@ -284,7 +284,7 @@
                 public  void startairSeatRQ(
 
                  com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.AirSeatRQ airSeatRQ0,com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.MessageHeader messageHeader1,
-                    com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security1 security2,
+                    com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security3 security2,
                     
 
                   final com.sabre.sws.tools.wsdl.stubs.AirSeatServiceCallbackHandler callback)
@@ -22414,7 +22414,7 @@
         }
            
     
-        public static class Service0
+        public static class Service2
         implements org.apache.axis2.databinding.ADBBean{
         
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
@@ -22695,9 +22695,9 @@
         * Postcondition: If this object is an element, the reader is positioned at its end element
         *                If this object is a complex type, the reader is positioned at the end element of its outer element
         */
-        public static Service0 parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception{
-            Service0 object =
-                new Service0();
+        public static Service2 parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception{
+            Service2 object =
+                new Service2();
 
             int event;
             java.lang.String nillableValue = null;
@@ -81537,7 +81537,7 @@
         }
            
     
-        public static class Security1
+        public static class Security3
         implements org.apache.axis2.databinding.ADBBean{
         
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
@@ -82010,9 +82010,9 @@
         * Postcondition: If this object is an element, the reader is positioned at its end element
         *                If this object is a complex type, the reader is positioned at the end element of its outer element
         */
-        public static Security1 parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception{
-            Security1 object =
-                new Security1();
+        public static Security3 parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception{
+            Security3 object =
+                new Security3();
 
             int event;
             java.lang.String nillableValue = null;
@@ -82039,7 +82039,7 @@
                             if (!"Security".equals(type)){
                                 //find namespace for the prefix
                                 java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
-                                return (Security1)ExtensionMapper.getTypeObject(
+                                return (Security3)ExtensionMapper.getTypeObject(
                                      nsUri,type,reader);
                               }
                         
@@ -83508,12 +83508,12 @@
 
             }
         
-            private  org.apache.axiom.om.OMElement  toOM(com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security1 param, boolean optimizeContent)
+            private  org.apache.axiom.om.OMElement  toOM(com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security3 param, boolean optimizeContent)
             throws org.apache.axis2.AxisFault {
 
             
                         try{
-                             return param.getOMElement(com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security1.MY_QNAME,
+                             return param.getOMElement(com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security3.MY_QNAME,
                                           org.apache.axiom.om.OMAbstractFactory.getOMFactory());
                         } catch(org.apache.axis2.databinding.ADBException e){
                             throw org.apache.axis2.AxisFault.makeFault(e);
@@ -83581,9 +83581,9 @@
 
                 }
            
-                if (com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security1.class.equals(type)){
+                if (com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security3.class.equals(type)){
                 
-                           return com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security1.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                           return com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security3.Factory.parse(param.getXMLStreamReaderWithoutCaching());
                     
 
                 }
@@ -83595,9 +83595,9 @@
 
                 }
            
-                if (com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security1.class.equals(type)){
+                if (com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security3.class.equals(type)){
                 
-                           return com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security1.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                           return com.sabre.sws.tools.wsdl.stubs.AirSeatServiceStub.Security3.Factory.parse(param.getXMLStreamReaderWithoutCaching());
                     
 
                 }
