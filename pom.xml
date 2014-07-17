@@ -12,6 +12,56 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    
+     <repositories>
+        <repository>
+            <id>sabre.public</id>
+            <name>Sabre Public Repository Group</name>
+            <url>http://maven.sabre.com/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>sabre.snapshots</id>
+            <name>Sabre Snapshots Repository Group</name>
+            <url>http://maven.sabre.com/content/groups/public-snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sabre.public</id>
+            <name>Sabre Public Repository Group</name>
+            <url>http://maven.sabre.com/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>sabre.snapshots</id>
+            <name>Sabre Snapshots Repository Group</name>
+            <url>http://maven.sabre.com/content/groups/public-snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    
     <build>
         <resources>
             <resource>
