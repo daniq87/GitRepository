@@ -34,7 +34,7 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
     private OTA_AirAvailRQ getSampleRequestBody( int index ) {
 
         OTA_AirAvailRQ requestBody = new AirAvailHelper().geEmptytAirAvailRQInstance( configuration );
-        requestBody.setVersion( "2.0.0" );
+        requestBody.setVersion( "2.0.0" );  // TODO
 
         switch ( index ) {
 
@@ -161,7 +161,7 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
 
         AirAvailHelper helper = new AirAvailHelper();
 
-        Security5 security = helper.getSecuirityInstance( configuration );
+        Security7 security = helper.getSecuirityInstance( configuration );
         MessageHeader header = helper.getMessageHeaderInstance( configuration );
 
         OTA_AirAvailRQ requestBody = getSampleRequestBody( requestIndex );

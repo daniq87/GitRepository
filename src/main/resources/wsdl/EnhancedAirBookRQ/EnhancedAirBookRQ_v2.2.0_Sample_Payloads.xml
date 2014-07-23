@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SamplePayloads>
+	<SampleRequests>
+		<!--Book and price an itinerary and then redisplay the record.-->
+		<EnhancedAirBookRQ Version="2.2.0" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stl="http://services.sabre.com/STL/v01">
+			<OTA_AirBookRQ HaltOnError="true">
+				<OriginDestinationInformation>
+					<FlightSegment FlightNumber="3550" DepartureDateTime="2013-07-22T06:30" NumberInParty="2" Status="NN" ResBookDesigCode="Y">
+						<DestinationLocation LocationCode="DEN"/>
+						<Equipment AirEquipType="763"/>
+						<MarketingAirline Code="UA" FlightNumber="7934"/>
+						<OperatingAirline Code="UA"/>
+						<OriginLocation LocationCode="DFW"/>
+					</FlightSegment>
+				</OriginDestinationInformation>
+			</OTA_AirBookRQ>
+			<OTA_AirPriceRQ HaltOnError="true">
+				<PriceRequestInformation Retain="true">
+					<OptionalQualifiers>
+						<PricingQualifiers>
+							<PassengerType Code="ADT" Quantity="1"/>
+							<PassengerType Code="SRC" Quantity="1"/>
+						</PricingQualifiers>
+					</OptionalQualifiers>
+				</PriceRequestInformation>
+			</OTA_AirPriceRQ>
+			<PostProcessing HaltOnError="true" RedisplayReservation="true"/>
+		</EnhancedAirBookRQ>
+	</SampleRequests>
+	<SampleResponses>
+
+	</SampleResponses>
+</SamplePayloads>

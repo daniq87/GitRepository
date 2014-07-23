@@ -15,7 +15,7 @@
     <build>
         <resources>
             <resource>
-                <directory>src/main/res</directory>
+                <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
@@ -67,7 +67,43 @@
                 <version>1.6.2</version>
                 <executions>
 
-                    <!-- TravelItineraryLLS -->
+                <!-- Orchestrated Services -->
+
+                    <!-- EnhancedAirBook (Orchestrated) -->
+
+                    <execution>
+                        <id>EnhancedAirBookRQ</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
+                            <wsdlFile>src/main/res/wsdl/EnhancedAirBookRQ/EnhancedAirBook2.5.0RQ.wsdl</wsdlFile>
+                            <databindingName>adb</databindingName>
+                            <outputDirectory>src/main/java</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
+                    <!-- PassengerDetails (Orchestrated) -->
+
+                    <execution>
+                        <id>PassengerDetailsRQ</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
+                            <wsdlFile>src/main/res/wsdl/PassengerDetailsRQ/PassengerDetails2.2.1RQ.wsdl</wsdlFile>
+                            <databindingName>adb</databindingName>
+                            <outputDirectory>src/main/java</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
+                <!-- Low Level Services -->
+
+                    <!-- TravelItineraryReadLLS -->
                     <execution>
                         <id>TravelItineraryReadLLS</id>
                         <goals>

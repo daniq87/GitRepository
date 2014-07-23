@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SamplePayloads>
+	<!--Pre-Conditions: these examples assume that the client application has already sold flight segments using EnhancedAirBookRQ, or OTA_AirBookLLSRQ, and retained pricing-related information using EnhancedAirBookRQ, or OTA_AirPriceLLSRQ.-->
+	<SampleRequests>
+		<!--Add passenger names, an agency address, email addresses, phone numbers, remarks, ticket time limit information, an OTH segment, link the price quote records to the passenger names, end the record, and then redisplay the completed PNR.-->
+		<PassengerDetailsRQ Version="2.0.0" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stl="http://services.sabre.com/STL/v01">
+			<MiscSegmentSellRQ HaltOnError="true">
+				<MiscSegment DepartureDateTime="12-21" NumberInParty="2" Type="OTH" Status="HK">
+					<OriginLocation LocationCode="SCL"/>
+					<Text>TEST</Text>
+					<VendorPrefs>
+						<Airline Code="LA"/>
+					</VendorPrefs>
+				</MiscSegment>
+			</MiscSegmentSellRQ>
+			<PostProcessing HaltOnError="true" RedisplayReservation="true">
+				<EndTransactionRQ HaltOnError="true">
+					<EndTransaction Ind="true"/>
+					<Source ReceivedFrom="SWS TESTING"/>
+				</EndTransactionRQ>
+			</PostProcessing>
+			<PriceQuoteInfo HaltOnError="true">
+				<Link NameNumber="1.1" Record="1"/>
+				<Link NameNumber="2.1" Record="1"/>
+			</PriceQuoteInfo>
+			<SpecialReqDetails>
+				<AddRemarkRQ HaltOnError="true">
+					<RemarkInfo>
+						<FOP_Remark Type="CHECK"/>
+						<Remark Type="General">
+							<Text>TEST GENERAL REMARK</Text>
+						</Remark>
+						<Remark Type="Hidden">
+							<Text>TEST HIDDEN REMARK</Text>
+						</Remark>
+						<Remark Type="Historical">
+							<Text>TEST HISTORICAL REMARK</Text>
+						</Remark>
+					</RemarkInfo>
+				</AddRemarkRQ>
+			</SpecialReqDetails>
+			<TravelItineraryAddInfoRQ HaltOnError="true">
+				<AgencyInfo>
+					<Address>
+						<AddressLine>SABRE TRAVEL</AddressLine>
+						<CityName>SOUTHLAKE</CityName>
+						<CountryCode>US</CountryCode>
+						<PostalCode>76092</PostalCode>
+						<StateCountyProv StateCode="TX"/>
+						<StreetNmbr>3150 SABRE DRIVE</StreetNmbr>
+					</Address>
+					<Ticketing TicketType="7T-A"/>
+				</AgencyInfo>
+				<CustomerInfo>
+					<ContactNumbers>
+						<ContactNumber NameNumber="1.1" Phone="817-555-1212" PhoneUseType="A"/>
+						<ContactNumber NameNumber="2.1" Phone="817-555-1212" PhoneUseType="H"/>
+					</ContactNumbers>
+					<Email Address="WEBSERVICES.SUPPORT@SABRE.COM" NameNumber="1.1" ShortText="ABC123" Type="CC"/>
+					<Email Address="WEBSERVICES.SUPPORT@SABRE.COM" NameNumber="2.1" ShortText="ABC123" Type="CC"/>
+					<PersonName>
+						<GivenName>SWS</GivenName>
+						<Surname>TEST ONE</Surname>
+					</PersonName>
+					<PersonName>
+						<GivenName>SWS</GivenName>
+						<Surname>TEST TWO</Surname>
+					</PersonName>
+				</CustomerInfo>
+			</TravelItineraryAddInfoRQ>
+		</PassengerDetailsRQ>
+	</SampleRequests>
+	<SampleResponses>
+		<PassengerDetailsRS xmlns="http://webservices.sabre.com/sabreXML/2011/10" Version="2.0.0">
+			<stl:ApplicationResults xmlns:stl="http://services.sabre.com/STL/v01" status="Complete">
+				<stl:Success timeStamp="2012-05-17T07:02:45.582-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>TravelItineraryAddInfoRQ</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+				<stl:Success timeStamp="2012-05-17T07:02:45.641-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>MiscSegmentSellRQ</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+				<stl:Success timeStamp="2012-05-17T07:02:45.692-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>AddRemarkRQ</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+				<stl:Success timeStamp="2012-05-17T07:02:56.507-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>PriceQuoteInfo[1]</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+				<stl:Success timeStamp="2012-05-17T07:03:00.559-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>PriceQuoteInfo[2]</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+				<stl:Success timeStamp="2012-05-17T07:03:01.029-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>EndTransactionRQ</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+				<stl:Success timeStamp="2012-05-17T07:03:01.362-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>RedisplayReservation</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+				<stl:Warning type="BusinessLogic" timeStamp="2012-05-17T07:03:01.029-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Message>DIRECT CONNECT IN PROGRESS, PLEASE WAIT
+</stl:Message>
+						<stl:Message>WARN.SWS.HOST.INTERMEDIATE_RESPONSE</stl:Message>
+						<stl:ShortText>WARN.SWS.ORCH.PROVIDER_WARNING</stl:ShortText>
+						<stl:Element>EndTransactionRQ</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Warning>
+			</stl:ApplicationResults>
+			<TravelItineraryReadRS>
+				<TravelItinerary>
+					<CustomerInfo>
+						<Address>
+							<AddressLine>SABRE TRAVEL</AddressLine>
+							<AddressLine>3150 SABRE DRIVE</AddressLine>
+							<AddressLine>SOUTHLAKE, TX US</AddressLine>
+							<AddressLine>76092</AddressLine>
+						</Address>
+						<ContactNumbers>
+							<ContactNumber LocationCode="DFW" Phone="817-555-1212-A-1.1" RPH="001"/>
+							<ContactNumber LocationCode="DFW" Phone="817-555-1212-H-2.1" RPH="002"/>
+						</ContactNumbers>
+						<PaymentInfo>
+							<Payment>
+								<Form RPH="001">CHECK</Form>
+							</Payment>
+						</PaymentInfo>
+						<PersonName Infant="false" NameNumber="01.01" PassengerType="ADT" RPH="1">
+							<Email>&#135;WEBSERVICES.SUPPORT@SABRE.COM&#135;CC/ABC123</Email>
+							<GivenName>SWS</GivenName>
+							<Surname>TEST ONE</Surname>
+						</PersonName>
+						<PersonName Infant="false" NameNumber="02.01" PassengerType="ADT" RPH="2">
+							<Email>&#135;WEBSERVICES.SUPPORT@SABRE.COM&#135;CC/ABC123</Email>
+							<GivenName>SWS</GivenName>
+							<Surname>TEST TWO</Surname>
+						</PersonName>
+					</CustomerInfo>
+					<ItineraryInfo>
+						<ItineraryPricing>
+							<PriceQuote RPH="1">
+								<MiscInformation>
+									<BaggageFees>
+										<Text>BAG ALLOWANCE     -LAXSCL-03P/LA</Text>
+										<Text>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY</Text>
+									</BaggageFees>
+									<SignatureLine CommissionAmount=".00" CommissionID="A" Source="SYS" Status="EXPIRED">
+										<Text>7TZA 7TZA*AW3 0702/17MAY</Text>
+									</SignatureLine>
+								</MiscInformation>
+								<PricedItinerary InputMessage="WPRQ&#135;P1ADT/1SRC" RPH="1" StatusCode="A" TaxExempt="false" ValidatingCarrier="LA">
+									<AirItineraryPricingInfo>
+										<ItinTotalFare>
+											<BaseFare Amount="5575.00" CurrencyCode="USD"/>
+											<Taxes>
+												<Tax Amount="23.70" TaxCode="XT"/>
+												<TaxBreakdownCode>16.70US</TaxBreakdownCode>
+												<TaxBreakdownCode>2.50AY</TaxBreakdownCode>
+												<TaxBreakdownCode>4.50XF</TaxBreakdownCode>
+											</Taxes>
+											<TotalFare Amount="5598.70" CurrencyCode="USD"/>
+											<Totals>
+												<BaseFare Amount="11150.00"/>
+												<Taxes>
+													<Tax Amount="47.40"/>
+												</Taxes>
+												<TotalFare Amount="11197.40"/>
+											</Totals>
+										</ItinTotalFare>
+										<PassengerTypeQuantity Code="ADT" Quantity="02"/>
+										<PTC_FareBreakdown>
+											<FareBasis Code="JEEEJ494"/>
+											<FareCalculation>
+												<Text>LAX LA SCL Q430.00 5145.00JEEEJ494 NUC5575.00END ROE1.00 XFLAX4.5</Text>
+											</FareCalculation>
+											<FlightSegment ConnectionInd="O" DepartureDateTime="06-05T13:20" FlightNumber="7934" ResBookDesigCode="J" SegmentNumber="1" Status="RQ">
+												<BaggageAllowance Number="03P"/>
+												<FareBasis Code="JEEEJ494"/>
+												<MarketingAirline Code="LA" FlightNumber="7934"/>
+												<OriginLocation LocationCode="LAX"/>
+												<ValidityDates>
+													<NotValidAfter>06-05</NotValidAfter>
+												</ValidityDates>
+											</FlightSegment>
+											<FlightSegment>
+												<OriginLocation LocationCode="SCL"/>
+											</FlightSegment>
+										</PTC_FareBreakdown>
+									</AirItineraryPricingInfo>
+								</PricedItinerary>
+								<ResponseHeader>
+									<Text>FARE - PRICE RETAINED</Text>
+									<Text>FARE USED TO CALCULATE DISCOUNT</Text>
+									<Text>FARE SUBJECT TO CHANGE</Text>
+								</ResponseHeader>
+							</PriceQuote>
+						</ItineraryPricing>
+						<ReservationItems>
+							<Item RPH="1">
+								<FlightSegment AirMilesFlown="4181" ArrivalDateTime="06-05T23:55" DepartureDateTime="2012-06-05T13:20" ElapsedTime="08.35" FlightNumber="7934" NumberInParty="02" ResBookDesigCode="J" SegmentNumber="0001" SmokingAllowed="false" SpecialMeal="false" Status="HK" StopQuantity="01" eTicket="true">
+									<DestinationLocation LocationCode="LIM"/>
+									<Equipment AirEquipType="763"/>
+									<MarketingAirline Code="LA" FlightNumber="7934"/>
+									<Meal Code="L"/>
+									<Meal Code="D"/>
+									<OriginLocation LocationCode="LAX"/>
+									<SupplierRef ID="DCLA"/>
+									<UpdatedDepartureTime>06-05T13:20</UpdatedDepartureTime>
+								</FlightSegment>
+							</Item>
+							<Item RPH="2">
+								<FlightSegment AirMilesFlown="1527" ArrivalDateTime="06-06T06:35" DepartureDateTime="2012-06-06T01:15" ElapsedTime="04.20" FlightNumber="7934" NumberInParty="02" ResBookDesigCode="J" SegmentNumber="0001" SmokingAllowed="false" SpecialMeal="false" Status="HK" StopQuantity="01" eTicket="true">
+									<DestinationLocation LocationCode="SCL"/>
+									<Equipment AirEquipType="763"/>
+									<MarketingAirline Code="LA" FlightNumber="7934"/>
+									<Meal Code="D"/>
+									<OriginLocation LocationCode="LIM"/>
+									<SupplierRef ID="DCLA"/>
+									<UpdatedArrivalTime>06-06T06:35</UpdatedArrivalTime>
+								</FlightSegment>
+							</Item>
+							<Item RPH="3">
+								<Misc DepartureDateTime="12-21" NumberInParty="02" SegmentNumber="0002" Status="HK" Type="OTH">
+									<OriginLocation LocationCode="SCL"/>
+									<Text>TEST</Text>
+									<Vendor Code="LA"/>
+								</Misc>
+							</Item>
+						</ReservationItems>
+						<Ticketing RPH="01" TicketTimeLimit="T-A"/>
+					</ItineraryInfo>
+					<ItineraryRef AirExtras="false" ID="GDVUSC" InhibitCode="U" PartitionID="AA" PrimeHostID="1S">
+						<Source AAAPseudoCityCode="7TZA" CreateDateTime="2012-05-17T07:02" CreationAgent="AW3" HomePseudoCityCode="7TZA" PseudoCityCode="7TZA" ReceivedFrom="SWS TESTING"/>
+					</ItineraryRef>
+					<RemarkInfo>
+						<Remark RPH="002" Type="General">
+							<Text>TEST GENERAL REMARK</Text>
+						</Remark>
+						<Remark RPH="003" Type="General">
+							<Text>HR-TEST HIDDEN REMARK</Text>
+						</Remark>
+						<Remark RPH="004" Type="Historical">
+							<Text>TEST HISTORICAL REMARK</Text>
+						</Remark>
+					</RemarkInfo>
+				</TravelItinerary>
+			</TravelItineraryReadRS>
+		</PassengerDetailsRS>
+	</SampleResponses>
+</SamplePayloads>

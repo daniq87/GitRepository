@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SamplePayloads>
+	<SampleRequests>
+		<!--Book and price an itinerary and then redisplay the record.-->
+		<EnhancedAirBookRQ Version="2.1.0" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stl="http://services.sabre.com/STL/v01">
+			<OTA_AirBookRQ HaltOnError="true">
+				<OriginDestinationInformation>
+					<FlightSegment FlightNumber="3550" DepartureDateTime="2013-07-22T06:30" NumberInParty="2" Status="NN" ResBookDesigCode="Y">
+						<DestinationLocation LocationCode="DEN"/>
+						<Equipment AirEquipType="763"/>
+						<MarketingAirline Code="UA" FlightNumber="7934"/>
+						<OperatingAirline Code="UA"/>
+						<OriginLocation LocationCode="DFW"/>
+					</FlightSegment>
+				</OriginDestinationInformation>
+			</OTA_AirBookRQ>
+			<OTA_AirPriceRQ HaltOnError="true">
+				<PriceRequestInformation Retain="true">
+					<OptionalQualifiers>
+						<PricingQualifiers>
+							<PassengerType Code="ADT" Quantity="1"/>
+							<PassengerType Code="SRC" Quantity="1"/>
+						</PricingQualifiers>
+					</OptionalQualifiers>
+				</PriceRequestInformation>
+			</OTA_AirPriceRQ>
+			<PostProcessing HaltOnError="true" RedisplayReservation="true"/>
+		</EnhancedAirBookRQ>
+	</SampleRequests>
+	<SampleResponses>
+		<EnhancedAirBookRS xmlns="http://webservices.sabre.com/sabreXML/2011/10" Version="2.1.0">
+			<stl:ApplicationResults xmlns:stl="http://services.sabre.com/STL/v01" status="Complete">
+				<stl:Success timeStamp="2012-08-28T22:16:25.34-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>OTA_AirBookRQ</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+				<stl:Success timeStamp="2012-08-28T22:16:26.185-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>OTA_AirPriceRQ</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+				<stl:Success timeStamp="2012-08-28T22:16:26.586-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>RedisplayReservation</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+			</stl:ApplicationResults>
+			<OTA_AirBookRS>
+				<OriginDestinationOption>
+					<FlightSegment ArrivalDateTime="07-22T07:28" DepartureDateTime="07-22T06:30" FlightNumber="3550" NumberInParty="002" ResBookDesigCode="Y" Status="NN" eTicket="true">
+						<DestinationLocation LocationCode="DEN"/>
+						<MarketingAirline Code="UA" FlightNumber="3550"/>
+						<OriginLocation LocationCode="DFW"/>
+					</FlightSegment>
+				</OriginDestinationOption>
+			</OTA_AirBookRS>
+			<OTA_AirPriceRS>
+				<PriceQuote>
+					<MiscInformation>
+						<HeaderInformation>
+							<Text>VALIDATING CARRIER - UA</Text>
+							<Text>VALIDATING CARRIER - UA</Text>
+							<Text>BAG ALLOWANCE     -DFWDEN-NIL/UA</Text>
+							<Text>1STCHECKED BAG FEE-DFWDEN-USD25.00/UA</Text>
+							<Text>2NDCHECKED BAG FEE-DFWDEN-USD35.00/UA</Text>
+							<Text>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY</Text>
+							<Text>BAG ALLOWANCE     -DFWDEN-NIL/UA</Text>
+							<Text>1STCHECKED BAG FEE-DFWDEN-USD25.00/UA</Text>
+							<Text>2NDCHECKED BAG FEE-DFWDEN-USD35.00/UA</Text>
+							<Text>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY</Text>
+							<ValidatingCarrier Code="UA"/>
+						</HeaderInformation>
+					</MiscInformation>
+					<PricedItinerary CurrencyCode="USD" TotalAmount="1905.60">
+						<AirItineraryPricingInfo>
+							<FareCalculation>
+								<Text>DFW UA DEN Q27.91 848.37YUA USD876.28END ZPDFW XFDFW4.5</Text>
+							</FareCalculation>
+							<ItinTotalFare>
+								<BaseFare Amount="876.28" CurrencyCode="USD"/>
+								<Commission Amount=".00"/>
+								<Taxes TotalAmount="76.52">
+									<Tax Amount="65.72" TaxCode="US1" TaxName="US DOMESTIC TRANSPORTATION TAX" TicketingTaxCode="US"/>
+									<Tax Amount="3.80" TaxCode="ZP" TaxName="SEGMENT TAX" TicketingTaxCode="ZP"/>
+									<Tax Amount="2.50" TaxCode="AY" TaxName="US SECURITY FEE" TicketingTaxCode="AY"/>
+									<Tax Amount="4.50" TaxCode="XF" TaxName="PASSENGER FACILITY CHARGES" TicketingTaxCode="XF"/>
+								</Taxes>
+								<TotalFare Amount="952.80" CurrencyCode="USD"/>
+								<Warnings>
+									<Warning ShortText="BAG ALLOWANCE     -DFWDEN-NIL/UA"/>
+									<Warning ShortText="1STCHECKED BAG FEE-DFWDEN-USD25.00/UA"/>
+									<Warning ShortText="2NDCHECKED BAG FEE-DFWDEN-USD35.00/UA"/>
+									<Warning ShortText="ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY"/>
+								</Warnings>
+							</ItinTotalFare>
+							<PassengerTypeQuantity Code="ADT" Quantity="1"/>
+							<PTC_FareBreakdown>
+								<FareBasis Code="YUA" FarePassengerType="ADT" FareType="P" FilingCarrier="UA" GlobalInd="WH" Market="DFWDEN"/>
+								<Surcharges Ind="Q" Type="FUEL">27.91</Surcharges>
+							</PTC_FareBreakdown>
+						</AirItineraryPricingInfo>
+						<AirItineraryPricingInfo>
+							<FareCalculation>
+								<Text>DFW UA DEN Q27.91 848.37YUA USD876.28END ZPDFW XFDFW4.5</Text>
+							</FareCalculation>
+							<ItinTotalFare>
+								<BaseFare Amount="876.28" CurrencyCode="USD"/>
+								<Commission Amount=".00"/>
+								<Taxes TotalAmount="76.52">
+									<Tax Amount="65.72" TaxCode="US1" TaxName="US DOMESTIC TRANSPORTATION TAX" TicketingTaxCode="US"/>
+									<Tax Amount="3.80" TaxCode="ZP" TaxName="SEGMENT TAX" TicketingTaxCode="ZP"/>
+									<Tax Amount="2.50" TaxCode="AY" TaxName="US SECURITY FEE" TicketingTaxCode="AY"/>
+									<Tax Amount="4.50" TaxCode="XF" TaxName="PASSENGER FACILITY CHARGES" TicketingTaxCode="XF"/>
+								</Taxes>
+								<TotalFare Amount="952.80" CurrencyCode="USD"/>
+								<Warnings>
+									<Warning ShortText="SRC NOT APPLICABLE - ADT FARE USED - VERIFY RESTRICTIONS"/>
+									<Warning ShortText="BAG ALLOWANCE     -DFWDEN-NIL/UA"/>
+									<Warning ShortText="1STCHECKED BAG FEE-DFWDEN-USD25.00/UA"/>
+									<Warning ShortText="2NDCHECKED BAG FEE-DFWDEN-USD35.00/UA"/>
+									<Warning ShortText="ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY"/>
+								</Warnings>
+							</ItinTotalFare>
+							<PassengerTypeQuantity Code="SRC" Quantity="1"/>
+							<PTC_FareBreakdown>
+								<FareBasis Code="YUA" FarePassengerType="SRC" FareType="P" FilingCarrier="UA" GlobalInd="WH" Market="DFWDEN"/>
+								<Surcharges Ind="Q" Type="FUEL">27.91</Surcharges>
+							</PTC_FareBreakdown>
+						</AirItineraryPricingInfo>
+					</PricedItinerary>
+				</PriceQuote>
+			</OTA_AirPriceRS>
+			<TravelItineraryReadRS>
+				<TravelItinerary>
+					<ItineraryInfo>
+						<ItineraryPricing>
+							<PriceQuote RPH="1">
+								<MiscInformation>
+									<BaggageFees>
+										<Text>BAG ALLOWANCE     -DFWDEN-NIL/UA</Text>
+										<Text>1STCHECKED BAG FEE-DFWDEN-USD25.00/UA</Text>
+										<Text>2NDCHECKED BAG FEE-DFWDEN-USD35.00/UA</Text>
+										<Text>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY</Text>
+									</BaggageFees>
+									<SignatureLine Source="SYS" Status="EXPIRED">
+										<Text>7TZA 7TZA*AW3 2215/28AUG</Text>
+									</SignatureLine>
+								</MiscInformation>
+								<PricedItinerary DisplayOnly="false" InputMessage="WPRQ&#135;P1ADT/1SRC" RPH="1" StatusCode="A" TaxExempt="false" ValidatingCarrier="UA">
+									<AirItineraryPricingInfo>
+										<ItinTotalFare>
+											<BaseFare Amount="876.28" CurrencyCode="USD"/>
+											<Taxes>
+												<Tax Amount="76.52" TaxCode="XT"/>
+												<TaxBreakdownCode>65.72US</TaxBreakdownCode>
+												<TaxBreakdownCode>3.80ZP</TaxBreakdownCode>
+												<TaxBreakdownCode>2.50AY</TaxBreakdownCode>
+												<TaxBreakdownCode>4.50XF</TaxBreakdownCode>
+											</Taxes>
+											<TotalFare Amount="952.80" CurrencyCode="USD"/>
+										</ItinTotalFare>
+										<PassengerTypeQuantity Code="ADT" Quantity="01"/>
+										<PTC_FareBreakdown>
+											<Endorsements>
+												<Text>/-REFUNDABLE-/</Text>
+											</Endorsements>
+											<FareBasis Code="YUA"/>
+											<FareCalculation>
+												<Text>DFW UA DEN Q27.91 848.37YUA USD876.28END ZPDFW XFDFW4.5</Text>
+											</FareCalculation>
+											<FareSource>ATPC</FareSource>
+											<FlightSegment ConnectionInd="O" DepartureDateTime="07-22T06:30" FlightNumber="3550" ResBookDesigCode="Y" SegmentNumber="1" Status="RQ">
+												<BaggageAllowance Number="NIL"/>
+												<FareBasis Code="YUA"/>
+												<MarketingAirline Code="UA" FlightNumber="3550"/>
+												<OriginLocation LocationCode="DFW"/>
+												<ValidityDates>
+													<NotValidAfter>07-22</NotValidAfter>
+												</ValidityDates>
+											</FlightSegment>
+											<FlightSegment>
+												<OriginLocation LocationCode="DEN"/>
+											</FlightSegment>
+										</PTC_FareBreakdown>
+									</AirItineraryPricingInfo>
+								</PricedItinerary>
+								<ResponseHeader>
+									<Text>FARE - PRICE RETAINED</Text>
+									<Text>FARE SUBJECT TO CHANGE</Text>
+								</ResponseHeader>
+							</PriceQuote>
+							<PriceQuote RPH="2">
+								<MiscInformation>
+									<BaggageFees>
+										<Text>BAG ALLOWANCE     -DFWDEN-NIL/UA</Text>
+										<Text>1STCHECKED BAG FEE-DFWDEN-USD25.00/UA</Text>
+										<Text>2NDCHECKED BAG FEE-DFWDEN-USD35.00/UA</Text>
+										<Text>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY</Text>
+									</BaggageFees>
+									<SignatureLine Source="SYS" Status="EXPIRED">
+										<Text>7TZA 7TZA*AW3 2215/28AUG</Text>
+									</SignatureLine>
+								</MiscInformation>
+								<PricedItinerary DisplayOnly="false" InputMessage="WPRQ&#135;P1ADT/1SRC" RPH="2" StatusCode="A" TaxExempt="false" ValidatingCarrier="UA">
+									<AirItineraryPricingInfo>
+										<ItinTotalFare>
+											<BaseFare Amount="876.28" CurrencyCode="USD"/>
+											<Taxes>
+												<Tax Amount="76.52" TaxCode="XT"/>
+												<TaxBreakdownCode>65.72US</TaxBreakdownCode>
+												<TaxBreakdownCode>3.80ZP</TaxBreakdownCode>
+												<TaxBreakdownCode>2.50AY</TaxBreakdownCode>
+												<TaxBreakdownCode>4.50XF</TaxBreakdownCode>
+											</Taxes>
+											<TotalFare Amount="952.80" CurrencyCode="USD"/>
+											<Totals>
+												<BaseFare Amount="1752.56"/>
+												<Taxes>
+													<Tax Amount="153.04"/>
+												</Taxes>
+												<TotalFare Amount="1905.60"/>
+											</Totals>
+										</ItinTotalFare>
+										<PassengerTypeQuantity Code="SRC" Quantity="01"/>
+										<PTC_FareBreakdown>
+											<Endorsements>
+												<Text>/-REFUNDABLE-/</Text>
+											</Endorsements>
+											<FareBasis Code="YUA"/>
+											<FareCalculation>
+												<Text>DFW UA DEN Q27.91 848.37YUA USD876.28END ZPDFW XFDFW4.5</Text>
+											</FareCalculation>
+											<FareSource>ATPC</FareSource>
+											<FlightSegment ConnectionInd="O" DepartureDateTime="07-22T06:30" FlightNumber="3550" ResBookDesigCode="Y" SegmentNumber="1" Status="RQ">
+												<BaggageAllowance Number="NIL"/>
+												<FareBasis Code="YUA"/>
+												<MarketingAirline Code="UA" FlightNumber="3550"/>
+												<OriginLocation LocationCode="DFW"/>
+												<ValidityDates>
+													<NotValidAfter>07-22</NotValidAfter>
+												</ValidityDates>
+											</FlightSegment>
+											<FlightSegment>
+												<OriginLocation LocationCode="DEN"/>
+											</FlightSegment>
+										</PTC_FareBreakdown>
+									</AirItineraryPricingInfo>
+								</PricedItinerary>
+								<ResponseHeader>
+									<Text>FARE - PRICE RETAINED</Text>
+									<Text>FARE USED TO CALCULATE DISCOUNT</Text>
+									<Text>FARE SUBJECT TO CHANGE</Text>
+								</ResponseHeader>
+							</PriceQuote>
+						</ItineraryPricing>
+						<ReservationItems>
+							<Item RPH="1">
+								<FlightSegment AirMilesFlown="0650" ArrivalDateTime="07-22T07:28" DayOfWeekInd="1" DepartureDateTime="2013-07-22T06:30" ElapsedTime="01.58" FlightNumber="3550" NumberInParty="02" ResBookDesigCode="Y" SegmentNumber="0001" SmokingAllowed="false" SpecialMeal="false" Status="NN" StopQuantity="00" eTicket="true">
+									<DestinationLocation LocationCode="DEN"/>
+									<Equipment AirEquipType="E70"/>
+									<MarketingAirline Code="UA" FlightNumber="3550"/>
+									<OperatingAirline CompanyShortName="/SHUTTLE AMERICA DBA UNITED EXPRESS"/>
+									<OperatingAirline CompanyShortName="/SHUTTLE AMERICA DBA UNITED EXPRESS"/>
+									<OriginLocation LocationCode="DFW" Terminal="TERMINAL E" TerminalCode="E"/>
+									<SupplierRef ID="PENDING"/>
+									<Text>OPERATED BY /SHUTTLE AMERICA DBA UNITED EXPRESS</Text>
+									<UpdatedArrivalTime>07-22T07:28</UpdatedArrivalTime>
+									<UpdatedDepartureTime>07-22T06:30</UpdatedDepartureTime>
+								</FlightSegment>
+							</Item>
+						</ReservationItems>
+					</ItineraryInfo>
+					<ItineraryRef AirExtras="false" InhibitCode="U" PartitionID="AA" PrimeHostID="1S">
+						<Source PseudoCityCode="7TZA"/>
+					</ItineraryRef>
+				</TravelItinerary>
+			</TravelItineraryReadRS>
+		</EnhancedAirBookRS>
+	</SampleResponses>
+</SamplePayloads>

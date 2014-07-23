@@ -30,16 +30,24 @@ public class LogMonitor extends JFrame {
         instance.addString( s );
     }
 
+    public static void logString( String h, String b ) {
+        instance.addString( h );
+        instance.addString( b );
+        instance.nl();
+    }
+
+    private static int k = 0;
+
     public void addString( String s ) {
 
-        textArea.append( s.replace( ">", ">\n" ).replace( "\n\n", "\n" ).concat( line ) );
+        //textArea.append( s.replace( ">", ">\n" ).replace( "\n\n", "\n" ).concat( line ) );
 
-        if( 0 < 1 ) return;
+        //if( 0 < 1 ) return;
         StringBuffer buffer = new StringBuffer();
         Reader reader = new StringReader( s );
         XMLInputFactory factory = XMLInputFactory.newInstance();
 
-        textArea.append( s );
+        //textArea.append( s );
 
         XMLStreamReader streamReader;
 
@@ -61,42 +69,59 @@ public class LogMonitor extends JFrame {
                     break;
                 }
 
-                // add check for document end if you want to
 
             } while(streamReader.hasNext());
 
-            textArea.append( "\n" );
 
             while( streamReader.hasNext() ) {
 
                 if( streamReader.getEventType() == XMLStreamConstants.START_ELEMENT ) {
                     ++lvl;
                     for( int i = 0; i < lvl; ++i ) {
-                        textArea.append( "  " );
+                        buffer.append( "    " );
                     }
-                    textArea.append( "<" + streamReader.getName().getLocalPart() );
+                    buffer.append( "<" + streamReader.getName().getLocalPart() );
                     for( int i = 0; i < streamReader.getAttributeCount(); ++i ) {
-                        textArea.append( " " + streamReader.getAttributeLocalName( i ) + "=" + streamReader.getAttributeValue( i ) );
+                        buffer.append( " " + streamReader.getAttributeLocalName( i ) + "=\"" + streamReader.getAttributeValue( i ) +"\"" );
                     }
-                    textArea.append( ">" );
+                    buffer.append( ">\n" );
+
 
                 }  else if( streamReader.getEventType() == XMLStreamConstants.END_ELEMENT ) {
                     --lvl;
                     for( int i = 0; i <= lvl; ++i ) {
-                        textArea.append( "  " );
+                        buffer.append( "    " );
                     }
-                    textArea.append( "</" + streamReader.getName().getLocalPart() + ">" );
+                    buffer.append( "</" + streamReader.getName().getLocalPart() + ">\n" );
+                } else if( streamReader.getEventType() == XMLStreamConstants.CHARACTERS && streamReader.getTextLength() > 0 ) {
+
+                    for( int i = 0; i <= lvl; ++i ) {
+                        buffer.append( "    " );
+                    }
+
+                    int start = streamReader.getTextStart();
+                    int length = streamReader.getTextLength();
+                    buffer.append(new String(streamReader.getTextCharacters(),
+                            start,
+                            length));
+                    buffer.append( "\n" );
                 }
-                textArea.append( "\n" );
+
+                //textArea.append( "\n" );
                 streamReader.next();
             }
 
-            //textArea.append( buffer.toString() );
+            textArea.append( buffer.toString().replace( "\n\n\n", "\n" ).replace( "\n\n", "\n" ) );
 
         } catch (XMLStreamException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println( k++ );
         }
 
+    }
+
+    public void nl() {
+        textArea.append( line );
     }
 
     private LogMonitor() {

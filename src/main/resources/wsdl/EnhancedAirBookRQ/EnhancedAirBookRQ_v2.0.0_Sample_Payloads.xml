@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SamplePayloads>
+	<SampleRequests>
+		<!--Book and price an itinerary and then redisplay the record.-->
+		<EnhancedAirBookRQ Version="2.0.0" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stl="http://services.sabre.com/STL/v01">
+			<OTA_AirBookRQ HaltOnError="true">
+				<OriginDestinationInformation>
+					<FlightSegment FlightNumber="7934" DepartureDateTime="2012-06-05T13:20" NumberInParty="2" Status="NN" ResBookDesigCode="J">
+						<DestinationLocation LocationCode="SCL"/>
+						<Equipment AirEquipType="763"/>
+						<MarketingAirline Code="LA" FlightNumber="7934"/>
+						<OperatingAirline Code="LA"/>
+						<OriginLocation LocationCode="LAX"/>
+					</FlightSegment>
+				</OriginDestinationInformation>
+			</OTA_AirBookRQ>
+			<OTA_AirPriceRQ HaltOnError="true">
+				<PriceRequestInformation Retain="true">
+					<OptionalQualifiers>
+						<PricingQualifiers>
+							<PassengerType Code="ADT" Quantity="1"/>
+							<PassengerType Code="SRC" Quantity="1"/>
+						</PricingQualifiers>
+					</OptionalQualifiers>
+				</PriceRequestInformation>
+			</OTA_AirPriceRQ>
+			<PostProcessing HaltOnError="true" RedisplayReservation="true"/>
+		</EnhancedAirBookRQ>
+	</SampleRequests>
+	<SampleResponses>
+		<EnhancedAirBookRS xmlns="http://webservices.sabre.com/sabreXML/2011/10" Version="2.0.0">
+			<stl:ApplicationResults xmlns:stl="http://services.sabre.com/STL/v01" status="Complete">
+				<stl:Success timeStamp="2012-05-17T06:57:57.363-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>OTA_AirBookRQ</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+				<stl:Success timeStamp="2012-05-17T06:57:57.756-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>OTA_AirPriceRQ</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+				<stl:Success timeStamp="2012-05-17T06:57:57.928-05:00">
+					<stl:SystemSpecificResults>
+						<stl:Element>RedisplayReservation</stl:Element>
+					</stl:SystemSpecificResults>
+				</stl:Success>
+			</stl:ApplicationResults>
+			<OTA_AirBookRS>
+				<OriginDestinationOption>
+					<FlightSegment ArrivalDateTime="06-06T06:35" DepartureDateTime="06-05T13:20" FlightNumber="7934" NumberInParty="002" ResBookDesigCode="J" Status="NN" eTicket="true">
+						<DestinationLocation LocationCode="SCL"/>
+						<MarketingAirline Code="LA" FlightNumber="7934"/>
+						<OriginLocation LocationCode="LAX"/>
+					</FlightSegment>
+				</OriginDestinationOption>
+			</OTA_AirBookRS>
+			<OTA_AirPriceRS>
+				<PriceQuote>
+					<MiscInformation>
+						<HeaderInformation>
+							<Text>VALIDATING CARRIER - LA</Text>
+							<Text>VALIDATING CARRIER - LA</Text>
+							<Text>BAG ALLOWANCE     -LAXSCL-03P/LA</Text>
+							<Text>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY</Text>
+							<Text>BAG ALLOWANCE     -LAXSCL-03P/LA</Text>
+							<Text>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY</Text>
+							<ValidatingCarrier Code="LA"/>
+						</HeaderInformation>
+					</MiscInformation>
+					<PricedItinerary CurrencyCode="USD" TotalAmount="11197.40">
+						<AirItineraryPricingInfo>
+							<FareCalculation>
+								<Text>LAX LA SCL Q430.00 5145.00JEEEJ494 NUC5575.00END ROE1.00 XFLAX4.5</Text>
+							</FareCalculation>
+							<ItinTotalFare>
+								<BaseFare Amount="5575.00" CurrencyCode="USD"/>
+								<Commission Amount=".00"/>
+								<Taxes>
+									<Tax Amount="16.70" TaxCode="US2" TaxName="US INTERNATIONAL TRANSPORTATIO" TicketingTaxCode="US"/>
+									<Tax Amount="2.50" TaxCode="AY" TaxName="US SECURITY FEE" TicketingTaxCode="AY"/>
+									<Tax Amount="4.50" TaxCode="XF" TaxName="PASSENGER FACILITY CHARGES" TicketingTaxCode="XF"/>
+								</Taxes>
+								<TotalFare Amount="5598.70" CurrencyCode="USD"/>
+								<Warnings>
+									<Warning ShortText="BAG ALLOWANCE     -LAXSCL-03P/LA"/>
+									<Warning ShortText="ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY"/>
+								</Warnings>
+							</ItinTotalFare>
+							<PassengerTypeQuantity Code="ADT" Quantity="1"/>
+							<PTC_FareBreakdown>
+								<FareBasis Code="JEEEJ494" FarePassengerType="ADT" FareType="P" FilingCarrier="LA" GlobalInd="WH" Market="LAXSCL"/>
+								<Surcharges Ind="Q" Type="FUEL">430.00</Surcharges>
+							</PTC_FareBreakdown>
+						</AirItineraryPricingInfo>
+						<AirItineraryPricingInfo>
+							<FareCalculation>
+								<Text>LAX LA SCL Q430.00 5145.00JEEEJ494 NUC5575.00END ROE1.00 XFLAX4.5</Text>
+							</FareCalculation>
+							<ItinTotalFare>
+								<BaseFare Amount="5575.00" CurrencyCode="USD"/>
+								<Commission Amount=".00"/>
+								<Taxes>
+									<Tax Amount="16.70" TaxCode="US2" TaxName="US INTERNATIONAL TRANSPORTATIO" TicketingTaxCode="US"/>
+									<Tax Amount="2.50" TaxCode="AY" TaxName="US SECURITY FEE" TicketingTaxCode="AY"/>
+									<Tax Amount="4.50" TaxCode="XF" TaxName="PASSENGER FACILITY CHARGES" TicketingTaxCode="XF"/>
+								</Taxes>
+								<TotalFare Amount="5598.70" CurrencyCode="USD"/>
+								<Warnings>
+									<Warning ShortText="SRC NOT APPLICABLE - ADT FARE USED - VERIFY RESTRICTIONS"/>
+									<Warning ShortText="BAG ALLOWANCE     -LAXSCL-03P/LA"/>
+									<Warning ShortText="ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY"/>
+								</Warnings>
+							</ItinTotalFare>
+							<PassengerTypeQuantity Code="SRC" Quantity="1"/>
+							<PTC_FareBreakdown>
+								<FareBasis Code="JEEEJ494" FarePassengerType="SRC" FareType="P" FilingCarrier="LA" GlobalInd="WH" Market="LAXSCL"/>
+								<Surcharges Ind="Q" Type="FUEL">430.00</Surcharges>
+							</PTC_FareBreakdown>
+						</AirItineraryPricingInfo>
+					</PricedItinerary>
+				</PriceQuote>
+			</OTA_AirPriceRS>
+			<TravelItineraryReadRS>
+				<TravelItinerary>
+					<ItineraryInfo>
+						<ItineraryPricing>
+							<PriceQuote RPH="1">
+								<MiscInformation>
+									<BaggageFees>
+										<Text>BAG ALLOWANCE     -LAXSCL-03P/LA</Text>
+										<Text>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY</Text>
+									</BaggageFees>
+									<SignatureLine CommissionAmount=".00" CommissionID="A" Source="SYS" Status="EXPIRED">
+										<Text>7TZA 7TZA*AW3 0657/17MAY</Text>
+									</SignatureLine>
+								</MiscInformation>
+								<PricedItinerary InputMessage="WPRQ&#135;P1ADT/1SRC" RPH="1" StatusCode="A" TaxExempt="false" ValidatingCarrier="LA">
+									<AirItineraryPricingInfo>
+										<ItinTotalFare>
+											<BaseFare Amount="5575.00" CurrencyCode="USD"/>
+											<Taxes>
+												<Tax Amount="23.70" TaxCode="XT"/>
+												<TaxBreakdownCode>16.70US</TaxBreakdownCode>
+												<TaxBreakdownCode>2.50AY</TaxBreakdownCode>
+												<TaxBreakdownCode>4.50XF</TaxBreakdownCode>
+											</Taxes>
+											<TotalFare Amount="5598.70" CurrencyCode="USD"/>
+										</ItinTotalFare>
+										<PassengerTypeQuantity Code="ADT" Quantity="01"/>
+										<PTC_FareBreakdown>
+											<FareBasis Code="JEEEJ494"/>
+											<FareCalculation>
+												<Text>LAX LA SCL Q430.00 5145.00JEEEJ494 NUC5575.00END ROE1.00 XFLAX4.5</Text>
+											</FareCalculation>
+											<FlightSegment ConnectionInd="O" DepartureDateTime="06-05T13:20" FlightNumber="7934" ResBookDesigCode="J" SegmentNumber="1" Status="RQ">
+												<BaggageAllowance Number="03P"/>
+												<FareBasis Code="JEEEJ494"/>
+												<MarketingAirline Code="LA" FlightNumber="7934"/>
+												<OriginLocation LocationCode="LAX"/>
+												<ValidityDates>
+													<NotValidAfter>06-05</NotValidAfter>
+												</ValidityDates>
+											</FlightSegment>
+											<FlightSegment>
+												<OriginLocation LocationCode="SCL"/>
+											</FlightSegment>
+										</PTC_FareBreakdown>
+									</AirItineraryPricingInfo>
+								</PricedItinerary>
+								<ResponseHeader>
+									<Text>FARE - PRICE RETAINED</Text>
+									<Text>FARE SUBJECT TO CHANGE</Text>
+								</ResponseHeader>
+							</PriceQuote>
+							<PriceQuote RPH="2">
+								<MiscInformation>
+									<BaggageFees>
+										<Text>BAG ALLOWANCE     -LAXSCL-03P/LA</Text>
+										<Text>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY</Text>
+									</BaggageFees>
+									<SignatureLine CommissionAmount=".00" CommissionID="A" Source="SYS" Status="EXPIRED">
+										<Text>7TZA 7TZA*AW3 0657/17MAY</Text>
+									</SignatureLine>
+								</MiscInformation>
+								<PricedItinerary InputMessage="WPRQ&#135;P1ADT/1SRC" RPH="2" StatusCode="A" TaxExempt="false" ValidatingCarrier="LA">
+									<AirItineraryPricingInfo>
+										<ItinTotalFare>
+											<BaseFare Amount="5575.00" CurrencyCode="USD"/>
+											<Taxes>
+												<Tax Amount="23.70" TaxCode="XT"/>
+												<TaxBreakdownCode>16.70US</TaxBreakdownCode>
+												<TaxBreakdownCode>2.50AY</TaxBreakdownCode>
+												<TaxBreakdownCode>4.50XF</TaxBreakdownCode>
+											</Taxes>
+											<TotalFare Amount="5598.70" CurrencyCode="USD"/>
+											<Totals>
+												<BaseFare Amount="11150.00"/>
+												<Taxes>
+													<Tax Amount="47.40"/>
+												</Taxes>
+												<TotalFare Amount="11197.40"/>
+											</Totals>
+										</ItinTotalFare>
+										<PassengerTypeQuantity Code="SRC" Quantity="01"/>
+										<PTC_FareBreakdown>
+											<FareBasis Code="JEEEJ494"/>
+											<FareCalculation>
+												<Text>LAX LA SCL Q430.00 5145.00JEEEJ494 NUC5575.00END ROE1.00 XFLAX4.5</Text>
+											</FareCalculation>
+											<FlightSegment ConnectionInd="O" DepartureDateTime="06-05T13:20" FlightNumber="7934" ResBookDesigCode="J" SegmentNumber="1" Status="RQ">
+												<BaggageAllowance Number="03P"/>
+												<FareBasis Code="JEEEJ494"/>
+												<MarketingAirline Code="LA" FlightNumber="7934"/>
+												<OriginLocation LocationCode="LAX"/>
+												<ValidityDates>
+													<NotValidAfter>06-05</NotValidAfter>
+												</ValidityDates>
+											</FlightSegment>
+											<FlightSegment>
+												<OriginLocation LocationCode="SCL"/>
+											</FlightSegment>
+										</PTC_FareBreakdown>
+									</AirItineraryPricingInfo>
+								</PricedItinerary>
+								<ResponseHeader>
+									<Text>FARE - PRICE RETAINED</Text>
+									<Text>FARE USED TO CALCULATE DISCOUNT</Text>
+									<Text>FARE SUBJECT TO CHANGE</Text>
+								</ResponseHeader>
+							</PriceQuote>
+						</ItineraryPricing>
+						<ReservationItems>
+							<Item RPH="1">
+								<FlightSegment AirMilesFlown="4181" ArrivalDateTime="06-05T23:55" DepartureDateTime="2012-06-05T13:20" ElapsedTime="08.35" FlightNumber="7934" NumberInParty="02" ResBookDesigCode="J" SegmentNumber="0001" SmokingAllowed="false" SpecialMeal="false" Status="NN" StopQuantity="01" eTicket="true">
+									<DestinationLocation LocationCode="LIM"/>
+									<Equipment AirEquipType="763"/>
+									<MarketingAirline Code="LA" FlightNumber="7934"/>
+									<Meal Code="L"/>
+									<Meal Code="D"/>
+									<OriginLocation LocationCode="LAX"/>
+									<SupplierRef ID="PENDING"/>
+									<UpdatedDepartureTime>06-05T13:20</UpdatedDepartureTime>
+								</FlightSegment>
+							</Item>
+							<Item RPH="2">
+								<FlightSegment AirMilesFlown="1527" ArrivalDateTime="06-06T06:35" DepartureDateTime="2012-06-06T01:15" ElapsedTime="04.20" FlightNumber="7934" NumberInParty="02" ResBookDesigCode="J" SegmentNumber="0001" SmokingAllowed="false" SpecialMeal="false" Status="NN" StopQuantity="01" eTicket="true">
+									<DestinationLocation LocationCode="SCL"/>
+									<Equipment AirEquipType="763"/>
+									<MarketingAirline Code="LA" FlightNumber="7934"/>
+									<Meal Code="D"/>
+									<OriginLocation LocationCode="LIM"/>
+									<SupplierRef ID="PENDING"/>
+									<UpdatedArrivalTime>06-06T06:35</UpdatedArrivalTime>
+								</FlightSegment>
+							</Item>
+						</ReservationItems>
+					</ItineraryInfo>
+					<ItineraryRef AirExtras="false" InhibitCode="U" PartitionID="AA" PrimeHostID="1S">
+						<Source PseudoCityCode="7TZA"/>
+					</ItineraryRef>
+				</TravelItinerary>
+			</TravelItineraryReadRS>
+		</EnhancedAirBookRS>
+	</SampleResponses>
+</SamplePayloads>

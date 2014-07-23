@@ -34,7 +34,7 @@ public class TravelItineraryReadWrapper extends TravelItineraryReadServiceStub {
         TravelItineraryReadRS responseBody;
 
         TravelItineraryReadRQ requestBody;
-        Security1 security;
+        Security3 security;
         MessageHeader header;
 
         TravelItineraryHelper helper = new TravelItineraryHelper();
@@ -46,6 +46,32 @@ public class TravelItineraryReadWrapper extends TravelItineraryReadServiceStub {
         responseBody = travelItineraryReadRQ( requestBody, header, security );
 
         return responseBody;
+    }
+
+    public TravelItineraryReadRS getCreatedPNR() throws RemoteException {
+
+        TravelItineraryReadRQ instance = new TravelItineraryReadRQ();
+
+        instance.setVersion( "2.0.0" );         // TODO: this and other versionings should be external dependency
+
+        MessagingDetails_type0 msgDetails = new MessagingDetails_type0();
+        Transaction_type0 transaction = new Transaction_type0();
+        Code_type0 code = Code_type0.PNR;
+        transaction.setCode( code );
+
+        msgDetails.addTransaction( transaction );
+
+        instance.setMessagingDetails(msgDetails);
+
+        Security3 security;
+        MessageHeader header;
+
+        TravelItineraryHelper helper = new TravelItineraryHelper();
+
+        security = helper.getSecuirityInstance( configuration );
+        header = helper.getMessageHeaderInstance( configuration );
+
+        return travelItineraryReadRQ( instance, header, security );
     }
 
 }

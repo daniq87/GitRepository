@@ -20,8 +20,7 @@ public class OutputHandler extends AbstractHandler {
         SOAPHeader header = envelope.getHeader();
         SOAPBody body = envelope.getBody();
 
-        LogMonitor.logString( header.toString() + "\n" + body.toString() );
-//        LogMonitor.logString( body.toString() );
+        LogMonitor.logString( header.toString(), body.toString() );
 
         return InvocationResponse.CONTINUE;
     }

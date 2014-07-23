@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--"ReturnHostCommand" is used to specify whether or not to return the native host command in the response message.-->
+<PassengerDetailsRQ ReturnHostCommand="true" TimeStamp="2012-10-08T11:30:00-06:00" Version="2.2.0" xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stl="http://services.sabre.com/STL/v01">
+	<!--Optional-->
+	<!--Repeat Factor=0-->
+	<!--"IgnoreOnError" (if true) tells the system to ignore the entire transaction if any errors are encountered.-->
+	<!--Equivalent Sabre host command: I-->
+	<IgnoreOnError Ind="true"/>
+	<!--Optional-->
+	<!--Repeat Factor=0-->
+	<!--HaltOnError" (if true) tells the system to halt processing if any errors are returned from the SabreCommandLLSRQ function being called thus cancelling any subsequent processing that was specified in the request message.-->
+	<MiscSegmentSellRQ HaltOnError="true">
+		<!--Mandatory-->
+		<!--Repeat Factor=0-->
+		<!--"DepartureDateTime" is used to specify the date associated with the miscellaneous segment.-->
+		<!--"NumberInParty" is used to specify the number of parties associated with the miscellaneous segment.-->
+		<!--"Status" is used to specify the action code to be used to sell the segment.-->
+		<!--"Type" is used to specify the type of miscellaneous segment, i.e. OTH, MCO, PTA, or INS.-->
+		<!--Equivalent Sabre host command: 0OTHXXGK1FSG21DEC-TEST-->
+		<MiscSegment DepartureDateTime="12-21" InsertAfter="0" NumberInParty="1" Status="GK" Type="OTH">
+			<!--Mandatory-->
+			<!--Repeat Factor=0-->
+			<!--"LocationCode" is used to specify the location to be associated with the miscellaneous segment.-->
+			<OriginLocation LocationCode="FSG"/>
+			<!--Mandatory-->
+			<!--Repeat Factor=0-->
+			<!--"Text" is used to specify free text information to be associated with the miscellaneous segment.-->
+			<Text>TEST</Text>
+			<!--Mandatory-->
+			<!--Repeat Factor=0-->
+			<VendorPrefs>
+				<!--Mandatory-->
+				<!--Repeat Factor=0-->
+				<!--"Code" is used to specify a particular vendor code.-->
+				<Airline Code="XX"/>
+			</VendorPrefs>
+		</MiscSegment>
+	</MiscSegmentSellRQ>
+	<!--Optional-->
+	<!--Repeat Factor=0-->
+	<!--HaltOnError" (if true) tells the system to halt processing if any errors are returned from the SabreCommandLLSRQ function being called thus cancelling any subsequent processing that was specified in the request message.-->
+	<!--"IgnoreAfter" is used to perform an ignore to clear out the AAA.  Please note that it does not close the session.-->
+	<!--IgnoreAfter equivalent Sabre host command: I-->
+	<!--"RedisplayReservation" is used to indicate whether or not to redisplay the PNR.-->
+	<!--RedisplayReservation equivalent Sabre host command: JX PNR*......-->
+	<PostProcessing HaltOnError="true" IgnoreAfter="true" RedisplayReservation="true">
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<!--"ARUNK_RQ" is used to add arrival unknown segments into a passenger name record.  The system will properly apply them so there is no need to segment select, etc...-->
+		<ARUNK_RQ HaltOnError="true"/>
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<!--HaltOnError" (if true) tells the system to halt processing if any errors are returned from the SabreCommandLLSRQ function being called thus cancelling any subsequent processing that was specified in the request message.-->
+		<EndTransactionRQ HaltOnError="true">
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<!--"EndTransaction" is used to end the transaction and finalize the record.-->
+			<!--Equivalent Sabre host command: E-->
+			<EndTransaction Ind="true">
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<!--"Email" is used to send an email notification upon end transaction to any email addresses contained within the particular record.-->
+				<!--Equivalent Sabre host command: EM-->
+				<Email Ind="true">
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<!--"eTicket" is used to send an email notification containing a text-based copy of the eTicket.-->
+					<!--eTicket cannot combine with .../Invoice, or .../Itinerary.-->
+					<!--Equivalent Sabre host command: EMT-->
+					<eTicket Ind="true">
+						<!--Optional-->
+						<!--Repeat Factor=0-->
+						<!--"eTicket" is used to send an email notification containing a PDF-based copy of the eTicket.-->
+						<!--Equivalent Sabre host command: EMTP-->
+						<PDF Ind="true"/>
+					</eTicket>
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<!--"Invoice" is used to send an email notification containing a text-based copy of the invoice.-->
+					<!--Invoice cannot combine with .../eTicket, or .../Itinerary.-->
+					<!--Equivalent Sabre host command: EMI-->
+					<Invoice Ind="true"/>
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<!--"Itinerary" is used to send an email notification containing a text-based copy of the itinerary.-->
+					<!--Itinerary cannot combine with .../eTicket, or .../Invoice.-->
+					<!--Equivalent Sabre host command: EMX-->
+					<Itinerary Ind="true">
+						<!--Optional-->
+						<!--Repeat Factor=0-->
+						<!--"PDF" is used to send an email notification containing a PDF-based copy of the itinerary.-->
+						<!--Equivalent Sabre host command: EMXP-->
+						<PDF Ind="true"/>
+						<!--Optional-->
+						<!--Repeat Factor=0-->
+						<!--"EndNumber" is used to specify an ending segment in the range to include in the email message.-->
+						<!--"Number" is used to specify a segment number to include in the email message.-->
+						<!--Equivalent Sabre host command: EMXP‡S1-2-->
+						<Segment EndNumber="1" Number="2"/>
+						<!--Multiple equivalent Sabre host command: EMXP‡S1-2/4-->
+						<Segment Number="4"/>
+					</Itinerary>
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<!--"NameNumber" is used to specify a particular passenger name number to send the email notification to.  Please note that the email address in the PNR's email field must be name associated to the specified name number.-->
+					<!--Equivalent Sabre host command: EMXP‡S1-2/4‡N2.1-->
+					<PersonName NameNumber="2.1"/>
+				</Email>
+			</EndTransaction>
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<!--"ReceivedFrom" is used to receive the record.-->
+			<!--Equivalent Sabre host command: 6SWS TESTING-->
+			<Source ReceivedFrom="SWS TESTING"/>
+		</EndTransactionRQ>
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<!--HaltOnError" (if true) tells the system to halt processing if any errors are returned from the SabreCommandLLSRQ function being called thus cancelling any subsequent processing that was specified in the request message.-->
+		<QueuePlaceRQ HaltOnError="true">
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<MultiQueuePlace>
+				<!--Mandatory-->
+				<!--Repeat Factor=0-20-->
+				<!--Equivalent Sabre host command: QPM/IPCC1400/7‡IPCC280/11-->
+				<QueueIdentifier Number="400" PrefatoryInstructionCode="11" PseudoCityCode="IPCC1"/>
+			</MultiQueuePlace>
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<QueueInfo>
+				<!--Mandatory-->
+				<!--Repeat Factor=0-3-->
+				<!--"Name" is used to specify the queue name where the record is to be placed.-->
+				<!--"Name" and "Number" cannot combine.-->
+				<!--"Number" is used to specify the queue number where the record is to be placed.-->
+				<!--"PrefatoryInstructionCode" is used to specify a prefatory instruction code.-->
+				<!--"PseudoCityCode" is used to specify a pseudo city code.-->
+				<!--Name equivalent Sabre host command: QP/-ABC123/11-->
+				<!--Number equivalent Sabre host command: QP/400/11 or QP/G-->
+				<!--PseudoCityCode equivalent Sabre host command: QP/IPCC1400/11-->
+				<QueueIdentifier Name="ABC123" Number="400" PrefatoryInstructionCode="11" PseudoCityCode="IPCC1"/>
+				<!--Optional-->
+				<!--Repeat Factor=0-6-->
+				<!--"ID" is used to specify a record locator to be queue placed.-->
+				<!--Equivalent Sabre host command: QP/400/11*ABC123-->
+				<UniqueID ID="ABC123"/>
+				<UniqueID ID="DEF456"/>
+			</QueueInfo>
+		</QueuePlaceRQ>
+	</PostProcessing>
+	<!--Optional-->
+	<!--Repeat Factor=0-->
+	<!--HaltOnError" (if true) tells the system to halt processing if any errors are returned from the SabreCommandLLSRQ function being called thus cancelling any subsequent processing that was specified in the request message.-->
+	<!--"IgnoreBefore" is used to perform an ignore to clear out the AAA.  Please note that it does not close the session.-->
+	<!--IgnoreBefore equivalent Sabre host command: I-->
+	<PreProcessing HaltOnError="true" IgnoreBefore="true">
+		<!--Mandatory-->
+		<!--Repeat Factor=0-->
+		<!--"ID" is used to specify a record locator.-->
+		<!--Equivalent Sabre host command: JX PNR*ABC123-->
+		<UniqueID ID="ABC123"/>
+	</PreProcessing>
+	<!--Optional-->
+	<!--Repeat Factor=0-->
+	<!--"PriceQuoteInfo" is used to associate price quote records stored as a result of a previous Enhanced_AirBookRQ, or Enhanced_AirBookWithTaxRQ with passenger names in the PassengerDetailsRQ.-->
+	<!--HaltOnError" (if true) tells the system to halt processing if any errors are returned from the SabreCommandLLSRQ function being called thus cancelling any subsequent processing that was specified in the request message.-->
+	<PriceQuoteInfo HaltOnError="true">
+		<!--Mandatory-->
+		<!--Repeat Factor=0-98-->
+		<!--"HostedCarrier" is used to tell the system that the request is coming from a hosted carrier, since the method of linking price quote records to names is slightly different between SabreSonic-hosted carriers, and Sabre Travel Network-based users.-->
+		<!--"NameNumber" is used to specify a passenger name number.-->
+		<!--SabreSonic-hosted carriers can omit "NameNumber" if all passengers need to be associated with a single price quote record -->
+		<!-- Sabre Travel Network-based users can set NameNumber="ALL" if all passengers need to be associated with a single price quote record -->
+		<!--"Record" is used to specify a price quote record.-->
+		<!--Equivalent Sabre host command: PQL1*N1.1-->
+		<!--HostedCarrier="true" equivalent Sabre host command: PQL1-1.1-->
+		<Link HostedCarrier="true" NameNumber="1.1" Record="1"/>
+		<Link HostedCarrier="true" NameNumber="2.1" Record="2"/>
+	</PriceQuoteInfo>
+	<!--Optional-->
+	<!--Repeat Factor=0-->
+	<!--HaltOnError" (if true) tells the system to halt processing if any errors are returned from the SabreCommandLLSRQ function being called thus cancelling any subsequent processing that was specified in the request message.-->
+	<ProfileRQ HaltOnError="true">
+		<!--Mandatory-->
+		<!--Repeat Factor=0-->
+		<!--"ID" is used to specify a profile name that is to be moved into the AAA to create the PNR.-->
+		<!--Equivalent Sabre host command: N*TEST§NM-->
+		<UniqueID ID="TEST"/>
+	</ProfileRQ>
+	<!--Optional-->
+	<!--Repeat Factor=0-->
+	<SpecialReqDetails>
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<!--HaltOnError" (if true) tells the system to halt processing if any errors are returned from the SabreCommandLLSRQ function being called thus cancelling any subsequent processing that was specified in the request message.-->
+		<AddRemarkRQ HaltOnError="true">
+			<!--Mandatory-->
+			<!--Repeat Factor=0-->
+			<RemarkInfo>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<!--"Type" is used to specify the form of payment type.-->
+				<!--Equivalent Sabre host command: 5-CHECK-->
+				<FOP_Remark Type="CHECK">
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<!--"Suppress" is used to specify whether or not to suppress credit card information on an itinerary.-->
+					<!--Suppress equivalent Sabre host command: 5-*VI4123412341234123‡12/12-XN-->
+					<CC_Info Suppress="true">
+						<!--Mandatory-->
+						<!--Repeat Factor=0-->
+						<!--"AirlineCode" is used to specify an airline code to be used in conjuntion with a credit card security code.-->
+						<!--"CardSecurityCode" is used to specify a credit card security code.-->
+						<!--"Code" is used to specify a credit card vendor code.-->
+						<!--"ExpireDate" is used to specify a credit card expiration date.-->
+						<!--"ManualApprovalCode" is used to specify a manual credit card if applicable.-->
+						<!--"Number" is used to specify a credit card number.-->
+						<!--CardSecurityCode equivalent Sabre host command: 5-*VI4123412341234123‡12/12‡1234/YY-->
+						<!--ExtendedPayment equivalent Sabre host command: 5-*VI4123412341234123‡12/12*E12-->
+						<!--ManualApprovalCode equivalent Sabre host command: 5-*VI4123412341234123‡12/12*Z123456-->
+						<PaymentCard AirlineCode="YY" CardSecurityCode="1234" Code="VI" ExpireDate="2012-12" ExtendedPayment="12" ManualApprovalCode="123456" Number="4123412341234123"/>
+					</CC_Info>
+				</FOP_Remark>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<!--"DateTime" is used to specify a queue placement date/time.-->
+				<!--"PrefatoryInstructionCode" is used to specify the prefatory instruction code.-->
+				<!--"PseudoCityCode" is used to specify a pseudocitycode.-->
+				<!--"QueueIdentifier" is used to specify a queue name/number.-->
+				<!--Equivalent Sabre host command: 5Q-IPCC121DEC/0600-499/11-->
+				<FutureQueuePlaceRemark DateTime="12-21T06:00" PrefatoryInstructionCode="11" PseudoCityCode="IPCC1" QueueIdentifier="499"/>
+				<!--Optional-->
+				<!--Repeat Factor=0-98-->
+				<!--"Code" is used to specify an alpha sorting character.-->
+				<!--"SegmentNumber" is used to specify a segment number.-->
+				<!--"Type" is used to specify the type of remark.  Acceptable values are: Alpha-Coded, Client Address, Corporate, Delivery Address, General, Group Name, Hidden, Historical, Invoice, or Itinerary.-->
+				<Remark Code="H" SegmentNumber="1" Type="General">
+					<!--Mandatory-->
+					<!--Repeat Factor=0-->
+					<!--"Text" is used to specify remark-related text.-->
+					<!--Equivalent Sabre host command: 5TEST REMARK-->
+					<Text>TEST REMARK</Text>
+				</Remark>
+			</RemarkInfo>
+		</AddRemarkRQ>
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<!--HaltOnError" (if true) tells the system to halt processing if any errors are returned from the SabreCommandLLSRQ function being called thus cancelling any subsequent processing that was specified in the request message.-->
+		<AirSeatRQ HaltOnError="true">
+			<!--Mandatory-->
+			<!--Repeat Factor=0-->
+			<Seats>
+				<!--Mandatory-->
+				<!--Repeat Factor=0-98-->
+				<!--"BoardingPass" is used to specify for the system to assign a seat and issue a boarding pass.-->
+				<!--"ChangeOfGauge" is used to specify a change of gauge of flight.-->
+				<!--"NameNumber" is used to specify a passenger name number.-->
+				<!--"Number" is used to specify a seat number.-->
+				<!--"Preference" is used to specify a seat preference.-->
+				<!--Preference cannot combine with Number.-->
+				<!--"SegmentNumber" is used to specify a segment number.-->
+				<!--Equivalent Sabre host command: 4G1/23B-1.1-->
+				<!--BoardingPass equivalent Sabre host command: 4G1/23B-1.1‡BP-->
+				<!--ChangeOfGauge equivalent Sabre host command: 4G1C/23B-1.1-->
+				<!--NameNumber equivalent Sabre host command: 4G1/23B-1.1-->
+				<!--Preference equivalent Sabre host command: 4G1/AN1-1.1-->
+				<Seat BoardingPass="true" ChangeOfGauge="true" NameNumber="1.1" Number="21A" Preference="AN" SegmentNumber="1"/>
+			</Seats>
+		</AirSeatRQ>
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<!--HaltOnError" (if true) tells the system to halt processing if any errors are returned from the SabreCommandLLSRQ function being called thus cancelling any subsequent processing that was specified in the request message.-->
+		<SpecialServiceRQ HaltOnError="true">
+			<!--Mandatory-->
+			<!--Repeat Factor=0-->
+			<SpecialServiceInfo>
+				<!--Optional-->
+				<!--Repeat Factor=0-99-->
+				<!--"SegmentNumber" is used to specify an itinerary segment. Clients can utilize "A" to associate this data to all segments in the PNR.-->
+				<!--"SSR_Code is used to specify an SSR code.-->
+				<!--Equivalent Sabre host command: 4DOCSA/DB/21DEC12/M/TEST/SWS-2.1-->
+				<SecureFlight SegmentNumber="A" SSR_Code="DOCS">
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<!--"DateOfBirth" and "Gender" cannot combine with "RedressNumber".-->
+					<PersonName DateOfBirth="2012-12-21" Gender="M" NameNumber="2.1">
+						<!--Optional-->
+						<!--Repeat Factor=0-->
+						<GivenName>SWS</GivenName>
+						<!--Optional-->
+						<!--Repeat Factor=0-->
+						<Surname>TEST</Surname>
+					</PersonName>
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<!--"RedressNumber" cannot combine with ".../PersonName@DateOfBirth" or ".../PersonName@Gender".-->
+					<!-- RedressNumber equivalent Sabre host command: 4DOCOA//R/123456789-2.1-->
+					<RedressNumber>123456789</RedressNumber>
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<VendorPrefs>
+						<!--Mandatory-->
+						<!--Repeat Factor=0-->
+						<!--"Hosted" is used to specify if the request is based upon a hosted or a non-hosted carrier.-->
+						<!--For Travel Network-based customers "HostedCarrier" should be omitted unless the message is being sent to AA.-->
+						<!--For SabreSonic RES-based customers "HostedCarrier" should be set to "true" when communicating internally, and omitted when sending to any other carrier.-->
+						<Airline Hosted="true"/>
+					</VendorPrefs>
+				</SecureFlight>
+				<!--Optional-->
+				<!--Repeat Factor=0-99-->
+				<!--"SegmentNumber" is used to specify an itinerary segment.-->
+				<!--"SSR_Code is used to specify an SSR code.-->
+				<!--Equivalent Sabre host command: 4WCHR2-3.1-->
+				<Service SegmentNumber="2" SSR_Code="WCHR">
+					<!--Optional, BUT some SSRCodes require a name number.-->
+					<!--Repeat Factor=0-->
+					<!--"Number" is used to specify a passenger name number.-->
+					<!--Equivalent Sabre host command:  4WCHR2-3.1-->
+					<PersonName NameNumber="3.1"/>
+					<!--Optional, BUT many SSRCodes RQs require text.-->
+					<!--Repeat Factor=0-->
+					<!--"Text" is used to specify miscellaneous free text information.-->
+					<!--Equivalent Sabre host command: 3OSI YY TEST-->
+					<Text>TEST</Text>
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<VendorPrefs>
+						<!--Mandatory-->
+						<!--Repeat Factor=0-->
+						<!--"Code" is only applicable to the "OSI" SSRCode, and is used to specify the airline that the SSR needs to be sent to.-->
+						<!--"Hosted" is used to specify if the request is based upon a hosted or a non-hosted carrier.-->
+						<!--For Travel Network-based customers "HostedCarrier" should be omitted unless the message is being sent to AA.-->
+						<!--For SabreSonic RES-based customers "HostedCarrier" should be set to "true" when communicating internally, and omitted when sending to any other carrier.-->
+						<!--If Hosted="true" the command created behind the scenes will start with a "4".-->
+						<!--If Hosted="false" the command created behind the scenes will start with a "3".-->
+						<!--Equivalent Sabre host command: 3WCHR2-3.1-->
+						<!--Hosted"true" equivalent Sabre host command: 4WCHR2-3.1-->
+						<!--Code equivalent Sabre host command: 3OSI YY TEST-->
+						<Airline Code="YY" Hosted="true"/>
+					</VendorPrefs>
+				</Service>
+			</SpecialServiceInfo>
+		</SpecialServiceRQ>
+	</SpecialReqDetails>
+	<!--Optional-->
+	<!--Repeat Factor=0-->
+	<!--HaltOnError" (if true) tells the system to halt processing if any errors are returned from the SabreCommandLLSRQ function being called thus cancelling any subsequent processing that was specified in the request message.-->
+	<TravelItineraryAddInfoRQ HaltOnError="true">
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<AgencyInfo>
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<!--"Address" is used to add an agency address into the record.-->
+			<!--Equivalent Sabre host command: W-SABRE TRAVEL‡3150 SABRE DRIVE‡SOUTHLAKE, TX US 76092-->
+			<Address>
+				<!--Mandatory-->
+				<!--Repeat Factor=0-->
+				<AddressLine>SABRE TRAVEL</AddressLine>
+				<!--Mandatory-->
+				<!--Repeat Factor=0-->
+				<CityName>SOUTHLAKE</CityName>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<CountryCode>US</CountryCode>
+				<!--Mandatory-->
+				<!--Repeat Factor=0-->
+				<PostalCode>76092</PostalCode>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<StateCountyProv StateCode="TX"/>
+				<!--Mandatory-->
+				<!--Repeat Factor=0-->
+				<StreetNmbr>3150 SABRE DRIVE</StreetNmbr>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<VendorPrefs>
+					<!--Mandatory-->
+					<!--Repeat Factor=0-->
+					<!--"Hosted" is used to specify if the request is based upon a hosted or a non-hosted carrier.-->
+					<!--For Travel Network customers "Hosted" should be set to "false".-->
+					<!--For SabreSonic RES-based customers "Hosted" should be omitted.-->
+					<!--Hosted="true" equivalent Sabre host command: W-N/SABRE TRAVEL‡A/3150 SABRE DRIVE‡C/SOUTHLAKE, TX US‡Z/76092-->
+					<Airline Hosted="true"/>
+				</VendorPrefs>
+			</Address>
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<!--"PseudoCityCode" is used to specify a pseudocity code.-->
+			<!--"QueueNumber" is used to specify a queue number.-->
+			<!--"ShortText" is used to specify miscellaneous free text.-->
+			<!--"TicketTimeLimit" is used to specify the ticket time limit.-->
+			<!--"TicketType" is used to specify the ticket type.  Acceptable values are: "7TAW", "7TAV", "7T-A"-->
+			<!--"TicketTimeLimit" follows this format: MM-DDTHH:MM-->
+			<!--TicketType only equivalent Sabre host command: 7TAW/-->
+			<!--TicketType only equivalent Sabre host command: 7T- -->
+			<!--TicketTimeLimit equivalent Sabre host command: 7TAW21DEC/0800/-->
+			<!--QueueNumber equivalent Sabre host command: 7TAW55/-->
+			<!--QueueNumber and PseudoCityCode equivalent Sabre host command: 7TAWIPCC55/-->
+			<!--TicketTimeLimit and QueueNumber equivalent Sabre host command: 7TAW21DEC55/-->
+			<!--PseudoCityCode, QueueNumber, and ShortText equivalent Sabre host command: 7TAWIPCC55/TEST-->
+			<!--TicketType and ShortText equivalent Sabre host command: 7TAW/TEST-->
+			<Ticketing PseudoCityCode="IPCC" QueueNumber="55" ShortText="TEST" TicketTimeLimit="12-21T08:00" TicketType="7TAW"/>
+		</AgencyInfo>
+		<!--Optional-->
+		<!--Repeat Factor=0-->
+		<CustomerInfo>
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<ContactNumbers>
+				<!--Mandatory-->
+				<!--Repeat Factor=0-99-->
+				<!--"InsertAfter" is used to add a phone number after or before an existing phone number.-->
+				<!--"LocationCode" is used to override the default city in the application's Travel Journal Record.-->
+				<!--"NameNumber" is used to specify a passenger name number.-->
+				<!--"Phone" is used to add customer telephone numbers into the record if applicable.-->
+				<!--"PhoneUseType" is used to specify if the number is agency, "A," home, "H," business, "B," or fax, "F."-->
+				<!--Equivalent Sabre host command: 90/817-555-1213-H-1.1-->
+				<ContactNumber InsertAfter="0" LocationCode="FSG" NameNumber="1.1" Phone="817-555-1212" PhoneUseType="H"/>
+			</ContactNumbers>
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<!--"Corporate" cannot combine with any other qualifier.-->
+			<Corporate>
+				<!--Mandatory-->
+				<!--Repeat Factor=0-->
+				<!--"ID" is used to add a corporate ID into the record if applicable.-->
+				<!--Equivalent Sabre host command: CID-CC006-->
+				<ID>CC006</ID>
+			</Corporate>
+			<!--Optional-->
+			<!--Repeat Factor=0-99-->
+			<!--"MembershipID" is used to add a frequent traveler number into the record.-->
+			<!--"NameNumber" is used to specify a passenger name number.-->
+			<!--"ProgramID" is used to add the carrier code associated with the frequent traveler number.-->
+			<!--"SegmentNumber" is used to add a segment number to associate the frequent traveler number to.-->
+			<!--"TravelingCarrierCode" is used to transmit the frequent traveler number of one airline to accrue mileage on another carrier.-->
+			<!--SegmentNumber and TravelingCarrierCode cannot combine.-->
+			<!--Equivalent Sabre host command: FFXX155P9B76-1.1-->
+			<!--SegmentNumber equivalent Sabre host command: FFXX155P9B76/1-1.1-->
+			<!--TravelingCarrierCode equivalent Sabre host command: FFXX155P9B76/YY-1.1-->
+			<CustLoyalty MembershipID="155P9B76" NameNumber="1.1" ProgramID="XX" SegmentNumber="1" TravelingCarrierCode="YY"/>
+			<!--Optional-->
+			<!--Repeat Factor=0-->
+			<!--"Identifier" is used to add a customer number into the record if applicable.-->
+			<!--The value of identifier can be 6,7, or 10 alphanumeric-->
+			<!--Equivalent Sabre host command: DK1111111-->
+			<CustomerIdentifier>1111111</CustomerIdentifier>
+			<!--Optional-->
+			<!--Repeat Factor=0-99-->
+			<!--"Address" is used to add an email address into the record.  Please note that if the email address contains an underscore character, i.e. "_", the client must replace the underscore with two equal sign characters, i.e. "==".-->
+			<!--"NameNumber" is used to specify a passenger name number.-->
+			<!--"ShortText" is used to specify miscellaneous email address-related free text information if applicable.-->
+			<!--"Type" is used to specify the type of email address.  Acceptable values for "Type" are: "BC" for blind copy, "CC" for carbon copy, "FR" for from, or "To" for to.-->
+			<!--Equivalent Sabre host command: PE‡WEBSERVICES.SUPPORT@SABRE.COM‡-1.1-->
+			<!--ShortText Equivalent Sabre host command: PE‡WEBSERVICES.SUPPORT@SABRE.COM‡ABC123-1.1-->
+			<!--Type="BC" equivalent Sabre host command: PE‡WEBSERVICES.SUPPORT@SABRE.COM‡BC/ABC123-1.1-->
+			<!--Type="CC" equivalent Sabre host command: PE‡WEBSERVICES.SUPPORT@SABRE.COM‡CC/ABC123-1.1-->
+			<!--Type="FR"  equivalent Sabre host command: PE‡WEBSERVICES.SUPPORT@SABRE.COM‡FR/ABC123-1.1-->
+			<!--Type="TO" equivalent Sabre host command: PE‡WEBSERVICES.SUPPORT@SABRE.COM‡TO/ABC123-1.1-->
+			<Email Address="WEBSERVICES.SUPPORT@SABRE.COM" NameNumber="1.1" ShortText="ABC123" Type="CC"/>
+			<!--Optional-->
+			<!--Repeat Factor=0-99-->
+			<!--"Infant" is used to specify that the particular passenger is an infant.-->
+			<!--"NameNumber" is used to specify a passenger name number.-->
+			<!--"NameReference" is used to specify miscellaneous name reference-related information if applicable.-->
+			<!--"PassengerType" is used to add a passenger type code into the record.-->
+			<!--Infant="true" equivalent Sabre host command: -I/TEST/SWS-->
+			<!--NameReference equivalent Sabre host command: -TEST/SWS*REF-->
+			<!--PassengerType equivalent Sabre host command: PDTADT-1.1-->
+			<PersonName Infant="false" NameNumber="1.1" NameReference="ABC123" PassengerType="ADT">
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<GivenName>SWS</GivenName>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<!--"Name" is used to specify miscellaneous group booking-related free text title information if applicable.-->
+				<!--"NumSeatsRemaining" is used to specify the number of passengers travelling in a group if applicable.-->
+				<!--Equivalent Sabre host command: -C/19TEST GROUP-->
+				<GroupInfo Name="TEST GROUP" NumSeatsRemaining="19">
+					<!--Optional-->
+					<!--Repeat Factor=0-->
+					<VendorPrefs>
+						<!--Mandatory-->
+						<!--Repeat Factor=0-->
+						<!--"Code" is used to specify the airline that the group is travelling on if applicable.  This option is only applicable to Abacus and INFINI subscribers.-->
+						<!--Equivalent Sabre host command: -C/YY/19TEST GROUP-->
+						<Airline Code="YY"/>
+					</VendorPrefs>
+				</GroupInfo>
+				<!--Optional-->
+				<!--Repeat Factor=0-->
+				<Surname>TEST</Surname>
+			</PersonName>
+		</CustomerInfo>
+	</TravelItineraryAddInfoRQ>
+</PassengerDetailsRQ>

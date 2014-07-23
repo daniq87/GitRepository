@@ -45,8 +45,8 @@ public class TravelItineraryHelper {
         return instance;
     }
 
-    public Security1 getSecuirityInstance( IConfigurationProvider configuration ) {
-        Security1 instance = new Security1();
+    public Security3 getSecuirityInstance( IConfigurationProvider configuration ) {
+        Security3 instance = new Security3();
         instance.setBinarySecurityToken(SessionManager.getInstance().getToken());
 
         return instance;

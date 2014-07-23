@@ -1,18 +1,13 @@
 package com.sabre.sws.tools.wsdl.client;
 
-import com.sabre.sws.tools.wsdl.stubs.SessionCloseRQServiceStub;
-import com.sabre.sws.tools.wsdl.stubs.SessionCreateRQServiceStub;
-import com.sabre.sws.tools.wsdl.stubs.TravelItineraryReadServiceStub;
+import com.sabre.sws.tools.wsdl.stubs.*;
 import com.sabre.sws.tools.wsdl.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.utils.PropertiesFileConfigurationSource;
 import com.sabre.sws.tools.wsdl.utils.handlers.ErrorHandler;
 import com.sabre.sws.tools.wsdl.utils.handlers.MustUnderstandHandler;
 import com.sabre.sws.tools.wsdl.utils.handlers.OutputHandler;
-import com.sabre.sws.tools.wsdl.wrappers.AirAvailWrapper;
-import com.sabre.sws.tools.wsdl.wrappers.SessionCloseWrapper;
-import com.sabre.sws.tools.wsdl.wrappers.SessionCreateWrapper;
-import com.sabre.sws.tools.wsdl.wrappers.TravelItineraryReadWrapper;
+import com.sabre.sws.tools.wsdl.wrappers.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +24,7 @@ import static com.sabre.sws.tools.wsdl.stubs.OTA_AirAvailServiceStub.OriginDesti
 public class SwsClient {
 
     private static IConfigurationProvider configuration;
-    private static final String configFileLocation = "src/main/res/connection.properties";
+    private static final String configFileLocation = "src/main/resources/connection.properties";
 
     private static File configFile = null;
 
@@ -47,6 +42,8 @@ public class SwsClient {
         SessionCloseWrapper sessionClose = null;
         AirAvailWrapper airAvail = null;
         TravelItineraryReadWrapper travelItinerary = null;
+        EnhancedAirBookWrapper enhancedAirBook = null;
+        PassengerDetailsRQWrapper passengerDetails = null;
 
         try {
             configFile = new File( configFileLocation );
@@ -59,37 +56,36 @@ public class SwsClient {
         }
 
         try {
-            sessionCreate = new SessionCreateWrapper( configuration );
-
-            /*  Debugging
-
-                List list = new ArrayList();
-                AxisConfiguration cfg = sessionCreate._getServiceClient().getAxisConfiguration().getAxisConfiguration();
-                list.add( new MustUnderstandHandler() );
-                list.add( new ErrorHandler() );
-                cfg.setInFaultPhases( list );
-                cfg.setInPhasesUptoAndIncludingPostDispatch( list );
-
-                 */
 
             // Create Session
+            sessionCreate = new SessionCreateWrapper( configuration );
             SessionCreateRQServiceStub.SessionCreateRS sessionCreateRS = sessionCreate.openSession();
             LOGGER.log(Level.INFO, "\nSession was Created");
 
             // Execute and process OTA_AirAvailRequest
-            LOGGER.log( Level.INFO, "Executing AirAvail Request..." );
-            airAvail = new AirAvailWrapper( configuration );
-
-            OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 0 );
-            processAirAvailInfo( airAvailRS );
-
-            airAvailRS = airAvail.executeSampleRequest( 1 );
-            processAirAvailInfo( airAvailRS );
+//            LOGGER.log( Level.INFO, "Executing AirAvail Request..." );
+//            airAvail = new AirAvailWrapper( configuration );
+//            OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 0 );
+//            processAirAvailInfo( airAvailRS );
+//
+//            airAvailRS = airAvail.executeSampleRequest( 1 );
+//            processAirAvailInfo( airAvailRS );
 
             // Execute and process TravelItinerary request
-            LOGGER.log( Level.INFO, "Executing TravelItineraryRead request..." );
-            travelItinerary = new TravelItineraryReadWrapper( configuration );
-            TravelItineraryReadServiceStub.TravelItineraryReadRS travelItineraryReadRS = travelItinerary.executeSampleRequest();
+//            LOGGER.log( Level.INFO, "Executing TravelItineraryRead request..." );
+//            travelItinerary = new TravelItineraryReadWrapper( configuration );
+//            TravelItineraryReadServiceStub.TravelItineraryReadRS travelItineraryReadRS = travelItinerary.executeSampleRequest();
+
+            // Execute and process EnhancedAirBook request
+            LOGGER.log( Level.INFO, "Executing EnhancedAirBook request...");
+            enhancedAirBook = new EnhancedAirBookWrapper( configuration );
+            EnhancedAirBookServiceStub.EnhancedAirBookRS enhancedAirBookRS = enhancedAirBook.executeSampleRequest();
+            processEnhancedAirBookInfo( enhancedAirBookRS );
+
+            // Execute and process PassengerDetails request
+            LOGGER.log( Level.INFO, "Executing PassengerDetails request..." );
+            passengerDetails = new PassengerDetailsRQWrapper( configuration );
+            PassengerDetailsServiceStub.PassengerDetailsRS passengerDetailsRS = passengerDetails.executeSampleRequest();
 
         } catch ( RemoteException e ) {
             LOGGER.log(Level.SEVERE, "Error connecting to web service", e);
@@ -130,6 +126,13 @@ public class SwsClient {
             System.out.println( "" );
         }
 
+    }
+
+    private static  void processEnhancedAirBookInfo( EnhancedAirBookServiceStub.EnhancedAirBookRS response ) {
+        for( EnhancedAirBookServiceStub.AirItineraryPricingInfo_type0 it : response.getOTA_AirPriceRS().getPriceQuote().getPricedItinerary().getAirItineraryPricingInfo() ) {
+            System.out.println( it.getItinTotalFare().getTotalFare().getAmount() );
+            System.out.println( it.getFareCalculation().getText() );
+        }
     }
 
 }
