@@ -2,13 +2,9 @@ package com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
+import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import com.sabre.sws.tools.wsdl.stubs.PassengerDetailsServiceStub;
 import org.apache.axis2.databinding.types.NonNegativeInteger;
-
-import java.text.DateFormatSymbols;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.Random;
 
 
 /**
@@ -16,27 +12,8 @@ import java.util.Random;
  */
 public class PassengerDetailsHelper {
 
-    private final String timestampFormat = new String( "yyyy-mm-dd_hh:mm:ss:SSS" );
     private final static String actionString = "PassengerDetailsRQ";
     private final static String versionString = "2.2.1";
-
-    private String getTimestamp() {
-
-        java.util.Date now = new java.util.Date();
-        DateFormatSymbols symbols = DateFormatSymbols.getInstance( new Locale( "PL" ));
-        SimpleDateFormat formatter = new SimpleDateFormat( timestampFormat, symbols );
-        return formatter.format( now );
-    }
-
-    private String longRandomHexString() {
-        StringBuffer buffer = new StringBuffer();
-        Random random = new Random();
-        for( int i = 0; i < 3; ++i ) {
-            buffer.append( Integer.toHexString(random.nextInt(10000000)) );
-        }
-        return buffer.toString();
-    }
-
 
     public PassengerDetailsServiceStub.NonEmptyString toNonEmptyString( String param ) {
 
@@ -80,9 +57,9 @@ public class PassengerDetailsHelper {
         instance.setCPAId( toNonEmptyString( configuration.getOrganization() ) );
 
         // Generate and set CONVERSATION_ID element
-        StringBuffer buffer = new StringBuffer( getTimestamp() );
+        StringBuffer buffer = new StringBuffer( Util.getTimestamp() );
         buffer.append( "-" );
-        buffer.append( longRandomHexString() );
+        buffer.append( Util.longRandomHexString() );
         String conversationID = buffer.toString();
 
 //        instance.setConversationId( toNonEmptyString( conversationID ) );
@@ -102,12 +79,12 @@ public class PassengerDetailsHelper {
         // Populate and set MESSAGE_DATA element
         PassengerDetailsServiceStub.MessageData_type0 messageData = new PassengerDetailsServiceStub.MessageData_type0();
 
-        String messageID = longRandomHexString();
+        String messageID = Util.longRandomHexString();
         messageData.setMessageId( toNonEmptyString(messageID ) );
 
         PassengerDetailsServiceStub.Timestamp timestamp = new PassengerDetailsServiceStub.Timestamp();
-        timestamp.setTimestamp( getTimestamp() );
-        messageData.setTimestamp( getTimestamp() );
+        timestamp.setTimestamp( Util.getTimestamp() );
+        messageData.setTimestamp( Util.getTimestamp() );
 
         messageData.setTimeout( new NonNegativeInteger( "50" ) );
 

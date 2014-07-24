@@ -2,7 +2,7 @@ package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 
 import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.SessionCloseHelper;
-import com.sabre.sws.tools.wsdl.commons.exceptions.WorldIsGoingToEndException;
+import com.sabre.sws.tools.wsdl.commons.exceptions.ProdEndpointConnectionException;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.stubs.SessionCloseRQServiceStub;
 import org.apache.axis2.AxisFault;
@@ -34,7 +34,7 @@ public class SessionCloseWrapper extends SessionCloseRQServiceStub {
     public SessionCloseRS closeSession() throws RemoteException {
 
         if( configuration.getEndpoint().matches( prodRegex ) ) {
-            throw new WorldIsGoingToEndException();
+            throw new ProdEndpointConnectionException();
         }
 
         SessionCloseHelper helper = new SessionCloseHelper();

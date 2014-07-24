@@ -110,8 +110,6 @@
                                     </sequential>
                                 </macrodef>
 
-                                <echo message="dupa?"/>
-
                                 <!-- Clear wsdls directory -->
 
                                 <!--<delete includeemptydirs="true">
@@ -330,10 +328,42 @@
     </build>
 
     <dependencies>
+
         <dependency>
             <groupId>com.sabre.sws.tools</groupId>
             <artifactId>toolkit-commons</artifactId>
             <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-kernel</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-adb</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-http</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-local</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-xmlbeans</artifactId>
+            <version>1.6.2</version>
         </dependency>
     </dependencies>
 

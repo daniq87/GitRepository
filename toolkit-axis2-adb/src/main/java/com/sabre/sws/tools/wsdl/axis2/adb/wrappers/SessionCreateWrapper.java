@@ -2,7 +2,7 @@ package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 
 import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.SessionCreateHelper;
-import com.sabre.sws.tools.wsdl.commons.exceptions.WorldIsGoingToEndException;
+import com.sabre.sws.tools.wsdl.commons.exceptions.ProdEndpointConnectionException;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.stubs.SessionCreateRQServiceStub;
@@ -46,7 +46,7 @@ public class SessionCreateWrapper extends SessionCreateRQServiceStub {
         }
 
         if( configuration.getEndpoint().matches( prodRegex ) ) {
-            throw new WorldIsGoingToEndException();
+            throw new ProdEndpointConnectionException();
         }
 
         SessionCreateHelper helper = new SessionCreateHelper();

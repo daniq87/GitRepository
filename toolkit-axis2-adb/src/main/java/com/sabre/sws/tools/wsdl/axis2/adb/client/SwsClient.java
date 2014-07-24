@@ -31,16 +31,16 @@ public class SwsClient {
 
         LOGGER.log(Level.INFO, "Starting client action");
 
-        MessageHandlerManager.addHandler(new MustUnderstandHandler());
+        MessageHandlerManager.addHandler( new MustUnderstandHandler() );
         MessageHandlerManager.addHandler( new ErrorHandler() );
         MessageHandlerManager.addHandler( new OutputHandler() );
 
-        SessionCreateWrapper sessionCreate = null;
-        SessionCloseWrapper sessionClose = null;
-        AirAvailWrapper airAvail = null;
-        TravelItineraryReadWrapper travelItinerary = null;
-        EnhancedAirBookWrapper enhancedAirBook = null;
-        PassengerDetailsRQWrapper passengerDetails = null;
+        SessionCreateWrapper sessionCreate;
+        SessionCloseWrapper sessionClose;
+        AirAvailWrapper airAvail;
+        TravelItineraryReadWrapper travelItinerary;
+        EnhancedAirBookWrapper enhancedAirBook;
+        PassengerDetailsRQWrapper passengerDetails;
 
         try {
             configFile = new File( configFileLocation );
@@ -48,8 +48,7 @@ public class SwsClient {
             LOGGER.log( Level.INFO, "Configuration loaded" );
         } catch( IOException e ) {
             LOGGER.log(Level.SEVERE, "Error reading configuration from a file", e);
-            e.printStackTrace();
-            System.exit( 1 );
+            return;
         }
 
         try {
@@ -60,18 +59,19 @@ public class SwsClient {
             LOGGER.log(Level.INFO, "\nSession was Created");
 
             // Execute and process OTA_AirAvailRequest
-//            LOGGER.log( Level.INFO, "Executing AirAvail Request..." );
-//            airAvail = new AirAvailWrapper( configuration );
-//            OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 0 );
-//            processAirAvailInfo( airAvailRS );
-//
-//            airAvailRS = airAvail.executeSampleRequest( 1 );
-//            processAirAvailInfo( airAvailRS );
+            LOGGER.log( Level.INFO, "Executing AirAvail Request..." );
+            airAvail = new AirAvailWrapper( configuration );
+
+            OTA_AirAvailServiceStub.OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 0 );
+            processAirAvailInfo( airAvailRS );
+
+            airAvailRS = airAvail.executeSampleRequest( 1 );
+            processAirAvailInfo( airAvailRS );
 
             // Execute and process TravelItinerary request
-//            LOGGER.log( Level.INFO, "Executing TravelItineraryRead request..." );
-//            travelItinerary = new TravelItineraryReadWrapper( configuration );
-//            TravelItineraryReadServiceStub.TravelItineraryReadRS travelItineraryReadRS = travelItinerary.executeSampleRequest();
+            LOGGER.log( Level.INFO, "Executing TravelItineraryRead request..." );
+            travelItinerary = new TravelItineraryReadWrapper( configuration );
+            TravelItineraryReadServiceStub.TravelItineraryReadRS travelItineraryReadRS = travelItinerary.executeSampleRequest();
 
             // Execute and process EnhancedAirBook request
             LOGGER.log( Level.INFO, "Executing EnhancedAirBook request...");
@@ -104,25 +104,29 @@ public class SwsClient {
 
     private static void processAirAvailInfo( OTA_AirAvailServiceStub.OTA_AirAvailRS response ) {
 
+//        System.out.println( response.get );
+
         System.out.println(response.getOriginDestinationOptions().getOriginDestinationOption().length + " possibilites found");
 
         System.out.println( "Travel descriptions: " );
         for( OTA_AirAvailServiceStub.OriginDestinationOption_type0 option: response.getOriginDestinationOptions().getOriginDestinationOption() ) {
 
-            String number           = option.getRPH();
-            String departureDate    = option.getFlightSegment()[0].getDepartureDateTime().toString().replace( 'T', ' ' );
-            String arrivalDate      = option.getFlightSegment()[0].getArrivalDateTime().toString().replace( 'T', ' ' );
-            String eTicketAvailable = option.getFlightSegment()[0].getETicket() ? "yes" : "no";
-            String smokingLabel     = option.getFlightSegment()[0].getSmokingAllowed() ? "" : "not " + "allowed";
+            for( int i = 0; i < option.getFlightSegment().length; ++i ) {
 
-            System.out.print( number + ".\t" + " Departure:\t" + departureDate );
-            System.out.print( ",\tArrival:\t" + arrivalDate );
+                String number = option.getRPH() + "." + String.valueOf( i + 1 );
+                String departureDate = option.getFlightSegment()[i].getDepartureDateTime().toString().replace('T', ' ');
+                String arrivalDate = option.getFlightSegment()[i].getArrivalDateTime().toString().replace('T', ' ');
+                String eTicketAvailable = option.getFlightSegment()[i].getETicket() ? "yes" : "no";
+                String smokingLabel = option.getFlightSegment()[i].getSmokingAllowed() ? "" : "not " + "allowed";
 
-            System.out.print( ",\te-ticket: " + eTicketAvailable + ",\tSmoking: " + smokingLabel );
+                System.out.print(number + ".\t" + " Departure:\t" + departureDate);
+                System.out.print(",\tArrival:\t" + arrivalDate);
 
-            System.out.println( "" );
+                System.out.print(",\te-ticket: " + eTicketAvailable + ",\tSmoking: " + smokingLabel);
+
+                System.out.println("");
+            }
         }
-
     }
 
     private static  void processEnhancedAirBookInfo( EnhancedAirBookServiceStub.EnhancedAirBookRS response ) {

@@ -3,12 +3,8 @@ package com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
+import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import org.apache.axis2.databinding.types.NonNegativeInteger;
-
-import java.text.DateFormatSymbols;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.Random;
 
 import static com.sabre.sws.tools.wsdl.stubs.OTA_AirAvailServiceStub.*;
 
@@ -17,27 +13,8 @@ import static com.sabre.sws.tools.wsdl.stubs.OTA_AirAvailServiceStub.*;
  */
 public class AirAvailHelper {
 
-    private final String timestampFormat = new String( "yyyy-mm-dd_hh:mm:ss:SSS" );
     private final static String actionString = "OTA_AirAvailLLSRQ";
     private final static String versionString = "2.0.0";
-
-    private String getTimestamp() {
-
-        java.util.Date now = new java.util.Date();
-        DateFormatSymbols symbols = DateFormatSymbols.getInstance( new Locale( "PL" ));
-        SimpleDateFormat formatter = new SimpleDateFormat( timestampFormat, symbols );
-        return formatter.format( now );
-    }
-
-    private String longRandomHexString() {
-        StringBuffer buffer = new StringBuffer();
-        Random random = new Random();
-        for( int i = 0; i < 3; ++i ) {
-            buffer.append( Integer.toHexString(random.nextInt(10000000)) );
-        }
-        return buffer.toString();
-    }
-
 
     public NonEmptyString toNonEmptyString( String param ) {
         NonEmptyString instance = new NonEmptyString();
@@ -76,9 +53,9 @@ public class AirAvailHelper {
         instance.setCPAId( toNonEmptyString( configuration.getOrganization() ) );
 
         // Generate and set CONVERSATION_ID element
-        StringBuffer buffer = new StringBuffer( getTimestamp() );
+        StringBuffer buffer = new StringBuffer( Util.getTimestamp() );
         buffer.append( "-" );
-        buffer.append( longRandomHexString() );
+        buffer.append( Util.longRandomHexString() );
         String conversationID = buffer.toString();
 
 //        instance.setConversationId( toNonEmptyString( conversationID ) );
@@ -97,12 +74,12 @@ public class AirAvailHelper {
         // Populate and set MESSAGE_DATA element
         MessageData_type0 messageData = new MessageData_type0();
 
-        String messageID = longRandomHexString();
+        String messageID = Util.longRandomHexString();
         messageData.setMessageId( toNonEmptyString(messageID ) );
 
         Timestamp timestamp = new Timestamp();
-        timestamp.setTimestamp( getTimestamp() );
-        messageData.setTimestamp( getTimestamp() );
+        timestamp.setTimestamp( Util.getTimestamp() );
+        messageData.setTimestamp( Util.getTimestamp() );
 
         messageData.setTimeout( new NonNegativeInteger( "50" ) );
 
