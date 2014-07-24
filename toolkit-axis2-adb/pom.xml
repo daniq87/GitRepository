@@ -1,0 +1,340 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>wsdl-toolkit</artifactId>
+        <groupId>com.sabre.sws.tools</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>toolkit-axis2-adb</artifactId>
+    <packaging>jar</packaging>
+
+    <name>toolkit-axis2-adb</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+
+            <!--Clean Plugin -->
+            <!--Deletes stub files, if any-->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.4.1</version>
+                <executions>
+                    <execution>
+                        <phase>clean</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <verbose>true</verbose>
+                    <filesets>
+                        <fileset>
+                            <directory>target/generated-sources/stubs</directory>
+                            <includes>
+                                <include>*.java</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <!-- Antrun Plugin - Download -->
+            <!-- Downloads necessary wsdl and schema files -->
+
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+
+                    <!-- Initalization and downloading during 'initialize' maven phase -->
+                    <execution>
+                        <id>download-files</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+
+                            <tasks>
+
+                                <!-- Macros definitions -->
+
+                                <macrodef name="copy_common_schemas">
+                                    <attribute name="todir"/>
+                                    <sequential>
+                                        <copy todir="@{todir}">
+                                            <fileset dir="target/common_schemas" />
+                                        </copy>
+                                    </sequential>
+                                </macrodef>
+
+                                <macrodef name="download_swso_schemas">
+                                    <attribute name="servicename" />
+                                    <attribute name="serviceversion" />
+                                    <sequential>
+                                        <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/@{servicename}@{serviceversion}RQ.wsdl" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.wsdl" />
+                                        <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/@{servicename}@{serviceversion}RQ.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.xsd" />
+                                        <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/@{servicename}@{serviceversion}RS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RS.xsd" />
+                                        <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/@{servicename}@{serviceversion}RQRS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQRS.xsd" />
+                                    </sequential>
+                                </macrodef>
+
+                                <macrodef name="download_sws_schemas">
+                                    <attribute name="servicename" />
+                                    <attribute name="serviceversion" />
+                                    <sequential>
+                                        <get src="http://wsdl-crt.int.sabre.com/wsdl/tpfc/@{servicename}@{serviceversion}RQ.wsdl" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.wsdl" />
+                                        <get src="http://wsdl-crt.int.sabre.com/wsdl/tpfc/@{servicename}@{serviceversion}RQ.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.xsd" />
+                                        <get src="http://wsdl-crt.int.sabre.com/wsdl/tpfc/@{servicename}@{serviceversion}RS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RS.xsd" />
+                                        <get src="http://wsdl-crt.int.sabre.com/wsdl/tpfc/@{servicename}@{serviceversion}RQRS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQRS.xsd" />
+                                    </sequential>
+                                </macrodef>
+
+                                <macrodef name="download_session_schemas">
+                                    <attribute name="servicename" />
+                                    <sequential>
+                                        <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/@{servicename}RQ.wsdl" dest="target/wsdls/@{servicename}RQ/@{servicename}RQ.wsdl" />
+                                        <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/@{servicename}RQ.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}RQ.xsd" />
+                                        <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/@{servicename}RS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}RS.xsd" />
+                                        <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/@{servicename}RQRS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}RQRS.xsd" />
+                                    </sequential>
+                                </macrodef>
+
+                                <echo message="dupa?"/>
+
+                                <!-- Clear wsdls directory -->
+
+                                <!--<delete includeemptydirs="true">
+                                    <fileset dir="target/wsdls"  defaultexcludes="false"/>
+                                </delete>-->
+
+                                <!-- Prepare diretocries for schema files for each service -->
+
+                                <mkdir dir="target/wsdls" />
+
+                                <mkdir dir="target/wsdls/EnhancedAirBookRQ"/>
+                                <mkdir dir="target/wsdls/PassengerDetailsRQ"/>
+                                <mkdir dir="target/wsdls/TravelItineraryReadLLSRQ"/>
+                                <mkdir dir="target/wsdls/AirSeatLLSRQ"/>
+                                <mkdir dir="target/wsdls/OTA_AirAvailLLSRQ"/>
+                                <mkdir dir="target/wsdls/SessionCloseRQ"/>
+                                <mkdir dir="target/wsdls/SessionCreateRQ"/>
+
+                                <mkdir dir="target/common_schemas" />
+
+                                <!-- Download common schemas -->
+
+                                <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/envelope.xsd" dest="target/common_schemas/envelope.xsd"/>
+                                <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/msg-header-2_0.xsd" dest="target/common_schemas/msg-header-2_0.xsd"/>
+                                <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/STL_For_SabreProtocol_v.1.2.0.xsd" dest="target/common_schemas/STL_For_SabreProtocol_v.1.2.0.xsd"/>
+                                <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/STL_Header_v.1.2.0.xsd" dest="target/common_schemas/STL_Header_v.1.2.0.xsd"/>
+                                <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/sws_common.xsd" dest="target/common_schemas/sws_common.xsd"/>
+                                <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/wsse.xsd" dest="target/common_schemas/wsse.xsd"/>
+                                <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/wsse2.xsd" dest="target/common_schemas/wsse2.xsd"/>
+                                <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/xlink.xsd" dest="target/common_schemas/xlink.xsd"/>
+                                <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/xml.xsd" dest="target/common_schemas/xml.xsd"/>
+                                <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/xmldsig-core-schema.xsd" dest="target/common_schemas/xmldsig-core-schema.xsd"/>
+
+                                <!-- Copy common schemas to each service's directory-->
+
+                                <copy_common_schemas todir="target/wsdls/EnhancedAirBookRQ" />
+                                <copy_common_schemas todir="target/wsdls/EnhancedAirBookRQ"/>
+                                <copy_common_schemas todir="target/wsdls/PassengerDetailsRQ"/>
+                                <copy_common_schemas todir="target/wsdls/TravelItineraryReadLLSRQ"/>
+                                <copy_common_schemas todir="target/wsdls/AirSeatLLSRQ"/>
+                                <copy_common_schemas todir="target/wsdls/OTA_AirAvailLLSRQ"/>
+                                <copy_common_schemas todir="target/wsdls/SessionCloseRQ"/>
+                                <copy_common_schemas todir="target/wsdls/SessionCreateRQ"/>
+
+                                <!-- Download service specific schemas -->
+
+                                <download_swso_schemas servicename="EnhancedAirBook" serviceversion="2.5.0" />
+                                <download_swso_schemas servicename="PassengerDetails" serviceversion="2.2.1" />
+
+                                <download_sws_schemas servicename="OTA_AirAvailLLS" serviceversion="2.1.1" />
+                                <download_sws_schemas servicename="TravelItineraryReadLLS" serviceversion="2.0.0" />
+
+                                <download_session_schemas servicename="SessionClose" />
+                                <download_session_schemas servicename="SessionCreate" />
+
+                            </tasks>
+                        </configuration>
+                    </execution>
+
+
+                    <execution>
+                        <id>generate-stubs</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Generating stubs during 'generate-source' maven phase -->
+
+            <!-- Axis2 WSDL-2-JAVA Plugin
+            Executing plugin goal will auto-generate Java stubs from .wsdl files
+            .wsdl files should be located in target/wsdls/<service_name>/<service_name><service_version>.wsdl -->
+
+            <plugin>
+                <groupId>org.apache.axis2</groupId>
+                <artifactId>axis2-wsdl2code-maven-plugin</artifactId>
+                <version>1.6.2</version>
+                <executions>
+
+                <!-- Orchestrated Services -->
+
+                    <!-- EnhancedAirBook (Orchestrated) -->
+
+                    <execution>
+                        <id>EnhancedAirBookRQ</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
+                            <wsdlFile>target/wsdls/EnhancedAirBookRQ/EnhancedAirBook2.5.0RQ.wsdl</wsdlFile>
+                            <databindingName>adb</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
+                    <!-- PassengerDetails (Orchestrated) -->
+
+                    <execution>
+                        <id>PassengerDetailsRQ</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
+                            <wsdlFile>target/wsdls/PassengerDetailsRQ/PassengerDetails2.2.1RQ.wsdl</wsdlFile>
+                            <databindingName>adb</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
+                <!-- Low Level Services -->
+
+                    <!-- TravelItineraryReadLLS -->
+                    <execution>
+                        <id>TravelItineraryReadLLSRQ</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
+                            <wsdlFile>target/wsdls/TravelItineraryReadLLSRQ/TravelItineraryReadLLS2.0.0RQ.wsdl</wsdlFile>
+                            <databindingName>adb</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
+                    <!-- OTA_AirAvailLLS -->
+                    <execution>
+                        <id>AirAvail</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
+                            <wsdlFile>target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS2.1.1RQ.wsdl</wsdlFile>
+                            <databindingName>adb</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
+                    <!-- SessionCloseRQ -->
+                    <execution>
+                        <id>SessionClose</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
+                            <wsdlFile>target/wsdls/SessionCloseRQ/SessionCloseRQ.wsdl</wsdlFile>
+                            <databindingName>adb</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
+                    <!-- SessionCreateRQ -->
+                    <execution>
+                        <id>SessionCreate</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
+                            <wsdlFile>target/wsdls/SessionCreateRQ/SessionCreateRQ.wsdl</wsdlFile>
+                            <databindingName>adb</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Build-helper plugin -->
+            <!-- Adds generated .java files to source dir -->
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.9</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/generated-sources/stubs</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sabre.sws.tools</groupId>
+            <artifactId>toolkit-commons</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -5,21 +5,51 @@
     <groupId>com.sabre.sws.tools</groupId>
     <artifactId>wsdl-toolkit</artifactId>
     <version>1.0.0</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>toolkit-commons</module>
+        <module>toolkit-axis2-adb</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>wsdl-toolkit</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <build>
         <resources>
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>toolkit-axis2-adb/src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
         <plugins>
+
+            <!-- Maven Properties Plugin -->
+            <!-- Allows to store maven properties in dedicated external file -->
+
+           <!-- <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>./maven.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
+
+            <!-- Compiler Plugin -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -32,168 +62,6 @@
                 </configuration>
             </plugin>
 
-            <!--Clean Plugin Deletes stub files, if any-->
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.4.1</version>
-                <executions>
-                    <execution>
-                        <phase>clean</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <verbose>true</verbose>
-                    <filesets>
-                        <fileset>
-                            <directory>./src/main/java/com/sabre/sws/tools/wsdl/stubs</directory>
-                            <includes>
-                                <include>*.java</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-
- <!--       Axis2 WSDL-2-JAVA Plugin
-            Executing plugin goal will auto-generate Java stubs from .wsdl files
-            .wsdl files should be located in src/res/wsdl/<service_name>/<service_name>.wsdl-->
-
-            <plugin>
-                <groupId>org.apache.axis2</groupId>
-                <artifactId>axis2-wsdl2code-maven-plugin</artifactId>
-                <version>1.6.2</version>
-                <executions>
-
-                <!-- Orchestrated Services -->
-
-                    <!-- EnhancedAirBook (Orchestrated) -->
-
-                    <execution>
-                        <id>EnhancedAirBookRQ</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
-                            <wsdlFile>src/main/res/wsdl/EnhancedAirBookRQ/EnhancedAirBook2.5.0RQ.wsdl</wsdlFile>
-                            <databindingName>adb</databindingName>
-                            <outputDirectory>src/main/java</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
-
-                    <!-- PassengerDetails (Orchestrated) -->
-
-                    <execution>
-                        <id>PassengerDetailsRQ</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
-                            <wsdlFile>src/main/res/wsdl/PassengerDetailsRQ/PassengerDetails2.2.1RQ.wsdl</wsdlFile>
-                            <databindingName>adb</databindingName>
-                            <outputDirectory>src/main/java</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
-
-                <!-- Low Level Services -->
-
-                    <!-- TravelItineraryReadLLS -->
-                    <execution>
-                        <id>TravelItineraryReadLLS</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
-                            <wsdlFile>src/main/res/wsdl/TravelItineraryReadLLS/TravelItineraryReadLLS2.0.0RQ.wsdl</wsdlFile>
-                            <databindingName>adb</databindingName>
-                            <outputDirectory>src/main/java</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
-
-                    <!-- AirSeatLLS -->
-                    <execution>
-                        <id>AirSeat</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
-                            <wsdlFile>src/main/res/wsdl/AirSeatLLS/AirSeatLLS2.0.0RQ.wsdl</wsdlFile>
-                            <databindingName>adb</databindingName>
-                            <outputDirectory>src/main/java</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
-
-                    <!-- OTA_AirAvailLLS -->
-                    <execution>
-                        <id>AirAvail</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
-                            <wsdlFile>src/main/res/wsdl/OTA_AirAvailLLS/OTA_AirAvailLLS2.1.1RQ.wsdl</wsdlFile>
-                            <databindingName>adb</databindingName>
-                            <outputDirectory>src/main/java</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
-
-                    <!-- OTA_AirScheduleLLS -->
-                    <execution>
-                        <id>AirSchedule</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
-                            <wsdlFile>src/main/res/wsdl/OTA_AirScheduleLLS/OTA_AirScheduleLLS2.0.0RQ.wsdl</wsdlFile>
-                            <databindingName>adb</databindingName>
-                            <outputDirectory>src/main/java</outputDirectory>
-                            <flattenFiles>false</flattenFiles>
-                        </configuration>
-                    </execution>
-
-                    <!-- SessionCloseRQ -->
-                    <execution>
-                        <id>SessionClose</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
-                            <wsdlFile>src/main/res/wsdl/SessionCloseRQ/SessionCloseRQ.wsdl</wsdlFile>
-                            <databindingName>adb</databindingName>
-                            <outputDirectory>src/main/java</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
-
-                    <!-- SessionCreateRQ -->
-                    <execution>
-                        <id>SessionCreate</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs</packageName>
-                            <wsdlFile>src/main/res/wsdl/SessionCreateRQ/SessionCreateRQ.wsdl</wsdlFile>
-                            <databindingName>adb</databindingName>
-                            <outputDirectory>src/main/java</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
 
     </build>
@@ -230,6 +98,12 @@
 
     </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
