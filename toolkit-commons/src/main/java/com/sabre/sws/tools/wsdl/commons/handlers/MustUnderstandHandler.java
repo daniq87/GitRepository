@@ -1,7 +1,6 @@
 package com.sabre.sws.tools.wsdl.commons.handlers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
-import org.apache.axiom.soap.RolePlayer;
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axiom.soap.SOAPHeader;
 import org.apache.axiom.soap.SOAPHeaderBlock;
@@ -11,6 +10,7 @@ import org.apache.axis2.engine.Handler;
 import org.apache.axis2.handlers.AbstractHandler;
 
 import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -34,41 +34,42 @@ public class MustUnderstandHandler extends AbstractHandler {
             return InvocationResponse.CONTINUE;
         }
 
-        RolePlayer rolePlayer = (RolePlayer) msgContext.getConfigurationContext().getAxisConfiguration().getParameterValue( "rolePlayer" );
+        XMLStreamReader streamReader =  header.getXMLStreamReader();
 
-        Iterator headerBlocks = header.getHeadersToProcess( rolePlayer );
+        try {
 
-        // XMLStreamReader parser = envelope.getXMLStreamReader();
-        // StAXStreamBuilder builder = new StAXStreamBuilder();
+            boolean isSessionCreateRS = false;
 
-        while( headerBlocks.hasNext() ) {
-            SOAPHeaderBlock headerBlock = (SOAPHeaderBlock) headerBlocks.next();
-
-            XMLStreamReader streamReader =  headerBlock.getXMLStreamReader();
-
-            try {                   // TODO: Should check, if it is SessionCreateRQ
-                while( streamReader.hasNext() ) {
-                    if( streamReader.getEventType() == XMLStreamConstants.START_ELEMENT ) {
-                        if( streamReader.hasName() ) {
-                            if( streamReader.getName().getLocalPart().equals( "BinarySecurityToken" ) ) {
-                                SessionManager.getInstance().startSession( streamReader.getElementText() );
-                                LOGGER.log( Level.INFO,
-                                            "Acquired session token from service",
-                                            SessionManager.getInstance().getToken()
-                                );
-                            } else if( streamReader.getName().getLocalPart().equals( "Action" ) ) {
-                                LOGGER.log( Level.INFO, streamReader.getElementText() );
+            while( streamReader.hasNext() ) {
+                if( streamReader.getEventType() == XMLStreamConstants.START_ELEMENT ) {
+                    if( streamReader.hasName() ) {
+                        if( streamReader.getName().getLocalPart().equals( "Action" ) ) {
+                            if( streamReader.getElementText().equals( "SessionCreateRS" ) ) {
+                                isSessionCreateRS = true;
                             }
+                            continue;
                         }
-
+                        if( isSessionCreateRS && streamReader.getName().getLocalPart().equals( "BinarySecurityToken" ) ) {
+                            SessionManager.getInstance().startSession( streamReader.getElementText() );
+                            LOGGER.log( Level.INFO,
+                                        "Acquired session token from service",
+                                        SessionManager.getInstance().getToken()
+                            );
+                        } else if( streamReader.getName().getLocalPart().equals( "Action" ) ) {
+                            LOGGER.log( Level.INFO, streamReader.getElementText() );
+                        }
                     }
-                    streamReader.next();
+
                 }
-            } catch( Exception e ) {    // TODO: Catch less generic exception
-                e.printStackTrace();
-                LOGGER.log( Level.SEVERE, "Error parsing message header", e );
+                streamReader.next();
             }
-            headerBlock.setProcessed();
+        } catch( XMLStreamException e ) {
+            LOGGER.log( Level.SEVERE, "Error parsing message header", e );
+        }
+
+        Iterator headerBlocksIterator = header.getHeadersToProcess( null );
+        while( headerBlocksIterator.hasNext() ) {
+            ((SOAPHeaderBlock) headerBlocksIterator.next()).setProcessed();
         }
 
         return InvocationResponse.CONTINUE;
