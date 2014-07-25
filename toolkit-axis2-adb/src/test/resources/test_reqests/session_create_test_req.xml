@@ -1,0 +1,61 @@
+<Header>
+    <MessageHeader mustUnderstand="0">
+        <From>
+            <PartyId>
+                SomeString
+            </PartyId>
+        </From>
+        <To>
+            <PartyId>
+                SomeString
+            </PartyId>
+        </To>
+        <CPAId>
+            7TZA
+        </CPAId>
+        <ConversationId>
+            conv-ID
+        </ConversationId>
+        <Service>
+            SessionCreateRQ
+        </Service>
+        <Action>
+            SessionCreateRQ
+        </Action>
+        <MessageData>
+            <MessageId>
+                77d833751908265e9f
+            </MessageId>
+            <Timestamp>
+                2014-20-25_10:20:26:580
+            </Timestamp>
+            <Timeout>
+                50
+            </Timeout>
+        </MessageData>
+    </MessageHeader>
+    <Security mustUnderstand="0">
+        <UsernameToken>
+            <Username>
+                7971
+            </Username>
+            <Password>
+                SWS2010
+            </Password>
+            <Organization>
+                7TZA
+            </Organization>
+            <Domain>
+                DEFAULT
+            </Domain>
+        </UsernameToken>
+    </Security>
+</Header>
+<Body>
+<SessionCreateRQ returnContextID="false">
+    <POS>
+        <Source PseudoCityCode="7TZA">
+        </Source>
+    </POS>
+</SessionCreateRQ>
+</Body>

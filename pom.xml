@@ -5,6 +5,7 @@
     <groupId>com.sabre.sws.tools</groupId>
     <artifactId>wsdl-toolkit</artifactId>
     <version>1.0.0</version>
+
     <modules>
         <module>toolkit-commons</module>
         <module>toolkit-axis2-adb</module>
@@ -15,8 +16,15 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Services versions -->
+        <OTA_AirAvailVersion>2.1.1</OTA_AirAvailVersion>
+        <TravelItineraryReadVersion>2.0.0</TravelItineraryReadVersion>
+        <EnhancedAirBookVersion>2.5.0</EnhancedAirBookVersion>
+        <PassengerDetailsVersion>2.2.1</PassengerDetailsVersion>
+
     </properties>
-    
+
      <repositories>
         <repository>
             <id>sabre.public</id>
@@ -65,7 +73,7 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-    
+
     <build>
         <resources>
             <resource>
@@ -74,28 +82,6 @@
             </resource>
         </resources>
         <plugins>
-
-            <!-- Maven Properties Plugin -->
-            <!-- Allows to store maven properties in dedicated external file -->
-
-           <!-- <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0-alpha-2</version>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>read-project-properties</goal>
-                        </goals>
-                        <configuration>
-                            <files>
-                                <file>./maven.properties</file>
-                            </files>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>-->
 
             <!-- Compiler Plugin -->
 
@@ -150,26 +136,38 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
+            <version>4.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-impl</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-api</artifactId>
+            <version>1.2.14</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <scope>test</scope>
+
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <scope>test</scope>
+
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.mock-server</groupId>
+            <artifactId>mockserver-netty</artifactId>
+            <version>3.4</version>
+        </dependency>
 
         <dependency>
             <groupId>org.jdom</groupId>

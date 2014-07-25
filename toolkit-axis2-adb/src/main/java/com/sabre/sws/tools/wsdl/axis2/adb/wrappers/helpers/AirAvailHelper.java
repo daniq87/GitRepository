@@ -16,7 +16,7 @@ public class AirAvailHelper {
     private final static String actionString = "OTA_AirAvailLLSRQ";
     private final static String versionString = "2.0.0";
 
-    public NonEmptyString toNonEmptyString( String param ) {
+    private NonEmptyString toNonEmptyString( String param ) {
         NonEmptyString instance = new NonEmptyString();
         instance.setNonEmptyString( param );
         return instance;

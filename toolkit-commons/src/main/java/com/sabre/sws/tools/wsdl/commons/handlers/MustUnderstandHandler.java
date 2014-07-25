@@ -44,19 +44,20 @@ public class MustUnderstandHandler extends AbstractHandler {
                 if( streamReader.getEventType() == XMLStreamConstants.START_ELEMENT ) {
                     if( streamReader.hasName() ) {
                         if( streamReader.getName().getLocalPart().equals( "Action" ) ) {
-                            if( streamReader.getElementText().equals( "SessionCreateRS" ) ) {
+                            String elementText = streamReader.getElementText();
+                            if( elementText.equals( "SessionCreateRS" ) ) {
                                 isSessionCreateRS = true;
+                            } else if( elementText.equals( "SessionCloseRS" ) ) {
+                                SessionManager.getInstance().endSession();
                             }
-                            continue;
                         }
                         if( isSessionCreateRS && streamReader.getName().getLocalPart().equals( "BinarySecurityToken" ) ) {
                             SessionManager.getInstance().startSession( streamReader.getElementText() );
+                            LOGGER.log( Level.INFO, "\n\nStarted session" );
                             LOGGER.log( Level.INFO,
-                                        "Acquired session token from service",
+                                        "Acquired session token from service ",
                                         SessionManager.getInstance().getToken()
                             );
-                        } else if( streamReader.getName().getLocalPart().equals( "Action" ) ) {
-                            LOGGER.log( Level.INFO, streamReader.getElementText() );
                         }
                     }
 
@@ -67,7 +68,7 @@ public class MustUnderstandHandler extends AbstractHandler {
             LOGGER.log( Level.SEVERE, "Error parsing message header", e );
         }
 
-        Iterator headerBlocksIterator = header.getHeadersToProcess( null );
+        Iterator headerBlocksIterator = header.getHeadersToProcess(null);
         while( headerBlocksIterator.hasNext() ) {
             ((SOAPHeaderBlock) headerBlocksIterator.next()).setProcessed();
         }

@@ -75,6 +75,9 @@ public class SessionCreateWrapper extends SessionCreateRQServiceStub {
                     }
                 });
 
+        System.setProperty( "http.proxyHost", "http://www-ad-proxy.sabre.com" );
+        System.setProperty( "http.proxyPort", "80" );
+
         System.setProperty( "http.proxyUser", authUser );
         System.setProperty( "http.proxyPassword", authPassword );
 

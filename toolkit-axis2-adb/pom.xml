@@ -23,7 +23,7 @@
             <!--Clean Plugin -->
             <!--Deletes stub files, if any-->
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>2.4.1</version>
@@ -44,19 +44,19 @@
                         </fileset>
                     </filesets>
                 </configuration>
-            </plugin>
+            </plugin>-->
 
             <!-- Antrun Plugin - Download -->
             <!-- Downloads necessary wsdl and schema files -->
 
 
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
 
-                    <!-- Initalization and downloading during 'initialize' maven phase -->
+                    &lt;!&ndash; Initalization and downloading during 'initialize' maven phase &ndash;&gt;
                     <execution>
                         <id>download-files</id>
                         <phase>initialize</phase>
@@ -67,7 +67,7 @@
 
                             <tasks>
 
-                                <!-- Macros definitions -->
+                                &lt;!&ndash; Macros definitions &ndash;&gt;
 
                                 <macrodef name="copy_common_schemas">
                                     <attribute name="todir"/>
@@ -110,13 +110,13 @@
                                     </sequential>
                                 </macrodef>
 
-                                <!-- Clear wsdls directory -->
+                                &lt;!&ndash; Clear wsdls directory &ndash;&gt;
 
-                                <!--<delete includeemptydirs="true">
+                                &lt;!&ndash;<delete includeemptydirs="true">
                                     <fileset dir="target/wsdls"  defaultexcludes="false"/>
-                                </delete>-->
+                                </delete>&ndash;&gt;
 
-                                <!-- Prepare diretocries for schema files for each service -->
+                                &lt;!&ndash; Prepare diretocries for schema files for each service &ndash;&gt;
 
                                 <mkdir dir="target/wsdls" />
 
@@ -130,7 +130,7 @@
 
                                 <mkdir dir="target/common_schemas" />
 
-                                <!-- Download common schemas -->
+                                &lt;!&ndash; Download common schemas &ndash;&gt;
 
                                 <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/envelope.xsd" dest="target/common_schemas/envelope.xsd"/>
                                 <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/msg-header-2_0.xsd" dest="target/common_schemas/msg-header-2_0.xsd"/>
@@ -143,7 +143,7 @@
                                 <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/xml.xsd" dest="target/common_schemas/xml.xsd"/>
                                 <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/xmldsig-core-schema.xsd" dest="target/common_schemas/xmldsig-core-schema.xsd"/>
 
-                                <!-- Copy common schemas to each service's directory-->
+                                &lt;!&ndash; Copy common schemas to each service's directory&ndash;&gt;
 
                                 <copy_common_schemas todir="target/wsdls/EnhancedAirBookRQ" />
                                 <copy_common_schemas todir="target/wsdls/EnhancedAirBookRQ"/>
@@ -154,13 +154,13 @@
                                 <copy_common_schemas todir="target/wsdls/SessionCloseRQ"/>
                                 <copy_common_schemas todir="target/wsdls/SessionCreateRQ"/>
 
-                                <!-- Download service specific schemas -->
+                                &lt;!&ndash; Download service specific schemas &ndash;&gt;
 
-                                <download_swso_schemas servicename="EnhancedAirBook" serviceversion="2.5.0" />
-                                <download_swso_schemas servicename="PassengerDetails" serviceversion="2.2.1" />
+                                <download_swso_schemas servicename="EnhancedAirBook" serviceversion="${EnhancedAirBookVersion}" />
+                                <download_swso_schemas servicename="PassengerDetails" serviceversion="${PassengerDetailsVersion}" />
 
-                                <download_sws_schemas servicename="OTA_AirAvailLLS" serviceversion="2.1.1" />
-                                <download_sws_schemas servicename="TravelItineraryReadLLS" serviceversion="2.0.0" />
+                                <download_sws_schemas servicename="OTA_AirAvailLLS" serviceversion="${OTA_AirAvailVersion}" />
+                                <download_sws_schemas servicename="TravelItineraryReadLLS" serviceversion="${TravelItineraryReadVersion}" />
 
                                 <download_session_schemas servicename="SessionClose" />
                                 <download_session_schemas servicename="SessionCreate" />
@@ -184,22 +184,22 @@
                     </execution>
                 </executions>
             </plugin>
-
+-->
             <!-- Generating stubs during 'generate-source' maven phase -->
 
             <!-- Axis2 WSDL-2-JAVA Plugin
             Executing plugin goal will auto-generate Java stubs from .wsdl files
             .wsdl files should be located in target/wsdls/<service_name>/<service_name><service_version>.wsdl -->
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.axis2</groupId>
                 <artifactId>axis2-wsdl2code-maven-plugin</artifactId>
                 <version>1.6.2</version>
                 <executions>
 
-                <!-- Orchestrated Services -->
+                &lt;!&ndash; Orchestrated Services &ndash;&gt;
 
-                    <!-- EnhancedAirBook (Orchestrated) -->
+                    &lt;!&ndash; EnhancedAirBook (Orchestrated) &ndash;&gt;
 
                     <execution>
                         <id>EnhancedAirBookRQ</id>
@@ -216,7 +216,7 @@
                         </configuration>
                     </execution>
 
-                    <!-- PassengerDetails (Orchestrated) -->
+                    &lt;!&ndash; PassengerDetails (Orchestrated) &ndash;&gt;
 
                     <execution>
                         <id>PassengerDetailsRQ</id>
@@ -233,9 +233,9 @@
                         </configuration>
                     </execution>
 
-                <!-- Low Level Services -->
+                &lt;!&ndash; Low Level Services &ndash;&gt;
 
-                    <!-- TravelItineraryReadLLS -->
+                    &lt;!&ndash; TravelItineraryReadLLS &ndash;&gt;
                     <execution>
                         <id>TravelItineraryReadLLSRQ</id>
                         <goals>
@@ -251,7 +251,7 @@
                         </configuration>
                     </execution>
 
-                    <!-- OTA_AirAvailLLS -->
+                    &lt;!&ndash; OTA_AirAvailLLS &ndash;&gt;
                     <execution>
                         <id>AirAvail</id>
                         <goals>
@@ -267,7 +267,7 @@
                         </configuration>
                     </execution>
 
-                    <!-- SessionCloseRQ -->
+                    &lt;!&ndash; SessionCloseRQ &ndash;&gt;
                     <execution>
                         <id>SessionClose</id>
                         <goals>
@@ -283,7 +283,7 @@
                         </configuration>
                     </execution>
 
-                    <!-- SessionCreateRQ -->
+                    &lt;!&ndash; SessionCreateRQ &ndash;&gt;
                     <execution>
                         <id>SessionCreate</id>
                         <goals>
@@ -299,12 +299,12 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
             <!-- Build-helper plugin -->
             <!-- Adds generated .java files to source dir -->
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <version>1.9</version>
@@ -322,6 +322,12 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>-->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
             </plugin>
 
         </plugins>
@@ -333,6 +339,12 @@
             <groupId>com.sabre.sws.tools</groupId>
             <artifactId>toolkit-commons</artifactId>
             <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.3</version>
         </dependency>
 
         <dependency>
@@ -360,11 +372,7 @@
             <artifactId>axis2-transport-local</artifactId>
             <version>1.6.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2-xmlbeans</artifactId>
-            <version>1.6.2</version>
-        </dependency>
+
     </dependencies>
 
 </project>

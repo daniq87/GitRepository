@@ -9,8 +9,6 @@ public class SessionManager {
     private boolean sessionIsActive = false;
     private String sessionToken;
 
-    private IConfigurationProvider configurationProvider;
-
     private SessionManager() {}
 
     public static SessionManager getInstance() {
@@ -22,6 +20,8 @@ public class SessionManager {
     }
 
     public void startSession( String token ) {
+
+        this.sessionIsActive = true;
         this.sessionToken = token;
     }
 
