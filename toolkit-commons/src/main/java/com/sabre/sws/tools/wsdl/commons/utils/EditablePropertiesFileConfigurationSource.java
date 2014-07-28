@@ -10,18 +10,47 @@ import java.util.Properties;
  * Created by SG0221139 on 7/11/2014.
  */
 
-public class PropertiesFileConfigurationSource implements IConfigurationProvider {
+public class EditablePropertiesFileConfigurationSource implements IEditableConfiguration {
 
-    private final String username;
-    private final String password;
-    private final String organization;
-    private final String domain;
-    private final String PCC;
+    private String username;
+    private String password;
+    private String organization;
+    private String domain;
 
-    private final String endpoint;
+    private String PCC;
+    private String endpoint;
     private final int maxConnections;
 
-    public PropertiesFileConfigurationSource( File file ) throws IOException {
+
+    @Override
+    public void setPCC(String PCC) {
+        this.PCC = PCC;
+    }
+
+    @Override
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+    @Override
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    @Override
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public void setEndpoint(String endpoint) { this.endpoint = endpoint; }
+
+    public EditablePropertiesFileConfigurationSource( File file ) throws IOException {
 
         Properties properties = new Properties();
 
@@ -43,7 +72,7 @@ public class PropertiesFileConfigurationSource implements IConfigurationProvider
     }
 
 
-    public PropertiesFileConfigurationSource( String propertiesFileLocation ) throws IOException {
+    public EditablePropertiesFileConfigurationSource( String propertiesFileLocation ) throws IOException {
         this(new File(propertiesFileLocation));
     }
 

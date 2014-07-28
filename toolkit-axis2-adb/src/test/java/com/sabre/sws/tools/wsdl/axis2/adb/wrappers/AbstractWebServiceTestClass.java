@@ -1,7 +1,7 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 
-import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
-import com.sabre.sws.tools.wsdl.commons.utils.PropertiesFileConfigurationSource;
+import com.sabre.sws.tools.wsdl.commons.utils.EditablePropertiesFileConfigurationSource;
+import com.sabre.sws.tools.wsdl.commons.utils.IEditableConfiguration;
 import org.apache.axis2.AxisFault;
 import org.junit.After;
 import org.junit.Before;
@@ -10,6 +10,7 @@ import org.mockserver.integration.ClientAndServer;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.ServerSocket;
 
 import static org.mockserver.integration.ClientAndProxy.startClientAndProxy;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
@@ -23,7 +24,10 @@ public class AbstractWebServiceTestClass {
     protected static ClientAndServer mockServer;
 
     protected String configFileLocation = "src/test/resources/connection.properties";
-    protected static IConfigurationProvider configuration = null;
+    protected static IEditableConfiguration configuration = null;
+
+    private static int serverPortNumber;
+    private static int proxyPortNumber;
 
     @Before
     public void startProxy() throws AxisFault {
@@ -32,13 +36,30 @@ public class AbstractWebServiceTestClass {
         File configFile;
         try {
             configFile = new File( configFileLocation );
-            configuration = new PropertiesFileConfigurationSource( configFile );
+            configuration = new EditablePropertiesFileConfigurationSource( configFile );
         } catch( IOException e ) {
             e.printStackTrace();
         }
 
-        mockServer = startClientAndServer(8080);
-        proxy = startClientAndProxy(9090);
+        ServerSocket ssa = null;
+        ServerSocket ssb = null;
+
+        try {
+            // ServerSocker( 0 ) constructor finds and allocates free port at runtime
+            ssa = new ServerSocket( 0 );
+            ssb = new ServerSocket( 0 );
+            serverPortNumber = ssa.getLocalPort();
+            proxyPortNumber = ssb.getLocalPort();
+            ssa.close();
+            ssb.close();
+            configuration.setEndpoint( "http://localhost:" + Integer.toString( serverPortNumber ) );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mockServer = startClientAndServer( serverPortNumber );
+        System.out.println( "Port number: " + serverPortNumber );
+        proxy = startClientAndProxy( proxyPortNumber );
     }
 
     @After
