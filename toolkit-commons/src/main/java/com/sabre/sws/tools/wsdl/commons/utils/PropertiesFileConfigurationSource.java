@@ -21,11 +21,6 @@ public class PropertiesFileConfigurationSource implements IConfigurationProvider
     private final String endpoint;
     private final int maxConnections;
 
-    private final boolean proxyRequired;
-    private final String proxyPassword;
-    private final String proxyUsername;
-
-
     public PropertiesFileConfigurationSource( File file ) throws IOException {
 
         Properties properties = new Properties();
@@ -42,10 +37,6 @@ public class PropertiesFileConfigurationSource implements IConfigurationProvider
 
         this.endpoint = properties.getProperty( "endpoint" );
         this.maxConnections = Integer.parseInt( properties.getProperty("max_connections") );
-
-        this.proxyRequired = properties.getProperty( "proxy_required" ).equals( "true" );
-        this.proxyPassword = properties.getProperty("proxy_password");
-        this.proxyUsername = properties.getProperty( "proxy_username" );
 
         inputStream.close();
 
