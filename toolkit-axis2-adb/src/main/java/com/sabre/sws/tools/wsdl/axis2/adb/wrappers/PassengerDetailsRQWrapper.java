@@ -4,6 +4,7 @@ import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.PassengerDetailsHelper;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.stubs.PassengerDetailsServiceStub;
+import com.sabre.sws.tools.wsdl.stubs.Type_type0Factory;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
@@ -47,7 +48,7 @@ public class PassengerDetailsRQWrapper extends PassengerDetailsServiceStub {
         MiscSegmentSellRQ_type0 miscSegmentSellRQ = new MiscSegmentSellRQ_type0();
         miscSegmentSellRQ.setHaltOnError( true );
         MiscSegment_type0 miscSeg = new MiscSegment_type0();
-        miscSeg.setType( new Type_type0( "OTH", false ) );
+        miscSeg.setType( Type_type0Factory.getNewType_type0( "OTH", false ) );
         miscSeg.setText("RETENTION SEGMENT");
         miscSeg.setDepartureDateTime(new Date() {{
             setDate("12-21");
@@ -109,10 +110,9 @@ public class PassengerDetailsRQWrapper extends PassengerDetailsServiceStub {
         for( int i = 0; i < 12; ++i ) {
             remarks[i] = new Remark_type0();
         }
-
-        remarks[0].setType( new Type_type1( "Alpha-Coded", false ) );
+        /*remarks[0].setType( Type_type1 ( "Alpha-Coded", false ) );
         remarks[0].setCode( "H" );
-        remarks[1].setType( new Type_type1( "Client Address", false ) );
+        remarks[1].setType( Type_type1( "Client Address", false ) );
         remarks[2].setType( new Type_type1( "Corporate", false ) );
         remarks[3].setType( new Type_type1( "General", false ) );
         remarks[4].setType( new Type_type1( "General", false ) );
@@ -124,6 +124,22 @@ public class PassengerDetailsRQWrapper extends PassengerDetailsServiceStub {
         remarks[10].setType(new Type_type1(  "Itinerary", false ) );
         remarks[10].setSegmentNumber( "1" );
         remarks[11].setType( new Type_type1( "Invoice", false ) );
+        remarks[11].setSegmentNumber( "1" );*/
+
+        remarks[0].setType( Type_type1.Factory.fromValue("Alpha-Coded") );
+        remarks[0].setCode( "H" );
+        remarks[1].setType( Type_type1.Factory.fromValue( "Client Address") );
+        remarks[2].setType( Type_type1.Factory.fromValue( "Corporate" ) );
+        remarks[3].setType( Type_type1.Factory.fromValue( "General" ) );
+        remarks[4].setType( Type_type1.Factory.fromValue( "General" ) );
+        remarks[5].setType( Type_type1.Factory.fromValue( "General" ) );
+        remarks[6].setType( Type_type1.Factory.fromValue( "Delivery Address" ) );
+        remarks[7].setType( Type_type1.Factory.fromValue( "Group Name" ) );
+        remarks[8].setType( Type_type1.Factory.fromValue( "Hidden" ) );
+        remarks[9].setType( Type_type1.Factory.fromValue( "Historical" ) );
+        remarks[10].setType(Type_type1.Factory.fromValue(  "Itinerary" ) );
+        remarks[10].setSegmentNumber( "1" );
+        remarks[11].setType( Type_type1.Factory.fromValue( "Invoice" ) );
         remarks[11].setSegmentNumber( "1" );
 
         String [] texts = { "TEST ALPHA CODE REMARK",
@@ -157,7 +173,7 @@ public class PassengerDetailsRQWrapper extends PassengerDetailsServiceStub {
         personName.setDateOfBirth(new Date() {{
             setDate("1977-11-27");
         }});
-        personName.setGender(new Gender_type0("M", false));
+        personName.setGender( Gender_type0.M );
         personName.setNameNumber( "1.1" );
         VendorPrefs_type1 vendorP = new VendorPrefs_type1();
         Airline_type1 airline1 = new Airline_type1();
@@ -176,7 +192,7 @@ public class PassengerDetailsRQWrapper extends PassengerDetailsServiceStub {
         TravelItineraryAddInfoRQ_type0 travelItineraryAddInfoRQ = new TravelItineraryAddInfoRQ_type0();
         AgencyInfo_type0 agencyInfo = new AgencyInfo_type0();
         Ticketing_type0 ticketing = new Ticketing_type0();
-        ticketing.setTicketType( new TicketType_type0( "7TAW", false ) );
+        ticketing.setTicketType( TicketType_type0.Factory.fromValue( "7TAW" ) );
         agencyInfo.setTicketing( ticketing );
         travelItineraryAddInfoRQ.setAgencyInfo( agencyInfo );
 
