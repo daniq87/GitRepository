@@ -31,21 +31,12 @@ public class SwsClient {
 
         LOGGER.log(Level.INFO, "Starting client action");
 
-        MessageHandlerManager.addHandler( new MustUnderstandHandler() );
-        MessageHandlerManager.addHandler( new ErrorHandler() );
-        MessageHandlerManager.addHandler( new OutputHandler() );
+        addHandlers();
 
-        SessionCreateWrapper sessionCreate;
         SessionCloseWrapper sessionClose;
-        AirAvailWrapper airAvail;
-        TravelItineraryReadWrapper travelItinerary;
-        EnhancedAirBookWrapper enhancedAirBook;
-        PassengerDetailsRQWrapper passengerDetails;
 
         try {
-            configFile = new File( configFileLocation );
-            configuration = new PropertiesFileConfigurationSource( configFile );
-            LOGGER.log( Level.INFO, "Configuration loaded" );
+            readConfiguration();
         } catch( IOException e ) {
             LOGGER.log(Level.SEVERE, "Error reading configuration from a file", e);
             return;
@@ -53,45 +44,24 @@ public class SwsClient {
 
         try {
 
-            // Create Session
-            sessionCreate = new SessionCreateWrapper( configuration );
-            SessionCreateRQServiceStub.SessionCreateRS sessionCreateRS = sessionCreate.openSession();
-            LOGGER.log(Level.INFO, "\nSession was Created");
-
-            // Execute and process OTA_AirAvailRequest
-            LOGGER.log( Level.INFO, "Executing AirAvail Request..." );
-            airAvail = new AirAvailWrapper( configuration );
-
-            OTA_AirAvailServiceStub.OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 0 );
-            processAirAvailInfo( airAvailRS );
-
-            airAvailRS = airAvail.executeSampleRequest( 1 );
-            processAirAvailInfo( airAvailRS );
-
-            // Execute and process TravelItinerary request
-            LOGGER.log( Level.INFO, "Executing TravelItineraryRead request..." );
-            travelItinerary = new TravelItineraryReadWrapper( configuration );
-            TravelItineraryReadServiceStub.TravelItineraryReadRS travelItineraryReadRS = travelItinerary.executeSampleRequest();
-
-            // Execute and process EnhancedAirBook request
-            LOGGER.log( Level.INFO, "Executing EnhancedAirBook request...");
-            enhancedAirBook = new EnhancedAirBookWrapper( configuration );
-            EnhancedAirBookServiceStub.EnhancedAirBookRS enhancedAirBookRS = enhancedAirBook.executeSampleRequest();
-            processEnhancedAirBookInfo( enhancedAirBookRS );
-
-            // Execute and process PassengerDetails request
-            LOGGER.log( Level.INFO, "Executing PassengerDetails request..." );
-            passengerDetails = new PassengerDetailsRQWrapper( configuration );
-            PassengerDetailsServiceStub.PassengerDetailsRS passengerDetailsRS = passengerDetails.executeSampleRequest();
+            createSession();
+            invokeOTAAirAvailRequest();
+            invokeAirItinerary();
+            invokeEnhancedAirBook();
+            invokePassengerDetails();
 
         } catch ( RemoteException e ) {
+
             LOGGER.log(Level.SEVERE, "Error connecting to web service", e);
             System.out.println(  );
             e.printStackTrace();
+
         } finally {
+
             // Close session
-            LOGGER.log(Level.INFO, "\nClosing session...");
             try {
+
+                LOGGER.log(Level.INFO, "\nClosing session...");
                 sessionClose = new SessionCloseWrapper(configuration);
                 SessionCloseRQServiceStub.SessionCloseRS sessionCloseRS = sessionClose.closeSession();
 
@@ -101,6 +71,75 @@ public class SwsClient {
         }
     }
 
+    private static void addHandlers() {
+
+        MessageHandlerManager.addHandler( new MustUnderstandHandler() );
+        MessageHandlerManager.addHandler( new ErrorHandler() );
+        MessageHandlerManager.addHandler( new OutputHandler() );
+    }
+
+    private static void readConfiguration() throws IOException {
+
+        configFile = new File( configFileLocation );
+        configuration = new PropertiesFileConfigurationSource( configFile );
+        LOGGER.log( Level.INFO, "Configuration loaded" );
+    }
+
+    private static void createSession() throws RemoteException {
+
+        SessionCreateWrapper sessionCreate;
+
+        sessionCreate = new SessionCreateWrapper( configuration );
+        SessionCreateRQServiceStub.SessionCreateRS sessionCreateRS = sessionCreate.openSession();
+        LOGGER.log(Level.INFO, "\nSession was Created");
+
+    }
+
+    private static void invokeOTAAirAvailRequest() throws RemoteException {
+
+        AirAvailWrapper airAvail;
+
+        LOGGER.log( Level.INFO, "Executing AirAvail Request..." );
+        airAvail = new AirAvailWrapper( configuration );
+
+        OTA_AirAvailServiceStub.OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 0 );
+        processAirAvailInfo( airAvailRS );
+
+        airAvailRS = airAvail.executeSampleRequest( 1 );
+        processAirAvailInfo( airAvailRS );
+
+    }
+
+    private static void invokeAirItinerary() throws RemoteException {
+
+        TravelItineraryReadWrapper travelItinerary;
+
+        LOGGER.log( Level.INFO, "Executing TravelItineraryRead request..." );
+        travelItinerary = new TravelItineraryReadWrapper( configuration );
+        TravelItineraryReadServiceStub.TravelItineraryReadRS travelItineraryReadRS = travelItinerary.executeSampleRequest();
+
+    }
+
+    private static void invokeEnhancedAirBook() throws RemoteException {
+
+        EnhancedAirBookWrapper enhancedAirBook;
+
+        LOGGER.log( Level.INFO, "Executing EnhancedAirBook request...");
+        enhancedAirBook = new EnhancedAirBookWrapper( configuration );
+        EnhancedAirBookServiceStub.EnhancedAirBookRS enhancedAirBookRS = enhancedAirBook.executeSampleRequest();
+        processEnhancedAirBookInfo( enhancedAirBookRS );
+
+    }
+
+    private static void invokePassengerDetails() throws RemoteException {
+
+        PassengerDetailsRQWrapper passengerDetails;
+
+        LOGGER.log( Level.INFO, "Executing PassengerDetails request..." );
+        passengerDetails = new PassengerDetailsRQWrapper( configuration );
+        PassengerDetailsServiceStub.PassengerDetailsRS passengerDetailsRS = passengerDetails.executeSampleRequest();
+
+    }
 
     private static void processAirAvailInfo( OTA_AirAvailServiceStub.OTA_AirAvailRS response ) {
 

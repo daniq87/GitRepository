@@ -27,11 +27,17 @@ public class MustUnderstandHandler extends AbstractHandler {
     @Override
     public Handler.InvocationResponse invoke(MessageContext msgContext) throws AxisFault {
 
+        LOGGER.log( Level.INFO, "MustUnderstandHandler invoke" );
+
         SOAPEnvelope envelope = msgContext.getEnvelope();
         SOAPHeader header = envelope.getHeader();
 
         if( header == null ) {
             return InvocationResponse.CONTINUE;
+        }
+
+        if( envelope.getBody().hasFault() ) {
+            return InvocationResponse.ABORT;
         }
 
         XMLStreamReader streamReader =  header.getXMLStreamReader();
@@ -41,26 +47,22 @@ public class MustUnderstandHandler extends AbstractHandler {
             boolean isSessionCreateRS = false;
 
             while( streamReader.hasNext() ) {
-                if( streamReader.getEventType() == XMLStreamConstants.START_ELEMENT ) {
-                    if( streamReader.hasName() ) {
-                        if( streamReader.getName().getLocalPart().equals( "Action" ) ) {
-                            String elementText = streamReader.getElementText();
-                            if( elementText.equals( "SessionCreateRS" ) ) {
-                                isSessionCreateRS = true;
-                            } else if( elementText.equals( "SessionCloseRS" ) ) {
-                                SessionManager.getInstance().endSession();
-                            }
-                        }
-                        if( isSessionCreateRS && streamReader.getName().getLocalPart().equals( "BinarySecurityToken" ) ) {
-                            SessionManager.getInstance().startSession( streamReader.getElementText() );
-                            LOGGER.log( Level.INFO, "\n\nStarted session" );
-                            LOGGER.log( Level.INFO,
-                                        "Acquired session token from service ",
-                                        SessionManager.getInstance().getToken()
-                            );
+                if( streamReader.getEventType() == XMLStreamConstants.START_ELEMENT && streamReader.hasName() ) {
+                    if( streamReader.getName().getLocalPart().equals( "Action" ) ) {
+                        String elementText = streamReader.getElementText();
+                        if( elementText.equals( "ErrorRS" ) ) {
+//                            continueErrorProcessing( envelope.getBody().getXMLStreamReader() ); // TODO
+                        } else if( elementText.equals( "SessionCreateRS" ) ) {
+                            isSessionCreateRS = true;
+                        } else if( elementText.equals( "SessionCloseRS" ) ) {
+                            SessionManager.getInstance().endSession();
                         }
                     }
-
+                    if( isSessionCreateRS && streamReader.getName().getLocalPart().equals( "BinarySecurityToken" ) ) {
+                        SessionManager.getInstance().startSession( streamReader.getElementText() );
+                        LOGGER.log( Level.INFO, "Started session" );
+                        LOGGER.log( Level.INFO, "Acquired session token from service " );
+                    }
                 }
                 streamReader.next();
             }

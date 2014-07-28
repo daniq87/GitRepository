@@ -26,41 +26,24 @@ public class LogMonitor extends JFrame {
 
     private final static LogMonitor instance = new LogMonitor();
 
-    public static void logString( String s ) {
-        instance.addString( s );
-    }
-
     public static void logString( String h, String b ) {
         instance.addString( h );
         instance.addString( b );
         instance.nl();
     }
 
-    private static int k = 0;
-
     public void addString( String s ) {
 
-        //textArea.append( s.replace( ">", ">\n" ).replace( "\n\n", "\n" ).concat( line ) );
-
-        //if( 0 < 1 ) return;
         StringBuffer buffer = new StringBuffer();
         Reader reader = new StringReader( s );
         XMLInputFactory factory = XMLInputFactory.newInstance();
 
-        //textArea.append( s );
 
         XMLStreamReader streamReader;
 
         try {
+
             streamReader = factory.createXMLStreamReader( reader );
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        int lvl = 1;
-
-        try {
 
             do {
                 int event = streamReader.next();
@@ -69,9 +52,9 @@ public class LogMonitor extends JFrame {
                     break;
                 }
 
-
             } while(streamReader.hasNext());
 
+            int lvl = 1;
 
             while( streamReader.hasNext() ) {
 
@@ -107,15 +90,13 @@ public class LogMonitor extends JFrame {
                     buffer.append( "\n" );
                 }
 
-                //textArea.append( "\n" );
                 streamReader.next();
             }
 
             textArea.append( buffer.toString().replace( "\n\n\n", "\n" ).replace( "\n\n", "\n" ) );
 
         } catch (XMLStreamException e) {
-            //e.printStackTrace();
-            System.out.println( k++ );
+            e.printStackTrace();
         }
 
     }

@@ -2,6 +2,7 @@ package com.sabre.sws.tools.wsdl.commons.utils;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
@@ -14,7 +15,7 @@ public class Util {
 
     public static String getTimestamp() {
 
-        java.util.Date now = new java.util.Date();
+        Date now = new java.util.Date();
         DateFormatSymbols symbols = DateFormatSymbols.getInstance( new Locale( "PL" ));
         SimpleDateFormat formatter = new SimpleDateFormat( timestampFormat, symbols );
         return formatter.format( now );
