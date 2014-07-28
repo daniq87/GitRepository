@@ -10,8 +10,6 @@ import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
 
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,63 +23,38 @@ public class SessionCreateWrapper extends SessionCreateRQServiceStub {
 
     private final String prodRegex = ".*?webservices\\.sabre\\.com.*?";
 
-    private final static Logger LOGGER = Logger.getLogger( SessionCreateWrapper.class.getName() );
+    private final static Logger LOGGER = Logger.getLogger(SessionCreateWrapper.class.getName());
 
-    public SessionCreateWrapper( ConfigurationContext configurationContext, IConfigurationProvider configuration ) throws AxisFault {
-        super( configurationContext, configuration.getEndpoint() );
+    public SessionCreateWrapper(ConfigurationContext configurationContext, IConfigurationProvider configuration) throws AxisFault {
+        super(configurationContext, configuration.getEndpoint());
         this.configuration = configuration;
         MessageHandlerManager.addStub(this);
     }
 
-    public SessionCreateWrapper( IConfigurationProvider configuration ) throws AxisFault {
-        super( ConfigurationContextFactory.createConfigurationContextFromFileSystem( null, null ), configuration.getEndpoint() );
+    public SessionCreateWrapper(IConfigurationProvider configuration) throws AxisFault {
+        super(ConfigurationContextFactory.createConfigurationContextFromFileSystem(null, null), configuration.getEndpoint());
         this.configuration = configuration;
-        MessageHandlerManager.addStub( this );
+        MessageHandlerManager.addStub(this);
     }
 
     public SessionCreateRS openSession() throws RemoteException {
 
-        if( configuration.isProxyRequired() ) {
-            setUpProxy();
-        }
-
-        if( configuration.getEndpoint().matches( prodRegex ) ) {
+        if (configuration.getEndpoint().matches(prodRegex)) {
             throw new ProdEndpointConnectionException();
         }
 
         SessionCreateHelper helper = new SessionCreateHelper();
 
-        SessionCreateRQ messageBody = helper.getSessionCreateRQInstance( configuration );
-        Security security = helper.getSecurityInstance( configuration );
-        MessageHeader header = helper.getMessageHeaderInstance( configuration );
+        SessionCreateRQ messageBody = helper.getSessionCreateRQInstance(configuration);
+        Security security = helper.getSecurityInstance(configuration);
+        MessageHeader header = helper.getMessageHeaderInstance(configuration);
 
-        SessionCreateRS responseBody = sessionCreateRQ( messageBody, header, security );
+        SessionCreateRS responseBody = sessionCreateRQ(messageBody, header, security);
 
-        LOGGER.log( Level.INFO, "Token: " + SessionManager.getInstance().getToken() );
+        LOGGER.log(Level.INFO, "Token: " + SessionManager.getInstance().getToken());
 
         return responseBody;
 
     }
-
-    public void setUpProxy() {
-        final String authUser = configuration.getProxyUsername();
-        final String authPassword = configuration.getProxyPassword();
-
-        Authenticator.setDefault(
-                new Authenticator() {
-                    @Override
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(authUser, authPassword.toCharArray());
-                    }
-                });
-
-        System.setProperty( "http.proxyHost", "http://www-ad-proxy.sabre.com" );
-        System.setProperty( "http.proxyPort", "80" );
-
-        System.setProperty( "http.proxyUser", authUser );
-        System.setProperty( "http.proxyPassword", authPassword );
-
-        LOGGER.log(Level.INFO, "Proxy gas been set up" );
-    }
-
 }
+

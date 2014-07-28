@@ -17,10 +17,4 @@ public interface IConfigurationProvider {
 
     public String getPCC();
 
-    public boolean isProxyRequired();
-
-    public String getProxyPassword();
-
-    public String getProxyUsername();
-
 }

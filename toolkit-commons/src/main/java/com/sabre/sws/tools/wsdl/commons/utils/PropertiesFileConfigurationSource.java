@@ -51,15 +51,6 @@ public class PropertiesFileConfigurationSource implements IConfigurationProvider
 
     }
 
-    @Override
-    public String getProxyPassword() {
-        return new String( proxyPassword );
-    }
-
-    @Override
-    public String getProxyUsername() {
-        return new String( proxyUsername );
-    }
 
     public PropertiesFileConfigurationSource( String propertiesFileLocation ) throws IOException {
         this(new File(propertiesFileLocation));
@@ -88,11 +79,6 @@ public class PropertiesFileConfigurationSource implements IConfigurationProvider
     @Override
     public String getEndpoint() {
         return new String( this.endpoint );
-    }
-
-    @Override
-    public boolean isProxyRequired() {
-        return this.proxyRequired;
     }
 
     @Override

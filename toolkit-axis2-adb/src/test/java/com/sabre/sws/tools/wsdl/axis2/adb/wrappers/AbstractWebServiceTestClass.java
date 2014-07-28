@@ -37,9 +37,6 @@ public class AbstractWebServiceTestClass {
             e.printStackTrace();
         }
 
-
-        new SessionCreateWrapper( configuration ).setUpProxy();
-
         mockServer = startClientAndServer(8080);
         proxy = startClientAndProxy(9090);
     }
