@@ -37,7 +37,7 @@ public class AbstractWebServiceTestClass {
             e.printStackTrace();
         }
 
-        mockServer = startClientAndServer(8080);
+        mockServer = startClientAndServer(8783);
         proxy = startClientAndProxy(9090);
     }
 
