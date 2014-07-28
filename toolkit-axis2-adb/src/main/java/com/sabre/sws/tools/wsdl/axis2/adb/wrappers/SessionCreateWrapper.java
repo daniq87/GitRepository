@@ -11,7 +11,6 @@ import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
 
 import java.rmi.RemoteException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -51,7 +50,7 @@ public class SessionCreateWrapper extends SessionCreateRQServiceStub {
 
         SessionCreateRS responseBody = sessionCreateRQ(messageBody, header, security);
 
-        LOGGER.log(Level.INFO, "Token: " + SessionManager.getInstance().getToken());
+        LOGGER.info( "Token: " + SessionManager.getInstance().getToken() );
 
         return responseBody;
 

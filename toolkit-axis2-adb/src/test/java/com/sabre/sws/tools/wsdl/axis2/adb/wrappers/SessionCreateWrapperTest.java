@@ -5,6 +5,8 @@ import com.sabre.sws.tools.wsdl.commons.handlers.MustUnderstandHandler;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.stubs.SessionCreateRQServiceStub;
 import org.apache.axis2.AxisFault;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +15,6 @@ import org.mockserver.model.Header;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -23,7 +23,7 @@ import static org.mockserver.model.HttpResponse.response;
 
 public class SessionCreateWrapperTest extends AbstractWebServiceTestClass {
 
-    private static final Logger LOGGER = Logger.getLogger( SessionCreateWrapperTest.class.getName() );
+    private static final Logger LOGGER = LogManager.getLogger(SessionCreateWrapperTest.class.getName());
 
     private static SessionCreateWrapper instance;
 
@@ -40,7 +40,7 @@ public class SessionCreateWrapperTest extends AbstractWebServiceTestClass {
     @Test
     public void shouldSendSessionCreateRequestAndReceiveResponse() throws Exception {
 
-        LOGGER.log(Level.INFO, "Test begin");
+        LOGGER.info( "Test begin" );
 
         // given
 

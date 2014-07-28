@@ -1,6 +1,7 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import com.sabre.sws.tools.wsdl.stubs.TravelItineraryReadServiceStub;
@@ -17,7 +18,7 @@ public class TravelItineraryHelper {
 
 
     private final static String actionString = "TravelItineraryReadLLSRQ";
-    private final static String versionString = "2.0.0";
+    private final static String versionString = ServicesVersionsProvider.getTravelItineraryVersion();
 
     public NonEmptyString toNonEmptyString( String param ) {
         NonEmptyString instance = new NonEmptyString();
@@ -38,7 +39,7 @@ public class TravelItineraryHelper {
         // Instantiate and set FROM element
         From_type0 from = new From_type0();
         PartyId_type0 partyId_type0 = new PartyId_type0();
-        partyId_type0.setString( "SomeString" );    // TODO: Set this value properly
+        partyId_type0.setString( Util.getFromString() );
         from.addPartyId( partyId_type0 );
 
         instance.setFrom( from );
@@ -47,7 +48,7 @@ public class TravelItineraryHelper {
         To to = new To();
         To_type0 to_type0 = new To_type0();
         PartyId_type0 toParty = new PartyId_type0();
-        toParty.setString( "yetAnother" );          // TODO: Set this value properly
+        toParty.setString( Util.getToString() );
         to_type0.addPartyId( partyId_type0 );
 
         instance.setTo( to_type0 );
@@ -56,18 +57,12 @@ public class TravelItineraryHelper {
         instance.setCPAId( toNonEmptyString( configuration.getOrganization() ) );
 
         // Generate and set CONVERSATION_ID element
-        StringBuffer buffer = new StringBuffer( Util.getTimestamp() );
-        buffer.append( "-" );
-        buffer.append( Util.longRandomHexString() );
-        String conversationID = buffer.toString();
-
-//        instance.setConversationId( toNonEmptyString( conversationID ) );
-        instance.setConversationId( toNonEmptyString( "conv-ID" ) );
+        instance.setConversationId( toNonEmptyString( SessionManager.getInstance().getConversationID() ) );
 
         // Set SERVICE element
         Service_type1 service_type1 = new Service_type1();
         service_type1.setType(toNonEmptyString(actionString));
-        service_type1.setString( "Dummy?" );
+        service_type1.setString( Util.getServiceTypeString() );
 
         instance.setService( service_type1 );
 
@@ -99,7 +94,7 @@ public class TravelItineraryHelper {
 
         TravelItineraryReadRQ instance = new TravelItineraryReadRQ();
 
-        instance.setVersion( "2.2.0" );         // TODO: this and other versionings should be external dependency
+        instance.setVersion( versionString );
 
         MessagingDetails_type0 msgDetails = new MessagingDetails_type0();
         Transaction_type0 transaction = new Transaction_type0();

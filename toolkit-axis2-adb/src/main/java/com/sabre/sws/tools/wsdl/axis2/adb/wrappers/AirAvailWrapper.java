@@ -3,6 +3,7 @@ package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.AirAvailHelper;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.stubs.OTA_AirAvailServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
@@ -16,7 +17,7 @@ import java.rmi.RemoteException;
 public class AirAvailWrapper extends OTA_AirAvailServiceStub {
 
     private final IConfigurationProvider configuration;
-    private String version = "2.1.1";   // TODO
+    private String version = ServicesVersionsProvider.getOtaAirAvailVersion();
 
     public AirAvailWrapper( IConfigurationProvider configuration ) throws AxisFault {
         super( ConfigurationContextFactory.createConfigurationContextFromFileSystem( null, null ),   configuration.getEndpoint() );
@@ -81,7 +82,7 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         // Debug
 
         requestBody = new OTA_AirAvailRQ();
-        requestBody.setVersion( "2.0.0" );
+        requestBody.setVersion( version );
         requestBody.setOptionalQualifiers( new OptionalQualifiers_type0() );
         requestBody.getOptionalQualifiers().setFlightQualifiers( new FlightQualifiers_type0() );
         requestBody.getOptionalQualifiers().getFlightQualifiers().setVendorPrefs( new VendorPrefs_type0() );

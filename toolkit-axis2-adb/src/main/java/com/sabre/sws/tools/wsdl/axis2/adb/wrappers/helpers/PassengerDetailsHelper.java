@@ -1,6 +1,7 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import com.sabre.sws.tools.wsdl.stubs.PassengerDetailsServiceStub;
@@ -13,7 +14,7 @@ import org.apache.axis2.databinding.types.NonNegativeInteger;
 public class PassengerDetailsHelper {
 
     private final static String actionString = "PassengerDetailsRQ";
-    private final static String versionString = "2.2.1";
+    private final static String versionString = ServicesVersionsProvider.getPassengerDetailsVersion();
 
     public PassengerDetailsServiceStub.NonEmptyString toNonEmptyString( String param ) {
 
@@ -34,21 +35,20 @@ public class PassengerDetailsHelper {
 
         PassengerDetailsServiceStub.MessageHeader instance = new PassengerDetailsServiceStub.MessageHeader();
 
-        instance.setVersion( toNonEmptyString( "2.2.1" ) );     // TODO: This should be stored somewhere else
+        instance.setVersion( toNonEmptyString( versionString ) );
 
         // Instantiate and set FROM element
         PassengerDetailsServiceStub.From_type0 from = new PassengerDetailsServiceStub.From_type0();
         PassengerDetailsServiceStub.PartyId_type0 partyId_type0 = new PassengerDetailsServiceStub.PartyId_type0();
-        partyId_type0.setString( "SomeString" );    // TODO: Set this value properly
+        partyId_type0.setString( Util.getFromString() );
         from.addPartyId( partyId_type0 );
 
         instance.setFrom( from );
 
         // Instantiate and set TO element
-        PassengerDetailsServiceStub.To to = new PassengerDetailsServiceStub.To();
         PassengerDetailsServiceStub.To_type0 to_type0 = new PassengerDetailsServiceStub.To_type0();
         PassengerDetailsServiceStub.PartyId_type0 toParty = new PassengerDetailsServiceStub.PartyId_type0();
-        toParty.setString( "yetAnother" );          // TODO: Set this value properly
+        toParty.setString( Util.getToString() );
         to_type0.addPartyId( partyId_type0 );
 
         instance.setTo( to_type0 );
@@ -63,12 +63,12 @@ public class PassengerDetailsHelper {
         String conversationID = buffer.toString();
 
 //        instance.setConversationId( toNonEmptyString( conversationID ) );
-        instance.setConversationId( toNonEmptyString( "conv-ID" ) );
+        instance.setConversationId( toNonEmptyString( SessionManager.getInstance().getConversationID() ) );
 
         // Set SERVICE element
         PassengerDetailsServiceStub.Service_type2 service_type2 = new PassengerDetailsServiceStub.Service_type2();
         service_type2.setString( actionString );
-        service_type2.setType( toNonEmptyString( "Dummy?" ) );  // TODO: Self-explaining
+        service_type2.setType( toNonEmptyString( Util.getServiceTypeString() ) );
 
         instance.setService( service_type2 );
 
@@ -97,7 +97,7 @@ public class PassengerDetailsHelper {
         PassengerDetailsServiceStub.PassengerDetailsRQ requestBody = new PassengerDetailsServiceStub.PassengerDetailsRQ();
         requestBody.setVersion( versionString );
 
-        requestBody.setVersion( "2.2.1" );  // TODO
+        requestBody.setVersion( versionString );
         return requestBody;
     }
 

@@ -46,6 +46,26 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <executions>
+                    <execution>
+                        <id>download-properties</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>../service-versions.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
              <!--Antrun Plugin - Download
              Downloads necessary wsdl and schema files-->
 
@@ -191,6 +211,25 @@
 <!--             Axis2 WSDL-2-JAVA Plugin
             Executing plugin goal will auto-generate Java stubs from .wsdl files
             .wsdl files should be located in target/wsdls/<service_name>/<service_name><service_version>.wsdl-->
+
+
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo>OMFG: ${TravelItineraryReadVersion}</echo>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.axis2</groupId>

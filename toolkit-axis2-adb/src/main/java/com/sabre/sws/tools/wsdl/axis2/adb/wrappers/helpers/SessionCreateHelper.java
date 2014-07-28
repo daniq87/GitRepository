@@ -17,6 +17,15 @@ public class SessionCreateHelper {
         return instance;
     }
 
+    private String getConversationID() {
+
+        StringBuffer buffer = new StringBuffer( Util.getTimestamp() );
+        buffer.append( "-" );
+        buffer.append( Util.longRandomHexString() );
+
+        return buffer.toString();
+    }
+
     public SessionCreateRQ getSessionCreateRQInstance( IConfigurationProvider configuration) {
 
         POS_type0 pos = new POS_type0();
@@ -55,16 +64,15 @@ public class SessionCreateHelper {
         // Instantiate and set FROM element
         From_type0 from = new From_type0();
         PartyId_type0 partyId_type0 = new PartyId_type0();
-        partyId_type0.setString( "SomeString" );    // TODO: Set this value properly
+        partyId_type0.setString( Util.getFromString() );
         from.addPartyId( partyId_type0 );
 
         instance.setFrom( from );
 
         // Instantiate and set TO element
-        To to = new To();
         To_type0 to_type0 = new To_type0();
         PartyId_type0 toParty = new PartyId_type0();
-        toParty.setString( "yetAnother" );          // TODO: Set this value properly
+        toParty.setString( Util.getToString() );
         to_type0.addPartyId( partyId_type0 );
 
         instance.setTo( to_type0 );
@@ -74,13 +82,9 @@ public class SessionCreateHelper {
         instance.setCPAId( toNonEmptyString( configuration.getOrganization() ) );
 
         // Generate and set CONVERSATION_ID element
-        StringBuffer buffer = new StringBuffer( Util.getTimestamp() );
-        buffer.append( "-" );
-        buffer.append( Util.longRandomHexString() );
-        String conversationID = buffer.toString();
+        String conversationID = getConversationID();
 
-//        instance.setConversationId( toNonEmptyString( conversationID ) );
-        instance.setConversationId( toNonEmptyString( "conv-ID" ) );
+        instance.setConversationId( toNonEmptyString( conversationID ) );
 
         // Set SERVICE element
         Service_type0 service_type0 = new Service_type0();

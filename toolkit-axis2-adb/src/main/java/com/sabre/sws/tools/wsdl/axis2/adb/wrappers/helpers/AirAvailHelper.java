@@ -2,6 +2,7 @@ package com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers;
 
 
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import org.apache.axis2.databinding.types.NonNegativeInteger;
@@ -14,7 +15,7 @@ import static com.sabre.sws.tools.wsdl.stubs.OTA_AirAvailServiceStub.*;
 public class AirAvailHelper {
 
     private final static String actionString = "OTA_AirAvailLLSRQ";
-    private final static String versionString = "2.0.0";
+    private final static String versionString = ServicesVersionsProvider.getOtaAirAvailVersion();
 
     private NonEmptyString toNonEmptyString( String param ) {
         NonEmptyString instance = new NonEmptyString();
@@ -35,7 +36,7 @@ public class AirAvailHelper {
         // Instantiate and set FROM element
         From_type0 from = new From_type0();
         PartyId_type0 partyId_type0 = new PartyId_type0();
-        partyId_type0.setString( "SomeString" );    // TODO: Set this value properly
+        partyId_type0.setString( Util.getToString() );
         from.addPartyId( partyId_type0 );
 
         instance.setFrom( from );
@@ -44,7 +45,7 @@ public class AirAvailHelper {
         To to = new To();
         To_type0 to_type0 = new To_type0();
         PartyId_type0 toParty = new PartyId_type0();
-        toParty.setString( "yetAnother" );          // TODO: Set this value properly
+        toParty.setString( Util.getToString() );
         to_type0.addPartyId( partyId_type0 );
 
         instance.setTo( to_type0 );
@@ -59,7 +60,7 @@ public class AirAvailHelper {
         String conversationID = buffer.toString();
 
 //        instance.setConversationId( toNonEmptyString( conversationID ) );
-        instance.setConversationId( toNonEmptyString( "conv-ID" ) );
+        instance.setConversationId( toNonEmptyString( SessionManager.getInstance().getConversationID() ) );
 
         // Set SERVICE element
         Service_type0 service_type0 = new Service_type0();

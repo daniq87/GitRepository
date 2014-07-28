@@ -13,6 +13,15 @@ public class Util {
 
     private static final String timestampFormat = new String( "yyyy-mm-dd_hh:mm:ss:SSS" );
 
+    private static final String fromString = "sample.url.of.sabre.client.com";
+    private static final String toString = "webservices.sabre.com";
+
+    private static final String serviceTypeString = "sabreXML";
+
+    public static String getServiceTypeString() {
+        return serviceTypeString;
+    }
+
     public static String getTimestamp() {
 
         Date now = new java.util.Date();
@@ -30,4 +39,11 @@ public class Util {
         return buffer.toString();
     }
 
+    public static String getFromString() {
+        return fromString;
+    }
+
+    public static String getToString() {
+        return toString;
+    }
 }

@@ -8,12 +8,12 @@ import com.sabre.sws.tools.wsdl.commons.handlers.OutputHandler;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.PropertiesFileConfigurationSource;
 import com.sabre.sws.tools.wsdl.stubs.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by SG0221139 on 7/11/2014.
@@ -21,15 +21,15 @@ import java.util.logging.Logger;
 public class SwsClient {
 
     private static IConfigurationProvider configuration;
-    private static final String configFileLocation = "toolkit-axis2-adb/src/main/resources/connection.properties";
+    private static final String configFileLocation = "toolkit-axis2-adb/src/main/resources/connection.properties"; // TODO: resources as bundle
 
     private static File configFile = null;
 
-    private static final Logger LOGGER = Logger.getLogger( SwsClient.class.getName() );
+    private static final Logger LOGGER = LogManager.getLogger(SwsClient.class.getName());
 
     public static void main( String ... args ) {
 
-        LOGGER.log(Level.INFO, "Starting client action");
+        LOGGER.info( "Starting client action");
 
         addHandlers();
 
@@ -38,7 +38,7 @@ public class SwsClient {
         try {
             readConfiguration();
         } catch( IOException e ) {
-            LOGGER.log(Level.SEVERE, "Error reading configuration from a file", e);
+            LOGGER.fatal( "Error reading configuration from a file", e);
             return;
         }
 
@@ -52,7 +52,7 @@ public class SwsClient {
 
         } catch ( RemoteException e ) {
 
-            LOGGER.log(Level.SEVERE, "Error connecting to web service", e);
+            LOGGER.fatal( "Error connecting to web service", e );
             System.out.println(  );
             e.printStackTrace();
 
@@ -61,7 +61,7 @@ public class SwsClient {
             // Close session
             try {
 
-                LOGGER.log(Level.INFO, "\nClosing session...");
+                LOGGER.info( "\nClosing session..." );
                 sessionClose = new SessionCloseWrapper(configuration);
                 SessionCloseRQServiceStub.SessionCloseRS sessionCloseRS = sessionClose.closeSession();
 
@@ -82,7 +82,7 @@ public class SwsClient {
 
         configFile = new File( configFileLocation );
         configuration = new PropertiesFileConfigurationSource( configFile );
-        LOGGER.log( Level.INFO, "Configuration loaded" );
+        LOGGER.info( "Configuration loaded" );
     }
 
     private static void createSession() throws RemoteException {
@@ -91,7 +91,7 @@ public class SwsClient {
 
         sessionCreate = new SessionCreateWrapper( configuration );
         SessionCreateRQServiceStub.SessionCreateRS sessionCreateRS = sessionCreate.openSession();
-        LOGGER.log(Level.INFO, "\nSession was Created");
+        LOGGER.info( "\nSession was Created");
 
     }
 
@@ -99,7 +99,7 @@ public class SwsClient {
 
         AirAvailWrapper airAvail;
 
-        LOGGER.log( Level.INFO, "Executing AirAvail Request..." );
+        LOGGER.info( "Executing AirAvail Request..." );
         airAvail = new AirAvailWrapper( configuration );
 
         OTA_AirAvailServiceStub.OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 0 );
@@ -114,7 +114,7 @@ public class SwsClient {
 
         TravelItineraryReadWrapper travelItinerary;
 
-        LOGGER.log( Level.INFO, "Executing TravelItineraryRead request..." );
+        LOGGER.info( "Executing TravelItineraryRead request..." );
         travelItinerary = new TravelItineraryReadWrapper( configuration );
         TravelItineraryReadServiceStub.TravelItineraryReadRS travelItineraryReadRS = travelItinerary.executeSampleRequest();
 
@@ -124,7 +124,7 @@ public class SwsClient {
 
         EnhancedAirBookWrapper enhancedAirBook;
 
-        LOGGER.log( Level.INFO, "Executing EnhancedAirBook request...");
+        LOGGER.info( "Executing EnhancedAirBook request...");
         enhancedAirBook = new EnhancedAirBookWrapper( configuration );
         EnhancedAirBookServiceStub.EnhancedAirBookRS enhancedAirBookRS = enhancedAirBook.executeSampleRequest();
         processEnhancedAirBookInfo( enhancedAirBookRS );
@@ -135,15 +135,13 @@ public class SwsClient {
 
         PassengerDetailsRQWrapper passengerDetails;
 
-        LOGGER.log( Level.INFO, "Executing PassengerDetails request..." );
+        LOGGER.info( "Executing PassengerDetails request..." );
         passengerDetails = new PassengerDetailsRQWrapper( configuration );
         PassengerDetailsServiceStub.PassengerDetailsRS passengerDetailsRS = passengerDetails.executeSampleRequest();
 
     }
 
     private static void processAirAvailInfo( OTA_AirAvailServiceStub.OTA_AirAvailRS response ) {
-
-//        System.out.println( response.get );
 
         System.out.println(response.getOriginDestinationOptions().getOriginDestinationOption().length + " possibilites found");
 
