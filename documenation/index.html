@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+	<style type="text/css">
+  
+		.header {
+			font-size: 20pt;
+			font-weight: bold;
+		}
+	
+		.subheader {
+			font-size: 17pt;
+			font-weight: bold;
+		}
+  
+		.caption {
+			font-size: 14pt;
+			font-weight: bold;
+		}
+  
+		.section {
+			font-size: 12pt;
+			font-weight: bold;
+		}
+  
+		.bold {
+			font-weight: bold;
+		}
+  
+		.italic {
+			font-style: italic;
+		}
+  
+		.code {
+			font-family: "Courier New";
+		}
+  
+	</style>
+
+</head>
+
+<body>
+
+<span class="header"> 1.	JAVA </span> <br /><br />
+<span class="subheader"> 1.1.	Axis2 </span> <br /><br />
+<span class="section">1.1.1.	ADB data binding </span> <br /><br />
+<span class="bold"> Overwiev </span> <br /><br />
+
+<p> ADB data binding framework is intended to be rather simple and lightweight. It provides means to compile XML schemas and WSDL files into java classes. 
+Use of this tool is pretty straightforward, but working with generated files may be cumbersome. </p>
+
+<span class="bold">Using ADB data binding </span> <br /><br />
+ 
+<p> ADB data binding is generally available through the WSDL2Java tool, by specifying proper databinding option. WSDL2Java may be accessed in various ways:
+<ul>
+<li>As stand-alone command line tool</li>
+<li>As Ant task</li>
+<li>As maven plugin</li>
+</ul>
+
+<p> Usage of all of the above is similar. It requires specifying location of the WSDL and XML Schema files, output location for the generated sources and package name for generated classes. Unless told differently, ADB generates one big stub class per one web service definition (or, alternatively, one stub java class per one WSDL file). Parameters are passed as command line options when running from command line. In case of invoking via Ant or Maven tool they are specified in adequate XML file (build.xml or pom.xml). 
+For the detailed parameters specification, see: </p>
+
+<ul>
+<li> <a href="http://axis.apache.org/axis2/java/core/tools/CodegenToolReference.html">This</a> for command line and Ant </li>
+<li> <a href="http://axis.apache.org/axis2/java/core/tools/maven-plugins/maven-wsdl2code-plugin.html">This</a> for Maven plugin </li> 
+</ul>
+
+</p>
+<span class="bold">Execution requirements</span>
+
+<p> As Sabre Web Services definitions (provided in form of WSDL files) use corresponding types of data structures, proper XML Schema files must be provided in same location as the WSDL file. 
+It includes common schemas for SOAP communication protocol (available as Common Schemas asset at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> ) and request/response object pairs definition 
+(available also at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> as asset for each service). </p>
+
+<span class="bold">Generated code</span>
+
+<p> If all of required files are available for code generation tool, after invocation it will by default generate one stub java class per service. 
+The file will be placed in proper folder structure, according to specified output package and directory. 
+The file will be named <span class="code"> &lt;serviceName&gt;ServiceStub.java </span>
+The stub will contain static inner classes for each complex type. Any element or attribute encapsulated by this complex type 
+will become a field in that class. Simple types restrictions are handled by replacing the relevant type with the basetype. 
+Generated classes follow the bean convention, with <span class="code">setAttribute</span> and <span class="code">getAttribute</span> methods for object fields and 
+<span class="code">addElement(Element e)</span> or <span class="code">setElements(Element [] e)</span> for arrays.
+Generated files may be quite large (up to hundreds of thousands of lines, depending on service definition complexity ) and therefore 
+problematic to work with, for example some IDE settings changes may be necessary. </p>
+
+
+</body>
+</html>
