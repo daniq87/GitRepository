@@ -79,7 +79,6 @@ public class MustUnderstandHandler extends AbstractHandler {
             ((SOAPHeaderBlock) headerBlocksIterator.next()).setProcessed();
         }
 
-
         return InvocationResponse.CONTINUE;
 
     }
