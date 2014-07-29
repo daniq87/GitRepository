@@ -18,6 +18,9 @@
     </properties>
 
     <build>
+
+        <!--   P  L   U   G   I   N   S   -->
+
         <plugins>
 
             <!--Clean Plugin -->

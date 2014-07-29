@@ -9,6 +9,7 @@
     <modules>
         <module>toolkit-commons</module>
         <module>toolkit-axis2-adb</module>
+        <module>toolkit-axis2-xmlbeans</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -16,13 +17,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <!-- Services versions -->
-        <!--<OTA_AirAvailVersion>2.1.1</OTA_AirAvailVersion>-->
-        <!--<TravelItineraryReadVersion>2.0.0</TravelItineraryReadVersion>-->
-        <!--<EnhancedAirBookVersion>2.5.0</EnhancedAirBookVersion>-->
-        <!--<PassengerDetailsVersion>2.2.1</PassengerDetailsVersion>-->
-
     </properties>
 
      <repositories>
