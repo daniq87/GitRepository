@@ -213,24 +213,6 @@
             .wsdl files should be located in target/wsdls/<service_name>/<service_name><service_version>.wsdl-->
 
 
-
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <echo>OMFG: ${TravelItineraryReadVersion}</echo>
-                            </tasks>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.axis2</groupId>
                 <artifactId>axis2-wsdl2code-maven-plugin</artifactId>
