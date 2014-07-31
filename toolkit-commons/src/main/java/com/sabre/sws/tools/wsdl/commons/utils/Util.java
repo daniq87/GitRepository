@@ -31,6 +31,7 @@ public class Util {
     static {
         try {
             File configFile;
+
             configFile = new File( configFileLocation );
             configuration = new PropertiesFileConfigurationSource( configFile );
             LOGGER.info( "Configuration loaded" );

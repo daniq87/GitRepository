@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>toolkit-axis2-xmlbeans</artifactId>
-    <packaging>jar</packaging>
+    <!--<packaging>jar</packaging>-->
 
     <name>toolkit-axis2-xmlbeans</name>
     <url>http://maven.apache.org</url>
