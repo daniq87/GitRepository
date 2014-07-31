@@ -28,6 +28,19 @@
     </dependencies>
 
     <build>
+
+        <resources>
+            <resource>
+                <directory>${parent.basedir}</directory>
+            </resource>
+        </resources>
+
+        <testResources>
+            <testResource>
+                <directory>${parent.basedir}</directory>
+            </testResource>
+        </testResources>
+
         <plugins>
 
             <plugin>
