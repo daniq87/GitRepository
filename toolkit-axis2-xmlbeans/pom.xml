@@ -24,6 +24,179 @@
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.4.1</version>
+                <executions>
+                    <execution>
+                        <phase>clean</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <verbose>true</verbose>
+                    <filesets>
+                        <fileset>
+                            <directory>target/generated-sources/stubs</directory>
+                            <includes>
+                                <include>*.java</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>download-files</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.axis2</groupId>
+                <artifactId>axis2-wsdl2code-maven-plugin</artifactId>
+                <version>1.6.2</version>
+                <executions>
+<!--
+
+                    &lt;!&ndash; Orchestrated Services &ndash;&gt;
+
+                    &lt;!&ndash;EnhancedAirBook (Orchestrated)&ndash;&gt;
+
+                    <execution>
+                        <id>EnhancedAirBookRQ</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/EnhancedAirBookRQ/EnhancedAirBook2.5.0RQ.wsdl</wsdlFile>
+                            <databindingName>xmlbeans</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
+                    &lt;!&ndash;PassengerDetails (Orchestrated)&ndash;&gt;
+
+                    <execution>
+                        <id>PassengerDetailsRQ</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/PassengerDetailsRQ/PassengerDetails2.2.1RQ.wsdl</wsdlFile>
+                            <databindingName>xmlbeans</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
+                    &lt;!&ndash;Low Level Services&ndash;&gt;
+
+                    &lt;!&ndash;TravelItineraryReadLLS&ndash;&gt;
+                    <execution>
+                        <id>TravelItineraryReadLLSRQ</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/TravelItineraryReadLLSRQ/TravelItineraryReadLLS2.0.0RQ.wsdl</wsdlFile>
+                            <databindingName>xmlbeans</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
+                    &lt;!&ndash;OTA_AirAvailLLS&ndash;&gt;
+                    <execution>
+                        <id>AirAvail</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS2.1.1RQ.wsdl</wsdlFile>
+                            <databindingName>xmlbeans</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+-->
+
+                    <!--SessionCloseRQ-->
+                    <execution>
+                        <id>SessionClose</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/SessionCloseRQ/SessionCloseRQ.wsdl</wsdlFile>
+                            <databindingName>xmlbeans</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
+                    <!--SessionCreateRQ-->
+                    <execution>
+                        <id>SessionCreate</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/SessionCreateRQ/SessionCreateRQ.wsdl</wsdlFile>
+                            <databindingName>xmlbeans</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.9</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/generated-sources/stubs</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
@@ -49,11 +222,61 @@
     <!--    D   E   P   E   N   D   E   N   C   I   E   S   -->
 
     <dependencies>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-xmlbeans</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sabre.sws.tools</groupId>
+            <artifactId>toolkit-commons</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.xmlbeans</groupId>
+            <artifactId>xmlbeans</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>wsdl4j</groupId>
+            <artifactId>wsdl4j</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.ws.commons.schema</groupId>
+            <artifactId>XmlSchema</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.neethi</groupId>
+            <artifactId>neethi</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-local</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-http</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
     </dependencies>
 </project>

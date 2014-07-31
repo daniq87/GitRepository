@@ -3,7 +3,7 @@ package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.commons.handlers.MustUnderstandHandler;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
-import com.sabre.sws.tools.wsdl.stubs.SessionCloseRQServiceStub;
+import com.sabre.sws.tools.wsdl.stubs.adb.SessionCloseRQServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

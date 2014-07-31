@@ -3,8 +3,7 @@ package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.PassengerDetailsHelper;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
-import com.sabre.sws.tools.wsdl.stubs.PassengerDetailsServiceStub;
-import com.sabre.sws.tools.wsdl.stubs.Type_type0Factory;
+import com.sabre.sws.tools.wsdl.stubs.adb.PassengerDetailsServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
@@ -48,7 +47,7 @@ public class PassengerDetailsRQWrapper extends PassengerDetailsServiceStub {
         MiscSegmentSellRQ_type0 miscSegmentSellRQ = new MiscSegmentSellRQ_type0();
         miscSegmentSellRQ.setHaltOnError( true );
         MiscSegment_type0 miscSeg = new MiscSegment_type0();
-        miscSeg.setType( Type_type0Factory.getNewType_type0( "OTH", false ) );
+        miscSeg.setType( Type_type0.Factory.fromValue( "OTH" ) );
         miscSeg.setText("RETENTION SEGMENT");
         miscSeg.setDepartureDateTime(new Date() {{
             setDate("12-21");

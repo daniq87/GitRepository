@@ -6,13 +6,11 @@ import com.sabre.sws.tools.wsdl.commons.handlers.ErrorHandler;
 import com.sabre.sws.tools.wsdl.commons.handlers.MustUnderstandHandler;
 import com.sabre.sws.tools.wsdl.commons.handlers.OutputHandler;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
-import com.sabre.sws.tools.wsdl.commons.utils.PropertiesFileConfigurationSource;
-import com.sabre.sws.tools.wsdl.stubs.*;
+import com.sabre.sws.tools.wsdl.commons.utils.Util;
+import com.sabre.sws.tools.wsdl.stubs.adb.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.io.IOException;
 import java.rmi.RemoteException;
 
 /**
@@ -20,10 +18,7 @@ import java.rmi.RemoteException;
  */
 public class SwsClient {
 
-    private static IConfigurationProvider configuration;
-    private static final String configFileLocation = "toolkit-axis2-adb/src/main/resources/connection.properties"; // TODO: resources as bundle
-
-    private static File configFile = null;
+    private static IConfigurationProvider configuration = Util.getConfigurationProvider();
 
     private static final Logger LOGGER = LogManager.getLogger(SwsClient.class.getName());
 
@@ -34,13 +29,6 @@ public class SwsClient {
         addHandlers();
 
         SessionCloseWrapper sessionClose;
-
-        try {
-            readConfiguration();
-        } catch( IOException e ) {
-            LOGGER.fatal( "Error reading configuration from a file", e);
-            return;
-        }
 
         try {
 
@@ -73,16 +61,9 @@ public class SwsClient {
 
     private static void addHandlers() {
 
-        MessageHandlerManager.addHandler( new MustUnderstandHandler() );
-        MessageHandlerManager.addHandler( new ErrorHandler() );
         MessageHandlerManager.addHandler( new OutputHandler() );
-    }
-
-    private static void readConfiguration() throws IOException {
-
-        configFile = new File( configFileLocation );
-        configuration = new PropertiesFileConfigurationSource( configFile );
-        LOGGER.info( "Configuration loaded" );
+        MessageHandlerManager.addHandler( new ErrorHandler() );
+        MessageHandlerManager.addHandler( new MustUnderstandHandler() );
     }
 
     private static void createSession() throws RemoteException {
@@ -102,10 +83,10 @@ public class SwsClient {
         LOGGER.info( "Executing AirAvail Request..." );
         airAvail = new AirAvailWrapper( configuration );
 
-        OTA_AirAvailServiceStub.OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 0 );
+        OTA_AirAvailServiceStub.OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 2 );
         processAirAvailInfo( airAvailRS );
 
-        airAvailRS = airAvail.executeSampleRequest( 1 );
+        airAvailRS = airAvail.executeSampleRequest( 3 );
         processAirAvailInfo( airAvailRS );
 
     }
@@ -118,6 +99,7 @@ public class SwsClient {
         travelItinerary = new TravelItineraryReadWrapper( configuration );
         TravelItineraryReadServiceStub.TravelItineraryReadRS travelItineraryReadRS = travelItinerary.executeSampleRequest();
 
+        processTravelItineraryDetail( travelItineraryReadRS );
     }
 
     private static void invokeEnhancedAirBook() throws RemoteException {
@@ -143,9 +125,9 @@ public class SwsClient {
 
     private static void processAirAvailInfo( OTA_AirAvailServiceStub.OTA_AirAvailRS response ) {
 
-        System.out.println(response.getOriginDestinationOptions().getOriginDestinationOption().length + " possibilites found");
+        System.out.println( "\t" + response.getOriginDestinationOptions().getOriginDestinationOption().length + " possibilites found");
 
-        System.out.println( "Travel descriptions: " );
+        System.out.println( "\tTravel descriptions: " );
         for( OTA_AirAvailServiceStub.OriginDestinationOption_type0 option: response.getOriginDestinationOptions().getOriginDestinationOption() ) {
 
             for( int i = 0; i < option.getFlightSegment().length; ++i ) {
@@ -156,7 +138,7 @@ public class SwsClient {
                 String eTicketAvailable = option.getFlightSegment()[i].getETicket() ? "yes" : "no";
                 String smokingLabel = option.getFlightSegment()[i].getSmokingAllowed() ? "" : "not " + "allowed";
 
-                System.out.print(number + ".\t" + " Departure:\t" + departureDate);
+                System.out.print( "\t\t" + number + ".\t" + " Departure:\t" + departureDate);
                 System.out.print(",\tArrival:\t" + arrivalDate);
 
                 System.out.print(",\te-ticket: " + eTicketAvailable + ",\tSmoking: " + smokingLabel);
@@ -167,10 +149,45 @@ public class SwsClient {
     }
 
     private static  void processEnhancedAirBookInfo( EnhancedAirBookServiceStub.EnhancedAirBookRS response ) {
+        System.out.println( "\tItinerary booked and priced" );
         for( EnhancedAirBookServiceStub.AirItineraryPricingInfo_type0 it : response.getOTA_AirPriceRS().getPriceQuote().getPricedItinerary().getAirItineraryPricingInfo() ) {
-            System.out.println( it.getItinTotalFare().getTotalFare().getAmount() );
-            System.out.println( it.getFareCalculation().getText() );
+            System.out.println( "\t\tTotal amount: " + it.getItinTotalFare().getTotalFare().getAmount() + " " + it.getItinTotalFare().getTotalFare().getCurrencyCode() );
+            System.out.println( "\t\tTaxes: " + it.getItinTotalFare().getTaxes().getTotalAmount() );
+//            System.out.println( it.getFareCalculation().getText() );
         }
+    }
+
+    private static void processTravelItineraryDetail( TravelItineraryReadServiceStub.TravelItineraryReadRS response ) {
+        System.out.println( "Travel itinerary:" );
+        TravelItineraryReadServiceStub.TravelItinerary_type0 itinerary = response.getTravelItinerary();
+
+        System.out.println( "\tCustomer info:" );
+
+        TravelItineraryReadServiceStub.PersonName_type1 personName = itinerary.getCustomerInfo().getPersonName()[0];
+        System.out.println( "\t\t" + personName.getGivenName() + " " + personName.getSurname() );
+        System.out.println( "\t\t" + personName.getEmail()[0].toString());
+
+        TravelItineraryReadServiceStub.Address_type0 address = itinerary.getCustomerInfo().getAddress();
+
+        for( String line : address.getAddressLine() ) {
+            System.out.println( "\t\t" + line );
+        }
+        System.out.print( "\n\n\tTravel info:\n\n" );
+        TravelItineraryReadServiceStub.ItineraryInfo_type0 info =  itinerary.getItineraryInfo();
+
+        for(TravelItineraryReadServiceStub.Item_type0 item : info.getReservationItems().getItem() ) {
+            TravelItineraryReadServiceStub.FlightSegment_type2 flightSegment = item.getFlightSegment();
+            System.out.println( "\t\tFrom " + flightSegment.getOriginLocation().getLocationCode()
+                + " to " + flightSegment.getDestinationLocation().getLocationCode() );
+            System.out.println( "\t\tFlight number: " + flightSegment.getFlightNumber() );
+            System.out.println( "\t\tMiles flown: " + flightSegment.getAirMilesFlown() );
+            System.out.println( "\t\tDeparture date: " + flightSegment.getDepartureDateTime() );
+            System.out.println( "\t\tArrival date: " + flightSegment.getArrivalDateTime() );
+            System.out.println( "\t\tDuration time: " + flightSegment.getElapsedTime() );
+            System.out.println( "\t\tAirline code: " + flightSegment.getMarketingAirline().getCode()  );
+
+        }
+
     }
 
 }

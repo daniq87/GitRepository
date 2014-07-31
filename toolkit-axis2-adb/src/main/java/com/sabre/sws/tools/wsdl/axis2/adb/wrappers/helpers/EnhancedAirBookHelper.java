@@ -9,7 +9,7 @@ import org.apache.axis2.databinding.types.NonNegativeInteger;
 
 import java.math.BigInteger;
 
-import static com.sabre.sws.tools.wsdl.stubs.EnhancedAirBookServiceStub.*;
+import static com.sabre.sws.tools.wsdl.stubs.adb.EnhancedAirBookServiceStub.*;
 
 /**
  * Created by SG0221139 on 7/21/2014.

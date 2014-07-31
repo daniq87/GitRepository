@@ -5,7 +5,7 @@ import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.SessionCreateHelper;
 import com.sabre.sws.tools.wsdl.commons.exceptions.ProdEndpointConnectionException;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
-import com.sabre.sws.tools.wsdl.stubs.SessionCreateRQServiceStub;
+import com.sabre.sws.tools.wsdl.stubs.adb.SessionCreateRQServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;

@@ -3,7 +3,7 @@ package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.TravelItineraryHelper;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
-import com.sabre.sws.tools.wsdl.stubs.TravelItineraryReadServiceStub;
+import com.sabre.sws.tools.wsdl.stubs.adb.TravelItineraryReadServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
@@ -43,6 +43,7 @@ public class TravelItineraryReadWrapper extends TravelItineraryReadServiceStub {
         header = helper.getMessageHeaderInstance( configuration );
         requestBody = helper.getTravelItineraryRQ("HNDAGG");
 
+        System.out.println( "Invoking TravelItineraryRead for PNR: HNDAGG" );
         responseBody = travelItineraryReadRQ( requestBody, header, security );
 
         return responseBody;

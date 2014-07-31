@@ -5,7 +5,7 @@ import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import org.apache.axis2.databinding.types.NonNegativeInteger;
 
-import static com.sabre.sws.tools.wsdl.stubs.SessionCreateRQServiceStub.*;
+import static com.sabre.sws.tools.wsdl.stubs.adb.SessionCreateRQServiceStub.*;
 /**
  * Created by SG0221139 on 7/11/2014.
  */

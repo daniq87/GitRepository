@@ -7,7 +7,7 @@ import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import org.apache.axis2.databinding.types.NonNegativeInteger;
 
-import static com.sabre.sws.tools.wsdl.stubs.OTA_AirAvailServiceStub.*;
+import static com.sabre.sws.tools.wsdl.stubs.adb.OTA_AirAvailServiceStub.*;
 
 /**
  * Created by SG0221139 on 7/14/2014.

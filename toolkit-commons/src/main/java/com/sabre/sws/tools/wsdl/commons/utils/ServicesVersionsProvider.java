@@ -28,7 +28,7 @@ public class ServicesVersionsProvider {
 
         try {
 
-            String location = new File( "." ).getCanonicalPath() + "\\" + servicesVersionsFileName;
+            String location = new File( "." ).getCanonicalPath() + "/" + servicesVersionsFileName;
 
             InputStream inputStream = new FileInputStream( location );
             properties.load( inputStream );

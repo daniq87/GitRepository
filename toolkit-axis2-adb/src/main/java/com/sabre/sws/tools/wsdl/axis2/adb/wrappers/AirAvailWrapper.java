@@ -4,7 +4,7 @@ import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.AirAvailHelper;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
-import com.sabre.sws.tools.wsdl.stubs.OTA_AirAvailServiceStub;
+import com.sabre.sws.tools.wsdl.stubs.adb.OTA_AirAvailServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
@@ -199,6 +199,33 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         MessageHeader header = helper.getMessageHeaderInstance( configuration );
 
         OTA_AirAvailRQ requestBody = getSampleRequestBody( requestIndex );
+
+        System.out.println( "\tExecuting AirAvail call for:" );
+
+        System.out.println( "\t\t" + requestBody
+                .getOriginDestinationInformation()
+                .getFlightSegment()
+                .getDepartureDateTime()
+                .toString()
+        );
+
+        System.out.println( "\t\tFrom: " +
+                 requestBody
+                    .getOriginDestinationInformation()
+                    .getFlightSegment()
+                    .getOriginLocation()
+                    .getLocationCode()
+                    .toString()
+        );
+
+        System.out.println( "\t\tTo: " +
+            requestBody
+                .getOriginDestinationInformation()
+                .getFlightSegment()
+                .getDestinationLocation()
+                .getLocationCode()
+                .toString()
+        );
 
         return oTA_AirAvailRQ( requestBody, header, security );
     }

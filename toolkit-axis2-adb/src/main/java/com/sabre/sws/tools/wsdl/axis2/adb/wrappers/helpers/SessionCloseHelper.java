@@ -7,7 +7,7 @@ import org.apache.axis2.databinding.types.NonNegativeInteger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.sabre.sws.tools.wsdl.stubs.SessionCloseRQServiceStub.*;
+import static com.sabre.sws.tools.wsdl.stubs.adb.SessionCloseRQServiceStub.*;
 
 /**
  * Created by SG0221139 on 7/11/2014.

@@ -1,0 +1,128 @@
+<project>
+
+    <!--    M   A   C   R   O   S       D   E   F   I   N   I   T   I   O   N   S -->
+
+    <macrodef name="copy_common_schemas">
+        <attribute name="todir"/>
+        <sequential>
+            <copy todir="@{todir}">
+                <fileset dir="target/common_schemas" />
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="download_swso_schemas">
+        <attribute name="servicename" />
+        <attribute name="serviceversion" />
+        <sequential>
+            <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/@{servicename}@{serviceversion}RQ.wsdl" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.wsdl" />
+            <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/@{servicename}@{serviceversion}RQ.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.xsd" />
+            <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/@{servicename}@{serviceversion}RS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RS.xsd" />
+            <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/@{servicename}@{serviceversion}RQRS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQRS.xsd" />
+            </sequential>
+    </macrodef>
+
+    <macrodef name="download_sws_schemas">
+        <attribute name="servicename" />
+        <attribute name="serviceversion" />
+        <sequential>
+            <get src="http://wsdl-crt.int.sabre.com/wsdl/tpfc/@{servicename}@{serviceversion}RQ.wsdl" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.wsdl" />
+            <get src="http://wsdl-crt.int.sabre.com/wsdl/tpfc/@{servicename}@{serviceversion}RQ.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.xsd" />
+            <get src="http://wsdl-crt.int.sabre.com/wsdl/tpfc/@{servicename}@{serviceversion}RS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RS.xsd" />
+            <get src="http://wsdl-crt.int.sabre.com/wsdl/tpfc/@{servicename}@{serviceversion}RQRS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQRS.xsd" />
+        </sequential>
+    </macrodef>
+
+    <macrodef name="download_session_schemas">
+        <attribute name="servicename" />
+        <sequential>
+            <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/@{servicename}RQ.wsdl" dest="target/wsdls/@{servicename}RQ/@{servicename}RQ.wsdl" />
+            <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/@{servicename}RQ.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}RQ.xsd" />
+            <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/@{servicename}RS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}RS.xsd" />
+            <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/@{servicename}RQRS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}RQRS.xsd" />
+        </sequential>
+    </macrodef>
+
+    <!--    T   A   R   G   E   T   S   -->
+
+    <!--    PREPARE  DIRS   -->
+
+    <target name="prepare-dirs" >
+
+        <mkdir dir="target" />
+        <mkdir dir="target/wsdls" />
+
+
+        <mkdir dir="target/wsdls/EnhancedAirBookRQ"/>
+        <mkdir dir="target/wsdls/PassengerDetailsRQ"/>
+        <mkdir dir="target/wsdls/TravelItineraryReadLLSRQ"/>
+        <mkdir dir="target/wsdls/AirSeatLLSRQ"/>
+        <mkdir dir="target/wsdls/OTA_AirAvailLLSRQ"/>
+        <mkdir dir="target/wsdls/SessionCloseRQ"/>
+        <mkdir dir="target/wsdls/SessionCreateRQ"/>
+
+        <mkdir dir="target/common_schemas" />
+
+    </target>
+
+    <!--    DOWNLOAD COMMONS   -->
+
+    <target name="download-common-schemas" >
+
+        <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/envelope.xsd" dest="target/common_schemas/envelope.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/msg-header-2_0.xsd" dest="target/common_schemas/msg-header-2_0.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/STL_For_SabreProtocol_v.1.2.0.xsd" dest="target/common_schemas/STL_For_SabreProtocol_v.1.2.0.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/STL_Header_v.1.2.0.xsd" dest="target/common_schemas/STL_Header_v.1.2.0.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/sws_common.xsd" dest="target/common_schemas/sws_common.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/wsse.xsd" dest="target/common_schemas/wsse.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/wsse2.xsd" dest="target/common_schemas/wsse2.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/xlink.xsd" dest="target/common_schemas/xlink.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/xml.xsd" dest="target/common_schemas/xml.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/xmldsig-core-schema.xsd" dest="target/common_schemas/xmldsig-core-schema.xsd"/>
+
+
+    </target>
+
+    <!--    COPY COMMON SCHEMAS    -->
+
+    <target name="copy-common-schemas" >
+
+        <copy_common_schemas todir="target/wsdls/EnhancedAirBookRQ" />
+        <copy_common_schemas todir="target/wsdls/EnhancedAirBookRQ"/>
+        <copy_common_schemas todir="target/wsdls/PassengerDetailsRQ"/>
+        <copy_common_schemas todir="target/wsdls/TravelItineraryReadLLSRQ"/>
+        <copy_common_schemas todir="target/wsdls/AirSeatLLSRQ"/>
+        <copy_common_schemas todir="target/wsdls/OTA_AirAvailLLSRQ"/>
+        <copy_common_schemas todir="target/wsdls/SessionCloseRQ"/>
+        <copy_common_schemas todir="target/wsdls/SessionCreateRQ"/>
+
+    </target>
+
+    <!--    DOWNLOAD LOW LEVEL SERVICES' SECHEMAS    -->
+
+    <target name="download-lls-schemas" >
+
+        <download_swso_schemas servicename="EnhancedAirBook" serviceversion="${EnhancedAirBookVersion}" />
+        <download_swso_schemas servicename="PassengerDetails" serviceversion="${PassengerDetailsVersion}" />
+
+    </target>
+
+    <!--    DOWNLOAD ORCHESTRATED SERVICES SCHEMAS  -->
+
+    <target name="download-swso-schemas" >
+
+        <download_sws_schemas servicename="OTA_AirAvailLLS" serviceversion="${OTA_AirAvailVersion}" />
+        <download_sws_schemas servicename="TravelItineraryReadLLS" serviceversion="${TravelItineraryReadVersion}" />
+
+    </target>
+
+    <!--    DOWNLOAD SESSION MANAGEMENT SERVICES SCHEMAS    -->
+
+    <target name="download-session-schemas" >
+
+        <download_session_schemas servicename="SessionClose" />
+        <download_session_schemas servicename="SessionCreate" />
+
+    </target>
+
+</project>

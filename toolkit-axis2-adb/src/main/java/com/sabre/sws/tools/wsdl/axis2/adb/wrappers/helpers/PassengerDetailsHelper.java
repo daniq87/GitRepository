@@ -4,7 +4,7 @@ import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
-import com.sabre.sws.tools.wsdl.stubs.PassengerDetailsServiceStub;
+import com.sabre.sws.tools.wsdl.stubs.adb.PassengerDetailsServiceStub;
 import org.apache.axis2.databinding.types.NonNegativeInteger;
 
 

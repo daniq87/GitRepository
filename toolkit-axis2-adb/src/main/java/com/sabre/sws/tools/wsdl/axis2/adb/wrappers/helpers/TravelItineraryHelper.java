@@ -4,12 +4,12 @@ import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
-import com.sabre.sws.tools.wsdl.stubs.TravelItineraryReadServiceStub;
+import com.sabre.sws.tools.wsdl.stubs.adb.TravelItineraryReadServiceStub;
 import org.apache.axis2.databinding.types.NonNegativeInteger;
 
 import java.security.InvalidParameterException;
 
-import static com.sabre.sws.tools.wsdl.stubs.TravelItineraryReadServiceStub.*;
+import static com.sabre.sws.tools.wsdl.stubs.adb.TravelItineraryReadServiceStub.*;
 
 /**
  * Created by SG0221139 on 7/16/2014.

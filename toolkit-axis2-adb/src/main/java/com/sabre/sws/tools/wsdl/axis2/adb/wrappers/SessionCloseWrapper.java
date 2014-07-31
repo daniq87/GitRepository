@@ -4,7 +4,7 @@ import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.SessionCloseHelper;
 import com.sabre.sws.tools.wsdl.commons.exceptions.ProdEndpointConnectionException;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
-import com.sabre.sws.tools.wsdl.stubs.SessionCloseRQServiceStub;
+import com.sabre.sws.tools.wsdl.stubs.adb.SessionCloseRQServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
