@@ -16,6 +16,8 @@ import java.io.StringReader;
  */
 public class LogMonitor extends JFrame {
 
+    private static boolean enableMonitr = false;
+
     private final int windowWidth = 1000;
     private final int windowHeight = 800;
 
@@ -23,6 +25,11 @@ public class LogMonitor extends JFrame {
     private final JTextArea textArea;
 
     private final String line = "\n\n*  *   *   *   *   *   *  *   *   *   *   *   *  *   *   *   *   *   *  *   *   *   *   *   *  *   *   *   *   *   *   *   *   *\n\n";
+
+    public static void setEnableMonitr( boolean b ) {
+        enableMonitr = b;
+        instance.setVisible( enableMonitr );
+    }
 
     private final static LogMonitor instance = new LogMonitor();
 
@@ -134,7 +141,7 @@ public class LogMonitor extends JFrame {
         setResizable(false);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setVisible( true );
+        setVisible( enableMonitr );
     }
 
 }
