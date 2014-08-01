@@ -104,7 +104,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>${project.parent.basedir}/service-versions.properties</file>
+                                <file>${project.parent.basedir}/resources/service-versions.properties</file>
                             </files>
                         </configuration>
                     </execution>
@@ -262,42 +262,57 @@
 
     <dependencies>
 
+        <!-- ADDITIONAL DEPENDENCIES -->
+
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-impl</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-api</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+
         <dependency>
             <groupId>com.sabre.sws.tools</groupId>
             <artifactId>toolkit-commons</artifactId>
             <version>1.0.0</version>
         </dependency>
 
+        <!-- INHERITED FROM DEPENDENCY-MANAGEMENT FROM PARENT POM -->
+
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
             <version>4.3</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2</artifactId>
-            <version>1.6.2</version>
+            <version>${axis2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2-kernel</artifactId>
-            <version>1.6.2</version>
+            <version>${axis2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2-adb</artifactId>
-            <version>1.6.2</version>
+            <version>${axis2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2-transport-http</artifactId>
-            <version>1.6.2</version>
+            <version>${axis2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2-transport-local</artifactId>
-            <version>1.6.2</version>
+            <version>${axis2.version}</version>
         </dependency>
 
     </dependencies>

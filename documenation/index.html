@@ -46,6 +46,11 @@
             margin-left: 50px;
         }
 
+        .warning {
+            font-weight: bold;
+            color: red;
+        }
+
 	</style>
 
 </head>
@@ -108,6 +113,44 @@
 </p>
 
 <p>
+    Client generation is accomplished through invoking <span class="code">wsdl2java</span> tool. <br /><br />
+
+    <span class="code">wsdl2java</span> may be accessed in various ways:
+<ul>
+    <li>As stand-alone command line tool</li>
+    <li>As Ant task</li>
+    <li>As maven plugin</li>
+</ul>
+
+<p> Usage of all of the above is similar. It requires specifying location of the WSDL and XML Schema files, output location for
+    the generated sources and package name for generated classes. Unless told differently, ADB generates one big stub class
+    per one web service definition (or, alternatively, one stub java class per one WSDL file). Parameters are passed as
+    command line options when running from command line. In case of invoking via Ant or Maven tool they are specified in adequate
+    XML file (build.xml or pom.xml). <br /><br />
+
+    Generating clients via command line tool is done by executing the following script: <br /><br/>
+
+    <span class="code">
+        $AXIS2_HOME/bin/wsdl2java.sh -uri &lt;path to .wsdl file&gt; -p &lt;output package name&gt; -d &lt;data binding framework&gt; -o &lt;output directory&gt; <br /><br />
+    </span>
+    The comman line tool is documented in detail <a href="http://axis.apache.org/axis2/java/core/docs/reference.html">HERE</a>.
+<br /><br />
+
+
+
+<br /><br/>
+For the detailed parameters specification, see: </p>
+
+<ul>
+    <li> <a href="http://axis.apache.org/axis2/java/core/tools/CodegenToolReference.html">This</a> for command line and Ant </li>
+    <li> <a href="http://axis.apache.org/axis2/java/core/tools/maven-plugins/maven-wsdl2code-plugin.html">This</a> for Maven plugin </li>
+</ul>
+
+</p>
+
+<hr> <!-- TODO: enhance integrity of the content -->
+
+<p>
     Handlers are classes that extend the <span class="code" >org.apache.axis2.handlers.AbstractHandler</span> class.
     A handler must extends that abstract class and implement
     <span class="code">public&nbsp;Handler.InvocationResponse&nbsp;invoke(MessageContext&nbsp;msgContext)&nbsp;throws&nbsp;AxisFault</span>
@@ -143,20 +186,8 @@ Use of this tool is pretty straightforward, but working with generated files may
 
 <span class="bold">Using ADB data binding </span> <br />
  
-<p> ADB data binding is generally available through the WSDL2Java tool, by specifying proper databinding option. WSDL2Java may be accessed in various ways:
-<ul>
-<li>As stand-alone command line tool</li>
-<li>As Ant task</li>
-<li>As maven plugin</li>
-</ul>
-
-<p> Usage of all of the above is similar. It requires specifying location of the WSDL and XML Schema files, output location for the generated sources and package name for generated classes. Unless told differently, ADB generates one big stub class per one web service definition (or, alternatively, one stub java class per one WSDL file). Parameters are passed as command line options when running from command line. In case of invoking via Ant or Maven tool they are specified in adequate XML file (build.xml or pom.xml). 
-For the detailed parameters specification, see: </p>
-
-<ul>
-<li> <a href="http://axis.apache.org/axis2/java/core/tools/CodegenToolReference.html">This</a> for command line and Ant </li>
-<li> <a href="http://axis.apache.org/axis2/java/core/tools/maven-plugins/maven-wsdl2code-plugin.html">This</a> for Maven plugin </li> 
-</ul>
+<p> ADB data binding is generally available through the <span class="code">WSDL2Java</span> tool, by specifying proper databinding option, as described
+    in Axis2 section <!-- TODO: add link -->.
 
 </p>
 <span class="bold">Execution requirements</span>
@@ -174,8 +205,21 @@ The stub will contain static inner classes for each complex type. Any element or
 will become a field in that class. Simple types restrictions are handled by replacing the relevant type with the basetype. 
 Generated classes follow the bean convention, with <span class="code">setAttribute</span> and <span class="code">getAttribute</span> methods for object fields and 
 <span class="code">addElement(Element e)</span> or <span class="code">setElements(Element [] e)</span> for arrays.
-Generated files may be quite large (up to hundreds of thousands of lines, depending on service definition complexity ) and therefore 
-problematic to work with, for example some IDE settings changes may be necessary. </p>
+
+    </p>
+
+<span class="bold">Limitations and drawbacks</span> <span class="warning">(important)</span>
+<p>
+    Generated files may be quite large (up to hundreds of thousands of lines, depending on service definition complexity ) and therefore
+    problematic to work with, for example some IDE settings changes may be necessary. <br />
+    What is more, ADB does not handle optional attributes in schema definitions well. In generated SOAP messages optional
+    attributes are always present, with values set to their defaults, which may not be desired behavior. In particular cases
+    optional attributes may be mutually exclusive and sending request containing them to server may cause the server
+    to respond with Fault message. <br />
+    Therefore it might not be possible to use automatically generated code without modificating it manually. <br /><br />
+    Because of the facts mentioned above, <span class="warning">ADB is not a recommended databinding framework
+    for working with Sabre Web Services.</span>
+</p>
 
 
 </body>
