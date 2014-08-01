@@ -3,8 +3,6 @@ package com.sabre.sws.tools.wsdl.commons.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -24,13 +22,10 @@ public class ServicesVersionsProvider {
     static {
 
         Properties properties = new Properties();
-        String servicesVersionsFileName = "service-versions.properties";
+        String servicesVersionsFileName = "/service-versions.properties";
 
         try {
-
-            String location = new File( "." ).getCanonicalPath() + "/" + servicesVersionsFileName;
-
-            InputStream inputStream = new FileInputStream( location );
+            InputStream inputStream = ServicesVersionsProvider.class.getResourceAsStream( servicesVersionsFileName );
             properties.load( inputStream );
 
             OTA_AIR_AVAIL_VERSION = properties.getProperty( "OTA_AirAvailVersion" );

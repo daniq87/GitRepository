@@ -17,7 +17,7 @@ public class SecurityFactory {
 
         SecurityDocument instance = SecurityDocument.Factory.newInstance();
 
-        SecurityDocument.Security security = instance.getSecurity();
+        SecurityDocument.Security security = instance.addNewSecurity();
 
         SecurityDocument.Security.UsernameToken usernameToken = security.addNewUsernameToken();
         usernameToken.setUsername( configuration.getUsername() );

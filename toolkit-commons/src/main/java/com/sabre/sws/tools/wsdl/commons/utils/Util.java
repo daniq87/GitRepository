@@ -25,13 +25,12 @@ public class Util {
 
     private static final String serviceTypeString = "sabreXML";
 
-    private static final String configFileLocation = Util.class.getClassLoader().getResource( "connection.properties" ).getPath(); // TODO: resources as bundle
+    private static final String configFileLocation = Util.class.getResource( "/connection.properties" ).getPath(); // TODO: resources as bundle
     private static final IConfigurationProvider configuration;
 
     static {
         try {
             File configFile;
-
             configFile = new File( configFileLocation );
             configuration = new PropertiesFileConfigurationSource( configFile );
             LOGGER.info( "Configuration loaded" );

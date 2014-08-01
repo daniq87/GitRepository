@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>toolkit-axis2-xmlbeans</artifactId>
-    <!--<packaging>jar</packaging>-->
+    <packaging>jar</packaging>
 
     <name>toolkit-axis2-xmlbeans</name>
     <url>http://maven.apache.org</url>
@@ -62,6 +62,21 @@
                             <skip>true</skip>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-typesystemholder-class</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                            <target>
+                                <ant antfile="${project.basedir}/ant-copy-typesystemholder-class.xml">
+                                    <target name="copy-typesystemholder-class" />
+                                </ant>
+                            </target>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
 
@@ -70,11 +85,10 @@
                 <artifactId>axis2-wsdl2code-maven-plugin</artifactId>
                 <version>1.6.2</version>
                 <executions>
+                    <!-- Orchestrated Services -->
+
+                    <!--EnhancedAirBook (Orchestrated)-->
 <!--
-
-                    &lt;!&ndash; Orchestrated Services &ndash;&gt;
-
-                    &lt;!&ndash;EnhancedAirBook (Orchestrated)&ndash;&gt;
 
                     <execution>
                         <id>EnhancedAirBookRQ</id>
@@ -90,8 +104,10 @@
                             <flattenFiles>true</flattenFiles>
                         </configuration>
                     </execution>
+-->
 
-                    &lt;!&ndash;PassengerDetails (Orchestrated)&ndash;&gt;
+                    <!--PassengerDetails (Orchestrated)-->
+<!--
 
                     <execution>
                         <id>PassengerDetailsRQ</id>
@@ -107,10 +123,12 @@
                             <flattenFiles>true</flattenFiles>
                         </configuration>
                     </execution>
+-->
 
-                    &lt;!&ndash;Low Level Services&ndash;&gt;
+                    <!--Low Level Services-->
 
-                    &lt;!&ndash;TravelItineraryReadLLS&ndash;&gt;
+                    <!--TravelItineraryReadLLS-->
+                    <!--
                     <execution>
                         <id>TravelItineraryReadLLSRQ</id>
                         <goals>
@@ -125,8 +143,9 @@
                             <flattenFiles>true</flattenFiles>
                         </configuration>
                     </execution>
+                    -->
 
-                    &lt;!&ndash;OTA_AirAvailLLS&ndash;&gt;
+                    <!--OTA_AirAvailLLS-->
                     <execution>
                         <id>AirAvail</id>
                         <goals>
@@ -135,13 +154,13 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS2.1.1RQ.wsdl</wsdlFile>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailVersion}RQ.wsdl</wsdlFile>
                             <databindingName>xmlbeans</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
                             <flattenFiles>true</flattenFiles>
                         </configuration>
                     </execution>
--->
+
 
                     <!--SessionCloseRQ-->
                     <execution>
@@ -210,7 +229,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>../service-versions.properties</file>
+                                <file>${project.parent.basedir}/resources/service-versions.properties</file>
                             </files>
                         </configuration>
                     </execution>

@@ -79,7 +79,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>../service-versions.properties</file>
+                                <file>${project.parent.basedir}/service-versions.properties</file>
                             </files>
                         </configuration>
                     </execution>

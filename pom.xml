@@ -104,7 +104,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>service-versions.properties</file>
+                                <file>resources/service-versions.properties</file>
                             </files>
                         </configuration>
                     </execution>

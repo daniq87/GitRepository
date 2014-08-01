@@ -15,7 +15,7 @@ public class SessionCreateRQFactory {
     public static SessionCreateRQDocument getSessionCreateRQ( IConfigurationProvider configuration ) {
 
         SessionCreateRQDocument instance = SessionCreateRQDocument.Factory.newInstance();
-        SessionCreateRQDocument.SessionCreateRQ sessionCreateRQ = instance.getSessionCreateRQ();
+        SessionCreateRQDocument.SessionCreateRQ sessionCreateRQ = instance.addNewSessionCreateRQ();
 
         SessionCreateRQDocument.SessionCreateRQ.POS pos = sessionCreateRQ.addNewPOS();
         pos.addNewSource().setPseudoCityCode( configuration.getPCC() );
