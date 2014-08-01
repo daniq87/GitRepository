@@ -6,6 +6,7 @@ import com.sabre.sws.tools.wsdl.commons.handlers.ErrorHandler;
 import com.sabre.sws.tools.wsdl.commons.handlers.MustUnderstandHandler;
 import com.sabre.sws.tools.wsdl.commons.handlers.OutputHandler;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.LogMonitor;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import com.sabre.sws.tools.wsdl.stubs.adb.*;
 import org.apache.logging.log4j.LogManager;
@@ -22,7 +23,11 @@ public class SwsClient {
 
     private static final Logger LOGGER = LogManager.getLogger(SwsClient.class.getName());
 
+    private static final boolean enableMonitor = true;
+
     public static void main( String ... args ) {
+
+        LogMonitor.setEnableMonitr( enableMonitor );
 
         LOGGER.info( "Starting client action");
 
@@ -83,10 +88,10 @@ public class SwsClient {
         LOGGER.info( "Executing AirAvail Request..." );
         airAvail = new AirAvailWrapper( configuration );
 
-        OTA_AirAvailServiceStub.OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 2 );
+        OTA_AirAvailServiceStub.OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 0 );
         processAirAvailInfo( airAvailRS );
 
-        airAvailRS = airAvail.executeSampleRequest( 3 );
+        airAvailRS = airAvail.executeSampleRequest( 1 );
         processAirAvailInfo( airAvailRS );
 
     }

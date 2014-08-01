@@ -35,6 +35,7 @@ public class MessageHeaderFactory {
         ToDocument.To to = ToDocument.To.Factory.newInstance();
         PartyIdDocument.PartyId partyIdTo = to.addNewPartyId();
         partyIdTo.setType( Util.getToString() );
+        header.setTo( to );
 
         header.setCPAId( configuration.getPCC() );
         ServiceDocument.Service service = header.addNewService();
@@ -46,6 +47,8 @@ public class MessageHeaderFactory {
         messageData.setMessageId( "TestCase" ); // TODO
         messageData.setTimestamp( Util.getTimestamp() );
         messageData.setTimeToLive( new GregorianCalendar( 2014, 12, 12 ));
+
+        System.out.println( instance.toString() );
 
         return instance;
     }
