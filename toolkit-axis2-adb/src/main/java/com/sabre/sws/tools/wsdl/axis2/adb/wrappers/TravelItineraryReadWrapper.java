@@ -1,6 +1,6 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 
-import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
+import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.TravelItineraryHelper;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.stubs.adb.TravelItineraryReadServiceStub;

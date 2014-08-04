@@ -1,6 +1,6 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.client;
 
-import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
+import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.*;
 import com.sabre.sws.tools.wsdl.commons.handlers.ErrorHandler;
 import com.sabre.sws.tools.wsdl.commons.handlers.MustUnderstandHandler;
@@ -66,9 +66,9 @@ public class SwsClient {
 
     private static void addHandlers() {
 
-        MessageHandlerManager.addHandler( new OutputHandler() );
-        MessageHandlerManager.addHandler( new ErrorHandler() );
-        MessageHandlerManager.addHandler( new MustUnderstandHandler() );
+        MessageHandlerManager.addLogPhaseHandler(new OutputHandler());
+        MessageHandlerManager.addErrorPhaseHandler(new ErrorHandler());
+        MessageHandlerManager.addDispatchPhaseHandler(new MustUnderstandHandler());
     }
 
     private static void createSession() throws RemoteException {

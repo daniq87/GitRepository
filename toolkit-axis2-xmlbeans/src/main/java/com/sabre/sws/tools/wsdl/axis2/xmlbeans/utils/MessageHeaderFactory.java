@@ -20,7 +20,7 @@ public class MessageHeaderFactory {
         return buffer.toString();
     }
 
-    public static MessageHeaderDocument getMessageHeader( IConfigurationProvider configuration ) {
+    public static MessageHeaderDocument getMessageHeader( IConfigurationProvider configuration, String action ) {
 
         MessageHeaderDocument instance = MessageHeaderDocument.Factory.newInstance();
         MessageHeaderDocument.MessageHeader header = instance.addNewMessageHeader();
@@ -41,7 +41,7 @@ public class MessageHeaderFactory {
         ServiceDocument.Service service = header.addNewService();
         service.setType( Util.getServiceTypeString() );
 
-        header.setAction( "SessionCreateRQ" );
+        header.setAction( action );
 
         MessageDataDocument.MessageData messageData = header.addNewMessageData();
         messageData.setMessageId( "TestCase" ); // TODO

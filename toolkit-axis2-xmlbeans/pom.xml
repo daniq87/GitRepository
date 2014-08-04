@@ -85,65 +85,8 @@
                 <artifactId>axis2-wsdl2code-maven-plugin</artifactId>
                 <version>1.6.2</version>
                 <executions>
-                    <!-- Orchestrated Services -->
 
-                    <!--EnhancedAirBook (Orchestrated)-->
-<!--
-
-                    <execution>
-                        <id>EnhancedAirBookRQ</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/EnhancedAirBookRQ/EnhancedAirBook2.5.0RQ.wsdl</wsdlFile>
-                            <databindingName>xmlbeans</databindingName>
-                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
--->
-
-                    <!--PassengerDetails (Orchestrated)-->
-<!--
-
-                    <execution>
-                        <id>PassengerDetailsRQ</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/PassengerDetailsRQ/PassengerDetails2.2.1RQ.wsdl</wsdlFile>
-                            <databindingName>xmlbeans</databindingName>
-                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
--->
-
-                    <!--Low Level Services-->
-
-                    <!--TravelItineraryReadLLS-->
-                    <!--
-                    <execution>
-                        <id>TravelItineraryReadLLSRQ</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/TravelItineraryReadLLSRQ/TravelItineraryReadLLS2.0.0RQ.wsdl</wsdlFile>
-                            <databindingName>xmlbeans</databindingName>
-                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
-                    -->
+                <!-- A  I  R      A  V  A  I  L   -->
 
                     <!--OTA_AirAvailLLS-->
                     <execution>

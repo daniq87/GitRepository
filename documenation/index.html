@@ -131,9 +131,9 @@
     Generating clients via command line tool is done by executing the following script: <br /><br/>
 
     <span class="code">
-        $AXIS2_HOME/bin/wsdl2java.sh -uri &lt;path to .wsdl file&gt; -p &lt;output package name&gt; -d &lt;data binding framework&gt; -o &lt;output directory&gt; <br /><br />
+        $AXIS2_HOME/bin/wsdl2java.sh -uri &lt;path_to_.wsdl_file&gt; -p &lt;output_package_name&gt; -d &lt;data_binding_framework&gt; -o &lt;output_directory&gt; <br /><br />
     </span>
-    The comman line tool is documented in detail <a href="http://axis.apache.org/axis2/java/core/docs/reference.html">HERE</a>.
+    The command line tool is documented in detail <a href="http://axis.apache.org/axis2/java/core/docs/reference.html">HERE</a>.
 <br /><br />
 
 
@@ -146,18 +146,25 @@ For the detailed parameters specification, see: </p>
     <li> <a href="http://axis.apache.org/axis2/java/core/tools/maven-plugins/maven-wsdl2code-plugin.html">This</a> for Maven plugin </li>
 </ul>
 
-</p>
+</p> <br />
 
-<hr> <!-- TODO: enhance integrity of the content -->
+
+<p>Handlers</p>
 
 <p>
     Handlers are classes that extend the <span class="code" >org.apache.axis2.handlers.AbstractHandler</span> class.
     A handler must extends that abstract class and implement
     <span class="code">public&nbsp;Handler.InvocationResponse&nbsp;invoke(MessageContext&nbsp;msgContext)&nbsp;throws&nbsp;AxisFault</span>
     method. Per each message in specified scope, this method will be invoked with the corresponding <span class="code">MessageContext</span>
-    object as a parameter. <br /><br />
+    object as a parameter. <br />
+    Specifying a proper set of handlers is generally advised. The handlers will form the first line of error detection and
+    processing system. Error handlers should check if the response from the server contains any
+    <span class="code">&lt;Fault&gt;</span> or <span class="code">&lt;Error&gt;</span> elements and if so, they should prevent
+    it from being processed. Any additional message check can be performed. After ensuring the message is valid,
+    the normal content processing flow may be continued.
+    <br /><br />
     There is a situation when specifying a handler is mandatory. It is when a message going in or out
-    contains a <span class="code">mustUnderstand="1"</span> attribute value. Each such message must be handled the proper way,
+    contains a <span class="code">mustUnderstand="1"</span> attribute value. Each such message must be handled in the proper way,
     or <span class="code">org.apache.axis2.AxisFault</span> will be thrown. To avoid this and ensure correct
     <span class="code">mustUnderstand="1"</span> handling, the following step must be taken:
     <ul>
@@ -169,7 +176,7 @@ For the detailed parameters specification, see: </p>
     The example flow may look something like this:
 
 <p class="snippet">
-    SOAPHeaderBlock header = msgContext.getEnvelopE().getHeader(); <br />
+    SOAPHeaderBlock header = msgContext.getEnvelope().getHeader(); <br />
     Iterator headerBlocksIterator = header.getHeadersToProcess(null); <br /><br />
     while( headerBlocksIterator.hasNext() ) { <br />
     &emsp;&emsp;((SOAPHeaderBlock) headerBlocksIterator.next()).setProcessed();<br />
@@ -177,9 +184,9 @@ For the detailed parameters specification, see: </p>
 </p>
 
 </p>
-
-<span class="section">1.1.1.	ADB data binding </span> <br /><br />
-<span class="bold"> Overwiev </span> <br /><br />
+<hr />
+<span class="section">1.1.1 ADB data binding </span> <br /><br />
+<span class="bold"> Overview </span> <br />
 
 <p> ADB data binding framework is intended to be rather simple and lightweight. It provides means to compile XML schemas and WSDL files into java classes. 
 Use of this tool is pretty straightforward, but working with generated files may be cumbersome. </p>
@@ -198,15 +205,16 @@ It includes common schemas for SOAP communication protocol (available as Common 
 
 <span class="bold">Generated code</span>
 
-<p> If all of the required files are available for code generation tool, after invocation it will by default generate one stub java class per service.
-The file will be placed in proper folder structure, according to specified output package and directory. 
-The file will be named <span class="code"> &lt;serviceName&gt;ServiceStub.java </span>
-The stub will contain static inner classes for each complex type. Any element or attribute encapsulated by this complex type 
-will become a field in that class. Simple types restrictions are handled by replacing the relevant type with the basetype. 
-Generated classes follow the bean convention, with <span class="code">setAttribute</span> and <span class="code">getAttribute</span> methods for object fields and 
-<span class="code">addElement(Element e)</span> or <span class="code">setElements(Element [] e)</span> for arrays.
-
-    </p>
+<p> If all of the required files are available for code generation tool, after invocation it will by default generate one
+    stub java class per service.
+    The file will be placed in proper folder structure, according to specified output package and directory.
+    The file will be named <span class="code"> &lt;serviceName&gt;ServiceStub.java </span>
+    The stub will contain static inner classes for each complex type. Any element or attribute encapsulated by this complex type
+    will become a field in that class. Simple types restrictions are handled by replacing the relevant type with the basetype.
+    Generated classes follow the bean convention, with <span class="code">setAttribute</span> and
+    <span class="code">getAttribute</span> methods for object fields and
+    <span class="code">addElement(Element e)</span> or <span class="code">setElements(Element [] e)</span> for arrays.
+</p>
 
 <span class="bold">Limitations and drawbacks</span> <span class="warning">(important)</span>
 <p>
@@ -217,10 +225,116 @@ Generated classes follow the bean convention, with <span class="code">setAttribu
     optional attributes may be mutually exclusive and sending request containing them to server may cause the server
     to respond with Fault message. <br />
     Therefore it might not be possible to use automatically generated code without modificating it manually. <br /><br />
+    Nevertheless, using ADB causes significant code redundancy in project. The reason is the fact that all binding inner
+    classes are generated per service. So there is one inner class for eb:MessageHeader xml object and one for wsse:Security
+    in each service, even though the structure of these classes is identical, as they reflect the same source xml structure.
+    For each service request an object of those classes must be assembled. So either a separate header-creating method must
+    be implemented for each service stub causing code repetition, or a header factory method using reflection
+    and generic return type may be introduced, which would be difficult and error-prone. <br/><br />
     Because of the facts mentioned above, <span class="warning">ADB is not a recommended databinding framework
     for working with Sabre Web Services.</span>
 </p>
+<hr />
+<span class="section">1.1.2 XMLBeans data binding </span> <br /><br />
+<span class="bold"> Overwiev </span> <br /><br />
 
+<p>
+    XMLBeans is another data binding framework for Java. It also is available via <span class="code">wsdl2code</span> maven plugin.
+    In this case, classes are not generated per service, but rather per namespace. It eliminates the code duplication problem,
+    causing code to be clearer and easier to use. <br />
+    However, XMLBeans framework has another significant problem, which may cause it impossible to use with some of the
+    Sabre Web Services (described in separate section). One should keep that in mind when deciding to use XMLBeans,
+    because at some point being unable to consume specific Sabre Web Service may block development of whole application.
+</p>
+
+    <span class="bold">Using XMLBeans</span>
+
+<p>
+    Just like ADB, XMLBeans data binding is available in Axis2 via <span class="code">WSDL2Java</span> command line tool
+    or <span class="code">wsdl2code</span> Maven plugin. They both provide same functionality and require similar
+    configuration.
+
+</p>
+
+    <span class="bold">Execution requirements</span>
+
+<p>
+    As XMLBeans framework is invoked as part of Axis2 client generation, for data binding purposes, the flow is similar to
+    the one described in ADB section. The main (and in most cases, the only) change would be to change the data binding option
+    (the <span class="code">-d xmlbeans</span> command line option or
+    <span class="code">&lt;databindingName&gt;xmlbeans&lt;/databindingName&gt;</span> in Maven configuration).
+    Any additional files referenced from WSDL file must reside with it in it's directory.
+</p>
+
+
+<span class="bold">Generated code</span>
+
+<p>
+    XMLBeans will generate one stub class per service (one stub class per one WSDL file). That stub will encapsulate
+    methods for invoking service calls defined in WSDL file. Unlike ADB, XMLBeans will generate classes per
+    XML structure namespace, which means one class for <span class="code">eb:MessageHeader</span> and
+    one class for <span class="code">wsse:Security</span>. Creating these objects can be done globally and the
+    proper factory method may be reused in every service. <br /><br />
+
+    The structure of generated classes will mirror the structure of XSD schema definition. Each nested type
+    in schema will cause the creation of corresponding nested Java Interface. That will cause problem described in the next section.
+    <br /><br />
+
+    Generated interfaces will be placed in a package whose name will reflect the target namespace of schema definition.
+    The general rules for converting namespace to package name can be obtained from
+    <a href="http://xmlbeans.apache.org/docs/2.0.0/guide/conJavaTypesGeneratedFromUserDerived.html">XMLBeans documentation</a>.<br /><br />
+
+    XMLBeans maps schema types into JavaBeans-style classes. This means the presence of typical setter/getter methods, such as
+    <span class="code">void setElement(ElementType element)</span> and <span class="code">ElementType getElement()</span>.
+    One useful thing is also a <span class="code">ElementType addNewElement()</span> method, that creates new element, places
+    it in the object in which it was invoked and returns it allowing further modification and processing. <br /> <br />
+
+    One can learn about using XMLBeans at <a href="http://xmlbeans.apache.org/documentation/index.html">XMLBeans Project's website</a>
+</p>
+
+
+<span class="bold">Limitations and drawbacks</span> <span class="warning">(important)</span>
+
+<p>
+    Although using XMLBeans data binding results in more clear and easy-to-use code, it has a serious issue,
+    which cause it almost impossible to use with some of the Sabre Web Services. <br /> <br />
+
+    To reflect the structure of XML Schema Definition, XMLBeans creates a series of nested interfaces.
+    Each nested type will have a corresponding nested interface. The problem is, that at compile time the Java compiler
+    creates separate <span class="code">.class</span> file for each class or interface. Nested classes will be compiled
+    to a file whose name will be composed of the name of the outer class, concatenated with the name of the inner class
+    with the dollar symbol ('$'). Classes nested in inner classes will be compiled to a file whose name will be composed of the
+    names of all classes which are higher in the hierarchy, like
+    <span class="code">OuterClass$InnerClass1$InnerClass2$...$InnerClass10$InnerClass11.class</span>.
+    When generating classes from a complex schema with deeply nested types, generated class's name may exceed the 255
+    characters limit imposed by most of the modern filesystems, used in both Windows and Unix-like systems
+    (this limit is present in all of the following file systems: NTFS, FAT32, exFAT, ext3, ext4 and ZFS). This will
+    make such nested class/interface impossible to compile, as the Java compiler will not be able to save compiled
+    file on disk. There is no possibility to use any custom binding or change XMLBeans behavior in way that would
+    allow generating Java stubs from deeply nested schemas. Therefore it is not possible to use XMLBeans with some of
+    the Sabre Web Services, that contain deeply nested schemas (e.g. EnhancedAirBook, PassengerDetailsRQ, TravelItineraryLLSRQ),
+    when using any common file system. On the other hand, changing operating system or switching to niche filesystem
+    just to use one particular XML binding framework (while there are many others) seems to be an exaggeration. <br /><br />
+
+    For the record, it should be mentioned that there is actually a way to use XMLBeans on any common filesystem
+    and avoid long file names issue. However, it is a workaround that requires developing specialized tools,
+    like custom compilers or Maven plugins, that should be next incorporated into application build process.
+    The trick is, that JVM itself does not preserve the 255 characters identifier length limit (it uses
+    it's own 65535 characters limit), so the only problem is a intermediate step of storing .class file on disk
+    between compiling and loading class by a classloader. Therefore, avoiding this step, would solve the problem.
+    There are at least two possible ways to do that. They both make use of the <span class="code">javax.tools</span>
+    package. The first way is to create a custom dynamic in-memory java compiler, that would load a source code file
+    from the disk, compile it in-memory and then provide means of instantiating object of compiled class via
+    customized in-memory classloader. Another way is to compile problematic source code in-memory and redirect the output
+    to byte arrays, which then would be used to create a JAR containing created classes. That way the storing phase would
+    be omitted, as the only file written to filesystem would be the JAR, which holds no name limitations. <br />
+    Although those ways seem to solve the problem (they were not tested), once again, creaing custom compilers
+    and classloaders does not seem to be an adequate way of solving a problem caused by wrong choice of
+    data binding framework for web services application.<br/><br />
+
+    Because of the facts mentioned above, <span class="warning">XMLBeans is not a recommended databinding framework
+    for working with Sabre Web Services neither.</span>
+</p>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 
-import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
+import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.commons.handlers.MustUnderstandHandler;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.stubs.adb.SessionCloseRQServiceStub;
@@ -72,7 +72,7 @@ public class SessionCloseWrapperTest extends AbstractWebServiceTestClass {
                                 )
                 );
 
-        MessageHandlerManager.addHandler( new MustUnderstandHandler() );
+        MessageHandlerManager.addDispatchPhaseHandler( new MustUnderstandHandler() );
         MessageHandlerManager.addStub( instance );
 
         // when

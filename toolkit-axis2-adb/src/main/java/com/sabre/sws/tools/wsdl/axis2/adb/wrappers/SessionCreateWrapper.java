@@ -1,6 +1,6 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 
-import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
+import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.SessionCreateHelper;
 import com.sabre.sws.tools.wsdl.commons.exceptions.ProdEndpointConnectionException;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;

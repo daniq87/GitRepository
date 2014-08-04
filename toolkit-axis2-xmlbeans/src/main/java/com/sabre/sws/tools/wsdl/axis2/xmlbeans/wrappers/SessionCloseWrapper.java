@@ -4,6 +4,7 @@ import com.sabre.sws.tools.wsdl.axis2.xmlbeans.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.axis2.xmlbeans.utils.SecurityFactory;
 import com.sabre.sws.tools.wsdl.axis2.xmlbeans.utils.SessionCloseRQFactory;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.stubs.xmlbeans.SessionCloseRQServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContextFactory;
@@ -22,15 +23,17 @@ public class SessionCloseWrapper extends SessionCloseRQServiceStub {
         super( ConfigurationContextFactory.createConfigurationContextFromFileSystem(null, null),
                 configuration.getEndpoint() );
         this.configuration = configuration;
-
+        MessageHandlerManager.addStub( this );
     }
 
     public SessionCloseRSDocument closeSession() throws RemoteException {
 
+        System.out.println( SessionCloseRQFactory.getSessionCloseRQ( configuration ) );
+
         return sessionCloseRQ (
                 SessionCloseRQFactory.getSessionCloseRQ( configuration ),
-                MessageHeaderFactory.getMessageHeader( configuration),
-                SecurityFactory.getSecuirtyDocument( configuration )
+                MessageHeaderFactory.getMessageHeader( configuration, "SessionCloseRQ"),
+                SecurityFactory.getSecuirtyDocument( configuration, false )
         );
     }
 
