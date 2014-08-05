@@ -10,6 +10,7 @@
         <module>toolkit-commons</module>
         <module>toolkit-axis2-adb</module>
         <module>toolkit-axis2-xmlbeans</module>
+        <module>toolkit-cxf-jaxb</module>
     </modules>
     <packaging>pom</packaging>
 
