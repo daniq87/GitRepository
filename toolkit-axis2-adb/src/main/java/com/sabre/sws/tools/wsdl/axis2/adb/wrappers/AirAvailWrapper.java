@@ -55,7 +55,6 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         requestBody.getOriginDestinationInformation().getFlightSegment().getDestinationLocation().setLocationCode( "FRA" );
         requestBody.getOriginDestinationInformation().getFlightSegment().getOriginLocation().setLocationCode( "DFW" );
 
-
         return requestBody;
     }
 
@@ -67,7 +66,6 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         requestBody.getOptionalQualifiers().setFlightQualifiers( new FlightQualifiers_type0() );
 
         VendorPrefs_type0 vendorPrefs = new VendorPrefs_type0();
-//                vendorPrefs.setExclude( true );
         Airline_type0 airline = new Airline_type0();
         airline.setCode( "AA" );
         vendorPrefs.addAirline( airline );
@@ -78,34 +76,6 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         }});
         requestBody.getOriginDestinationInformation().getFlightSegment().getDestinationLocation().setLocationCode( "LHR" );
         requestBody.getOriginDestinationInformation().getFlightSegment().getOriginLocation().setLocationCode( "DFW" );
-
-        // Debug
-
-        requestBody = new OTA_AirAvailRQ();
-        requestBody.setVersion( version );
-        requestBody.setOptionalQualifiers( new OptionalQualifiers_type0() );
-        requestBody.getOptionalQualifiers().setFlightQualifiers( new FlightQualifiers_type0() );
-        requestBody.getOptionalQualifiers().getFlightQualifiers().setVendorPrefs( new VendorPrefs_type0() );
-        requestBody.getOptionalQualifiers().getFlightQualifiers().getVendorPrefs().setExclude( true );
-        Airline_type0 airlinee = new Airline_type0();
-        airlinee.setCode( "AA" );
-        requestBody.getOptionalQualifiers().getFlightQualifiers().getVendorPrefs().addAirline( airlinee );
-
-        requestBody.setOriginDestinationInformation( new OriginDestinationInformation_type0());
-        requestBody.getOriginDestinationInformation().setFlightSegment( new FlightSegment_type0() );
-        DateOrTime departureTime = new DateOrTime();
-        departureTime.setDateOrTime( "12-21" );
-        requestBody.getOriginDestinationInformation().getFlightSegment().setDepartureDateTime( departureTime );
-        DestinationLocation_type0 dest = new DestinationLocation_type0();
-        dest.setLocationCode( "LHR" );
-        OriginLocation_type0 origin = new OriginLocation_type0();
-        origin.setLocationCode( "DFW" );
-
-        requestBody.getOriginDestinationInformation().getFlightSegment().setDestinationLocation( dest );
-        requestBody.getOriginDestinationInformation().getFlightSegment().setOriginLocation( origin );
-
-        // /Debug
-
 
         return requestBody;
     }

@@ -2,7 +2,7 @@ package com.sabre.sws.tools.wsdl.cxf.jaxb.utils;
 
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
-import com.sabre.sws.tools.wsdl.cxf.jaxb.*;
+import org.ebxml.namespaces.messageheader.*;
 
 /**
  * Created by SG0221139 on 8/5/2014.

@@ -3,6 +3,7 @@ package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.TravelItineraryHelper;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.stubs.adb.TravelItineraryReadServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
@@ -53,7 +54,7 @@ public class TravelItineraryReadWrapper extends TravelItineraryReadServiceStub {
 
         TravelItineraryReadRQ instance = new TravelItineraryReadRQ();
 
-        instance.setVersion( "2.0.0" );         // TODO: this and other versionings should be external dependency
+        instance.setVersion(ServicesVersionsProvider.getTravelItineraryVersion());
 
         MessagingDetails_type0 msgDetails = new MessagingDetails_type0();
         Transaction_type0 transaction = new Transaction_type0();

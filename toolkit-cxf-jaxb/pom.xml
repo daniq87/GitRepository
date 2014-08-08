@@ -74,8 +74,11 @@
                                 <extraargs>
                                     <extraarg>-db</extraarg>
                                     <extraarg>jaxb</extraarg>
-                                    <extraarg>-p</extraarg>
-                                    <extraarg>com.sabre.sws.tools.wsdl.cxf.jaxb</extraarg>
+                                    <extraarg>-autoNameResolution</extraarg>
+                                    <!--<extraarg>-p</extraarg>-->
+                                    <!--<extraarg>com.sabre.sws.tools.wsdl.cxf.jaxb</extraarg>-->
+                                    <extraarg>-dns</extraarg>
+                                    <extraarg>false</extraarg>
                                     <extraarg>-client</extraarg>
                                 </extraargs>
                             </defaultOptions>
@@ -86,6 +89,16 @@
                                 </wsdlOption>
                                 <wsdlOption>
                                     <wsdl>${project.parent.basedir}/target/wsdls/SessionCreateRQ/SessionCreateRQ.wsdl</wsdl>
+                                </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>${project.parent.basedir}/target/wsdls/TravelItineraryReadLLSRQ/TravelItineraryReadLLS${TravelItineraryReadVersion}RQ.wsdl</wsdl>
+                                    <extraargs>
+                                        <extraarg>-b</extraarg>
+                                        <extraarg>${project.basedir}/jaxb-custom-binding.jxb</extraarg>
+                                    </extraargs>
+                                </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailVersion}RQ.wsdl</wsdl>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>
@@ -111,11 +124,11 @@
             <version>${project.parent.version}</version>
         </dependency>
 
-        <dependency>
+<!--        <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt</artifactId>
             <version>${cxf.version}</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.apache.cxf</groupId>
