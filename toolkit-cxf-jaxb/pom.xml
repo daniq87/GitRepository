@@ -94,11 +94,25 @@
                                     <wsdl>${project.parent.basedir}/target/wsdls/TravelItineraryReadLLSRQ/TravelItineraryReadLLS${TravelItineraryReadVersion}RQ.wsdl</wsdl>
                                     <extraargs>
                                         <extraarg>-b</extraarg>
-                                        <extraarg>${project.basedir}/jaxb-custom-binding.jxb</extraarg>
+                                        <extraarg>${project.basedir}/custom-bindings/travel-itinerary-custom-binding.jxb</extraarg>
                                     </extraargs>
                                 </wsdlOption>
                                 <wsdlOption>
                                     <wsdl>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailVersion}RQ.wsdl</wsdl>
+                                </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>${project.parent.basedir}/target/wsdls/EnhancedAirBookRQ/EnhancedAirBook${EnhancedAirBookVersion}RQ.wsdl</wsdl>
+                                    <extraargs>
+                                        <extraarg>-b</extraarg>
+                                        <extraarg>${project.basedir}/custom-bindings/enhanced-airbook-custom-binding.jxb</extraarg>
+                                    </extraargs>
+                                </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>${project.parent.basedir}/target/wsdls/PassengerDetailsRQ/PassengerDetails${PassengerDetailsVersion}RQ.wsdl</wsdl>
+                                    <extraargs>
+                                        <extraarg>-b</extraarg>
+                                        <extraarg>${project.basedir}/custom-bindings/passenger-details-custom-binding.jxb</extraarg>
+                                    </extraargs>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>

@@ -1,9 +1,6 @@
 package com.sabre.sws.tools.wsdl.cxf.jaxb.client;
 
-import com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers.AirAvailWrapper;
-import com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers.SessionCloseWrapper;
-import com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers.SessionCreateWrapper;
-import com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers.TravelItineraryWrapper;
+import com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers.*;
 
 /**
  * Created by SG0221139 on 8/5/2014.
@@ -14,8 +11,9 @@ public class SwsClient {
 
         openSession();
 
-        invokeTravelItineraryRequest();
-        invokeAirAvailRequests();
+//        invokeTravelItineraryRequest();
+//        invokeAirAvailRequests();
+        invokeEnhancedAirBookRequest();
 
         closeSession();
     }
@@ -41,6 +39,10 @@ public class SwsClient {
 
     private static void invokeTravelItineraryRequest() {
         new TravelItineraryWrapper().executeSampleRequest();
+    }
+
+    private static void invokeEnhancedAirBookRequest() {
+        new EnhancedAirBookWrapper().executeSampleRequest();
     }
 
 }

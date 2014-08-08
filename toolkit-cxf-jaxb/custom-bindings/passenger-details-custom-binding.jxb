@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+
+    <jaxb:bindings schemaLocation="../../target/wsdls/PassengerDetailsRQ/PassengerDetails2.2.1RS.xsd" node="/xs:schema">
+        <jaxb:bindings node="//xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element[10]/xs:complexType">
+            <jaxb:class name="Vehicle1"/>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+</jaxb:bindings>

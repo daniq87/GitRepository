@@ -132,7 +132,7 @@ public class EnhancedAirBookHelper {
         flightSegment.setFlightNumber( "8865" );
 //        flightSegment.setArrivalDateTime( "12-22T11:45" );
         flightSegment.setDepartureDateTime( new DateTime() {{ setDateTime( "2014-12-21T16:10" ); }} ); // does not work without specifying a year
-        flightSegment.setNumberInParty( "1" );
+        flightSegment.setNumberInParty( "2" );
         flightSegment.setStatus( "GK" );
         flightSegment.setResBookDesigCode( "Y" );
 
