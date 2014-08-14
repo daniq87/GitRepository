@@ -1,6 +1,7 @@
 package com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
+import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.LLSErrorInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.SessionCreateIncomingInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.SecurityFactory;
@@ -10,7 +11,8 @@ import https.webservices_sabre_com.websvc.SessionCreateRQService;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.endpoint.Endpoint;
 import org.apache.cxf.frontend.ClientProxy;
-import org.apache.cxf.wsdl.interceptors.BareOutInterceptor;
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.ebxml.namespaces.messageheader.MessageHeader;
 import org.opentravel.ota._2002._11.SessionCreateRQ;
 import org.opentravel.ota._2002._11.SessionCreateRS;
@@ -46,11 +48,12 @@ public class SessionCreateWrapper {
         Client client = ClientProxy.getClient(stub);
         Endpoint endpoint = client.getEndpoint();
 
-        BareOutInterceptor outBare = new BareOutInterceptor();
-        SessionCreateIncomingInterceptor sessionInterceptor = new SessionCreateIncomingInterceptor();
 
-        endpoint.getOutInterceptors().add( outBare );
-        endpoint.getInInterceptors().add( sessionInterceptor );
+        endpoint.getOutInterceptors().add( new LoggingOutInterceptor() );
+        endpoint.getInInterceptors().add( new SessionCreateIncomingInterceptor() );
+        endpoint.getInInterceptors().add( new LoggingInInterceptor() );
+        endpoint.getInInterceptors().add( new LLSErrorInterceptor() );
+
 
         SessionCreateRS rs = stub.sessionCreateRQ( headerHolder, securityHolder, body );
         return rs;

@@ -3,6 +3,7 @@ package com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
+import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.SWSOResponseInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.SecurityFactory;
 import com.sabre.webservices.sabrexml._2011._10.EnhancedAirBookRQ;
@@ -68,7 +69,9 @@ public class EnhancedAirBookWrapper {
         Endpoint endpoint = client.getEndpoint();
 
         endpoint.getOutInterceptors().add( new LoggingOutInterceptor() );
+
         endpoint.getInInterceptors().add( new LoggingInInterceptor() );
+        endpoint.getInInterceptors().add( new SWSOResponseInterceptor() );
     }
 
     private EnhancedAirBookRQ getRequestBody() {

@@ -11,9 +11,10 @@ public class SwsClient {
 
         openSession();
 
-//        invokeTravelItineraryRequest();
-//        invokeAirAvailRequests();
+        invokeTravelItineraryRequest();
+        invokeAirAvailRequests();
         invokeEnhancedAirBookRequest();
+        invokePassengerDetailsRequest();
 
         closeSession();
     }
@@ -45,4 +46,7 @@ public class SwsClient {
         new EnhancedAirBookWrapper().executeSampleRequest();
     }
 
+    private static void invokePassengerDetailsRequest() {
+        new PassengerDetailsWrapper().executeSampleRequest();
+    }
 }

@@ -11,6 +11,7 @@
         <module>toolkit-axis2-adb</module>
         <module>toolkit-axis2-xmlbeans</module>
         <module>toolkit-cxf-jaxb</module>
+        <module>toolkit-spring-ws</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -71,12 +72,12 @@
     </pluginRepositories>
 
     <build>
-        <resources>
+        <!--<resources>
             <resource>
                 <directory>toolkit-axis2-adb/src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
-        </resources>
+        </resources>-->
         <plugins>
 
             <!-- Compiler Plugin -->
