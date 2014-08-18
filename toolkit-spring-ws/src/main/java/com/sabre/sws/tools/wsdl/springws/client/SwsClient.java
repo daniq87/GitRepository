@@ -2,21 +2,14 @@ package com.sabre.sws.tools.wsdl.springws.client;
 
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
-import org.ebxml.namespaces.messageheader.From;
-import org.ebxml.namespaces.messageheader.MessageHeader;
-import org.ebxml.namespaces.messageheader.Service;
-import org.ebxml.namespaces.messageheader.To;
+import com.sabre.sws.tools.wsdl.springws.callbacks.HeaderComposingCallback;
 import org.opentravel.ota._2002._11.SessionCreateRQ;
 import org.opentravel.ota._2002._11.SessionCreateRS;
-import org.springframework.ws.WebServiceMessage;
-import org.springframework.ws.client.core.WebServiceMessageCallback;
+import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
-import org.springframework.ws.soap.SoapHeader;
-import org.springframework.ws.soap.saaj.SaajSoapMessage;
-import org.xmlsoap.schemas.ws._2002._12.secext.Security;
+import org.springframework.ws.client.support.interceptor.ClientInterceptor;
+import org.springframework.ws.context.MessageContext;
 
-import javax.xml.namespace.QName;
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
 
 /**
@@ -26,46 +19,38 @@ public class SwsClient extends WebServiceGatewaySupport {
 
     public SessionCreateRS createSession() {
 
-        WebServiceMessageCallback callback = new WebServiceMessageCallback() {
+        ClientInterceptor clientInterceptor = new ClientInterceptor() {
             @Override
-            public void doWithMessage(WebServiceMessage webServiceMessage) throws IOException, TransformerException {
-                SaajSoapMessage message = (SaajSoapMessage) webServiceMessage;
-                SoapHeader header = message.getSoapHeader();
-                QName qName = new QName( "http://schemas.xmlsoap.org/ws/2002/12/secext", "Security", "wsse" );
-                header.addHeaderElement( qName );
-                webServiceMessage.writeTo( System.out );
+            public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
+                return false;
+            }
+
+            @Override
+            public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
+                try {
+                    System.out.println( "\nResponse:" );
+                    messageContext.getResponse().writeTo( System.out );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            public boolean handleFault(MessageContext messageContext) throws WebServiceClientException {
+                return false;
+            }
+
+            @Override
+            public void afterCompletion(MessageContext messageContext, Exception e) throws WebServiceClientException {
+
             }
         };
 
-        SessionCreateRQ request = new SessionCreateRQ();
-
-        Security security = new Security();
-        Security.UsernameToken usernameToken = new Security.UsernameToken();
-
         IConfigurationProvider configurationProvider = Util.getConfigurationProvider();
 
-        usernameToken.setDomain(configurationProvider.getDomain());
-        usernameToken.setOrganization(configurationProvider.getOrganization());
-        usernameToken.setPassword(configurationProvider.getPassword());
-        usernameToken.setUsername(configurationProvider.getUsername());
-
-        security.setUsernameToken(usernameToken);
-
-        // Message Header
-        MessageHeader header = new MessageHeader();
-        header.setAction( "SessionCreateRQ" );
-        StringBuffer buffer = new StringBuffer( Util.getTimestamp() );
-        buffer.append( "-" );
-        buffer.append( Util.longRandomHexString() );
-        header.setConversationId(buffer.toString());
-        header.setCPAId( configurationProvider.getPCC() );
-        From from = new From();
-        from.setRole( Util.getFromString() );
-        header.setFrom( from );
-        To to = new To();
-        to.setRole( Util.getToString() );
-        header.setTo( to );
-        header.setService( new Service());
+        SessionCreateRQ request = new SessionCreateRQ();
 
         SessionCreateRQ.POS pos = new SessionCreateRQ.POS();
         SessionCreateRQ.POS.Source source = new SessionCreateRQ.POS.Source();
@@ -73,7 +58,9 @@ public class SwsClient extends WebServiceGatewaySupport {
         pos.setSource( source );
         request.setPOS( pos );
 
-        SessionCreateRS response = (SessionCreateRS)getWebServiceTemplate().marshalSendAndReceive(request, callback);
+        this.setInterceptors( new ClientInterceptor[] {clientInterceptor} );
+
+        SessionCreateRS response = (SessionCreateRS)getWebServiceTemplate().marshalSendAndReceive(request, new HeaderComposingCallback( "SessionCreateRQ" ) );
 
         return response;
     }

@@ -38,6 +38,7 @@ public class SessionCreateConfiguration {
         SwsClient swsClient = new SwsClient();
 
         swsClient.setDefaultUri( "http://localhost:8088/mockSessionCreateSoapBinding" );
+//        swsClient.setDefaultUri(Util.getConfigurationProvider().getEndpoint());
         swsClient.setMarshaller( marshaller );
         swsClient.setUnmarshaller(marshaller);
 
