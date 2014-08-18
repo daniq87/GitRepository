@@ -1,68 +1,32 @@
 package com.sabre.sws.tools.wsdl.springws.client;
 
-import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
-import com.sabre.sws.tools.wsdl.commons.utils.Util;
-import com.sabre.sws.tools.wsdl.springws.callbacks.HeaderComposingCallback;
-import org.opentravel.ota._2002._11.SessionCreateRQ;
-import org.opentravel.ota._2002._11.SessionCreateRS;
-import org.springframework.ws.client.WebServiceClientException;
-import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
-import org.springframework.ws.client.support.interceptor.ClientInterceptor;
-import org.springframework.ws.context.MessageContext;
-
-import java.io.IOException;
+import com.sabre.sws.tools.wsdl.springws.configuration.BeansConfiguration;
+import com.sabre.sws.tools.wsdl.springws.wrappers.SessionCloseWrapper;
+import com.sabre.sws.tools.wsdl.springws.wrappers.SessionCreateWrapper;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 
 /**
  * Created by SG0221139 on 8/13/2014.
  */
-public class SwsClient extends WebServiceGatewaySupport {
+public class SwsClient {
 
-    public SessionCreateRS createSession() {
+    private static ApplicationContext context;
 
-        ClientInterceptor clientInterceptor = new ClientInterceptor() {
-            @Override
-            public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
-                return false;
-            }
+    public static void main( String ... args ) {
 
-            @Override
-            public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
-                try {
-                    System.out.println( "\nResponse:" );
-                    messageContext.getResponse().writeTo( System.out );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-                return true;
-            }
+        context = SpringApplication.run(BeansConfiguration.class, args);
 
-            @Override
-            public boolean handleFault(MessageContext messageContext) throws WebServiceClientException {
-                return false;
-            }
+    }
 
-            @Override
-            public void afterCompletion(MessageContext messageContext, Exception e) throws WebServiceClientException {
+    private static void openSession() {
+        SessionCreateWrapper sessionCreateWrapper = context.getBean( SessionCreateWrapper.class );
+        sessionCreateWrapper.openSession();
+    }
 
-            }
-        };
-
-        IConfigurationProvider configurationProvider = Util.getConfigurationProvider();
-
-        SessionCreateRQ request = new SessionCreateRQ();
-
-        SessionCreateRQ.POS pos = new SessionCreateRQ.POS();
-        SessionCreateRQ.POS.Source source = new SessionCreateRQ.POS.Source();
-        source.setPseudoCityCode( configurationProvider.getPCC() );
-        pos.setSource( source );
-        request.setPOS( pos );
-
-        this.setInterceptors( new ClientInterceptor[] {clientInterceptor} );
-
-        SessionCreateRS response = (SessionCreateRS)getWebServiceTemplate().marshalSendAndReceive(request, new HeaderComposingCallback( "SessionCreateRQ" ) );
-
-        return response;
+    private static void closeSession() {
+        SessionCloseWrapper sessionCloseWrapper = context.getBean( SessionCloseWrapper.class );
+        sessionCloseWrapper.closeSession();
     }
 
 }

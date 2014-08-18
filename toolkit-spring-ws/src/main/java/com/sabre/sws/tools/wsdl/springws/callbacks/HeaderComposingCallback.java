@@ -7,19 +7,12 @@ import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.soap.SoapHeader;
 import org.springframework.ws.soap.SoapMessage;
-import org.w3c.dom.Document;
 import org.xmlsoap.schemas.ws._2002._12.secext.Security;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
 import java.io.IOException;
 
 /**
@@ -51,6 +44,30 @@ public class HeaderComposingCallback implements WebServiceMessageCallback {
         SoapHeader soapHeader = ((SoapMessage)webServiceMessage).getSoapHeader();
 
         try {
+
+            JAXBContext context = JAXBContext.newInstance( MessageHeader.class, Security.class );
+
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.marshal( header, soapHeader.getResult() );
+            marshaller.marshal( security, soapHeader.getResult() );
+
+            webServiceMessage.writeTo( System.out );
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /*
+    Last working copy
+    @Override
+    public void doWithMessage(WebServiceMessage webServiceMessage) throws IOException, TransformerException {
+
+        SoapHeader soapHeader = ((SoapMessage)webServiceMessage).getSoapHeader();
+
+        try {
             JAXBContext context = JAXBContext.newInstance( MessageHeader.class, Security.class );
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -76,6 +93,6 @@ public class HeaderComposingCallback implements WebServiceMessageCallback {
         } catch (JAXBException | ParserConfigurationException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 }

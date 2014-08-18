@@ -1,11 +1,9 @@
 package com.sabre.sws.tools.wsdl.springws.utils;
 
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
-import org.ebxml.namespaces.messageheader.From;
-import org.ebxml.namespaces.messageheader.MessageHeader;
-import org.ebxml.namespaces.messageheader.Service;
-import org.ebxml.namespaces.messageheader.To;
+import org.ebxml.namespaces.messageheader.*;
 
 /**
  * Created by SG0221139 on 8/14/2014.
@@ -18,20 +16,41 @@ public class MessageHeaderFactory {
 
         MessageHeader header = new MessageHeader();
         header.setAction( actionString );
-        StringBuffer buffer = new StringBuffer( Util.getTimestamp() );
-        buffer.append( "-" );
-        buffer.append( Util.longRandomHexString() );
-        header.setConversationId(buffer.toString());
+        header.setConversationId( getConversationId() );
         header.setCPAId( configuration.getPCC() );
+
+        // From
         From from = new From();
-        from.setRole( Util.getFromString() );
+        PartyId fromPartyId = new PartyId();
+        fromPartyId.setValue( Util.getFromString() );
+        from.getPartyId().add( fromPartyId );
         header.setFrom( from );
+
+        // To
         To to = new To();
-        to.setRole( Util.getToString() );
+        PartyId toPartyId = new PartyId();
+        toPartyId.setValue( Util.getToString() );
+        to.getPartyId().add( toPartyId );
         header.setTo( to );
-        header.setService( new Service());
+
+        header.setService( new Service() );
 
         return header;
+    }
+
+    private static String getConversationId() {
+
+        String id;
+
+        if(SessionManager.getInstance().isSessionActive()) {
+            id = SessionManager.getInstance().getConversationID();
+        } else {
+            StringBuffer buffer = new StringBuffer( Util.getTimestamp() );
+            buffer.append( "-" );
+            buffer.append( Util.longRandomHexString() );
+            id = buffer.toString();
+        }
+        return id;
     }
 
 }
