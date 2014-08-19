@@ -1,11 +1,14 @@
 package com.sabre.sws.tools.wsdl.springws.configuration;
 
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
+import com.sabre.sws.tools.wsdl.springws.wrappers.AirAvailWrapper;
 import com.sabre.sws.tools.wsdl.springws.wrappers.SessionCloseWrapper;
 import com.sabre.sws.tools.wsdl.springws.wrappers.SessionCreateWrapper;
+import com.sabre.sws.tools.wsdl.springws.wrappers.TravelItineraryReadWrapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
 /**
  * Created by SG0221139 on 8/13/2014.
@@ -15,15 +18,20 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 @Configuration
 public class BeansConfiguration {
 
+    private void configureWebServiceGateway( WebServiceGatewaySupport ws, Jaxb2Marshaller marshaller ) {
+        ws.setDefaultUri(Util.getConfigurationProvider().getEndpoint());
+        ws.setMarshaller(marshaller);
+        ws.setUnmarshaller(marshaller);
+    }
+
     @Bean
     public Jaxb2Marshaller marshaller() {
 
         StringBuffer buffer = new StringBuffer();
-        buffer.append( "org.ebxml.namespaces.messageheader" ).append( ":" );
-        buffer.append( "org.opentravel.ota._2002._11" ).append( ":" );
-        buffer.append( "org.w3._2000._09.xmldsig_" ).append( ":" );
-        buffer.append( "org.xmlsoap.schemas.soap.envelope" ).append( ":" );
-        buffer.append( "org.xmlsoap.schemas.ws._2002._12.secext" );
+        buffer.append( "com.sabre.sws.tools.wsdl.springws.session" ).append( ":" );
+        buffer.append( "com.sabre.sws.tools.wsdl.springws.soap" ).append( ":" );
+        buffer.append( "com.sabre.sws.tools.wsdl.springws.airavail" ).append( ":" );
+        buffer.append( "com.sabre.sws.tools.wsdl.springws.travelitinerary" ).append( ":" );
 
         String contextPath = buffer.toString();
 
@@ -38,11 +46,7 @@ public class BeansConfiguration {
     public SessionCreateWrapper sessionCreateWrapper( Jaxb2Marshaller marshaller ) {
 
         SessionCreateWrapper sessionCreateWrapper = new SessionCreateWrapper();
-
-//        sessionCreateWrapper.setDefaultUri("http://localhost:8088/mockSessionCreateSoapBinding");
-        sessionCreateWrapper.setDefaultUri(Util.getConfigurationProvider().getEndpoint());
-        sessionCreateWrapper.setMarshaller( marshaller );
-        sessionCreateWrapper.setUnmarshaller(marshaller);
+        configureWebServiceGateway( sessionCreateWrapper, marshaller );
 
         return sessionCreateWrapper;
     }
@@ -50,14 +54,29 @@ public class BeansConfiguration {
     @Bean
     public SessionCloseWrapper sessionCloseWrapper( Jaxb2Marshaller marshaller ) {
 
-        SessionCloseWrapper sessionCloseWrapper = new SessionCloseWrapper();
 
-//        sessionCloseWrapper.setDefaultUri("http://localhost:8088/mockSessionCloseSoapBinding");
-        sessionCloseWrapper.setDefaultUri(Util.getConfigurationProvider().getEndpoint());
-        sessionCloseWrapper.setMarshaller( marshaller );
-        sessionCloseWrapper.setUnmarshaller(marshaller);
+        SessionCloseWrapper sessionCloseWrapper = new SessionCloseWrapper();
+        configureWebServiceGateway( sessionCloseWrapper, marshaller );
 
         return sessionCloseWrapper;
+    }
+
+    @Bean
+    public AirAvailWrapper airAvailWrapper( Jaxb2Marshaller marshaller ) {
+
+        AirAvailWrapper airAvailWrapper = new AirAvailWrapper();
+        configureWebServiceGateway( airAvailWrapper, marshaller );
+
+        return airAvailWrapper;
+    }
+
+    @Bean
+    public TravelItineraryReadWrapper travelItineraryReadWrapper( Jaxb2Marshaller marshaller ) {
+
+        TravelItineraryReadWrapper travelItineraryReadWrapper = new TravelItineraryReadWrapper();
+        configureWebServiceGateway( travelItineraryReadWrapper, marshaller );
+
+        return travelItineraryReadWrapper;
     }
 
 }

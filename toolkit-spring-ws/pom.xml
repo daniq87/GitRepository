@@ -90,22 +90,111 @@
                 <version>0.9.0</version>
                 <executions>
                     <execution>
+                        <id>session-schemas</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
+                        <configuration>
+                            <schemaLanguage>WSDL</schemaLanguage>
+                            <forceRegenerate>true</forceRegenerate>
+                            <schemaDirectory>${project.parent.basedir}/target/</schemaDirectory>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc-1</generateDirectory>
+                            <generatePackage>com.sabre.sws.tools.wsdl.springws.session</generatePackage>
+                            <schemaIncludes>
+                                <include>**/wsdls/SessionCreateRQ/*RQRS.xsd</include>
+                                <include>**/wsdls/SessionCloseRQ/*RQRS.xsd</include>
+                            </schemaIncludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>common-schemas</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <schemaLanguage>WSDL</schemaLanguage>
+                            <forceRegenerate>true</forceRegenerate>
+                            <schemaDirectory>${project.parent.basedir}/target/</schemaDirectory>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc-1</generateDirectory>
+                            <generatePackage>com.sabre.sws.tools.wsdl.springws.soap</generatePackage>
+                            <schemaIncludes>
+                                <include>**/common_schemas/wsse.xsd</include>
+                                <include>**/common_schemas/msg-header-2_0.xsd</include>
+                            </schemaIncludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>air-avail-schemas</id>
+                        <goals><goal>generate</goal></goals>
+                        <configuration>
+                            <schemaLanguage>WSDL</schemaLanguage>
+                            <forceRegenerate>true</forceRegenerate>
+                            <schemaDirectory>${project.parent.basedir}/target/</schemaDirectory>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc-2</generateDirectory>
+                            <generatePackage>com.sabre.sws.tools.wsdl.springws.airavail</generatePackage>
+                            <schemaIncludes>
+                                <include>**/wsdls/OTA_AirAvailLLSRQ/*RQRS.xsd</include>
+                            </schemaIncludes>
+                            <schemaExcludes>
+                                <exclude>**/wsdls/OTA_AirAvailLLSRQ/STL_Header_v.1.2.0.xsd</exclude>
+                            </schemaExcludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>travel-itinerary-schemas</id>
+                        <goals><goal>generate</goal></goals>
+                        <configuration>
+                            <schemaLanguage>WSDL</schemaLanguage>
+                            <forceRegenerate>true</forceRegenerate>
+                            <bindingDirectory>${project.basedir}/custom-bindings</bindingDirectory>
+                            <bindingIncludes>
+                                <include>**/travel-itinerary-custom-binding.jxb</include>
+                            </bindingIncludes>
+                            <schemaDirectory>${project.parent.basedir}/target/</schemaDirectory>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc-3</generateDirectory>
+                            <generatePackage>com.sabre.sws.tools.wsdl.springws.travelitinerary</generatePackage>
+                            <schemaIncludes>
+                                <include>**/wsdls/TravelItineraryReadLLSRQ/*RQRS.xsd</include>
+                            </schemaIncludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>passenger-details-schemas</id>
+                        <goals><goal>generate</goal></goals>
+                        <configuration>
+                            <schemaLanguage>WSDL</schemaLanguage>
+                            <forceRegenerate>true</forceRegenerate>
+                            <bindingDirectory>${project.basedir}/custom-bindings</bindingDirectory>
+                            <bindingIncludes>
+                                <include>**/passenger-details-custom-binding.jxb</include>
+                            </bindingIncludes>
+                            <schemaDirectory>${project.parent.basedir}/target/</schemaDirectory>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc-4</generateDirectory>
+                            <generatePackage>com.sabre.sws.tools.wsdl.springws.passengerdetails</generatePackage>
+                            <schemaIncludes>
+                                <include>**/wsdls/PassengerDetailsRQ/*RQRS.xsd</include>
+                            </schemaIncludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>enhanced-air-book-schemas</id>
+                        <goals><goal>generate</goal></goals>
+                        <configuration>
+                            <schemaLanguage>WSDL</schemaLanguage>
+                            <forceRegenerate>true</forceRegenerate>
+                            <bindingDirectory>${project.basedir}/custom-bindings</bindingDirectory>
+                            <bindingIncludes>
+                                <include>**/enhanced-airbook-custom-binding.jxb</include>
+                            </bindingIncludes>
+                            <schemaDirectory>${project.parent.basedir}/target/</schemaDirectory>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc-4</generateDirectory>
+                            <generatePackage>com.sabre.sws.tools.wsdl.springws.enhancedairbook</generatePackage>
+                            <schemaIncludes>
+                                <include>**/wsdls/EnhancedAirBookRQ/*RQRS.xsd</include>
+                            </schemaIncludes>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <schemaLanguage>WSDL</schemaLanguage>
-                    <forceRegenerate>true</forceRegenerate>
-                    <schemaDirectory>${project.parent.basedir}/target/</schemaDirectory>
-                    <schemaIncludes>
-                        <include>**/wsdls/SessionCreateRQ/*RQRS.xsd</include>
-                        <include>**/common_schemas/wsse.xsd</include>
-                        <include>**/common_schemas/msg-header-2_0.xsd</include>
-                        <include>**/wsdls/SessionCloseRQ/*RQRS.xsd</include>
-                    </schemaIncludes>
-                </configuration>
             </plugin>
         </plugins>
 

@@ -5,8 +5,8 @@ import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import com.sabre.sws.tools.wsdl.springws.callbacks.HeaderComposingCallback;
 import com.sabre.sws.tools.wsdl.springws.interceptors.LoggingInterceptor;
 import com.sabre.sws.tools.wsdl.springws.interceptors.SessionCreateInterceptor;
-import org.opentravel.ota._2002._11.SessionCreateRQ;
-import org.opentravel.ota._2002._11.SessionCreateRS;
+import com.sabre.sws.tools.wsdl.springws.session.SessionCreateRQ;
+import com.sabre.sws.tools.wsdl.springws.session.SessionCreateRS;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 

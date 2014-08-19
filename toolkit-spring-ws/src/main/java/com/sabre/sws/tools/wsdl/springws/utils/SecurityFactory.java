@@ -3,7 +3,7 @@ package com.sabre.sws.tools.wsdl.springws.utils;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
-import org.xmlsoap.schemas.ws._2002._12.secext.Security;
+import com.sabre.sws.tools.wsdl.springws.soap.Security;
 
 /**
  * Created by SG0221139 on 8/14/2014.

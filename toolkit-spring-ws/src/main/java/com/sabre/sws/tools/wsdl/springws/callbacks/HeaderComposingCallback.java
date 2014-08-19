@@ -1,13 +1,13 @@
 package com.sabre.sws.tools.wsdl.springws.callbacks;
 
+import com.sabre.sws.tools.wsdl.springws.soap.MessageHeader;
+import com.sabre.sws.tools.wsdl.springws.soap.Security;
 import com.sabre.sws.tools.wsdl.springws.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.springws.utils.SecurityFactory;
-import org.ebxml.namespaces.messageheader.MessageHeader;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.soap.SoapHeader;
 import org.springframework.ws.soap.SoapMessage;
-import org.xmlsoap.schemas.ws._2002._12.secext.Security;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

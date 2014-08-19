@@ -1,12 +1,12 @@
 package com.sabre.sws.tools.wsdl.springws.interceptors;
 
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
-import org.ebxml.namespaces.messageheader.MessageHeader;
+import com.sabre.sws.tools.wsdl.springws.soap.MessageHeader;
+import com.sabre.sws.tools.wsdl.springws.soap.Security;
 import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
 import org.springframework.ws.soap.SoapMessage;
-import org.xmlsoap.schemas.ws._2002._12.secext.Security;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

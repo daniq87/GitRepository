@@ -3,7 +3,7 @@ package com.sabre.sws.tools.wsdl.springws.utils;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
-import org.ebxml.namespaces.messageheader.*;
+import com.sabre.sws.tools.wsdl.springws.soap.*;
 
 /**
  * Created by SG0221139 on 8/14/2014.
