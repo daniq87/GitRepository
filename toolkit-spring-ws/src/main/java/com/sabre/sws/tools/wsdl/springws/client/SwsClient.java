@@ -1,9 +1,8 @@
 package com.sabre.sws.tools.wsdl.springws.client;
 
+import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.springws.configuration.BeansConfiguration;
-import com.sabre.sws.tools.wsdl.springws.wrappers.AirAvailWrapper;
-import com.sabre.sws.tools.wsdl.springws.wrappers.SessionCloseWrapper;
-import com.sabre.sws.tools.wsdl.springws.wrappers.SessionCreateWrapper;
+import com.sabre.sws.tools.wsdl.springws.wrappers.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
@@ -20,9 +19,20 @@ public class SwsClient {
 
         openSession();
 
-        executeAirAvailRequests();
+        try {
 
-        closeSession();
+//            executeAirAvailRequests();
+//            executeTravelItineraryRequest();
+//            executeEnhancedAirBookRequest();
+            executePassengerDetailsRequest();
+
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            if(SessionManager.getInstance().isSessionActive()) {
+                closeSession();
+            }
+        }
 
     }
 
@@ -43,6 +53,24 @@ public class SwsClient {
         airAvailWrapper.executeSampleRequest( 1 );
         airAvailWrapper.executeSampleRequest( 2 );
         airAvailWrapper.executeSampleRequest( 3 );
+    }
+
+    private static void executeTravelItineraryRequest() {
+
+        TravelItineraryReadWrapper wrapper = context.getBean( TravelItineraryReadWrapper.class );
+        wrapper.executeSampleRequest();
+    }
+
+    private static void executeEnhancedAirBookRequest() {
+
+        EnhancedAirBookWrapper wrapper = context.getBean( EnhancedAirBookWrapper.class );
+        wrapper.executeSampleRequest();
+    }
+
+    private static void executePassengerDetailsRequest() {
+
+        PassengerDetailsWrapper wrapper = context.getBean( PassengerDetailsWrapper.class );
+        wrapper.executeSampleRequest();
     }
 
 }

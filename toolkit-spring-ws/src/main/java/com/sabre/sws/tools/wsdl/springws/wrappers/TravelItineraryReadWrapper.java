@@ -6,6 +6,7 @@ import com.sabre.sws.tools.wsdl.springws.interceptors.FaultInterceptor;
 import com.sabre.sws.tools.wsdl.springws.interceptors.LoggingInterceptor;
 import com.sabre.sws.tools.wsdl.springws.travelitinerary.TravelItineraryReadRQ;
 import com.sabre.sws.tools.wsdl.springws.travelitinerary.TravelItineraryReadRS;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 
@@ -22,6 +23,12 @@ public class TravelItineraryReadWrapper extends WebServiceGatewaySupport {
 
     private List<ClientInterceptor> interceptors = new ArrayList<>();
 
+    public TravelItineraryReadWrapper( Jaxb2Marshaller marshaller ) {
+        super();
+        marshaller.setContextPath( "com.sabre.sws.tools.wsdl.springws.travelitinerary" );
+        this.setMarshaller( marshaller );
+    }
+
     private void addInterceptors() {
         interceptors.add( new FaultInterceptor() );
         interceptors.add( new LoggingInterceptor() );
@@ -32,7 +39,8 @@ public class TravelItineraryReadWrapper extends WebServiceGatewaySupport {
     public TravelItineraryReadRS executeSampleRequest() {
 
         addInterceptors();
-
+        System.out.println(((Jaxb2Marshaller)this.getMarshaller()).getContextPath());
+        this.setUnmarshaller( (Jaxb2Marshaller)this.getMarshaller() );
         return (TravelItineraryReadRS) getWebServiceTemplate().marshalSendAndReceive(
                 getRequestBody(),
                 new HeaderComposingCallback( actionString )

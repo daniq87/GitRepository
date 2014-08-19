@@ -6,6 +6,7 @@ import com.sabre.sws.tools.wsdl.springws.airavail.OTAAirAvailRS;
 import com.sabre.sws.tools.wsdl.springws.callbacks.HeaderComposingCallback;
 import com.sabre.sws.tools.wsdl.springws.interceptors.FaultInterceptor;
 import com.sabre.sws.tools.wsdl.springws.interceptors.LoggingInterceptor;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 
@@ -21,6 +22,12 @@ public class AirAvailWrapper extends WebServiceGatewaySupport {
     private static final String serviceVersion = ServicesVersionsProvider.getOtaAirAvailVersion();
 
     private List<ClientInterceptor> interceptors = new ArrayList<>();
+
+    public AirAvailWrapper( Jaxb2Marshaller marshaller ) {
+        super();
+        marshaller.setContextPath( "com.sabre.sws.tools.wsdl.springws.airavail" );
+        this.setMarshaller( marshaller );
+    }
 
     private void addInterceptors() {
         interceptors.add( new FaultInterceptor() );

@@ -129,6 +129,10 @@
                         <configuration>
                             <schemaLanguage>WSDL</schemaLanguage>
                             <forceRegenerate>true</forceRegenerate>
+                            <bindingDirectory>${project.basedir}/custom-bindings</bindingDirectory>
+                            <bindingIncludes>
+                                <include>**/air-avail-custom-binding.jxb</include>
+                            </bindingIncludes>
                             <schemaDirectory>${project.parent.basedir}/target/</schemaDirectory>
                             <generateDirectory>${project.build.directory}/generated-sources/xjc-2</generateDirectory>
                             <generatePackage>com.sabre.sws.tools.wsdl.springws.airavail</generatePackage>

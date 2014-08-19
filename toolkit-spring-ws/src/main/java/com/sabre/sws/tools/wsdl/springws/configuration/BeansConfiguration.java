@@ -1,10 +1,7 @@
 package com.sabre.sws.tools.wsdl.springws.configuration;
 
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
-import com.sabre.sws.tools.wsdl.springws.wrappers.AirAvailWrapper;
-import com.sabre.sws.tools.wsdl.springws.wrappers.SessionCloseWrapper;
-import com.sabre.sws.tools.wsdl.springws.wrappers.SessionCreateWrapper;
-import com.sabre.sws.tools.wsdl.springws.wrappers.TravelItineraryReadWrapper;
+import com.sabre.sws.tools.wsdl.springws.wrappers.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -24,26 +21,24 @@ public class BeansConfiguration {
         ws.setUnmarshaller(marshaller);
     }
 
-    @Bean
-    public Jaxb2Marshaller marshaller() {
+    private Jaxb2Marshaller marshaller() {
 
         StringBuffer buffer = new StringBuffer();
-        buffer.append( "com.sabre.sws.tools.wsdl.springws.session" ).append( ":" );
-        buffer.append( "com.sabre.sws.tools.wsdl.springws.soap" ).append( ":" );
-        buffer.append( "com.sabre.sws.tools.wsdl.springws.airavail" ).append( ":" );
-        buffer.append( "com.sabre.sws.tools.wsdl.springws.travelitinerary" ).append( ":" );
+        buffer.append("com.sabre.sws.tools.wsdl.springws.session:");
+        buffer.append( "com.sabre.sws.tools.wsdl.springws.soap:" );
 
         String contextPath = buffer.toString();
 
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-
         marshaller.setContextPath( contextPath );
 
         return marshaller;
     }
 
     @Bean
-    public SessionCreateWrapper sessionCreateWrapper( Jaxb2Marshaller marshaller ) {
+    public SessionCreateWrapper sessionCreateWrapper() {
+
+        Jaxb2Marshaller marshaller = marshaller();
 
         SessionCreateWrapper sessionCreateWrapper = new SessionCreateWrapper();
         configureWebServiceGateway( sessionCreateWrapper, marshaller );
@@ -52,8 +47,8 @@ public class BeansConfiguration {
     }
 
     @Bean
-    public SessionCloseWrapper sessionCloseWrapper( Jaxb2Marshaller marshaller ) {
-
+    public SessionCloseWrapper sessionCloseWrapper() {
+        Jaxb2Marshaller marshaller = marshaller();
 
         SessionCloseWrapper sessionCloseWrapper = new SessionCloseWrapper();
         configureWebServiceGateway( sessionCloseWrapper, marshaller );
@@ -62,21 +57,48 @@ public class BeansConfiguration {
     }
 
     @Bean
-    public AirAvailWrapper airAvailWrapper( Jaxb2Marshaller marshaller ) {
+    public AirAvailWrapper airAvailWrapper() {
 
-        AirAvailWrapper airAvailWrapper = new AirAvailWrapper();
+        Jaxb2Marshaller marshaller = marshaller();
+
+        AirAvailWrapper airAvailWrapper = new AirAvailWrapper( marshaller );
         configureWebServiceGateway( airAvailWrapper, marshaller );
 
         return airAvailWrapper;
     }
 
     @Bean
-    public TravelItineraryReadWrapper travelItineraryReadWrapper( Jaxb2Marshaller marshaller ) {
+    public TravelItineraryReadWrapper travelItineraryReadWrapper() {
 
-        TravelItineraryReadWrapper travelItineraryReadWrapper = new TravelItineraryReadWrapper();
+        Jaxb2Marshaller marshaller = marshaller();
+
+        TravelItineraryReadWrapper travelItineraryReadWrapper = new TravelItineraryReadWrapper( marshaller );
         configureWebServiceGateway( travelItineraryReadWrapper, marshaller );
 
         return travelItineraryReadWrapper;
     }
+
+    @Bean
+    public EnhancedAirBookWrapper enhancedAirBookWrapper() {
+
+        Jaxb2Marshaller marshaller = marshaller();
+
+        EnhancedAirBookWrapper enhancedAirBookWrapper = new EnhancedAirBookWrapper( marshaller );
+        configureWebServiceGateway( enhancedAirBookWrapper, marshaller );
+
+        return  enhancedAirBookWrapper;
+    }
+
+    @Bean
+    public PassengerDetailsWrapper passengerDetailsWrapper() {
+
+        Jaxb2Marshaller marshaller = marshaller();
+
+        PassengerDetailsWrapper passengerDetailsWrapper = new PassengerDetailsWrapper( marshaller );
+        configureWebServiceGateway( passengerDetailsWrapper, marshaller );
+
+        return passengerDetailsWrapper;
+    }
+
 
 }
