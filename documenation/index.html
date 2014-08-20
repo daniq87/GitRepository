@@ -5,54 +5,7 @@
 
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
-	<style type="text/css">
-  
-		.header {
-			font-size: 20pt;
-			font-weight: bold;
-		}
-	
-		.subheader {
-			font-size: 17pt;
-			font-weight: bold;
-		}
-  
-		.caption {
-			font-size: 14pt;
-			font-weight: bold;
-		}
-  
-		.section {
-			font-size: 12pt;
-			font-weight: bold;
-		}
-  
-		.bold {
-			font-weight: bold;
-		}
-  
-		.italic {
-			font-style: italic;
-		}
-  
-		.code {
-			font-family: "Courier New";
-            font-size: small;
-		}
-
-        .snippet {
-            font-family: "Courier New";
-            font-size: small;
-            margin-left: 50px;
-        }
-
-        .warning {
-            font-weight: bold;
-            color: red;
-        }
-
-	</style>
-
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
@@ -74,8 +27,7 @@
     Generated stubs will contain two major components:
 
     <ul>
-        <li>Static inner classes for each complex type defined in corresponding XSD file (together with all nested classes,
-        reflecting the hierarchy defined in schema) </li>
+        <li>Static inner classes for each complex type defined in corresponding XSD file </li>
         <li>Methods to invoke web services calls (one method per each binding defined in WSDL file) </li>
     </ul>
 
@@ -94,10 +46,11 @@
     Appending <span class="code">$AXIS2_HOME/bin</span> (or <span class="code">%AXIS2_HOME%\bin</span> under Windows)
     to <span class="code">PATH</span> system variable will allow to run Axis2-related scripts easily. <br /><br />
     Using Axis2 as Maven dependency will be no surprise for Maven users. For information about versioning and
-    dependencies, see <a href="http://mvnrepository.com/artifact/org.apache.axis2" >Maven repository site</a>.
+    dependencies, see <a href="http://mvnrepository.com/artifact/org.apache.axis2">Maven repository site</a>.
+    To see a working example with full set of dependencies, check !!!sample project, provided by Sabre Web Services Team.
 </p>
 
-<span class="section">Typical Axis2 flow (client)</span>
+<span class="section">Typical Axis2 flow (client side)</span>
 
 <p>
     Consuming web services with Axis2 contains of the following steps:
@@ -133,12 +86,13 @@
     <span class="code">
         $AXIS2_HOME/bin/wsdl2java.sh -uri &lt;path_to_.wsdl_file&gt; -p &lt;output_package_name&gt; -d &lt;data_binding_framework&gt; -o &lt;output_directory&gt; <br /><br />
     </span>
+    As one could expect, executing the above generates client's side services stubs for services described in the WSDL file,
+    path to which is provided after <span class="code">-uri</span> option. Classes are generated into specified
+    output directory (<span class="code">-o</span> option) under specified package (<span class="code">-p</span>).
+    Proper data binding framework is used (<span class="code">-d</span>).
     The command line tool is documented in detail <a href="http://axis.apache.org/axis2/java/core/docs/reference.html">HERE</a>.
 <br /><br />
 
-
-
-<br /><br/>
 For the detailed parameters specification, see: </p>
 
 <ul>
@@ -176,10 +130,12 @@ For the detailed parameters specification, see: </p>
     The example flow may look something like this:
 
 <p class="snippet">
-    SOAPHeaderBlock header = msgContext.getEnvelope().getHeader(); <br />
+    SOAPHeader header = msgContext.getEnvelope().getHeader(); <br />
     Iterator headerBlocksIterator = header.getHeadersToProcess(null); <br /><br />
     while( headerBlocksIterator.hasNext() ) { <br />
-    &emsp;&emsp;((SOAPHeaderBlock) headerBlocksIterator.next()).setProcessed();<br />
+    &emsp;&emsp;SOAPHeaderBlock headerBlock = (SOAPHeaderBlock) headerBlocksIterator.next(); <br />
+    &emsp;&emsp;// process header block <br />
+    &emsp;&emsp;headerBlock.setProcessed();<br />
     }<br />
 </p>
 
@@ -199,9 +155,10 @@ Use of this tool is pretty straightforward, but working with generated files may
 </p>
 <span class="bold">Execution requirements</span>
 
-<p> As Sabre Web Services definitions (provided in form of WSDL files) use corresponding types of data structures, proper XML Schema files must be provided in same location as the WSDL file. 
+<p> As Sabre Web Services definitions (provided in the form of WSDL files) use corresponding types of data structures, proper XML Schema files must be provided in same location as the WSDL file.
 It includes common schemas for SOAP communication protocol (available as Common Schemas asset at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> ) and request/response object pairs definition 
-(available also at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> as asset for each service). </p>
+(available also at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> as asset for each service or at
+    <a href="http://developer.sabre.com">http://developer.sabre.com</a>). </p>
 
 <span class="bold">Generated code</span>
 
@@ -335,6 +292,163 @@ It includes common schemas for SOAP communication protocol (available as Common 
     Because of the facts mentioned above, <span class="warning">XMLBeans is not a recommended databinding framework
     for working with Sabre Web Services neither.</span>
 </p>
+
+<br /><hr /> <br />
+
+<span class="subheader">1.2. Apache CXF</span>
+
+<p>
+    Apache CXF is another framework designed strictly for the purpose of working with web services.
+    In general, it provides same functionality as Axis2, which means the ability to send, process and receive messages,
+    both to and from services. Similarly, CXF allows user to develop both client and server side application.
+    It uses contract-first approach, which means creation of service implementation code based on service definition
+    (in form ow WSDL files and schema definition). What it means for Sabre Web Services consumer, is that Java client
+    code can be generated easily based on WSDL and XSD files, available on <a href="https://drc.sabre.com">DRC</a> and
+    <a href="http://developer.sabre.com">Developer's Site</a>.
+    <br />
+    Client code will consist of classes similar to service stubs in Axis2, Services and PortTypes, allowing
+    user to invoke services calls, and accompanying binding classes representing types defined in schemas.
+    Developer's role is to construct an object representing request to be invoked, pass it to a method representing
+    service call, and then to process the response.
+</p>
+
+<span class="bold">Using CXF</span> <br />
+
+<p>
+
+    CXF's code generation feature may be used in one of three ways: <br />
+
+    <ul>
+        <li>As command line tool</li>
+        <li>As Maven goal</li>
+        <li>Via WSDL2Java API at runtime</li>
+    </ul>
+
+    The documentation for command line tool can be obtained <a href="http://cxf.apache.org/docs/wsdl-to-java.html">here</a>,
+    and maveen plugin documentation is available <a href="http://cxf.apache.org/docs/using-cxf-with-maven.html#UsingCXFwithmaven-MavenPlugin">here</a>
+    and <a href="http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html">here</a>.
+
+</p>
+
+<span class="bold">Typical CXF flow</span> <br />
+
+<p>
+    Using CXF to consume web services is generally no different than using CXF:
+
+    <ol>
+        <li>Collecting all necessary files (WSDL, XML and XSD) for each service</li>
+        <li>Generating services stubs code, using one of the data binding frameworks (e.g. XMLBeans, JAXB)</li>
+        <li>Creating client, which will use generated code</li>
+        <li>Providing interceptors for messages</li>
+        <li>Invoking services via adequate methods calls</li>
+        <li>Receiving and handling the response</li>
+    </ol>
+
+</p>
+
+<span class="bold">Developing client in detail</span> <br />
+
+<p>
+    Client development starts with collecting services definitions and schema definitions (WSDL and XSD) files.
+    They are available for Sabre clients on web. Note, that code generation tool expect all the necessary schemas
+    to be present in the same directory as WSDL file. So be sure to place there not only the service specific files,
+    but also those available as "Common Schemas" asset (they are needed to create SOAP envelope and message correctly).
+    <br /><br />
+    When required files are gathered, <span class="code">wsdl2java</span> tool can be used to generate client code.
+    Check documentation mentioned before for details on how to use this tool.
+    <br /><br />
+    On this stage, developer must decide which data binding framework to use for client code generation. The recommended
+    one is JAXB, as it is quite easy to use and elastic, yet powerful. The ADB and XMLBeans frameworks have disadvantages
+    described in previous sections. However, the proper use of JAXB data binding requires taking additional steps
+    (creating custom binding files), as described in next section. However, this is not difficult thing to do.
+    <br /><br />
+    The next step is to create a client, which will utilize generated classes to access web services.
+    This process requires a bit of knowledge how the CXF framework works. This will be covered here briefly. To see
+    a full working example, please refer to the !!!sample project, provided by Sabre Web Services Team (toolkit-cxf-jaxb module).
+    <br /><br />
+    CXF generates two main classes for each service defined in WSDL file:
+    <span class="code">&lt;ServiceName&gt;Service extends javax.xml.ws.Service</span> and
+    <span class="code">&lt;ServiceName&gt;PortType</span>.
+    <br /><br />
+    The first one provides two useful components:
+    <ul>
+        <li>Default constructor - creates service class, based on information contained in WSDL file at the time
+        of generating this class (assumes, that WSDL file is still available in the same location)</li>
+        <li><span class="code">get_PortName_()</span> method - returns a class associated with specific
+        port defined in service. This class maps each operation defined in the WSDL file to a corresponding method,
+        whose invokation is equivalent to a web service call.</li>
+    </ul>
+    So, based on !!!sample project, the invokation of Sabre's OTA_AirAvailLLSRQ would look something like this:
+    <br /><br />
+    <span class="code">
+        &emsp;&emsp;OTAAirAvailService service = new OTAAirAvailService(); <br />
+        &emsp;&emsp;OTAAirAvailPortType port = service.getOTAAirAvailPortType(); <br />
+        &emsp;&emsp;OTAAirAvailRS serviceResponse = port.otaAirAvail(...); // set correct arguments <br />
+    </span>
+    <br />
+
+    After creating logic to create requests and handle respones, one must define interceptors for services. Interceptors
+    are necessary to get access to full SOAP envelope. Invoking methods on port class allows only to see response body,
+    which is not enough information to successfully consume Sabre Web Services. Typically, one has to access the
+    data in SOAP header, like <span class="code">&lt;eb:MessageHeader&gt;</span>
+    (<span class="code">eb:Action</span> element, to check if the message contains correct or error response)
+    and <span class="code">&lt;wsse:Security&gt;</span> (to obtain binary security token during session creation).
+    Interceptors allow exactly to do that.
+    <br/>
+    In the !!!sample project, interceptor classes are derived from
+    <span class="code">org.apache.cxf.binding.soap.interceptor.SoapActionInInterceptor</span> class, which
+    provides means of accessing full SOAP message via <span class="code">handleMessage(SoapMessage message)</span> method.
+    It is possible to get full information from SOAP message as stream, however, this will leave the message empty.
+    To avoid error on further processing, data must be copied and placed back into the message
+    (see <span class="code">LLSErrorInterceptor</span> class from
+    <span class="code">com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors</span> package in
+    <span class="code">toolkit-cxf-jaxb</span> module in !!!sample project).
+    Interceptor must be placed in a correct phase, so that the expected data is present in the message as it is being processed.
+    For the detailed information about phases and interceptor chains, please refer to the
+    <a href="http://cxf.apache.org/docs/interceptors.html"> CXF's documentation</a>.
+    <br /><br />
+    Note one important thing - by default, port class will use the endpoint URL specified in WSDL file, from which
+    it was created. However, this could be highly undesirable, especially during the development and testing phase,
+    as this would be <span class="code">https://webservices.sabre.com/websvc</span> - it's a production endpoint and
+    performing any operations on it may generate charges on customer's account and decrement real-time inventory.
+    During development, one would probably use Sabre test system or even mocked service. To change endpoint URL
+    used by your service's client, please do as following (or see one of classes in
+    <span class="code">com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers</span> package in !!!sample project):
+    <br /><br />
+
+    <span class="code">
+    &emsp;&emsp;String endpointURL = "http://some.test.url/svc"; <br />
+    &emsp;&emsp;OTAAirAvailService service = new OTAAirAvailService(); <br />
+    &emsp;&emsp;OTAAirAvailPortType port = service.getOTAAirAvailPortType(); <br />
+    &emsp;&emsp;BindingProvider bindingProvider = (BindingProvider) port;<br />
+    &emsp;&emsp;bindingProvider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);<br />
+    </span>
+
+    <br /><br />
+    After all these steps are taken, one has to create a valid request object and pass it to port's method corresponding
+    to the desired service, along with proper header holders (as in the !!!sample project).
+    The method will return response object, which may be further processed to extract required information from it.
+</p>
+
+    <span class="bold">Known issues</span>
+
+    <br /><br />
+
+    There are some extra steps that must be taken in order build Sabre Web Services' client using CXF and JAXB.
+    <br /><br />
+    JAXB generates a public static class for each complex type defined in a schema. Due to that, if two (or more) types
+    with the same name will appear in a schema, there will be two public static classes with the same name in one outer
+    class, which is illegal and will cause compilation error. To solve that, one must define custom JAXB binding which
+    will change one of the clashing names. Binding files are provided as parameters during code generation.
+    Binding contains schema file location, node position (in the form of XPath expression) and desired class name.
+    Simple adding number to the node name will solve the problem without reducing readability of the resulting code.
+    <br /><br />
+    This approach has one disadvantage - binding should specify the location of the schema file, which it concerns.
+    It means hardcoding that location into binding file and may cause troubles, when location or name of the file changes
+    (eg. project starts to use newer version of the service). There is no simple solution to this and one should keep that
+    in mind when manipulating with schema files or project structure.
+    <br /><br />
+    To see working example of binding use, refer to the !!!sample project.
 
 </body>
 </html>

@@ -1,0 +1,43 @@
+.header {
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+.subheader {
+    font-size: 17pt;
+    font-weight: bold;
+}
+
+.caption {
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.section {
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.code {
+    font-family: "Courier New";
+    font-size: small;
+}
+
+.snippet {
+    font-family: "Courier New";
+    font-size: small;
+    margin-left: 50px;
+}
+
+.warning {
+    font-weight: bold;
+    color: red;
+}

@@ -78,8 +78,6 @@
                                     <extraarg>-db</extraarg>
                                     <extraarg>jaxb</extraarg>
                                     <extraarg>-autoNameResolution</extraarg>
-                                    <!--<extraarg>-p</extraarg>-->
-                                    <!--<extraarg>com.sabre.sws.tools.wsdl.cxf.jaxb</extraarg>-->
                                     <extraarg>-dns</extraarg>
                                     <extraarg>false</extraarg>
                                     <extraarg>-client</extraarg>
@@ -140,12 +138,6 @@
             <artifactId>toolkit-commons</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-
-<!--        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>-->
 
         <dependency>
             <groupId>org.apache.cxf</groupId>

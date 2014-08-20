@@ -48,6 +48,7 @@
 
         <plugins>
 
+            <!-- Skip antrun plugin execution from parent POM -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
