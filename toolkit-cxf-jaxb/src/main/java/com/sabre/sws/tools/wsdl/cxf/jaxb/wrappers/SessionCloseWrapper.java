@@ -45,7 +45,6 @@ public class SessionCloseWrapper {
         Endpoint endpoint = client.getEndpoint();
         endpoint.getInInterceptors().add( new SessionCloseIncomingInterceptor() );
 
-
         // Invoke
         SessionCloseRS response = stub.sessionCloseRQ( headerHolder, securityHolder, body );
 

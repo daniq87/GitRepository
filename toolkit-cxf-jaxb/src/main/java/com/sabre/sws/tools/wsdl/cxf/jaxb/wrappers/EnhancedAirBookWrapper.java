@@ -128,17 +128,13 @@ public class EnhancedAirBookWrapper {
         EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation.OptionalQualifiers optionalQualifiers = new EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation.OptionalQualifiers();
         EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation.OptionalQualifiers.PricingQualifiers pricingQualifiers = new EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation.OptionalQualifiers.PricingQualifiers();
 
-        EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation.OptionalQualifiers.PricingQualifiers.PassengerType passengerType1 = new EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation.OptionalQualifiers.PricingQualifiers.PassengerType();
-        EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation.OptionalQualifiers.PricingQualifiers.PassengerType passengerType2 = new EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation.OptionalQualifiers.PricingQualifiers.PassengerType();
+        EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation.OptionalQualifiers.PricingQualifiers.PassengerType passengerType = new EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation.OptionalQualifiers.PricingQualifiers.PassengerType();
 
-        passengerType1.setCode( "ADT" );
-        passengerType2.setCode( "ADR" );
+        passengerType.setCode("ADT");
 
-        passengerType1.setQuantity( "1" );
-        passengerType2.setQuantity( "1" );
+        passengerType.setQuantity("1");
 
-        pricingQualifiers.getPassengerType().add( passengerType1 );
-//        pricingQualifiers.getPassengerType().add( passengerType2 );
+        pricingQualifiers.getPassengerType().add( passengerType );
 
         optionalQualifiers.setPricingQualifiers( pricingQualifiers );
         priceRequestInformation.setOptionalQualifiers( optionalQualifiers );
