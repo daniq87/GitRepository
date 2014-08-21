@@ -333,7 +333,7 @@ It includes common schemas for SOAP communication protocol (available as Common 
 <span class="bold">Typical CXF flow</span> <br />
 
 <p>
-    Using CXF to consume web services is generally no different than using CXF:
+    Using CXF to consume web services is generally no different than using Axis2:
 
     <ol>
         <li>Collecting all necessary files (WSDL, XML and XSD) for each service</li>
@@ -387,7 +387,7 @@ It includes common schemas for SOAP communication protocol (available as Common 
     </span>
     <br />
 
-    After creating logic to create requests and handle respones, one must define interceptors for services. Interceptors
+    After implementing logic to create requests and handle respones, one must define interceptors for services. Interceptors
     are necessary to get access to full SOAP envelope. Invoking methods on port class allows only to see response body,
     which is not enough information to successfully consume Sabre Web Services. Typically, one has to access the
     data in SOAP header, like <span class="code">&lt;eb:MessageHeader&gt;</span>
@@ -396,7 +396,7 @@ It includes common schemas for SOAP communication protocol (available as Common 
     Interceptors allow exactly to do that.
     <br/>
     In the !!!sample project, interceptor classes are derived from
-    <span class="code">org.apache.cxf.binding.soap.interceptor.SoapActionInInterceptor</span> class, which
+    <span class="code">org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor</span> class, which
     provides means of accessing full SOAP message via <span class="code">handleMessage(SoapMessage message)</span> method.
     It is possible to get full information from SOAP message as stream, however, this will leave the message empty.
     To avoid error on further processing, data must be copied and placed back into the message
@@ -442,13 +442,135 @@ It includes common schemas for SOAP communication protocol (available as Common 
     will change one of the clashing names. Binding files are provided as parameters during code generation.
     Binding contains schema file location, node position (in the form of XPath expression) and desired class name.
     Simple adding number to the node name will solve the problem without reducing readability of the resulting code.
+    To get more details on creating custom bindings in JAXB, see it's
+    <a href="http://docs.oracle.com/cd/E17802_01/webservices/webservices/docs/1.5/tutorial/doc/JAXBUsing4.html">documentation</a>.
     <br /><br />
     This approach has one disadvantage - binding should specify the location of the schema file, which it concerns.
     It means hardcoding that location into binding file and may cause troubles, when location or name of the file changes
     (eg. project starts to use newer version of the service). There is no simple solution to this and one should keep that
     in mind when manipulating with schema files or project structure.
     <br /><br />
-    To see working example of binding use, refer to the !!!sample project.
+    To see working example of binding use, refer to the !!!sample project. <br /><br />
+
+<span class="section">1.2.1 JAXB data binding </span> <br /><br />
+
+    <span class="bold"> Overwiev </span> <br /><br />
+
+<p>
+    JAXB data binding is a powerful tool with good customization capabilities, due to custom bindings mechanism.
+    Thanks to that, if default behavior causes any problems, it may be easily changed. JAXB is a commercial standard
+    for Java XML binding and is a recommended tool for working with Sabre Web Services.
+</p>
+
+    <span class="bold">Using JAXB data binding</span>
+
+<p>
+    The main ability of JAXB, creating Java classes from XSD schemas, is available through
+    <span class="code">xjc</span> schema compiler, which may accessed in a variety of ways.
+    When using JAXB as data binding framework to work with Apache CXF, it is generally advised to use
+    <span class="code">cxf-codegen-plugin</span> maven plugin with proper binding option.
+    <br /><br />
+    However, <span class="code">xjc</span> is also available as stand-alone command line tool distributed with JDK (1.6 or higher)
+    or via one of JAXB maven plugins:
+
+    <ul>
+        <li class="code">
+            &emsp;&emsp;&lt;groupId&gt;org.jvnet.jaxb2.maven2&lt;/groupId&gt;<br />
+            &emsp;&emsp;&lt;artifactId&gt;maven-jaxb2-plugin&lt;/artifactId&gt;<br /><br />
+        </li>
+        <li class="code">
+            &emsp;&emsp;&lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;<br />
+            &emsp;&emsp;&lt;artifactId&gt;jaxb2-maven-plugin&lt;/artifactId&gt;<br /><br />
+        </li>
+    </ul>
+
+    The use of both is similar, and details are available at
+    <a href="https://java.net/projects/maven-jaxb2-plugin/pages/Home">java.net</a> and
+    <a href="http://mojo.codehaus.org/jaxb2-maven-plugin/index.html">mojo</a> websites.
+
+</p>
+
+    <span class="bold">Execution requirements</span>
+
+<p>
+    Just like with two former data bindings, the main and only requirement is to provide all necessary files and
+    their directories. In this case, along with schema and WSDL files, custom bindings (in form of .jxb files) should
+    be delivered.
+</p>
+
+<span class="bold">Generated code</span>
+
+<p>
+    By default, JAXB will generate classes <span class="italic">per namespace</span>, mapping <span class="code">targetNamespace</span>
+    attribute from schema to package name. For example, type <span class="code">PassengerDetailsRQ</span>, defined in
+    <span class="code">http://webservices.sabre.com/sabreXML/2011/10</span> target namespace will be compiled (with
+    default settings) to <span class="code">com.sabre.webservices.sabrexml._2011._10.PassengerDetailsRQ</span> class.
+    This means no classes duplication and ability to reuse code throughout the application. JAXB generates nested public
+    static classes to reflect the structure of a schema. Bindings of nodes and package names may be customized using binding files
+    (<a href="https://jaxb.java.net/guide/Customizing_Java_packages.html">here</a> are hints about package naming customization).
+</p>
+
+<span class="bold">Limitations and drawbacks</span>
+
+<p>
+    Currently there are no major issues concerning the use of CXF/JAXB tools with Sabre Web Services, that can't be solved
+    with a little or no effort (which usually boils down to creating custom binding file).
+    Therefore, <span class="warning"> JAXB is a recommended data binding tool to work with Sabre Web Services in Java language.</span>
+</p>
+
+<br /><hr /><br />
+
+<span class="subheader"> 1.3. Spring Web Services </span> <br /><br />
+
+<p>
+    Spring Web Services (Spring WS) is part of the Spring Framework responsible for working with web services.
+    It benefits from that fact in many ways, simplifying and automating many things. However, Spring WS has a bit
+    different approach to building web services than previously described frameworks - it works on lower level,
+    exposing to user things, that they do behind the scenes. It gives more control over the process to the developer,
+    but requires more effort.
+    <br /><br />
+    Spring WS also uses <span class="italic">contract-first </span> approach, so user is encouraged to develop client code
+    based on existing service definition. Main difference is, that Spring WS handles marshalling and sending of a single object
+    well, but requires more effort to compose the message consisting of multiple elements. This will be covered in following
+    section, and the full working implementation may be seen in !!!sample project, at <span class="code">toolkit-spring-ws</span>
+    module.
+</p>
+
+<span class="bold">Using Spring Web Services</span>
+
+<p>
+    Spring Web Services does not provide it's own code generation tool, so using it is just a matter of
+    placing Spring WS jars in your classpath. This is easiest done via dependency management system, like Maven or Gradle.
+    This also means, that user has to take care of compiling schemas to java classes him or herself. Since it is assumed
+    that system like Maven is being used, the easiest way is to utilize one of binding plugins. Two examples of JAXB Maven
+    plugins are listed in previous section.
+</p>
+
+<span class="bold">Typical Spring WS flow</span>
+
+<p>
+    <ol>
+        <li>Collecting all necessary schema definition files (WSDL files are not required)</li>
+        <li>Compiling schemas into Java code using external data binding, like JAXB (e.g. in form of a plugin)</li>
+        <li>Creating client, which will use generated code</li>
+        <li>Configuring Spring to take advantage of it's IoC capabilities</li>
+        <li>Providing interceptors and callbacks for messages</li>
+        <li>Invoking services via adequate methods calls</li>
+        <li>Receiving and handling the response</li>
+    </ol>
+</p>
+
+<span class="bold">Developing client in details</span>
+
+<p>
+    When using Spring WS, only schema definitions are required, for developer takes care of creating the message.
+    In fact, the minimal set of required schemas consists of request and response definitions for each service
+    and schemas of security and message headers to build the envelope.
+    <br />
+    These files should be then compiled to Java classes. However, there is one thing that will cause troubles in
+    developing Sabre Web Services client.
+
+</p>
 
 </body>
 </html>

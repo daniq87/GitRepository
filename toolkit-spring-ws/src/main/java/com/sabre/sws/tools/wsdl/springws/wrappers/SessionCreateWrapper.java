@@ -28,7 +28,7 @@ public class SessionCreateWrapper extends WebServiceGatewaySupport {
         interceptors.add( clientInterceptor );
         interceptors.add( sessionCreateInterceptor );
 
-        this.setInterceptors( interceptors.toArray( new ClientInterceptor[2] ) );
+        this.setInterceptors( interceptors.toArray( new ClientInterceptor[0] ) );
     }
 
     private SessionCreateRQ getRequestBody() {

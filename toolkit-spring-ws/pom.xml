@@ -84,6 +84,8 @@
                 </executions>
             </plugin>
 
+            <!-- JAXB2 Maven Plugin -->
+
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>

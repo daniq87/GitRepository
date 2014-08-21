@@ -21,9 +21,9 @@ public class SwsClient {
 
         try {
 
-//            executeAirAvailRequests();
-//            executeTravelItineraryRequest();
-//            executeEnhancedAirBookRequest();
+            executeAirAvailRequests();
+            executeTravelItineraryRequest();
+            executeEnhancedAirBookRequest();
             executePassengerDetailsRequest();
 
         } catch ( Exception e ) {
