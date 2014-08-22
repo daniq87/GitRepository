@@ -3,6 +3,8 @@ package com.sabre.sws.tools.wsdl.springws.interceptors;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.springws.soap.MessageHeader;
 import com.sabre.sws.tools.wsdl.springws.soap.Security;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
@@ -18,6 +20,8 @@ import javax.xml.transform.Source;
  * Created by SG0221139 on 8/18/2014.
  */
 public class SessionCloseInterceptor implements ClientInterceptor {
+
+    private static final Logger LOGGER = LogManager.getLogger( SessionCloseInterceptor.class );
 
     private static final String securityNs = "http://schemas.xmlsoap.org/ws/2002/12/secext";
     private static final String securityLocalName = "Security";
@@ -69,11 +73,13 @@ public class SessionCloseInterceptor implements ClientInterceptor {
         String currentSessionToken = SessionManager.getInstance().getToken();
         String currentSessionConversationId = SessionManager.getInstance().getConversationID();
 
-        System.out.println( "SessionManager - Response:" );
-        System.out.println( currentSessionConversationId );
-        System.out.println( conversationId );
-        System.out.println( currentSessionToken );
-        System.out.println( token );
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("Closing Session").append("\n");
+        buffer.append("Session token: " + token).append("\n");
+        buffer.append("Conversation-Id: " + conversationId).append("\n");
+
+        String logMessage = buffer.toString();
+        LOGGER.info( logMessage );
 
         if( !( currentSessionConversationId.equals(conversationId)
                 && currentSessionToken.equals(token) ) ) {

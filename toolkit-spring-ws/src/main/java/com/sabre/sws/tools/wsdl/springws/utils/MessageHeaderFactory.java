@@ -15,27 +15,33 @@ public class MessageHeaderFactory {
     public static MessageHeader getMessageHeader( String actionString ) {
 
         MessageHeader header = new MessageHeader();
+
         header.setAction( actionString );
         header.setConversationId( getConversationId() );
         header.setCPAId( configuration.getPCC() );
 
-        // From
-        From from = new From();
-        PartyId fromPartyId = new PartyId();
-        fromPartyId.setValue( Util.getFromString() );
-        from.getPartyId().add( fromPartyId );
-        header.setFrom( from );
-
-        // To
-        To to = new To();
-        PartyId toPartyId = new PartyId();
-        toPartyId.setValue( Util.getToString() );
-        to.getPartyId().add( toPartyId );
-        header.setTo( to );
+        header.setFrom( getFrom() );
+        header.setTo( getTo() );
 
         header.setService( new Service() );
 
         return header;
+    }
+
+    private static From getFrom() {
+        From from = new From();
+        PartyId fromPartyId = new PartyId();
+        fromPartyId.setValue( Util.getFromString() );
+        from.getPartyId().add( fromPartyId );
+        return from;
+    }
+
+    private static To getTo() {
+        To to = new To();
+        PartyId toPartyId = new PartyId();
+        toPartyId.setValue( Util.getToString() );
+        to.getPartyId().add( toPartyId );
+        return to;
     }
 
     private static String getConversationId() {

@@ -6,7 +6,6 @@ import com.sabre.sws.tools.wsdl.springws.interceptors.FaultInterceptor;
 import com.sabre.sws.tools.wsdl.springws.interceptors.LoggingInterceptor;
 import com.sabre.sws.tools.wsdl.springws.passengerdetails.PassengerDetailsRQ;
 import com.sabre.sws.tools.wsdl.springws.passengerdetails.PassengerDetailsRS;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 
@@ -25,11 +24,8 @@ public class PassengerDetailsWrapper extends WebServiceGatewaySupport {
 
     private List<ClientInterceptor> interceptors = new ArrayList<>();
 
-    public PassengerDetailsWrapper( Jaxb2Marshaller marshaller ) {
+    public PassengerDetailsWrapper() {
         super();
-        marshaller.setContextPath( "com.sabre.sws.tools.wsdl.springws.passengerdetails" );
-        this.setMarshaller( marshaller );
-
         addInterceptors();
     }
 
@@ -58,6 +54,18 @@ public class PassengerDetailsWrapper extends WebServiceGatewaySupport {
         ignoreOnError.setInd( false );
         request.setIgnoreOnError( ignoreOnError );
 
+        request.setMiscSegmentSellRQ( getMiscSegmentSellRQ() );
+        request.setPostProcessing( getPostProcessing() );
+        request.setPriceQuoteInfo( getPriceQuoteInfo() );
+        request.setSpecialReqDetails( getSpecialReqDetails() );
+        request.setTravelItineraryAddInfoRQ( getTravelItineraryAddInfoRQ() );
+
+        return request;
+
+    }
+
+    private PassengerDetailsRQ.MiscSegmentSellRQ getMiscSegmentSellRQ() {
+
         PassengerDetailsRQ.MiscSegmentSellRQ miscSegmentSellRQ = new PassengerDetailsRQ.MiscSegmentSellRQ();
         miscSegmentSellRQ.setHaltOnError( true );
         PassengerDetailsRQ.MiscSegmentSellRQ.MiscSegment miscSegment = new PassengerDetailsRQ.MiscSegmentSellRQ.MiscSegment();
@@ -78,7 +86,10 @@ public class PassengerDetailsWrapper extends WebServiceGatewaySupport {
         miscSegment.setVendorPrefs( vendorPrefs );
         miscSegmentSellRQ.setMiscSegment( miscSegment );
 
-        request.setMiscSegmentSellRQ( miscSegmentSellRQ );
+        return miscSegmentSellRQ;
+    }
+
+    private PassengerDetailsRQ.PostProcessing getPostProcessing() {
 
         PassengerDetailsRQ.PostProcessing postProcessing = new PassengerDetailsRQ.PostProcessing();
         postProcessing.setHaltOnError( true );
@@ -90,20 +101,45 @@ public class PassengerDetailsWrapper extends WebServiceGatewaySupport {
         endTransactionRQ.setSource( source );
 
         postProcessing.setEndTransactionRQ( endTransactionRQ );
-        request.setPostProcessing( postProcessing );
 
+        return postProcessing;
+    }
 
-        PassengerDetailsRQ.PriceQuoteInfo priceQuoteInfo = new PassengerDetailsRQ.PriceQuoteInfo();
-        priceQuoteInfo.setHaltOnError( true );
-        PassengerDetailsRQ.PriceQuoteInfo.Link link = new PassengerDetailsRQ.PriceQuoteInfo.Link();
-        link.setNameNumber( "1.1" );
-        link.setRecord( "1" );
-        priceQuoteInfo.getLink().add( link );
-
-//        request.setPriceQuoteInfo( priceQuoteInfo );
-
+    private PassengerDetailsRQ.SpecialReqDetails getSpecialReqDetails() {
 
         PassengerDetailsRQ.SpecialReqDetails specialReqDetails = new PassengerDetailsRQ.SpecialReqDetails();
+
+        specialReqDetails.setAddRemarkRQ( getAddRemarkRQ() );
+
+        PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ specialServiceRQ = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ();
+        specialServiceRQ.setHaltOnError( true );
+        PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo specialServiceInfo = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo();
+        PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight secureFlight = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight();
+        secureFlight.setSSRCode( "DOCS" );
+        secureFlight.setSegmentNumber( "A" );
+
+        PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight.PersonName personName = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight.PersonName();
+        personName.setGivenName( "SWS" );
+        personName.setSurname( "TEST" );
+        personName.setDateOfBirth( "1977-11-27" );
+        personName.setGender( "M" );
+        personName.setNameNumber( "1.1" );
+        PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight.VendorPrefs vendorPrefs1 = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight.VendorPrefs();
+        PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight.VendorPrefs.Airline airline1 = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight.VendorPrefs.Airline();
+        airline1.setHosted( true );
+        vendorPrefs1.setAirline( airline1 );
+        secureFlight.setPersonName( personName );
+        secureFlight.setVendorPrefs( vendorPrefs1 );
+        specialServiceInfo.getSecureFlight().add( secureFlight );
+        specialServiceRQ.setSpecialServiceInfo( specialServiceInfo );
+
+        specialReqDetails.setSpecialServiceRQ( specialServiceRQ );
+
+        return specialReqDetails;
+    }
+
+    private PassengerDetailsRQ.SpecialReqDetails.AddRemarkRQ getAddRemarkRQ() {
+
         PassengerDetailsRQ.SpecialReqDetails.AddRemarkRQ addRemarkRQ = new PassengerDetailsRQ.SpecialReqDetails.AddRemarkRQ();
         addRemarkRQ.setHaltOnError( true );
 
@@ -132,37 +168,26 @@ public class PassengerDetailsWrapper extends WebServiceGatewaySupport {
         remarks[11].setSegmentNumber( "1" );
 
         fopRemark.setType( "CASH" );
-        remarkInfo.getRemark().addAll( Arrays.asList(remarks) );
+        remarkInfo.getRemark().addAll( Arrays.asList( remarks ) );
         remarkInfo.setFOPRemark( fopRemark );
         addRemarkRQ.setRemarkInfo( remarkInfo );
 
-        specialReqDetails.setAddRemarkRQ( addRemarkRQ );
+        return addRemarkRQ;
+    }
 
-        PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ specialServiceRQ = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ();
-        specialServiceRQ.setHaltOnError( true );
-        PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo specialServiceInfo = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo();
-        PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight secureFlight = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight();
-        secureFlight.setSSRCode( "DOCS" );
-        secureFlight.setSegmentNumber( "A" );
+    private PassengerDetailsRQ.PriceQuoteInfo getPriceQuoteInfo() {
 
-        PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight.PersonName personName = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight.PersonName();
-        personName.setGivenName( "SWS" );
-        personName.setSurname( "TEST" );
-        personName.setDateOfBirth( "1977-11-27" );
-        personName.setGender( "M" );
-        personName.setNameNumber( "1.1" );
-        PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight.VendorPrefs vendorPrefs1 = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight.VendorPrefs();
-        PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight.VendorPrefs.Airline airline1 = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight.VendorPrefs.Airline();
-        airline1.setHosted( true );
-        vendorPrefs1.setAirline( airline1 );
-        secureFlight.setPersonName( personName );
-        secureFlight.setVendorPrefs( vendorPrefs1 );
-        specialServiceInfo.getSecureFlight().add( secureFlight );
-        specialServiceRQ.setSpecialServiceInfo( specialServiceInfo );
+        PassengerDetailsRQ.PriceQuoteInfo priceQuoteInfo = new PassengerDetailsRQ.PriceQuoteInfo();
+        priceQuoteInfo.setHaltOnError( true );
+        PassengerDetailsRQ.PriceQuoteInfo.Link link = new PassengerDetailsRQ.PriceQuoteInfo.Link();
+        link.setNameNumber( "1.1" );
+        link.setRecord( "1" );
+        priceQuoteInfo.getLink().add( link );
 
-//        specialReqDetails.setSpecialServiceRQ( specialServiceRQ );
-        request.setSpecialReqDetails( specialReqDetails );
+        return priceQuoteInfo;
+    }
 
+    private PassengerDetailsRQ.TravelItineraryAddInfoRQ getTravelItineraryAddInfoRQ() {
 
         PassengerDetailsRQ.TravelItineraryAddInfoRQ travelItineraryAddInfoRQ = new PassengerDetailsRQ.TravelItineraryAddInfoRQ();
         PassengerDetailsRQ.TravelItineraryAddInfoRQ.AgencyInfo agencyInfo = new PassengerDetailsRQ.TravelItineraryAddInfoRQ.AgencyInfo();
@@ -171,6 +196,28 @@ public class PassengerDetailsWrapper extends WebServiceGatewaySupport {
         agencyInfo.setTicketing( ticketing );
 
         PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo customerInfo = new PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo();
+
+        customerInfo.setContactNumbers( getContactNumbers() );
+
+        PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.Email email = new PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.Email();
+        email.setAddress( "webservices.support@sabre.com" );
+        email.setNameNumber( "1.1" );
+
+        customerInfo.getEmail().add( email );
+        PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.PersonName personName1 = new PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.PersonName();
+        personName1.setNameNumber( "1.1" );
+        personName1.setGivenName( "SWS" );
+        personName1.setSurname( "TEST" );
+        customerInfo.getPersonName().add( personName1 );
+        travelItineraryAddInfoRQ.setCustomerInfo( customerInfo );
+
+        return travelItineraryAddInfoRQ;
+    }
+
+    private PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.ContactNumbers getContactNumbers() {
+
+        PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.ContactNumbers contactNumbers = new PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.ContactNumbers();
+
         PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.ContactNumbers.ContactNumber contactNumber1 = new PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.ContactNumbers.ContactNumber();
         PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.ContactNumbers.ContactNumber contactNumber2 = new PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.ContactNumbers.ContactNumber();
 
@@ -184,28 +231,10 @@ public class PassengerDetailsWrapper extends WebServiceGatewaySupport {
         contactNumber2.setPhone( "682-555-1212" );
         contactNumber2.setPhoneUseType("O");
 
-        PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.ContactNumbers contactNumbers = new PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.ContactNumbers();
         contactNumbers.getContactNumber().add( contactNumber1 );
         contactNumbers.getContactNumber().add( contactNumber2 );
 
-        customerInfo.setContactNumbers( contactNumbers );
-
-        PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.Email email = new PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.Email();
-        email.setAddress( "webservices.support@sabre.com" );
-        email.setNameNumber( "1.1" );
-
-        customerInfo.getEmail().add( email );
-        PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.PersonName personName1 = new PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.PersonName();
-        personName1.setNameNumber( "1.1" );
-        personName1.setGivenName( "SWS" );
-        personName1.setSurname( "TEST" );
-        customerInfo.getPersonName().add( personName1 );
-        travelItineraryAddInfoRQ.setCustomerInfo( customerInfo );
-        request.setTravelItineraryAddInfoRQ( travelItineraryAddInfoRQ );
-
-        return request;
-
-
+        return contactNumbers;
     }
 
 }

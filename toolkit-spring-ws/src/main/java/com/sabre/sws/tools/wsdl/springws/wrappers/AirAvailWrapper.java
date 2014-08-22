@@ -1,5 +1,6 @@
 package com.sabre.sws.tools.wsdl.springws.wrappers;
 
+import com.sabre.sws.tools.wsdl.commons.utils.AirAvailRequests;
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.springws.airavail.OTAAirAvailRQ;
 import com.sabre.sws.tools.wsdl.springws.airavail.OTAAirAvailRS;
@@ -23,10 +24,9 @@ public class AirAvailWrapper extends WebServiceGatewaySupport {
 
     private List<ClientInterceptor> interceptors = new ArrayList<>();
 
-    public AirAvailWrapper( Jaxb2Marshaller marshaller ) {
+    public AirAvailWrapper() {
         super();
-        marshaller.setContextPath( "com.sabre.sws.tools.wsdl.springws.airavail" );
-        this.setMarshaller( marshaller );
+        addInterceptors();
     }
 
     private void addInterceptors() {
@@ -35,36 +35,31 @@ public class AirAvailWrapper extends WebServiceGatewaySupport {
         super.setInterceptors( interceptors.toArray( new ClientInterceptor[0] ) );
     }
 
-    public OTAAirAvailRS executeSampleRequest( int requestIndex ) {
+    public OTAAirAvailRS executeSampleRequest( AirAvailRequests requestType ) {
 
-        addInterceptors();
-
+        System.out.println(((Jaxb2Marshaller) getMarshaller()).getContextPath());
         return (OTAAirAvailRS) getWebServiceTemplate().marshalSendAndReceive(
-                getRequestBody( requestIndex ),
+                getRequestBody( requestType ),
                 new HeaderComposingCallback( serviceAction )
         );
     }
 
-    private OTAAirAvailRQ getRequestBody( int requestIndex ) {
-
-        if( requestIndex > 3 || requestIndex < 0 ) {
-            throw new IllegalArgumentException( "Invalid request index" );
-        }
+        private OTAAirAvailRQ getRequestBody( AirAvailRequests requestType ) {
 
         OTAAirAvailRQ requestBody = null;
 
-        switch( requestIndex ) {
-            case 0:
-                requestBody = getRequestBody0();
+        switch( requestType ) {
+            case BETWEEN_TWO_POINTS_WITH_DEPARTURE_DATE:
+                requestBody = getRequestBodyWithTwoPointsAndDepartureDate();
                 break;
-            case 1:
-                requestBody = getRequestBody1();
+            case BETWEEN_TWO_POINTS_WITH_DEPARTURE_HOUR:
+                requestBody = getRequestBodyWithTwoPointsAndDepartureHour();
                 break;
-            case 2:
-                requestBody = getRequestBody2();
+            case BETWEEN_TWO_POINTS_WITH_VENDOR_PREFS:
+                requestBody = getRequestBodyWithTwoPointsAndVendorPrefs();
                 break;
-            case 3:
-                requestBody = getRequestBody3();
+            case MULTILEG_FLIGHT_SEGMENT_WITH_VENDOR_PREFS:
+                requestBody = getRequestBodyWithMultilegFlightSegmentAndVendorPrefs();
                 break;
         }
 
@@ -72,7 +67,7 @@ public class AirAvailWrapper extends WebServiceGatewaySupport {
 
     }
 
-    private OTAAirAvailRQ getRequestBody0() {
+    private OTAAirAvailRQ getRequestBodyWithTwoPointsAndDepartureDate() {
 
         OTAAirAvailRQ requestBody = new OTAAirAvailRQ();
         requestBody.setVersion( serviceVersion );
@@ -95,7 +90,8 @@ public class AirAvailWrapper extends WebServiceGatewaySupport {
         return requestBody;
     }
 
-    private OTAAirAvailRQ getRequestBody1() {
+    private OTAAirAvailRQ getRequestBodyWithTwoPointsAndDepartureHour() {
+
         OTAAirAvailRQ requestBody = new OTAAirAvailRQ();
         requestBody.setVersion( serviceVersion );
 
@@ -118,7 +114,8 @@ public class AirAvailWrapper extends WebServiceGatewaySupport {
         return requestBody;
     }
 
-    private OTAAirAvailRQ getRequestBody2() {
+    private OTAAirAvailRQ getRequestBodyWithTwoPointsAndVendorPrefs() {
+
         OTAAirAvailRQ requestBody = new OTAAirAvailRQ();
         requestBody.setVersion( serviceVersion );
 
@@ -147,7 +144,8 @@ public class AirAvailWrapper extends WebServiceGatewaySupport {
         return requestBody;
     }
 
-    private OTAAirAvailRQ getRequestBody3() {
+    private OTAAirAvailRQ getRequestBodyWithMultilegFlightSegmentAndVendorPrefs() {
+
         OTAAirAvailRQ requestBody = new OTAAirAvailRQ();
         requestBody.setVersion( serviceVersion );
 

@@ -24,6 +24,11 @@ public class SessionCreateWrapper extends WebServiceGatewaySupport {
     private final IConfigurationProvider configurationProvider = Util.getConfigurationProvider();
     private final List<ClientInterceptor> interceptors = new ArrayList<>();
 
+    public SessionCreateWrapper() {
+        super();
+        addInterceptors();
+    }
+
     private void addInterceptors() {
         interceptors.add( clientInterceptor );
         interceptors.add( sessionCreateInterceptor );
@@ -45,8 +50,6 @@ public class SessionCreateWrapper extends WebServiceGatewaySupport {
     }
 
     public SessionCreateRS openSession() {
-
-        addInterceptors();
 
         return (SessionCreateRS) getWebServiceTemplate().marshalSendAndReceive(
             getRequestBody(),

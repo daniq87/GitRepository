@@ -3,6 +3,8 @@ package com.sabre.sws.tools.wsdl.springws.interceptors;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.springws.soap.MessageHeader;
 import com.sabre.sws.tools.wsdl.springws.soap.Security;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
@@ -18,6 +20,8 @@ import javax.xml.transform.Source;
  * Created by SG0221139 on 8/18/2014.
  */
 public class SessionCreateInterceptor implements ClientInterceptor {
+
+    private static final Logger LOGGER = LogManager.getLogger( SessionCreateInterceptor.class );
 
     private static final String securityNs = "http://schemas.xmlsoap.org/ws/2002/12/secext";
     private static final String securityLocalName = "Security";
@@ -51,6 +55,8 @@ public class SessionCreateInterceptor implements ClientInterceptor {
             Security security = (Security) unmarshaller.unmarshal( securitySource );
             MessageHeader header = (MessageHeader) unmarshaller.unmarshal( headerSource );
 
+            LOGGER.info( "Creating session..." );
+
             if( !header.getAction().equalsIgnoreCase( "SessionCreateRS" ) ) {
                 throw new UnsupportedOperationException( "This interceptors works with SessionCreateRQ only" );
             }
@@ -67,6 +73,11 @@ public class SessionCreateInterceptor implements ClientInterceptor {
 
             };
         }
+
+        StringBuffer logBuffer = new StringBuffer("Session Successfully created").append("\n");
+        logBuffer.append("Session Token: ").append(token).append("\n");
+        logBuffer.append("Conversation ID: ").append(conversationId);
+        LOGGER.info(logBuffer.toString());
 
         SessionManager.getInstance().startSession( token );
         SessionManager.getInstance().setConversationID( conversationId );

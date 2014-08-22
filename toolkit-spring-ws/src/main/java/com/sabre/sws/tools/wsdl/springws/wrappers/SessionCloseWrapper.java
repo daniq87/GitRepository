@@ -19,6 +19,11 @@ public class SessionCloseWrapper extends WebServiceGatewaySupport {
 
     private List<ClientInterceptor> interceptors = new ArrayList<>();
 
+    public SessionCloseWrapper() {
+        super();
+        addInterceptors();
+    }
+
     private void addInterceptors() {
         interceptors.add( new LoggingInterceptor() );
         interceptors.add( new SessionCloseInterceptor() );
@@ -40,7 +45,6 @@ public class SessionCloseWrapper extends WebServiceGatewaySupport {
     }
 
     public SessionCloseRS closeSession() {
-        addInterceptors();
 
         return (SessionCloseRS) getWebServiceTemplate().marshalSendAndReceive(
                 getRequestBody(),

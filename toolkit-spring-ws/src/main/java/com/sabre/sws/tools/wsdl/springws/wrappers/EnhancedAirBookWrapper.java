@@ -6,7 +6,6 @@ import com.sabre.sws.tools.wsdl.springws.enhancedairbook.EnhancedAirBookRQ;
 import com.sabre.sws.tools.wsdl.springws.enhancedairbook.EnhancedAirBookRS;
 import com.sabre.sws.tools.wsdl.springws.interceptors.FaultInterceptor;
 import com.sabre.sws.tools.wsdl.springws.interceptors.LoggingInterceptor;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 
@@ -24,10 +23,8 @@ public class EnhancedAirBookWrapper extends WebServiceGatewaySupport {
 
     private List<ClientInterceptor> interceptors = new ArrayList<>();
 
-    public EnhancedAirBookWrapper( Jaxb2Marshaller marshaller ) {
+    public EnhancedAirBookWrapper() {
         super();
-        marshaller.setContextPath( "com.sabre.sws.tools.wsdl.springws.enhancedairbook" );
-        this.setMarshaller( marshaller );
         addInterceptors();
     }
 
@@ -122,7 +119,7 @@ public class EnhancedAirBookWrapper extends WebServiceGatewaySupport {
         EnhancedAirBookRQ.PostProcessing postProcessing = new EnhancedAirBookRQ.PostProcessing();
         EnhancedAirBookRQ.PostProcessing.RedisplayReservation redisplayReservation = new EnhancedAirBookRQ.PostProcessing.RedisplayReservation();
 
-        redisplayReservation.setWaitInterval( new BigInteger( "2000" ) );
+        redisplayReservation.setWaitInterval( new BigInteger( "1000" ) );
         postProcessing.setRedisplayReservation( redisplayReservation );
 
         requestBody.setPostProcessing( postProcessing );

@@ -4,6 +4,9 @@ import com.sabre.sws.tools.wsdl.springws.soap.MessageHeader;
 import com.sabre.sws.tools.wsdl.springws.soap.Security;
 import com.sabre.sws.tools.wsdl.springws.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.springws.utils.SecurityFactory;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.soap.SoapHeader;
@@ -13,12 +16,15 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.TransformerException;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
  * Created by SG0221139 on 8/14/2014.
  */
 public class HeaderComposingCallback implements WebServiceMessageCallback {
+
+    private static final Logger LOGGER = LogManager.getLogger( HeaderComposingCallback.class );
 
     private final String actionString;
     private final boolean creatingSession;
@@ -30,7 +36,7 @@ public class HeaderComposingCallback implements WebServiceMessageCallback {
         this.actionString = actionString;
         this.creatingSession = actionString.equalsIgnoreCase( "SessionCreateRQ" );
 
-        header = MessageHeaderFactory.getMessageHeader( actionString );
+        header = MessageHeaderFactory.getMessageHeader( this.actionString );
         if( this.creatingSession ) {
             security = SecurityFactory.getCredentialsSecurity();
         } else {
@@ -51,48 +57,25 @@ public class HeaderComposingCallback implements WebServiceMessageCallback {
             marshaller.marshal( header, soapHeader.getResult() );
             marshaller.marshal( security, soapHeader.getResult() );
 
-            webServiceMessage.writeTo( System.out );
+            logMessage( webServiceMessage );
 
         } catch (JAXBException e) {
             e.printStackTrace();
         }
     }
 
+    private void logMessage(WebServiceMessage webServiceMessage) {
 
-
-    /*
-    Last working copy
-    @Override
-    public void doWithMessage(WebServiceMessage webServiceMessage) throws IOException, TransformerException {
-
-        SoapHeader soapHeader = ((SoapMessage)webServiceMessage).getSoapHeader();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         try {
-            JAXBContext context = JAXBContext.newInstance( MessageHeader.class, Security.class );
-
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-
-            Document securityDocument = builder.newDocument();
-            Document headerDocument = builder.newDocument();
-
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.marshal( header, headerDocument );
-            marshaller.marshal( security, securityDocument );
-
-            Transformer t = TransformerFactory.newInstance().newTransformer();
-
-            DOMSource headerSource = new DOMSource( headerDocument );
-            DOMSource securitySource = new DOMSource( securityDocument );
-
-            t.transform( headerSource, soapHeader.getResult() );
-            t.transform( securitySource, soapHeader.getResult() );
-
-            webServiceMessage.writeTo( System.out );
-
-        } catch (JAXBException | ParserConfigurationException e) {
+            webServiceMessage.writeTo( outputStream );
+            String log = outputStream.toString( "UTF-8" );
+            LOGGER.log( Level.INFO, log );
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+
+    }
 
 }
