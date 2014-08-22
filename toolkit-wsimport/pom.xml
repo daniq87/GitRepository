@@ -62,15 +62,78 @@
                 <groupId>org.jvnet.jax-ws-commons</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
                 <version>2.3</version>
+                <configuration>
+                    <wsdlDirectory>${project.parent.basedir}/target/wsdls</wsdlDirectory>
+                    <bindingDirectory>${project.basedir}/custom-bindings</bindingDirectory>
+                </configuration>
                 <executions>
+
                     <execution>
+                        <id>session-schemas</id>
                         <goals>
                             <goal>wsimport</goal>
                         </goals>
                         <configuration>
-                            <wsdlDirectory>${project.parent.basedir}/target/wsdls</wsdlDirectory>
                             <wsdlFiles>
                                 <wsdlFile>SessionCreateRQ/SessionCreateRQ.wsdl</wsdlFile>
+                                <wsdlFile>SessionCloseRQ/SessionCloseRQ.wsdl</wsdlFile>
+                            </wsdlFiles>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>travel-itinerary-schemas</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <bindingFiles>
+                                <bindingFile>travel-itinerary-custom-binding.jxb</bindingFile>
+                            </bindingFiles>
+                            <wsdlFiles>
+                                    <wsdlFile>TravelItineraryReadLLSRQ/TravelItineraryReadLLS${TravelItineraryReadVersion}RQ.wsdl</wsdlFile>
+                            </wsdlFiles>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>ota-air-avail-schemas</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                    <wsdlFile>OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailVersion}RQ.wsdl</wsdlFile>
+                            </wsdlFiles>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>enhanced-air-book-schemas</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <bindingFiles>
+                                <bindingFile>enhanced-airbook-custom-binding.jxb</bindingFile>
+                            </bindingFiles>
+                            <wsdlFiles>
+                                    <wsdlFile>EnhancedAirBookRQ/EnhancedAirBook${EnhancedAirBookVersion}RQ.wsdl</wsdlFile>
+                            </wsdlFiles>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>passenger-details-schemas</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <bindingFiles>
+                                <bindingFile>passenger-details-custom-binding.jxb</bindingFile>
+                            </bindingFiles>
+                            <wsdlFiles>
+                                    <wsdlFile>PassengerDetailsRQ/PassengerDetails${PassengerDetailsVersion}RQ.wsdl</wsdlFile>
                             </wsdlFiles>
                         </configuration>
                     </execution>
