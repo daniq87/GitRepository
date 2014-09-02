@@ -39,7 +39,7 @@ public class MessageHeaderFactory {
         instance.setAction( action );
 
         MessageData messageData = new MessageData();
-        messageData.setMessageId( "Some msg ID" );  // TODO
+        messageData.setMessageId( getMessageId( action ) );
         messageData.setTimestamp( Util.getTimestamp() );
         instance.setMessageData( messageData );
 
@@ -55,4 +55,7 @@ public class MessageHeaderFactory {
         return buffer.toString();
     }
 
+    private static String getMessageId( String seed ) {
+        return new StringBuilder( seed ).append( Util.longRandomHexString() ).toString();
+    }
 }

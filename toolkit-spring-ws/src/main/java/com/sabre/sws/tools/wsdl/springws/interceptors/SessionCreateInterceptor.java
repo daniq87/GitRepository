@@ -70,7 +70,6 @@ public class SessionCreateInterceptor implements ClientInterceptor {
 
         if( token == null | conversationId == null ) {
             throw new WebServiceClientException( "Couldn't retrieve session token from message" ) {
-
             };
         }
 

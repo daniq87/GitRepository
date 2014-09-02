@@ -79,7 +79,7 @@ public class PassengerDetailsHelper {
         // Populate and set MESSAGE_DATA element
         PassengerDetailsServiceStub.MessageData_type0 messageData = new PassengerDetailsServiceStub.MessageData_type0();
 
-        String messageID = Util.longRandomHexString();
+        String messageID = new StringBuffer("PassengerDetails-").append(Util.longRandomHexString()).toString();
         messageData.setMessageId( toNonEmptyString(messageID ) );
 
         PassengerDetailsServiceStub.Timestamp timestamp = new PassengerDetailsServiceStub.Timestamp();

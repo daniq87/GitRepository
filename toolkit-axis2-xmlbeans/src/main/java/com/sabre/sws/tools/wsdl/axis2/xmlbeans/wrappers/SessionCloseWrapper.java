@@ -28,8 +28,6 @@ public class SessionCloseWrapper extends SessionCloseRQServiceStub {
 
     public SessionCloseRSDocument closeSession() throws RemoteException {
 
-        System.out.println( SessionCloseRQFactory.getSessionCloseRQ( configuration ) );
-
         return sessionCloseRQ (
                 SessionCloseRQFactory.getSessionCloseRQ( configuration ),
                 MessageHeaderFactory.getMessageHeader( configuration, "SessionCloseRQ"),

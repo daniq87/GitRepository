@@ -44,13 +44,17 @@ public class MessageHeaderFactory {
         header.setAction( action );
 
         MessageDataDocument.MessageData messageData = header.addNewMessageData();
-        messageData.setMessageId( "TestCase" ); // TODO
+        messageData.setMessageId( getMessageId(action) );
         messageData.setTimestamp( Util.getTimestamp() );
         messageData.setTimeToLive( new GregorianCalendar( 2014, 12, 12 ));
 
         System.out.println( instance.toString() );
 
         return instance;
+    }
+
+    private static String getMessageId( String seed ) {
+        return new StringBuilder( seed ).append( Util.longRandomHexString() ).toString();
     }
 
 }

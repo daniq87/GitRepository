@@ -6,7 +6,6 @@ import com.sabre.sws.tools.wsdl.commons.handlers.ErrorHandler;
 import com.sabre.sws.tools.wsdl.commons.handlers.MustUnderstandHandler;
 import com.sabre.sws.tools.wsdl.commons.handlers.OutputHandler;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
-import com.sabre.sws.tools.wsdl.commons.utils.LogMonitor;
 import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import org.opentravel.www.ota._2002._11.SessionCreateRSDocument;
@@ -21,8 +20,6 @@ public class SwsClient {
     private static final IConfigurationProvider configuration = Util.getConfigurationProvider();
 
     public static void main( String ... args ) {
-
-        LogMonitor.setEnableMonitr( true );
 
         addHandlers();
 

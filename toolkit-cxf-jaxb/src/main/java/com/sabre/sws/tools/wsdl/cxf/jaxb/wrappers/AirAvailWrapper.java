@@ -40,7 +40,7 @@ public class AirAvailWrapper {
 
         OTAAirAvailPortType port = getConfiguredPort();
 
-        return port.otaAirAvailRQ( new Holder<>(header), new Holder<Security>(security), requestBody );
+        return port.otaAirAvailRQ( new Holder<>(header), new Holder<>(security), requestBody );
     }
 
     private OTAAirAvailRQ getRequestBody( AirAvailRequests requestType ) {

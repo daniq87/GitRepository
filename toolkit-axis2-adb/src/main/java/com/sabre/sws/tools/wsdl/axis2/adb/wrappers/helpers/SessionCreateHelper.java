@@ -99,7 +99,7 @@ public class SessionCreateHelper {
         // Populate and set MESSAGE_DATA element
         MessageData_type0 messageData = new MessageData_type0();
 
-        String messageID = Util.longRandomHexString();
+        String messageID = new StringBuffer("SessionCreate-").append(Util.longRandomHexString()).toString();
         messageData.setMessageId( toNonEmptyString(messageID ) );
 
         Timestamp timestamp = new Timestamp();

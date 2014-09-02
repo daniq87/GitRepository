@@ -1,6 +1,6 @@
 package com.sabre.sws.tools.wsdl.commons.handlers;
 
-import com.sabre.sws.tools.wsdl.commons.utils.LogMonitor;
+import com.sabre.sws.tools.wsdl.commons.utils.XMLPrettifier;
 import org.apache.axiom.soap.SOAPBody;
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axiom.soap.SOAPHeader;
@@ -26,7 +26,11 @@ public class OutputHandler extends AbstractHandler {
         SOAPHeader header = envelope.getHeader();
         SOAPBody body = envelope.getBody();
 
-        LogMonitor.logString(header.toString(), body.toString());
+        StringBuffer buffer = new StringBuffer();
+        buffer.append( XMLPrettifier.pretify(header.toString()) );
+        buffer.append( XMLPrettifier.pretify(body.toString()) );
+        String formattedMessage = buffer.toString();
+        LOGGER.debug( formattedMessage );
 
         return InvocationResponse.CONTINUE;
     }

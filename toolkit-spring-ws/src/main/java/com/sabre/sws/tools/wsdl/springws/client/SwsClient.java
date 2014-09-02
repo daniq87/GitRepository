@@ -31,7 +31,7 @@ public class SwsClient {
             executePassengerDetailsRequest();
 
         } catch ( Exception e ) {
-            e.printStackTrace();
+            LOGGER.error( "Error executing request", e );
         } finally {
             if(SessionManager.getInstance().isSessionActive()) {
                 closeSession();

@@ -7,6 +7,8 @@ import com.sabre.sws.tools.wsdl.springws.interceptors.LoggingInterceptor;
 import com.sabre.sws.tools.wsdl.springws.interceptors.SessionCreateInterceptor;
 import com.sabre.sws.tools.wsdl.springws.session.SessionCreateRQ;
 import com.sabre.sws.tools.wsdl.springws.session.SessionCreateRS;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 
@@ -17,6 +19,8 @@ import java.util.List;
  * Created by SG0221139 on 8/18/2014.
  */
 public class SessionCreateWrapper extends WebServiceGatewaySupport {
+
+    private static final Logger LOGGER = LogManager.getLogger( SessionCreateWrapper.class );
 
     private final ClientInterceptor clientInterceptor = new LoggingInterceptor();
     private final SessionCreateInterceptor sessionCreateInterceptor = new SessionCreateInterceptor();
@@ -51,9 +55,15 @@ public class SessionCreateWrapper extends WebServiceGatewaySupport {
 
     public SessionCreateRS openSession() {
 
-        return (SessionCreateRS) getWebServiceTemplate().marshalSendAndReceive(
-            getRequestBody(),
-            new HeaderComposingCallback( "SessionCreateRQ" )
+        LOGGER.info( "Opening session..." );
+
+        SessionCreateRS sessionCreateRQ = (SessionCreateRS) getWebServiceTemplate().marshalSendAndReceive(
+                getRequestBody(),
+                new HeaderComposingCallback("SessionCreateRQ")
         );
+
+        LOGGER.info( "Session successfully opened" );
+
+        return sessionCreateRQ;
     }
 }

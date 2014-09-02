@@ -1,6 +1,6 @@
 package com.sabre.sws.tools.wsdl.springws.interceptors;
 
-import org.apache.logging.log4j.Level;
+import com.sabre.sws.tools.wsdl.commons.utils.XMLPrettifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.ws.client.WebServiceClientException;
@@ -19,6 +19,16 @@ public class LoggingInterceptor implements ClientInterceptor {
 
     @Override
     public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
+
+        try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            messageContext.getRequest().writeTo( outputStream );
+            String responseText = outputStream.toString( "UTF-8" );
+            LOGGER.debug("\nOutgoing request message:\n" + XMLPrettifier.pretify(responseText));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 
@@ -28,7 +38,7 @@ public class LoggingInterceptor implements ClientInterceptor {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             messageContext.getResponse().writeTo( outputStream );
             String responseText = outputStream.toString( "UTF-8" );
-            LOGGER.log(Level.INFO, "\nResponse:\n" + responseText );
+            LOGGER.debug("\nIncoming response message:\n" + XMLPrettifier.pretify(responseText));
         } catch (IOException e) {
             e.printStackTrace();
             return false;

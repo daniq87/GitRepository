@@ -1,10 +1,10 @@
 package com.sabre.sws.tools.wsdl.springws.callbacks;
 
+import com.sabre.sws.tools.wsdl.commons.utils.XMLPrettifier;
 import com.sabre.sws.tools.wsdl.springws.soap.MessageHeader;
 import com.sabre.sws.tools.wsdl.springws.soap.Security;
 import com.sabre.sws.tools.wsdl.springws.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.springws.utils.SecurityFactory;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.ws.WebServiceMessage;
@@ -57,7 +57,7 @@ public class HeaderComposingCallback implements WebServiceMessageCallback {
             marshaller.marshal( header, soapHeader.getResult() );
             marshaller.marshal( security, soapHeader.getResult() );
 
-            logMessage( webServiceMessage );
+//            logMessage( webServiceMessage );
 
         } catch (JAXBException e) {
             e.printStackTrace();
@@ -70,8 +70,8 @@ public class HeaderComposingCallback implements WebServiceMessageCallback {
 
         try {
             webServiceMessage.writeTo( outputStream );
-            String log = outputStream.toString( "UTF-8" );
-            LOGGER.log( Level.INFO, log );
+            String log = XMLPrettifier.pretify( outputStream.toString( "UTF-8" ) );
+            LOGGER.debug("\n\n" + log + "\n" );
         } catch (IOException e) {
             e.printStackTrace();
         }
