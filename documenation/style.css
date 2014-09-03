@@ -41,3 +41,39 @@
     font-weight: bold;
     color: red;
 }
+
+.intend-level-1 {
+    padding-left: 25px;
+    width: 98%;
+}
+
+.intend-level-2 {
+    padding-left: 40px;
+    width: 100%;
+}
+
+.intend-level-3 {
+    padding-left: 55px;
+    width: 100%;
+}
+
+.intend-level-4 {
+    padding-left: 70px;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #2040ee;
+}
+
+
+ul {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+li {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}

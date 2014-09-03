@@ -79,13 +79,29 @@ public class EnhancedAirBookWrapper {
         EnhancedAirBookRQ requestBody = new EnhancedAirBookRQ();
         requestBody.setVersion( ServicesVersionsProvider.getEnhancedAirBookVersion() );
 
-        // Populate and set OTAAirBookRQ
+        requestBody.setOTAAirBookRQ( getOTAAirBookRQ() );
+        requestBody.setOTAAirPriceRQ( getOTAAirPriceRQ() );
+        requestBody.setPostProcessing( getPostProcessing() );
+
+        return requestBody;
+    }
+
+    private EnhancedAirBookRQ.OTAAirBookRQ getOTAAirBookRQ() {
+
         EnhancedAirBookRQ.OTAAirBookRQ airBookRQ = new EnhancedAirBookRQ.OTAAirBookRQ();
+        airBookRQ.setHaltOnError( false );
 
         EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation originDestinationInformation = new EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation();
+        originDestinationInformation.getFlightSegment().add( getFlightSegment() );
+        airBookRQ.setOriginDestinationInformation( originDestinationInformation );
+
+        return airBookRQ;
+    }
+
+    private EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation.FlightSegment getFlightSegment() {
+
         EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation.FlightSegment flightSegment = new EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation.FlightSegment();
 
-        airBookRQ.setHaltOnError( false );
         EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation.FlightSegment.DestinationLocation destinationLocation = new EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation.FlightSegment.DestinationLocation();
         EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation.FlightSegment.Equipment equipment = new EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation.FlightSegment.Equipment();
         EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation.FlightSegment.MarketingAirline marketingAirline = new EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation.FlightSegment.MarketingAirline();
@@ -111,15 +127,12 @@ public class EnhancedAirBookWrapper {
         flightSegment.setStatus("GK");
         flightSegment.setResBookDesigCode("Y");
 
-        originDestinationInformation.getFlightSegment().add( flightSegment );
-        airBookRQ.setOriginDestinationInformation( originDestinationInformation );
+        return flightSegment;
+    }
 
-        requestBody.setOTAAirBookRQ( airBookRQ );
+    private EnhancedAirBookRQ.OTAAirPriceRQ getOTAAirPriceRQ() {
 
-
-        // Populate and set OTAAirPrice
         EnhancedAirBookRQ.OTAAirPriceRQ airPriceRQ = new EnhancedAirBookRQ.OTAAirPriceRQ();
-
         airPriceRQ.setHaltOnError( true );
 
         EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation priceRequestInformation = new EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation();
@@ -131,16 +144,17 @@ public class EnhancedAirBookWrapper {
         EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation.OptionalQualifiers.PricingQualifiers.PassengerType passengerType = new EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation.OptionalQualifiers.PricingQualifiers.PassengerType();
 
         passengerType.setCode("ADT");
-
         passengerType.setQuantity("1");
-
         pricingQualifiers.getPassengerType().add( passengerType );
 
         optionalQualifiers.setPricingQualifiers( pricingQualifiers );
         priceRequestInformation.setOptionalQualifiers( optionalQualifiers );
         airPriceRQ.setPriceRequestInformation( priceRequestInformation );
 
-        requestBody.setOTAAirPriceRQ( airPriceRQ );
+        return airPriceRQ;
+    }
+
+    private EnhancedAirBookRQ.PostProcessing getPostProcessing() {
 
         EnhancedAirBookRQ.PostProcessing postProcessing = new EnhancedAirBookRQ.PostProcessing();
         EnhancedAirBookRQ.PostProcessing.RedisplayReservation redisplayReservation = new EnhancedAirBookRQ.PostProcessing.RedisplayReservation();
@@ -148,9 +162,7 @@ public class EnhancedAirBookWrapper {
         redisplayReservation.setWaitInterval( new BigInteger( "2000" ) );
         postProcessing.setRedisplayReservation( redisplayReservation );
 
-        requestBody.setPostProcessing( postProcessing );
-
-        return requestBody;
+        return postProcessing;
     }
 
 }

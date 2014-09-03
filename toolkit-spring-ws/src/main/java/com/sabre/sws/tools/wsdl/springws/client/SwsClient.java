@@ -19,6 +19,8 @@ public class SwsClient {
 
     public static void main( String ... args ) {
 
+        addCloseSessionOnExitShutdownHook();
+
         context = SpringApplication.run(BeansConfiguration.class, args);
 
         openSession();
@@ -38,6 +40,17 @@ public class SwsClient {
             }
         }
 
+    }
+
+    private static void addCloseSessionOnExitShutdownHook() {
+        Runtime.getRuntime().addShutdownHook( new Thread( new Runnable() {
+            @Override
+            public void run() {
+                if( SessionManager.getInstance().isSessionActive() ) {
+                    closeSession();
+                }
+            }
+        }));
     }
 
     private static void openSession() {

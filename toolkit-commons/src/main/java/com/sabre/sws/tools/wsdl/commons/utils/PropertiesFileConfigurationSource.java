@@ -1,7 +1,5 @@
 package com.sabre.sws.tools.wsdl.commons.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -21,12 +19,9 @@ public class PropertiesFileConfigurationSource implements IConfigurationProvider
     private final String endpoint;
     private final int maxConnections;
 
-    public PropertiesFileConfigurationSource( File file ) throws IOException {
+    public PropertiesFileConfigurationSource( InputStream inputStream ) throws IOException {
 
         Properties properties = new Properties();
-
-        InputStream inputStream = new FileInputStream( file );
-
         properties.load( inputStream );
 
         this.username = properties.getProperty( "username" );
@@ -40,11 +35,6 @@ public class PropertiesFileConfigurationSource implements IConfigurationProvider
 
         inputStream.close();
 
-    }
-
-
-    public PropertiesFileConfigurationSource( String propertiesFileLocation ) throws IOException {
-        this(new File(propertiesFileLocation));
     }
 
     @Override

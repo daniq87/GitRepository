@@ -1,6 +1,7 @@
 package com.sabre.sws.tools.wsdl.wsimport.wrappers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import com.sabre.sws.tools.wsdl.wsimport.handlers.LoggingHandler;
 import com.sabre.sws.tools.wsdl.wsimport.handlers.SessionCreateIncomingInterceptor;
@@ -37,7 +38,6 @@ public class SessionCreateWrapper {
         port = new SessionCreateRQService().getSessionCreatePortType();
 
         String endpointURL = Util.getConfigurationProvider().getEndpoint();
-//        endpointURL = "http://localhost:8088/mockSessionCreateSoapBinding";
         ((BindingProvider) port).getRequestContext().put( BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL );
     }
 
@@ -48,16 +48,20 @@ public class SessionCreateWrapper {
 
         addHandlers(port);
 
-        LOGGER.info( "Opening session..." );
+        LOGGER.debug( "Opening session..." );
+
+        Holder<Security> securityHolder = new Holder<>(security);
+        Holder<MessageHeader> headerHolder = new Holder<>(header);
 
         SessionCreateRS sessionCreateRS = port.sessionCreateRQ(
-                new Holder<>(header),
-                new Holder<>(security),
+                headerHolder,
+                securityHolder,
                 getRequestBody()
         );
 
         LOGGER.info( "Session was successfully opened" );
-
+        LOGGER.info("Token from returned header: " + securityHolder.value.getBinarySecurityToken());
+        LOGGER.info( "Token from session manager: " + SessionManager.getInstance().getToken() );
         return sessionCreateRS;
     }
 

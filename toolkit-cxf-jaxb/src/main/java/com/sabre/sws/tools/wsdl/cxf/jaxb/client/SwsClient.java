@@ -1,23 +1,49 @@
 package com.sabre.sws.tools.wsdl.cxf.jaxb.client;
 
 import com.sabre.sws.tools.wsdl.commons.utils.AirAvailRequests;
+import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 /**
  * Created by SG0221139 on 8/5/2014.
  */
 public class SwsClient {
 
+    private static final Logger LOGGER = LogManager.getLogger(SwsClient.class);
+
     public static void main( String ... args ) {
 
-        openSession();
+        addCloseSessionOnExitShutdownHook();
 
-        invokeTravelItineraryRequest();
-        invokeAirAvailRequests();
-        invokeEnhancedAirBookRequest();
-        invokePassengerDetailsRequest();
+        try {
+            openSession();
 
-        closeSession();
+            invokeTravelItineraryRequest();
+            invokeAirAvailRequests();
+            invokeEnhancedAirBookRequest();
+            invokePassengerDetailsRequest();
+
+        } catch ( Exception e ) {
+            LOGGER.error( "Exception caught:", e );
+        } finally {
+            if( SessionManager.getInstance().isSessionActive() ) {
+                closeSession();
+            }
+        }
+    }
+
+    private static void addCloseSessionOnExitShutdownHook() {
+        Runtime.getRuntime().addShutdownHook( new Thread( new Runnable() {
+            @Override
+            public void run() {
+                if(SessionManager.getInstance().isSessionActive()) {
+                    closeSession();
+                }
+            }
+        }));
     }
 
     private static void openSession() {

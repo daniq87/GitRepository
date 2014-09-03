@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body>
+
+<!-- Section template  -->
+
+<!--
+
+    <a name=""></a>
+    <span class="subheader"></span><br/><br/> &lt;!&ndash; Framework name &ndash;&gt;
+    <div class="intend-level-1">
+
+        &lt;!&ndash; Overview &ndash;&gt;
+        <a name="-overview-anchor"></a>
+        <span class="bold"> Overview </span><br/>
+        <p class="intend-level-2">
+
+        </p>
+
+        &lt;!&ndash; Using Framework &ndash;&gt;
+        <a name="-using-anchor"></a>
+        <span class="bold"> Using </span><br/>
+        <p>
+
+        </p>
+
+        &lt;!&ndash; Typical flow in particular framework &ndash;&gt;
+        <a name="-typical-flow-anchor"></a>
+        <span class="bold"> Typical flow </span><br/>
+        <p>
+
+            &lt;!&ndash; Typical flow list &ndash;&gt;
+            <ol>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ol>
+
+        </p>
+
+        &lt;!&ndash; Details of client development &ndash;&gt;
+        <a name="-developing-client-anchor"></a>
+        <span class="bold"> Developing client in detail </span><br/>
+        <p>
+
+        </p>
+
+        &lt;!&ndash; TODO: decide which phrase to use for this section &ndash;&gt;
+        &lt;!&ndash; Known issues &ndash;&gt;
+        <a name="-known-issues-anchor"></a>
+        <span class="bold"> Known issues </span><br/>
+        <p>
+
+        </p>
+
+    </div>
+
+-->
+
+    <!-- Index of content -->
+
+    <span class="header"> Index of content </span>
+    <ul>
+        <li><a href="#overview-anchor">Overview</a></li>
+        <li>
+            Java web services frameworks
+            <ul>
+                <li>
+                    Apache Axis2
+                    <ul>
+                        <li><a href="#axis2-overview-anchor">Overview</a></li>
+                        <li><a href="#axis2-using-anchor">Using</a></li>
+                        <li><a href="#axis2-typical-flow-anchor">Typical flow</a></li>
+                        <li><a href="#axis2-developing-client-anchor">Developing client in detail</a></li>
+                        <li><a href="#axis2-known-issues-anchor">Known issues</a></li>
+                    </ul>
+                </li>
+                <li>
+                    Apache CXF
+                    <ul>
+                        <li><a href="#cxf-overview-anchor">Overview</a></li>
+                        <li><a href="#cxf-using-anchor">Using</a></li>
+                        <li><a href="#cxf-typical-flow-anchor">Typical flow</a></li>
+                        <li><a href="#cxf-developing-client-anchor">Developing client in detail</a></li>
+                        <li><a href="#cxf-known-issues-anchor">Known issues</a></li>
+                    </ul>
+                </li>
+                <li>
+                    Spring Web Services
+                    <ul>
+                        <li><a href="#springws-overview-anchor">Overview</a></li>
+                        <li><a href="#springws-using-anchor">Using</a></li>
+                        <li><a href="#springws-typical-flow-anchor">Typical flow</a></li>
+                        <li><a href="#springws-developing-client-anchor">Developing client in detail</a></li>
+                        <li><a href="#springws-known-issues-anchor">Known issues</a></li>
+                    </ul>
+                </li>
+                <li>
+                    wsimport
+                    <ul>
+                        <li><a href="#axis2-overview-anchor">Overview</a></li>
+                        <li><a href="#axis2-using-anchor">Using</a></li>
+                        <li><a href="#axis2-typical-flow-anchor">Typical flow</a></li>
+                        <li><a href="#axis2-developing-client-anchor">Developing client in detail</a></li>
+                        <li><a href="#axis2-known-issues-anchor">Known issues</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            Java data binding frameworks
+            <ul>
+                <li>ADB</li>
+                <li>XMLBeans</li>
+                <li>JAXB</li>
+            </ul>
+        </li>
+    </ul>
+
+
+    <!-- Overview & intro -->
+
+    <a name="overview-anchor"></a>
+    <span class="header">Overview</span>
+    <p>
+
+    </p>
+
+    <!-- Document content -->
+
+    <!-- Apache Axis2 framework -->
+
+    <a name="axis2-framework-anchor"></a>
+    <span class="subheader"> Apache Axis2 </span><br/><br/> <!-- Framework name -->
+    <div class="intend-level-1">
+
+        <!-- Overview -->
+        <a name="axis2-overview-anchor"></a>
+        <span class="bold"> Overview </span><br/>
+        <p>
+
+            Apache Axis2 is a Java framework for working with WebServices, SOAP and WSDL. It provides means to create, send, receive and handle
+            SOAP messages to and from web services. <br />
+            Axis2 Engine has two main functionalities:
+        </p>
+            <ul>
+                <li>Providing services as a web services server</li>
+                <li>Consuimng services from server as a web services client</li>
+            </ul>
+        <p>
+            The use of both is similar - one should provide Axis2 with web services description in form of WSDL files,
+            and it will produce corresponding java code. When generating clients, the framework will produce service stubs.
+            Generated stubs will contain two major components:
+        </p>
+            <ul>
+                <li>Static inner classes for each complex type defined in corresponding XSD file </li>
+                <li>Methods to invoke web services calls (one method per each binding defined in WSDL file) </li>
+            </ul>
+        <p>
+            When generating services stubs, Axis2 will take a WSDL file (with all related XSD files) and respond with appropriate
+            structure of directories and classes. The next step is to fill generated classes' methods with business-logic code to provide
+            desired functionality for services. Among generated files there will be a Ant <span class="code" >build.xml</span> file. When invoked on that
+            file, Ant will compile all sources and pack them into a WAR archive, ready to deploy into a web server, such as Tomcat.
+        </p>
+
+        <!-- Using Framework -->
+        <a name="axis2-using-anchor"></a>
+        <span class="bold"> Using </span><br/>
+        <p>
+            Axis2 may be used either as stand-alone command line tool or as a Maven plugin. When using Axis2 from command line,
+            user must specify <span class="code">AXIS2_HOME</span> home variable, pointing to the location of Axis2 directory.
+            Appending <span class="code">$AXIS2_HOME/bin</span> (or <span class="code">%AXIS2_HOME%\bin</span> under Windows)
+            to <span class="code">PATH</span> system variable will allow to run Axis2-related scripts easily. <br /><br />
+            Using Axis2 as Maven dependency will be no surprise for Maven users. For information about versioning and
+            dependencies, see <a href="http://mvnrepository.com/artifact/org.apache.axis2">Maven repository site</a>.
+            To see a working example with full set of dependencies, check !!!sample project, provided by Sabre Web Services Team.
+        </p>
+
+        <!-- Typical flow in particular framework -->
+        <a name="axis2-typical-flow-anchor"></a>
+        <span class="bold"> Typical flow </span><br/>
+        <p>
+            Consuming web services with Axis2 contains of the following steps:
+        </p>
+            <!-- Typical flow list -->
+            <ol>
+                <li>Collecting all necessary files (WSDL, XML and XSD) for each service</li>
+                <li>Generating services stubs code, using one of the data binding frameworks (e.g. ADB, XMLBeans, JiBX)</li>
+                <li>Creating client, which will use services stubs</li>
+                <li>Providing handlers for messages (this is described below)</li>
+                <li>Invoking services via adequate methods calls</li>
+                <li>Receiving and handling the response</li>
+            </ol>
+
+        <!-- Details of client development -->
+        <a name="axis2-developing-client-anchor"></a>
+        <span class="bold"> Developing client in detail </span><br/>
+        <p>
+            Client generation is accomplished through invoking <span class="code">wsdl2java</span> tool. <br />
+        </p>
+            <span class="code">wsdl2java</span> may be accessed in various ways:
+            <ul>
+                <li>As stand-alone command line tool</li>
+                <li>As Ant task</li>
+                <li>As maven plugin</li>
+            </ul>
+        <p>
+            Usage of all of the above is similar. It requires specifying location of the WSDL and XML Schema files, output location for
+            the generated sources and package name for generated classes. Unless told differently, ADB generates one big stub class
+            per one web service definition (or, alternatively, one stub java class per one WSDL file). Parameters are passed as
+            command line options when running from command line. In case of invoking via Ant or Maven tool they are specified in adequate
+            XML file (build.xml or pom.xml). <br /><br />
+
+            Generating clients via command line tool is done by executing the following script: <br /><br/>
+
+            <span class="code">
+            $AXIS2_HOME/bin/wsdl2java.sh -uri &lt;path_to_.wsdl_file&gt; -p &lt;output_package_name&gt; -d &lt;data_binding_framework&gt; -o &lt;output_directory&gt; <br /><br />
+            </span>
+
+            As one could expect, executing the above generates client's side services stubs for services described in the WSDL file,
+            path to which is provided after <span class="code">-uri</span> option. Classes are generated into specified
+            output directory (<span class="code">-o</span> option) under specified package (<span class="code">-p</span>).
+            Proper data binding framework is used (<span class="code">-d</span>).
+            The command line tool is documented in detail <a href="http://axis.apache.org/axis2/java/core/docs/reference.html">HERE</a>.
+            <br /><br />
+
+            For the detailed parameters specification, see:
+        </p>
+            <ul>
+                <li> <a href="http://axis.apache.org/axis2/java/core/tools/CodegenToolReference.html">Codegen tool reference site</a> for command line and Ant </li>
+                <li> <a href="http://axis.apache.org/axis2/java/core/tools/maven-plugins/maven-wsdl2code-plugin.html"><span class="code">wsdl2code</span> tool documentation</a> for Maven plugin </li>
+            </ul>
+
+
+        <p>Handlers</p>
+
+        <p>
+            Handlers are classes that extend the <span class="code" >org.apache.axis2.handlers.AbstractHandler</span> class.
+            A handler must extends that abstract class and implement
+            <span class="code">public&nbsp;Handler.InvocationResponse&nbsp;invoke(MessageContext&nbsp;msgContext)&nbsp;throws&nbsp;AxisFault</span>
+            method. Per each message in specified scope, this method will be invoked with the corresponding <span class="code">MessageContext</span>
+            object as a parameter. <br />
+            Specifying a proper set of handlers is generally advised. The handlers will form the first line of error detection and
+            processing system. Error handlers should check if the response from the server contains any
+            <span class="code">&lt;Fault&gt;</span> or <span class="code">&lt;Error&gt;</span> elements and if so, they should prevent
+            it from being processed. Any additional message check can be performed. After ensuring the message is valid,
+            the normal content processing flow may be continued.
+            <br /><br />
+            There is a situation when specifying a handler is mandatory. It is when a message going in or out
+            contains a <span class="code">mustUnderstand="1"</span> attribute value. Each such message must be handled in the proper way,
+            or <span class="code">org.apache.axis2.AxisFault</span> will be thrown. To avoid this and ensure correct
+            <span class="code">mustUnderstand="1"</span> handling, the following step must be taken:
+        </p>
+
+        <ul>
+            <li>
+                The <span class="code">setProcessed()</span> method must be invoked on each of the <span class="code">SOAPHeaderBlock</span>
+                members of the <span class="code">SOAPHeader</span> element of the current context.
+            </li>
+        </ul>
+        <p>
+            The example flow may look something like this:
+        </p>
+        <p class="snippet">
+            SOAPHeader header = msgContext.getEnvelope().getHeader(); <br />
+            Iterator headerBlocksIterator = header.getHeadersToProcess(null); <br /><br />
+            while( headerBlocksIterator.hasNext() ) { <br />
+            &emsp;&emsp;SOAPHeaderBlock headerBlock = (SOAPHeaderBlock) headerBlocksIterator.next(); <br />
+            &emsp;&emsp;// process header block <br />
+            &emsp;&emsp;headerBlock.setProcessed();<br />
+            }<br />
+        </p>
+
+
+        <!-- TODO: decide which phrase to use for this section -->
+        <!-- Known issues -->
+        <a name="axis2-known-issues-anchor"></a>
+        <span class="bold"> Known issues </span><br/><br/>
+        <p class="intend-level-2">
+
+        </p>
+
+    </div>
+
+
+    <a name="cxf-framework-anchor"></a>
+    <span class="subheader">Apache CXF</span><br/><br/> <!-- Framework name -->
+    <div class="intend-level-1">
+
+        <!-- Overview -->
+        <a name="cxf-overview-anchor"></a>
+        <span class="bold"> Overview </span><br/>
+        <p>
+
+            Apache CXF is another framework designed strictly for the purpose of working with web services.
+            In general, it provides same functionality as Axis2, which means the ability to send, process and receive messages,
+            both to and from services. Similarly, CXF allows user to develop both client and server side application.
+            It uses contract-first approach, which means creation of service implementation code based on service definition
+            (in form ow WSDL files and schema definition). What it means for Sabre Web Services consumer, is that Java client
+            code can be generated easily based on WSDL and XSD files, available on
+            <a href="http://developer.sabre.com">Sabre Developer's Site</a>.
+            <br />
+            Client code will consist of classes similar to service stubs in Axis2, Services and PortTypes, allowing
+            user to invoke services calls, and accompanying binding classes representing types defined in schemas.
+            Developer's role is to construct an object representing request to be invoked, pass it to a method representing
+            service call, and then to process the response.
+
+        </p>
+
+        <!-- Using Framework -->
+        <a name="cxf-using-anchor"></a>
+        <span class="bold"> Using </span><br/><br/>
+        <p>
+            CXF's code generation feature may be used in one of three ways: <br />
+        </p>
+
+        <ul>
+            <li>As command line tool</li>
+            <li>As Maven goal</li>
+            <li>Via WSDL2Java API at runtime</li>
+        </ul>
+
+        <p>
+            The documentation for command line tool can be obtained on
+            <a href="http://cxf.apache.org/docs/wsdl-to-java.html"><span class="code">wsdl2java</span> tool reference site</a>,
+            and maven plugin documentation is available in
+            <a href="http://cxf.apache.org/docs/using-cxf-with-maven.html#UsingCXFwithmaven-MavenPlugin">
+                maven plugin section of CXF docs
+            </a>
+            and <a href="http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html">CXF's codegen plugin site</a>.
+        </p>
+
+
+        <!-- Typical flow in particular framework -->
+        <a name="cxf-typical-flow-anchor"></a>
+        <span class="bold"> Typical flow </span><br/>
+        <p>
+            Using CXF to consume web services is generally no different than using Axis2:
+        </p>
+
+            <!-- Typical flow list -->
+            <ol>
+                <li>Collecting all necessary files (WSDL, XML and XSD) for each service</li>
+                <li>Generating services stubs code, using one of the data binding frameworks (e.g. XMLBeans, JAXB)</li>
+                <li>Creating client, which will use generated code</li>
+                <li>Providing interceptors for messages</li>
+                <li>Invoking services via adequate methods calls</li>
+                <li>Receiving and handling the response</li>
+            </ol>
+
+
+
+        <!-- Details of client development -->
+        <a name="cxf-developing-client-anchor"></a>
+        <span class="bold"> Developing client in detail </span><br/>
+        <p>
+            Client development starts with collecting services definitions and schema definitions (WSDL and XSD) files.
+            They are available for Sabre clients on web. Note, that code generation tool expect all the necessary schemas
+            to be present in the same directory as WSDL file. So be sure to place there not only the service specific files,
+            but also those available as "Common Schemas" asset (they are needed to create SOAP envelope and message correctly).
+            <br /><br />
+            When required files are gathered, <span class="code">wsdl2java</span> tool can be used to generate client code.
+            Check documentation mentioned before for details on how to use this tool.
+            <br /><br />
+            On this stage, developer must decide which data binding framework to use for client code generation. The recommended
+            one is JAXB, as it is quite easy to use and elastic, yet powerful. The ADB and XMLBeans frameworks have disadvantages
+            described in previous sections. However, the proper use of JAXB data binding requires taking additional steps
+            (creating custom binding files), as described in next section. However, this is not difficult thing to do.
+            <br /><br />
+            The next step is to create a client, which will utilize generated classes to access web services.
+            This process requires a bit of knowledge how the CXF framework works. This will be covered here briefly. To see
+            a full working example, please refer to the !!!sample project, provided by Sabre Web Services Team (toolkit-cxf-jaxb module).
+            <br /><br />
+            CXF generates two main classes for each service defined in WSDL file:
+            <span class="code">&lt;ServiceName&gt;Service extends javax.xml.ws.Service</span> and
+            <span class="code">&lt;ServiceName&gt;PortType</span>.
+            <br /><br />
+            The first one provides two useful components:
+        </p>
+        <ul>
+            <li>Default constructor - creates service class, based on information contained in WSDL file at the time
+                of generating this class (assumes, that WSDL file is still available in the same location)</li>
+            <li><span class="code">get_PortName_()</span> method - returns a class associated with specific
+                port defined in service. This class maps each operation defined in the WSDL file to a corresponding method,
+                whose invokation is equivalent to a web service call.</li>
+        </ul>
+
+        <p>
+            So, based on !!!sample project, the invokation of Sabre's OTA_AirAvailLLSRQ would look something like this:
+            <br /><br />
+            <span class="code">
+            &emsp;&emsp;OTAAirAvailService service = new OTAAirAvailService(); <br />
+            &emsp;&emsp;OTAAirAvailPortType port = service.getOTAAirAvailPortType(); <br />
+            &emsp;&emsp;OTAAirAvailRS serviceResponse = port.otaAirAvail(...); // set correct arguments <br />
+            </span>
+            <br />
+
+            After implementing logic to create requests and handle respones, one must define interceptors for services. Interceptors
+            are necessary to get access to full SOAP envelope. Invoking methods on port class allows only to see response body,
+            which is not enough information to successfully consume Sabre Web Services. Typically, one has to access the
+            data in SOAP header, like <span class="code">&lt;eb:MessageHeader&gt;</span>
+            (<span class="code">eb:Action</span> element, to check if the message contains correct or error response)
+            and <span class="code">&lt;wsse:Security&gt;</span> (to obtain binary security token during session creation).
+            Interceptors allow exactly to do that.
+            <br/>
+            In the !!!sample project, interceptor classes are derived from
+            <span class="code">org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor</span> class, which
+            provides means of accessing full SOAP message via <span class="code">handleMessage(SoapMessage message)</span> method.
+            It is possible to get full information from SOAP message as stream, however, this will leave the message empty.
+            To avoid error on further processing, data must be copied and placed back into the message
+            (see <span class="code">LLSErrorInterceptor</span> class from
+            <span class="code">com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors</span> package in
+            <span class="code">toolkit-cxf-jaxb</span> module in !!!sample project).
+            Interceptor must be placed in a correct phase, so that the expected data is present in the message as it is being processed.
+            For the detailed information about phases and interceptor chains, please refer to the
+            <a href="http://cxf.apache.org/docs/interceptors.html"> CXF's documentation</a>.
+            <br /><br />
+            Note one important thing - by default, port class will use the endpoint URL specified in WSDL file, from which
+            it was created. However, this could be highly undesirable, especially during the development and testing phase,
+            as this would be <span class="code">https://webservices.sabre.com/websvc</span> - it's a production endpoint and
+            performing any operations on it may generate charges on customer's account and decrement real-time inventory.
+            During development, one would probably use Sabre test system or even mocked service. To change endpoint URL
+            used by your service's client, please do as following (or see one of classes in
+            <span class="code">com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers</span> package in !!!sample project):
+            <br /><br />
+
+            <span class="code">
+            &emsp;&emsp;String endpointURL = "http://some.test.url/svc"; <br />
+            &emsp;&emsp;OTAAirAvailService service = new OTAAirAvailService(); <br />
+            &emsp;&emsp;OTAAirAvailPortType port = service.getOTAAirAvailPortType(); <br />
+            &emsp;&emsp;BindingProvider bindingProvider = (BindingProvider) port;<br />
+            &emsp;&emsp;bindingProvider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);<br />
+            </span>
+
+            <br /><br />
+            After all these steps are taken, one has to create a valid request object and pass it to port's method corresponding
+            to the desired service, along with proper header holders (as in the !!!sample project).
+            The method will return response object, which may be further processed to extract required information from it.
+        </p>
+
+        <!-- TODO: decide which phrase to use for this section -->
+        <!-- Known issues -->
+        <a name="cxf-known-issues-anchor"></a>
+        <span class="bold"> Known issues </span><br/>
+        <p>
+
+        </p>
+    </div>
+
+
+    <a name="springws-framework-anchor"></a>
+    <span class="subheader">Spring Web Services</span><br/><br/> <!-- Framework name -->
+    <div class="intend-level-1">
+
+        <!-- Overview -->
+        <a name="springws-overview-anchor"></a>
+        <span class="bold"> Overview </span><br/>
+        <p>
+            Spring Web Services (Spring WS) is part of the Spring Framework responsible for working with web services.
+            It benefits from that fact in many ways, simplifying and automating many things. However, Spring WS has a bit
+            different approach to building web services than previously described frameworks - it works on lower level,
+            exposing to user things, that they do behind the scenes. It gives more control over the process to the developer,
+            but requires more effort.
+            <br /><br />
+            Spring WS also uses <span class="italic">contract-first </span> approach, so user is encouraged to develop client code
+            based on existing service definition. Main difference is, that Spring WS handles marshalling and sending of a single object
+            well, but requires more effort to compose the message consisting of multiple elements. This will be covered in following
+            section, and the full working implementation may be seen in !!!sample project, at <span class="code">toolkit-spring-ws</span>
+            module.
+        </p>
+
+        <!-- Using Framework -->
+        <a name="springws-using-anchor"></a>
+        <span class="bold"> Using </span><br/>
+        <p>
+            Spring Web Services does not provide it's own code generation tool, so using it is just a matter of
+            placing Spring WS jars in your classpath. This is easiest done via dependency management system, like Maven or Gradle.
+            This also means, that user has to take care of compiling schemas to java classes him or herself. Since it is assumed
+            that system like Maven is being used, the easiest way is to utilize one of binding plugins. Two examples of JAXB Maven
+            plugins are listed in previous section.
+        </p>
+
+        <!-- Typical flow in particular framework -->
+        <a name="springws-typical-flow-anchor"></a>
+        <span class="bold"> Typical flow </span><br/>
+        <ol>
+            <li>Collecting all necessary schema definition files (WSDL files are not required)</li>
+            <li>Compiling schemas into Java code using external data binding, like JAXB (e.g. in form of a plugin)</li>
+            <li>Creating client, which will use generated code</li>
+            <li>Configuring Spring to take advantage of it's IoC capabilities</li>
+            <li>Providing interceptors and callbacks for messages</li>
+            <li>Invoking services via adequate methods calls</li>
+            <li>Receiving and handling the response</li>
+        </ol>
+
+        <!-- Details of client development -->
+        <a name="springws-developing-client-anchor"></a>
+        <span class="bold"> Developing client in detail </span><br/>
+        <p>
+            When using Spring WS, only schema definitions are required, for developer takes care of creating the message.
+            In fact, the minimal set of required schemas consists of request and response definitions for each service
+            and schemas of security and message headers to build the envelope.
+            <br />
+            These files should be then compiled to Java classes. However, there is one thing that will cause troubles in
+            developing Sabre Web Services client.
+        </p>
+
+        <!-- TODO: decide which phrase to use for this section -->
+        <!-- Known issues -->
+        <a name="springws-known-issues-anchor"></a>
+        <span class="bold"> Known issues </span><br/>
+        <p>
+
+        </p>
+
+    </div>
+
+
+</body>

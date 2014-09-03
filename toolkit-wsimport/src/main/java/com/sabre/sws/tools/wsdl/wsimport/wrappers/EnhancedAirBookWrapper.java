@@ -1,47 +1,73 @@
-package com.sabre.sws.tools.wsdl.springws.wrappers;
+package com.sabre.sws.tools.wsdl.wsimport.wrappers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
-import com.sabre.sws.tools.wsdl.springws.callbacks.HeaderComposingCallback;
-import com.sabre.sws.tools.wsdl.springws.enhancedairbook.EnhancedAirBookRQ;
-import com.sabre.sws.tools.wsdl.springws.enhancedairbook.EnhancedAirBookRS;
-import com.sabre.sws.tools.wsdl.springws.interceptors.FaultInterceptor;
-import com.sabre.sws.tools.wsdl.springws.interceptors.LoggingInterceptor;
-import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
-import org.springframework.ws.client.support.interceptor.ClientInterceptor;
+import com.sabre.sws.tools.wsdl.commons.utils.Util;
+import com.sabre.sws.tools.wsdl.wsimport.handlers.LoggingHandler;
+import com.sabre.sws.tools.wsdl.wsimport.utils.MessageHeaderFactory;
+import com.sabre.sws.tools.wsdl.wsimport.utils.SecurityFactory;
+import com.sabre.webservices.sabrexml._2011._10.EnhancedAirBookRQ;
+import com.sabre.webservices.sabrexml._2011._10.EnhancedAirBookRS;
+import https.webservices_sabre_com.websvc.EnhancedAirBookPortType;
+import https.webservices_sabre_com.websvc.EnhancedAirBookService;
+import org.ebxml.namespaces.messageheader.MessageHeader;
+import org.xmlsoap.schemas.ws._2002._12.secext.Security;
 
+import javax.xml.ws.BindingProvider;
+import javax.xml.ws.Holder;
+import javax.xml.ws.handler.Handler;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by SG0221139 on 8/19/2014.
+ * Created by SG0221139 on 9/2/2014.
  */
-public class EnhancedAirBookWrapper extends WebServiceGatewaySupport {
-
-    private static final String serviceAction = "EnhancedAirBookRQ";
-    private static final String serviceVersion = ServicesVersionsProvider.getEnhancedAirBookVersion();
-
-    private List<ClientInterceptor> interceptors = new ArrayList<>();
-
-    public EnhancedAirBookWrapper() {
-        super();
-        addInterceptors();
-    }
-
-    private void addInterceptors() {
-        interceptors.add( new LoggingInterceptor() );
-        interceptors.add( new FaultInterceptor() );
-
-        this.setInterceptors( interceptors.toArray( new ClientInterceptor[0] ) );
-    }
+public class EnhancedAirBookWrapper {
+    private static final String actionString = "EnhancedAirBookRQ";
 
     public EnhancedAirBookRS executeSampleRequest() {
 
-        return (EnhancedAirBookRS) getWebServiceTemplate().marshalSendAndReceive(
-                getRequestBody(),
-                new HeaderComposingCallback(serviceAction)
-        );
+        Security security = SecurityFactory.getTokenSecurity();
+        MessageHeader header = MessageHeaderFactory.getMessageHeader(actionString);
+        EnhancedAirBookRQ requestBody = getRequestBody();
 
+        EnhancedAirBookPortType port = getConfiguredPort();
+
+        EnhancedAirBookRS responseBody = port.enhancedAirBookRQ( new Holder<>(header), new Holder<>(security), requestBody );
+
+        return responseBody;
+    }
+
+    private EnhancedAirBookPortType getConfiguredPort() {
+
+        EnhancedAirBookService service = new EnhancedAirBookService();
+        EnhancedAirBookPortType port = service.getEnhancedAirBookPortType();
+
+        setEndpointFromConfiguration( port );
+        addInterceptors( port );
+
+        return port;
+    }
+
+    private void setEndpointFromConfiguration( EnhancedAirBookPortType port ) {
+
+        String endpointURL = Util.getConfigurationProvider().getEndpoint();
+
+        BindingProvider bindingProvider = (BindingProvider) port;
+        bindingProvider.getRequestContext().put( BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL );
+    }
+
+    private void addInterceptors( EnhancedAirBookPortType port ) {
+
+        List<Handler> handlers = ((BindingProvider)port).getBinding().getHandlerChain();
+
+        if( handlers == null ) {
+            handlers = new ArrayList<>();
+        }
+
+        handlers.add( new LoggingHandler() );
+
+        ((BindingProvider)port).getBinding().setHandlerChain( handlers );
     }
 
     private EnhancedAirBookRQ getRequestBody() {
@@ -134,5 +160,4 @@ public class EnhancedAirBookWrapper extends WebServiceGatewaySupport {
 
         return postProcessing;
     }
-
 }

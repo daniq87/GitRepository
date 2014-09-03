@@ -5,7 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -20,14 +19,12 @@ public class Util {
 
     private static final String serviceTypeString = "sabreXML";
 
-    private static final String configFileLocation = Util.class.getResource( "/connection.properties" ).getPath();
+    private static final String configurationFileName = "/connection.properties";
     private static final IConfigurationProvider configuration;
 
     static {
         try {
-            File configFile;
-            configFile = new File( configFileLocation );
-            configuration = new PropertiesFileConfigurationSource( configFile );
+            configuration = new PropertiesFileConfigurationSource( Util.class.getResourceAsStream( configurationFileName ) );
             LOGGER.info( "Configuration loaded" );
         } catch( IOException e ) {
             LOGGER.fatal( "Error reading configuration from a file", e);
