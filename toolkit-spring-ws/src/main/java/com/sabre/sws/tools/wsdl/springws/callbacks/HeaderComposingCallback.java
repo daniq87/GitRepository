@@ -1,22 +1,16 @@
 package com.sabre.sws.tools.wsdl.springws.callbacks;
 
-import com.sabre.sws.tools.wsdl.commons.utils.XMLPrettifier;
 import com.sabre.sws.tools.wsdl.springws.soap.MessageHeader;
 import com.sabre.sws.tools.wsdl.springws.soap.Security;
 import com.sabre.sws.tools.wsdl.springws.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.springws.utils.SecurityFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.soap.SoapHeader;
 import org.springframework.ws.soap.SoapMessage;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.transform.TransformerException;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
@@ -24,13 +18,23 @@ import java.io.IOException;
  */
 public class HeaderComposingCallback implements WebServiceMessageCallback {
 
-    private static final Logger LOGGER = LogManager.getLogger( HeaderComposingCallback.class );
-
     private final String actionString;
     private final boolean creatingSession;
 
+    private final static String messageHeaderPackage = MessageHeader.class.getPackage().getName();
+    private final static String securityPackage = Security.class.getPackage().getName();
+
     private final MessageHeader header;
     private final Security security;
+
+    private static final Jaxb2Marshaller marshaller;
+
+    static {
+        marshaller = new Jaxb2Marshaller();
+        StringBuffer buffer = new StringBuffer().append( messageHeaderPackage ).append( ":" ).append( securityPackage );
+        String contextPath = buffer.toString();
+        marshaller.setContextPath( contextPath );
+    }
 
     public HeaderComposingCallback(String actionString) {
         this.actionString = actionString;
@@ -49,33 +53,12 @@ public class HeaderComposingCallback implements WebServiceMessageCallback {
 
         SoapHeader soapHeader = ((SoapMessage)webServiceMessage).getSoapHeader();
 
-        try {
-
-            JAXBContext context = JAXBContext.newInstance( MessageHeader.class, Security.class );
-
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.marshal( header, soapHeader.getResult() );
-            marshaller.marshal( security, soapHeader.getResult() );
-
-//            logMessage( webServiceMessage );
-
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void logMessage(WebServiceMessage webServiceMessage) {
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        try {
-            webServiceMessage.writeTo( outputStream );
-            String log = XMLPrettifier.pretify( outputStream.toString( "UTF-8" ) );
-            LOGGER.debug("\n\n" + log + "\n" );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        JAXBContext context = JAXBContext.newInstance( MessageHeader.class, Security.class ); // TODO
+//        Marshaller marshaller = context.createMarshaller();
+        marshaller.marshal( header, soapHeader.getResult() );
+        marshaller.marshal( security, soapHeader.getResult() );
 
     }
+
 
 }

@@ -36,9 +36,9 @@ public class SwsClient {
 
         AirAvailWrapper airAvailWrapper = new AirAvailWrapper();
 
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.BETWEEN_TWO_POINTS_WITH_DEPARTURE_DATE );
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.BETWEEN_TWO_POINTS_WITH_DEPARTURE_HOUR );
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.BETWEEN_TWO_POINTS_WITH_VENDOR_PREFS );
+        airAvailWrapper.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_DATE);
+        airAvailWrapper.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_HOUR);
+        airAvailWrapper.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_VENDOR_PREFS);
         airAvailWrapper.executeSampleRequest( AirAvailRequests.MULTILEG_FLIGHT_SEGMENT_WITH_VENDOR_PREFS );
 
     }

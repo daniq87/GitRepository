@@ -106,6 +106,10 @@
                                 <include>**/wsdls/SessionCreateRQ/*RQRS.xsd</include>
                                 <include>**/wsdls/SessionCloseRQ/*RQRS.xsd</include>
                             </schemaIncludes>
+                            <schemaExcludes>
+                                <exclude>**/common_schemas/wsse.xsd</exclude>
+                                <exclude>**/common_schemas/msg-header-2_0.xsd</exclude>
+                            </schemaExcludes>
                         </configuration>
                     </execution>
                     <execution>

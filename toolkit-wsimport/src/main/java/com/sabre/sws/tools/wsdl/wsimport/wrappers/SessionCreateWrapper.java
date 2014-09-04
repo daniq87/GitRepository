@@ -60,7 +60,7 @@ public class SessionCreateWrapper {
         );
 
         LOGGER.info( "Session was successfully opened" );
-        LOGGER.info("Token from returned header: " + securityHolder.value.getBinarySecurityToken());
+        LOGGER.info( "Token from returned header: " + securityHolder.value.getBinarySecurityToken());
         LOGGER.info( "Token from session manager: " + SessionManager.getInstance().getToken() );
         return sessionCreateRS;
     }

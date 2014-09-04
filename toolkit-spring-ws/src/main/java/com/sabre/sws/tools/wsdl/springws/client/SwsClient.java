@@ -66,9 +66,9 @@ public class SwsClient {
     private static void executeAirAvailRequests() {
         AirAvailWrapper airAvailWrapper = context.getBean( AirAvailWrapper.class );
 
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.BETWEEN_TWO_POINTS_WITH_VENDOR_PREFS );
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.BETWEEN_TWO_POINTS_WITH_DEPARTURE_HOUR );
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.BETWEEN_TWO_POINTS_WITH_DEPARTURE_DATE );
+        airAvailWrapper.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_VENDOR_PREFS);
+        airAvailWrapper.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_HOUR);
+        airAvailWrapper.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_DATE);
         airAvailWrapper.executeSampleRequest( AirAvailRequests.MULTILEG_FLIGHT_SEGMENT_WITH_VENDOR_PREFS );
     }
 

@@ -62,8 +62,8 @@ public class SessionCloseInterceptor implements ClientInterceptor {
             token = security.getBinarySecurityToken();
             conversationId = header.getConversationId();
 
-        } catch (JAXBException e) {
-            e.printStackTrace();
+        } catch (JAXBException | NullPointerException e) {
+            LOGGER.fatal( "Error occurred during retrieving session token", e );
         }
 
         if( token == null | conversationId == null ) {

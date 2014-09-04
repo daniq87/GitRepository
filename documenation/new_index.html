@@ -10,68 +10,45 @@
 
 <body>
 
-<!-- Section template  -->
-
-<!--
-
-    <a name=""></a>
-    <span class="subheader"></span><br/><br/> &lt;!&ndash; Framework name &ndash;&gt;
-    <div class="intend-level-1">
-
-        &lt;!&ndash; Overview &ndash;&gt;
-        <a name="-overview-anchor"></a>
-        <span class="bold"> Overview </span><br/>
-        <p class="intend-level-2">
-
-        </p>
-
-        &lt;!&ndash; Using Framework &ndash;&gt;
-        <a name="-using-anchor"></a>
-        <span class="bold"> Using </span><br/>
-        <p>
-
-        </p>
-
-        &lt;!&ndash; Typical flow in particular framework &ndash;&gt;
-        <a name="-typical-flow-anchor"></a>
-        <span class="bold"> Typical flow </span><br/>
-        <p>
-
-            &lt;!&ndash; Typical flow list &ndash;&gt;
-            <ol>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ol>
-
-        </p>
-
-        &lt;!&ndash; Details of client development &ndash;&gt;
-        <a name="-developing-client-anchor"></a>
-        <span class="bold"> Developing client in detail </span><br/>
-        <p>
-
-        </p>
-
-        &lt;!&ndash; TODO: decide which phrase to use for this section &ndash;&gt;
-        &lt;!&ndash; Known issues &ndash;&gt;
-        <a name="-known-issues-anchor"></a>
-        <span class="bold"> Known issues </span><br/>
-        <p>
-
-        </p>
-
-    </div>
-
--->
-
     <!-- Index of content -->
 
     <span class="header"> Index of content </span>
     <ul>
         <li><a href="#overview-anchor">Overview</a></li>
         <li>
-            Java web services frameworks
+            <span class="bold"><a href="#db-frameworks-anchor">Java data binding frameworks</a></span>
+            <ul>
+                <li><a href="#adb-anchor">Apache ADB</a>
+                    <ul>
+                        <li><a href="#adb-overview-anchor">Overview</a></li>
+                        <li><a href="#adb-using-anchor">Usage</a></li>
+                        <li><a href="#adb-execution-requirements-anchor">Execution requirements</a></li>
+                        <li><a href="#adb-generated-code-anchor">Generated code</a></li>
+                        <li><a href="#adb-known-issues-anchor">Known issues</a></li>
+                    </ul>
+                </li>
+                <li><a href="#xmlbeans-anchor">Apache XMLBeans</a>
+                    <ul>
+                        <li><a href="#xmlbeans-overview-anchor">Overview</a></li>
+                        <li><a href="#xmlbeans-using-anchor">Usage</a></li>
+                        <li><a href="#xmlbeans-execution-requirements-anchor">Execution requirements</a></li>
+                        <li><a href="#xmlbeans-generated-code-anchor">Generated code</a></li>
+                        <li><a href="#xmlbeans-known-issues-anchor">Known issues</a></li>
+                    </ul>
+                </li>
+                <li><a href="#jaxb-anchor">JAXB</a>
+                    <ul>
+                        <li><a href="#jaxb-overview-anchor">Overview</a></li>
+                        <li><a href="#jaxb-using-anchor">Usage</a></li>
+                        <li><a href="#jaxb-execution-requirements-anchor">Execution requirements</a></li>
+                        <li><a href="#jaxb-generated-code-anchor">Generated code</a></li>
+                        <li><a href="#jaxb-known-issues-anchor">Known issues</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span class="bold"><a href="#ws-frameworks-anchor">Java web services frameworks</a></span>
             <ul>
                 <li>
                     Apache Axis2
@@ -106,11 +83,11 @@
                 <li>
                     wsimport
                     <ul>
-                        <li><a href="#axis2-overview-anchor">Overview</a></li>
-                        <li><a href="#axis2-using-anchor">Using</a></li>
-                        <li><a href="#axis2-typical-flow-anchor">Typical flow</a></li>
-                        <li><a href="#axis2-developing-client-anchor">Developing client in detail</a></li>
-                        <li><a href="#axis2-known-issues-anchor">Known issues</a></li>
+                        <li><a href="#wsimport-overview-anchor">Overview</a></li>
+                        <li><a href="#wsimport-using-anchor">Using</a></li>
+                        <li><a href="#wsimport-typical-flow-anchor">Typical flow</a></li>
+                        <li><a href="#wsimport-developing-client-anchor">Developing client in detail</a></li>
+                        <li><a href="#wsimport-known-issues-anchor">Known issues</a></li>
                     </ul>
                 </li>
             </ul>
@@ -134,7 +111,303 @@
 
     </p>
 
-    <!-- Document content -->
+<!-- Document content -->
+
+    <!-- Data binding frameworks -->
+
+    <a name="db-frameworks-anchor"></a>
+    <span class="header">Data binding frameworks</span><br /><br />
+
+    <!-- ADB -->
+
+    <a name="adb-anchor"></a> <!-- Framework name -->
+    <span class="subheader"> Apache ADB </span>
+    <div class="intend-level-1">
+
+        <!-- Overview -->
+        <a name="adb-overview-anchor"></a><br />
+        <span class="bold"> Overview </span><br/>
+        <p>
+            ADB data binding framework is intended to be rather simple and lightweight. It provides means to compile XML schemas and WSDL files into java classes.
+            Use of this tool is pretty straightforward, but working with generated files may be cumbersome.
+        </p>
+
+        <!-- Using -->
+        <a name="adb-using-anchor"></a>
+        <span class="bold"> Using </span><br/>
+        <p>
+            ADB data binding is generally available through the <span class="code">WSDL2Java</span> tool, by specifying proper databinding option, as described
+            in Axis2 section <!-- TODO: add link -->.
+        </p>
+
+        <!-- Execution requirements -->
+        <a name="adb-execution-requirements-anchor"></a>
+        <span class="bold"> Execution requirements </span><br/>
+        <p>
+            As Sabre Web Services definitions (provided in the form of WSDL files) use corresponding types of data structures, proper XML Schema files must be provided in same location as the WSDL file.
+            It includes common schemas for SOAP communication protocol (available as Common Schemas asset at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> ) and request/response object pairs definition
+            (available also at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> as asset for each service or at
+            <a href="http://developer.sabre.com">http://developer.sabre.com</a>).
+        </p>
+
+        <!-- Generated Code -->
+        <a name="adb-generated-code-anchor"></a>
+        <span class="bold"> Generated Code </span><br/>
+        <p>
+            If all of the required files are available for code generation tool, after invocation it will by default generate one
+            stub java class per service.
+            The file will be placed in proper folder structure, according to specified output package and directory.
+            The file will be named <span class="code"> &lt;serviceName&gt;ServiceStub.java </span>
+            The stub will contain static inner classes for each complex type. Any element or attribute encapsulated by this complex type
+            will become a field in that class. Simple types restrictions are handled by replacing the relevant type with the basetype.
+            Generated classes follow the bean convention, with <span class="code">setAttribute</span> and
+            <span class="code">getAttribute</span> methods for object fields and
+            <span class="code">addElement(Element e)</span> or <span class="code">setElements(Element [] e)</span> for arrays.
+
+        </p>
+
+        <!-- Known Issues -->
+        <a name="adb-known-issues-anchor"></a>
+        <span class="bold"> Known issues </span><br/>
+        <p>
+            Beacuse all used structures are compiled into a stub class as static innter classes, the generated
+            files may be quite large (up to hundreds of thousands of lines, depending on service definition
+            complexity ) and therefore problematic to work with, for example some IDE settings changes may be necessary. <br />
+            What is more, ADB does not handle optional attributes in schema definitions well. In generated SOAP messages optional
+            attributes are always present, with values set to their defaults, which may not be desired behavior. In particular cases
+            optional attributes may be mutually exclusive and sending request containing them to server may cause the server
+            to respond with Fault message. <br />
+            Therefore it might not be possible to use automatically generated code without modificating it manually. <br /><br />
+            Nevertheless, using ADB causes significant code redundancy in project. The reason is the fact that all binding inner
+            classes are generated per service. So there is one inner class for eb:MessageHeader xml object and one for wsse:Security
+            in each service, even though the structure of these classes is identical, as they reflect the same source xml structure.
+            For each service request an object of those classes must be assembled. So either a separate header-creating method must
+            be implemented for each service stub causing code repetition, or a header factory method using reflection
+            and generic return type may be introduced, which would be difficult and error-prone. <br/><br />
+            Because of the facts mentioned above, <span class="warning">ADB is not a recommended databinding framework
+            for working with Sabre Web Services.</span>
+        </p>
+
+    </div>
+
+    <!-- XMLBeans -->
+
+    <a name="xmlbeans-anchor"></a> <!-- Framework name -->
+    <span class="subheader">XMLBeans</span><br /><br/>
+    <div class="intend-level-1">
+
+        <!-- Overview -->
+        <a name="xmlbeans-overview-anchor"></a>
+        <span class="bold"> Overview </span><br/>
+        <p>
+            XMLBeans is another data binding framework for Java. It also is available via <span class="code">wsdl2code</span> maven plugin.
+            In this case, classes are not generated per service, but rather per namespace. It eliminates the code duplication problem,
+            causing code to be clearer and easier to use. <br />
+            However, XMLBeans framework has another significant problem, which may cause it impossible to use with some of the
+            Sabre Web Services (described in separate section). One should keep that in mind when deciding to use XMLBeans,
+            because at some point being unable to consume specific Sabre Web Service may block development of whole application.
+        </p>
+
+        <!-- Using -->
+        <a name="xmlbeans-using-anchor"></a>
+        <span class="bold"> Using </span><br/>
+        <p>
+            Just like ADB, XMLBeans data binding is available in Axis2 via <span class="code">WSDL2Java</span> command line tool
+            or <span class="code">wsdl2code</span> Maven plugin. They both provide same functionality and require similar
+            configuration.
+        </p>
+
+        <!-- Execution requirements -->
+        <a name="xmlbeans-execution-requirements-anchor"></a>
+        <span class="bold"> Execution requirements </span><br/>
+        <p>
+            As XMLBeans framework is invoked as part of Axis2 client generation, for data binding purposes, the flow is similar to
+            the one described in ADB section. The main (and in most cases, the only) change would be to change the data binding option
+            (the <span class="code">-d xmlbeans</span> command line option or
+            <span class="code">&lt;databindingName&gt;xmlbeans&lt;/databindingName&gt;</span> in Maven configuration).
+            Any additional files referenced from WSDL file must reside with it in it's directory.
+        </p>
+
+        <!-- Generated Code -->
+        <a name="xmlbeans-generated-code-anchor"></a>
+        <span class="bold"> Generated code </span><br/>
+        <p>
+            XMLBeans will generate one stub class per service (one stub class per one WSDL file). That stub will encapsulate
+            methods for invoking service calls defined in WSDL file. Unlike ADB, XMLBeans will generate classes per
+            XML structure namespace, which means one class for <span class="code">eb:MessageHeader</span> and
+            one class for <span class="code">wsse:Security</span>. Creating these objects can be done globally and the
+            proper factory method may be reused in every service. <br /><br />
+
+            The structure of generated classes will mirror the structure of XSD schema definition. Each nested type
+            in schema will cause the creation of corresponding nested Java Interface. That will cause problem described in the next section.
+            <br /><br />
+
+            Generated interfaces will be placed in a package whose name will reflect the target namespace of schema definition.
+            The general rules for converting namespace to package name can be obtained from
+            <a href="http://xmlbeans.apache.org/docs/2.0.0/guide/conJavaTypesGeneratedFromUserDerived.html">XMLBeans documentation</a>.<br /><br />
+
+            XMLBeans maps schema types into JavaBeans-style classes. This means the presence of typical setter/getter methods, such as
+            <span class="code">void setElement(ElementType element)</span> and <span class="code">ElementType getElement()</span>.
+            One useful thing is also a <span class="code">ElementType addNewElement()</span> method, that creates new element, places
+            it in the object in which it was invoked and returns it allowing further modification and processing. <br /> <br />
+
+            One can learn about using XMLBeans at <a href="http://xmlbeans.apache.org/documentation/index.html">XMLBeans Project's website</a>
+        </p>
+
+        <!-- Known Issues -->
+        <a name="xmlbeans-known-issues-anchor"></a>
+        <span class="bold"> Known issues </span><br/>
+        <p>
+            Although using XMLBeans data binding results in more clear and easy-to-use code, it has a serious issue,
+            which cause it almost impossible to use with some of the Sabre Web Services. <br /> <br />
+
+            To reflect the structure of XML Schema Definition, XMLBeans creates a series of nested interfaces.
+            Each nested type will have a corresponding nested interface. The problem is, that at compile time the Java compiler
+            creates separate <span class="code">.class</span> file for each class or interface. Nested classes will be compiled
+            to a file whose name will be composed of the name of the outer class, concatenated with the name of the inner class
+            with the dollar symbol ('$'). Classes nested in inner classes will be compiled to a file whose name will be composed of the
+            names of all classes which are higher in the hierarchy, like
+            <span class="code">OuterClass$InnerClass1$InnerClass2$...$InnerClass10$InnerClass11.class</span>.
+            When generating classes from a complex schema with deeply nested types, generated class's name may exceed the 255
+            characters limit imposed by most of the modern filesystems, used in both Windows and Unix-like systems
+            (this limit is present in all of the following file systems: NTFS, FAT32, exFAT, ext3, ext4 and ZFS). This will
+            make such nested class/interface impossible to compile, as the Java compiler will not be able to save compiled
+            file on disk. There is no possibility to use any custom binding or change XMLBeans behavior in way that would
+            allow generating Java stubs from deeply nested schemas. Therefore it is not possible to use XMLBeans with some of
+            the Sabre Web Services, that contain deeply nested schemas (e.g. EnhancedAirBook, PassengerDetailsRQ, TravelItineraryLLSRQ),
+            when using any common file system. On the other hand, changing operating system or switching to niche filesystem
+            just to use one particular XML binding framework (while there are many others) seems to be an exaggeration. <br /><br />
+
+            For the record, it should be mentioned that there is actually a way to use XMLBeans on any common filesystem
+            and avoid long file names issue. However, it is a workaround that requires developing specialized tools,
+            like custom compilers or Maven plugins, that should be next incorporated into application build process.
+            The trick is, that JVM itself does not preserve the 255 characters identifier length limit (it uses
+            it's own 65535 characters limit), so the only problem is a intermediate step of storing .class file on disk
+            between compiling and loading class by a classloader. Therefore, avoiding this step, would solve the problem.
+            There are at least two possible ways to do that. They both make use of the <span class="code">javax.tools</span>
+            package. The first way is to create a custom dynamic in-memory java compiler, that would load a source code file
+            from the disk, compile it in-memory and then provide means of instantiating object of compiled class via
+            customized in-memory classloader. Another way is to compile problematic source code in-memory and redirect the output
+            to byte arrays, which then would be used to create a JAR containing created classes. That way the storing phase would
+            be omitted, as the only file written to filesystem would be the JAR, which holds no name limitations. <br />
+            Although those ways seem to solve the problem (they were not tested), once again, creaing custom compilers
+            and classloaders does not seem to be an adequate way of solving a problem caused by wrong choice of
+            data binding framework for web services application.<br/><br />
+
+            Because of the facts mentioned above, <span class="warning">XMLBeans is not a recommended databinding framework
+    for working with Sabre Web Services neither.</span>
+        </p>
+
+    </div>
+
+    <!-- JAXB -->
+
+    <a name="jaxb-anchor"></a> <!-- Framework name -->
+    <span class="subheader">JAXB</span><br /><br />
+    <div class="intend-level-1">
+
+        <!-- Overview -->
+        <a name="jaxb-overview-anchor"></a>
+        <span class="bold"> Overview </span><br/>
+        <p>
+            JAXB data binding is a powerful tool with good customization capabilities, due to custom bindings mechanism.
+            Thanks to that, if default behavior causes any problems, it may be easily changed. JAXB is a commercial standard
+            for Java XML binding and is a recommended tool for working with Sabre Web Services.
+        </p>
+
+        <!-- Using -->
+        <a name="jaxb-using-anchor"></a>
+        <span class="bold"> Using </span><br/>
+        <p>
+            The main ability of JAXB, creating Java classes from XSD schemas, is available through
+            <span class="code">xjc</span> schema compiler, which may accessed in a variety of ways.
+            When using JAXB as data binding framework to work with Apache CXF, it is generally advised to use
+            <span class="code">cxf-codegen-plugin</span> maven plugin with proper binding option.
+            <br /><br />
+            However, <span class="code">xjc</span> is also available as stand-alone command line tool distributed with JDK (1.6 or higher)
+            or via one of JAXB maven plugins:
+        </p>
+        <ul>
+            <li class="code">
+                &emsp;&emsp;&lt;groupId&gt;org.jvnet.jaxb2.maven2&lt;/groupId&gt;<br />
+                &emsp;&emsp;&lt;artifactId&gt;maven-jaxb2-plugin&lt;/artifactId&gt;<br /><br />
+            </li>
+            <li class="code">
+                &emsp;&emsp;&lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;<br />
+                &emsp;&emsp;&lt;artifactId&gt;jaxb2-maven-plugin&lt;/artifactId&gt;<br /><br />
+            </li>
+        </ul>
+        <p>
+            The use of both is similar, and details are available at
+            <a href="https://java.net/projects/maven-jaxb2-plugin/pages/Home">java.net</a> and
+            <a href="http://mojo.codehaus.org/jaxb2-maven-plugin/index.html">mojo</a> websites.
+        </p>
+
+        <!-- Execution requirements -->
+        <a name="jaxb-execution-requirements-anchor"></a>
+        <span class="bold"> Execution requirements </span><br/>
+        <p>
+            Just like with two former data bindings, the main and only requirement is to provide all necessary files and
+            their directories. In this case, along with schema and WSDL files, custom bindings (in form of .jxb files) should
+            be delivered. <br /><br />
+
+            Some of Sabre Web services will require specyfing custom JAXB binding file during schema compilation. This is
+            because some schemas contain nested types with the same name as one of outer elements. JAXB compiles each
+            complex type into a public static inner class and there cannot be two such classes with the same name.
+            However, this may solved easily. The custom binding file has a form of a XML file (although the file
+            extension may be different, like *.jxb, to emphasize it's function) and the following structure:
+        </p>
+
+        <p>
+            <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #557799">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span style="color: #007700">&lt;jaxb:bindings</span> <span style="color: #0000CC">version=</span><span style="background-color: #fff0f0">&quot;2.0&quot;</span> <span style="color: #0000CC">xmlns:jaxb=</span><span style="background-color: #fff0f0">&quot;http://java.sun.com/xml/ns/jaxb&quot;</span> <span style="color: #0000CC">xmlns:xjc=</span><span style="background-color: #fff0f0">&quot;http://java.sun.com/xml/ns/jaxb/xjc&quot;</span> <span style="color: #0000CC">xmlns:xs=</span><span style="background-color: #fff0f0">&quot;http://www.w3.org/2001/XMLSchema&quot;</span> <span style="color: #0000CC">xmlns:wsdl=</span><span style="background-color: #fff0f0">&quot;http://schemas.xmlsoap.org/wsdl/&quot;</span><span style="color: #007700">&gt;</span>
+  <span style="color: #007700">&lt;jaxb:bindings</span> <span style="color: #0000CC">schemaLocation=</span><span style="background-color: #fff0f0">&quot;hardcoded/path/to/schema/file.xsd&quot;</span> <span style="color: #0000CC">node=</span><span style="background-color: #fff0f0">&quot;/xs:schema&quot;</span><span style="color: #007700">&gt;</span>
+    <span style="color: #007700">&lt;jaxb:bindings</span> <span style="color: #0000CC">node=</span><span style="background-color: #fff0f0">&quot;XPath_expression_of_node_being_customized&quot;</span><span style="color: #007700">&gt;</span>
+      <span style="color: #007700">&lt;jaxb:class</span> <span style="color: #0000CC">name=</span><span style="background-color: #fff0f0">&quot;CustomizedClassName&quot;</span> <span style="color: #007700">/&gt;</span>
+    <span style="color: #007700">&lt;/jaxb:bindings&gt;</span>
+  <span style="color: #007700">&lt;/jaxb:bindings&gt;</span>
+<span style="color: #007700">&lt;/jaxb:bindings&gt;</span>
+</pre></td></tr></table></div>
+
+        </p>
+
+        <!-- Generated Code -->
+        <a name="jaxb-generated-code-anchor"></a>
+        <span class="bold"> Generated code </span><br/>
+        <p>
+            By default, JAXB will generate classes <span class="italic">per namespace</span>, mapping <span class="code">targetNamespace</span>
+            attribute from schema to package name. For example, type <span class="code">PassengerDetailsRQ</span>, defined in
+            <span class="code">http://webservices.sabre.com/sabreXML/2011/10</span> target namespace will be compiled (with
+            default settings) to <span class="code">com.sabre.webservices.sabrexml._2011._10.PassengerDetailsRQ</span> class.
+            This means no classes duplication and ability to reuse code throughout the application. JAXB generates nested public
+            static classes to reflect the structure of a schema. Bindings of nodes and package names may be customized using binding files
+            (<a href="https://jaxb.java.net/guide/Customizing_Java_packages.html">here</a> are hints about package naming customization). <br /><br />
+
+            The classes will be annotated with JAXB annotations, which means they may be reused by any other JAX-WS implementation.
+            Because it is a widely used standard, it makes the code more generic, reusable and less tightly-coupled
+        </p>
+
+        <!-- Known Issues -->
+        <a name="jaxb-known-issues-anchor"></a>
+        <span class="bold"> Known issues </span><br/>
+        <p>
+            Currently, there are no major issues concerning the use of CXF/JAXB tools with Sabre Web Services, that can't be solved
+            with a little or no effort (which usually boils down to creating custom binding file).
+            Therefore, <span class="warning"> JAXB is a recommended data binding tool to work with Sabre Web Services in Java language.</span>
+        </p>
+
+    </div>
+
+    <!-- Web Services frameworks -->
+    <a name="ws-frameworks-anchor"></a>
+    <span class="header">Web Services Frameworks</span> <br /><br/>
 
     <!-- Apache Axis2 framework -->
 
@@ -455,6 +728,7 @@
         </p>
     </div>
 
+    <!-- Spring Web Services -->
 
     <a name="springws-framework-anchor"></a>
     <span class="subheader">Spring Web Services</span><br/><br/> <!-- Framework name -->
@@ -495,7 +769,7 @@
             <li>Collecting all necessary schema definition files (WSDL files are not required)</li>
             <li>Compiling schemas into Java code using external data binding, like JAXB (e.g. in form of a plugin)</li>
             <li>Creating client, which will use generated code</li>
-            <li>Configuring Spring to take advantage of it's IoC capabilities</li>
+            <li>Configuring Spring to take advantage of it's IoC capabilities (optional)</li>
             <li>Providing interceptors and callbacks for messages</li>
             <li>Invoking services via adequate methods calls</li>
             <li>Receiving and handling the response</li>
@@ -506,11 +780,144 @@
         <span class="bold"> Developing client in detail </span><br/>
         <p>
             When using Spring WS, only schema definitions are required, for developer takes care of creating the message.
-            In fact, the minimal set of required schemas consists of request and response definitions for each service
-            and schemas of security and message headers to build the envelope.
+            In fact, the minimal set of schemas required to consume Sabre Web Services consists of request and response
+            definitions for each service and schemas of security and message headers to build the envelope.
             <br />
-            These files should be then compiled to Java classes. However, there is one thing that will cause troubles in
-            developing Sabre Web Services client.
+            These files should be then compiled to Java classes. !!!sample project uses JAXB2 Maven plugin to achieve this.
+            Spring WS provides one main class to send and receive web services message: <span class="code">WebServiceTemplate</span>,
+            which resides in <span class="code">org.springframework.ws.client.core</span> package.
+            This class contains many methods to invoke web services calls. Two most important of them are
+            <span class="code">sendSourceAndReceiveToResult(...)</span> and <span class="code">marshallSendAndReceive(...)</span>.
+            The former takes two parameters: <span class="code">javax.xml.transform.Source</span>, from which it reads
+            the request to send, and <span class="code">javax.xml.transform.Result</span>, to which it writes the response.
+            The latter allows working with POJO's and hides the details of marshalling and unmarshalling from the developer.
+            It returns <span class="code">Object</span> type and takes one object as a parameter. Before calling this
+            method, developer must configure the <span class="code">WebServiceTemplate</span> object by setting
+            marshaller and unmarshaller and specifying web service's URI. URI may be set during constructing of an object
+            through the constructor argument or set anytime before web service call via <span class="code">WebServiceTemplate</span>'s
+            <span class="code">setDefaultUri(String uri)</span> method. The easiest way of providing marshaller and
+            unmarshaller is to use Spring OXM's <span class="code">org.springframework.oxm.jaxb.Jaxb2Marshaller</span> class'
+            object. It implements both <span class="code">Marshaller</span> and <span class="code">Unmarshaller</span>
+            interfaces and is capable of marshalling and unmarshalling objects of classes that are generated via JAXB
+            (and therefore annotated with proper JAX-WS annotations). <span class="code">Jaxb2Marshaller</span>
+            must be supplied with a <span class="code">contextPath</span> - a <span class="code">String</span> containing
+            colon-separated packages names with classes to marshall. <br/><br/>
+
+            After such configuration one can call <span class="code">marshallSendAndReceive(...)</span>. It then will
+            marshall the parameter object, put it into the message, send the message to the URI specified, obtain
+            the response, unmarshall it and return resulting object as method return value. <br/><br/>
+
+            It is also possible to use Spring's convenience class
+            <span class="code">org.springframework.ws.client.core.support.WebServiceGatewaySupport</span>, which encapsulates
+            <span class="code">WebServiceTemplate</span> and exposes convenient bean properties to enable easy configuration.
+            However, this is not mandatory. <br /><br />
+
+            To get comprehensive information on Spring WS client development, please check !!!sample project
+            (<span class="code">toolkit-spring-ws</span> module) or some of the following:
+        </p>
+
+            <ul>
+                <li>
+                    <a href="http://docs.spring.io/spring-ws/docs/2.2.0.RELEASE/reference/htmlsingle/#client">
+                        Spring WS reference on client development
+                    </a>
+                </li>
+                <li><a href="http://spring.io/guides/gs/consuming-web-service/">Spring WS guide</a></li>
+                <li><a href="http://docs.spring.io/spring-ws/docs/2.2.0.RELEASE/api/org/springframework/ws/client/core/WebServiceTemplate.html">
+                    <span class="code">WebServiceTemplate</span> JavaDoc
+                </a></li>
+                <li><a href="http://docs.spring.io/spring-ws/docs/2.2.0.RELEASE/api/org/springframework/ws/client/core/support/WebServiceGatewaySupport.html">
+                    <span class="code">WebServiceGatewaySupport</span> JavaDoc
+                </a></li>
+                <li><a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/oxm/jaxb/Jaxb2Marshaller.html">
+                    <span class="code">Jaxb2Marshaller</span> JavaDoc
+                </a></li>
+            </ul>
+
+        <p>
+            Callbacks <br/><br/>
+
+            Callbacks mechanism allows developer to manipulate the message content after it was created, but before it is
+            send. Send methods described above have overloaded versions that take one Callback
+            parameter. Since Spring WS leaves construction of a message to the developer, it is a good point to
+            add all necessary headers into SOAP message. Sabre Web Services require two custom headers:
+            <span class="code">eb:MessageHeader</span> and <span class="code">wsse:Security</span>.
+            They can be easily inserted in SOAP Envelope using callback. Callback must implement <span class="code">
+            org.springframework.ws.client.core.WebServiceMessageCallback</span> interface and thus implement
+            <span class="code">void doWithMessage(WebServiceMessage webServiceMessage)</span> method.
+            The snippet below shows how to use this to compose correct message to work with Sabre Web Services:
+        </p>
+
+        <p class="snippet">
+            public class HeaderComposingCallback implements WebServiceMessageCallback { <br />
+            &emsp;@Override <br />
+            &emsp;public void doWithMessage(WebServiceMessage webServiceMessage) throws IOException, TransformerException {<br />
+            &emsp;&emsp;&emsp;MessageHeader header = ... // get MessageHeader object<br />
+            &emsp;&emsp;&emsp;Security security = ... // get Security object<br /><br />
+
+            &emsp;&emsp;&emsp;StringBuilder builder = new StringBuilder();<br />
+            &emsp;&emsp;&emsp;builder.append(header.getClass().getPackage().getName()).append(":");<br />
+            &emsp;&emsp;&emsp;builder.append(security.getClass().getPackage().getName());<br />
+            &emsp;&emsp;&emsp;Jaxb2Marshaller marshaller = new Jaxb2Marshaller();<br />
+            &emsp;&emsp;&emsp;marshaller.setContextPath(builder.toString());<br /><br/>
+
+            &emsp;&emsp;&emsp;SoapHeader soapHeader = ((SoapMessage)webServiceMessage).getSoapHeader();<br />
+            &emsp;&emsp;&emsp;marshaller.marshal(header, soapHeader.getResult());<br />
+            &emsp;&emsp;&emsp;marshaller.marshal(security, soapHeader.getResult());<br />
+            &emsp;}<br />
+            }<br />
+        </p>
+
+        <p>
+            The !!!sample project uses this approach to create SOAP envelope and invoke Sabre Web Services.
+        </p>
+
+        <p>
+            Interceptors
+        </p>
+
+        <p>
+            Spring Web Services provides also the interceptors mechanism. Using interceptors one may gain access
+            to <span class="code">MessageContext</span> object, which contains information about request and
+            response messages, message exchange properties, endpoint and other useful data. As the interceptor
+            allows to handle response message, it is a good mean of obtaining header information from it.
+            In !!!sample project this capability is utilized to retrieve session token from SessionCreateRQ
+            service's response. <br/><br />
+            Interceptor must implement <span class="code">org.springframework.ws.client.support.interceptor.ClientInterceptor</span>
+            interface with four methods:
+        </p>
+        <ul>
+            <li><span class="code">public boolean handleRequest(MessageContext messageContext)</span> </li>
+            <li><span class="code">public boolean handleResponse(MessageContext messageContext)</span></li>
+            <li><span class="code">public boolean handleFault(MessageContext messageContext)</span></li>
+            <li><span class="code">public void afterCompletion(MessageContext messageContext, Exception e)</span></li>
+        </ul>
+
+        <p>
+            The <span class="code">handleResponse</span> method may be used to retrieve token from message.
+            It can be done by retrieving response from <span class="code">MessageContext</span>, then
+            getting <span class="code">Security</span> header from it, unmarhaling it into object and
+            finally getting session token from it with getter method. The snippet below shows the outline of
+            code that need to be placed in <span class="code">handleResponse(MessageContext messageContext)</span> method:
+        </p>
+
+        <p class="snippet">
+
+            &emsp;SoapMessage message = (SoapMessage) messageContext.getResponse();<br />
+            &emsp;Source securitySource = message.getSoapHeader().examineHeaderElements(securityQName).next().getSource();<br />
+            &emsp;Source headerSource = message.getSoapHeader().examineHeaderElements(headerQName).next().getSource();<br />
+
+            &emsp;Jaxb2Marshaller = ... // create marshaller as in example above<br />
+
+            &emsp;Security security = (Security) marshaller.unmarshal(securitySource);<br />
+            &emsp;MessageHeader header = (MessageHeader) marshaller.unmarshal(headerSource);<br /><br />
+            &emsp;String token = security.getBinarySecurityToken();<br />
+            &emsp;String conversationId = header.getConversationId();<br />
+        </p>
+
+        <p>
+            To see a full working example of interceptor use, refer to !!!sample project, <span class="code">toolkit-spring-ws</span>
+            module.
         </p>
 
         <!-- TODO: decide which phrase to use for this section -->
@@ -518,10 +925,139 @@
         <a name="springws-known-issues-anchor"></a>
         <span class="bold"> Known issues </span><br/>
         <p>
+            When using Spring beans configuration, one should make sure that all underlying resources
+            are adjusted to it. This concerns mostly <span class="code">Jaxb2Marshaller</span> bean.
+            When a bean of that class is configured, it will be injected into <span class="code">WebServiceTemplate</span>
+            objects. In that case the marshaller bean must contain information about all used classes and packages.
+            It means that all names and identifiers used in JAXB annotations have to be unique. To achieve that,
+            code generation tool should be executed with care and may require extensive configuration
+            to avoid names duplication (as Sabre Web Services schemas share many common data structures in every service).
+        </p>
+
+    </div>
+
+    <!-- wsimport framework-->
+
+    <a name="wsimport-framework-anchor"></a>
+    <span class="subheader">wsimport</span><br/><br/> <!-- Framework name -->
+    <div class="intend-level-1">
+
+        <!-- Overview -->
+        <a name="wsimport-overview-anchor"></a>
+        <span class="bold"> Overview </span><br/>
+        <p>
+            The <span class="code">wsimport</span> tool generates JAX-WS portable artifacts (services,
+            service endpoint interfaces, fault exceptions, JAXB generated value types). It is distributed with JDK
+            (from version 6). Beacuse it implements JAX-WS specification, using it is similar to using other JAX-WS
+            implementation - CXF.
+        </p>
+
+        <!-- Using Framework -->
+        <a name="wsimport-using-anchor"></a>
+        <span class="bold"> Using </span><br/>
+        <p>
+            Using <span class="code">wsimport</span> is very simple and in many cases it would require no additional
+            configuration - it should run from command line on any machine with JDK 6 or newer installed.
+            To check if it is available (assuming that <span class="code">JAVA_HOME\bin</span> is in
+            <span class="code">PATH</span> system variable), just type <span class="code">wsimport -help</span>.
+            The <span class="code">wsimport</span> help page should be displayed. It contains information on
+            how to use this tool. <br /><br />
+
+            The simplest use case is compiling WSDL service definition into JAXB-generated classes. To do that,
+            just type: <br /><br />
+
+            <span class="code">wsimport -keep -verbose path/to/wsdl/file.wsdl</span> <br /><br />
+
+            This will compile all schemas into java classes and create JAX-WS service artifacts for each service
+            defined in WSDL file. <br /><br />
+
+            <span class="code">wsimport</span> is also available as Maven plugin. To utilize it in your project,
+            add the following to your POM's plugin section: <br /><br />
+        </p>
+
+        <p class="snippet">
+            &lt;plugin&gt;<br />
+            &emsp;&lt;groupId&gt;org.jvnet.jax-ws-commons&lt;/groupId&gt;<br />
+            &emsp;&lt;artifactId&gt;jaxws-maven-plugin&lt;/artifactId&gt;<br />
+            &lt;/plugin&gt;
+        </p>
+
+        <p>
+            The detailed information about using wsimport from command line are available at
+            <a href="http://docs.oracle.com/javase/7/docs/technotes/tools/share/wsimport.html">Java SE Documentation page</a><br /><br />
+
+            <span class="code">wsimport</span> Maven plugin is described in details in
+            <a href="https://jax-ws-commons.java.net/jaxws-maven-plugin/wsimport-mojo.html">Metro project documentation</a>.
+        </p>
+
+        <!-- Typical flow in particular framework -->
+        <a name="wsimport-typical-flow-anchor"></a>
+        <span class="bold"> Typical flow </span><br/>
+        <p>
+
+        </p>
+
+        <ol>
+            <li>Collecting all necessary files (WSDL, XML and XSD) for each service</li>
+            <li>Generating JAXB-annotated classes and other JAX-WS artifacts</li>
+            <li>Developing client, which will use generated classes</li>
+            <li>Providing SOAP handlers</li>
+            <li>Invoking services via adequate methods calls</li>
+            <li>Receiving and handling the response</li>
+        </ol>
+
+        <!-- Details of client development -->
+        <a name="wsimport-developing-client-anchor"></a>
+        <span class="bold"> Developing client in detail </span><br/>
+        <p>
+            Client development starts with invoking <span class="code">wsimport</span> tool on appropriate WSDL file
+            (all service-specific and common schemas must be present in one directory).
+            It will generate JAX-WS artifacts - JAXB classes (that represent data types used in messages being exchanged
+            and are defined in schemas) and JAX-WS artifacts - service enpoint interfaces (SEIs) and services. Together
+            they allow to make web service call. <br /><br />
+
+            User may specify additional options during <span class="code">wsimport</span> execution.
+            Most important options are:
+        </p>
+        <ul>
+            <li><span class="code">-d &lt;directory&gt;&thinsp; </span>  - specifies output directory for generated files</li>
+            <li><span class="code">-b &lt;path&gt;</span> - specifies path to JAXB custom binding files (one
+            <span class="code">-b</span> option per one binding file)</li>
+            <li><span class="code">-B &lt;jaxbOption&gt;</span> - options to pass to JAXB compiler </li>
+            <li><span class="code">-keep</span> - keep generated sources</li>
+            <li><span class="code">-p </span> specify the output package name (overrides namespace to package mapping
+            and any package mapping defined in custom binding file)</li>
+        </ul>
+
+        <p>
+            The corresponding set of Maven options is:
+        </p>
+
+        <ul>
+            <li><span class="code">&lt;destDir&gt;</span></li>
+            <li><span class="code">&lt;bindingFiles&gt;</span></li>
+            <li><span class="code">&lt;xjcArgs&gt;</span></li>
+            <li><span class="code">&lt;keep&gt;</span></li>
+            <li><span class="code">&lt;packageName&gt;</span></li>
+        </ul>
+
+        <p>
+            Note, that some of the
+        </p>
+
+
+
+        <!-- TODO: decide which phrase to use for this section -->
+        <!-- Known issues -->
+        <a name="wsimport-known-issues-anchor"></a>
+        <span class="bold"> Known issues </span><br/>
+        <p>
 
         </p>
 
     </div>
+
+
 
 
 </body>

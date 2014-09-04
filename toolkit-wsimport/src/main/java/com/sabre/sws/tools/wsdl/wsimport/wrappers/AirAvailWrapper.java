@@ -44,13 +44,13 @@ public class AirAvailWrapper {
         OTAAirAvailRQ requestBody = null;
 
         switch( requestType ) {
-            case BETWEEN_TWO_POINTS_WITH_DEPARTURE_DATE:
+            case TWO_POINTS_WITH_DEPARTURE_DATE:
                 requestBody = getRequestBodyWithTwoPointsAndDepartureDate();
                 break;
-            case BETWEEN_TWO_POINTS_WITH_DEPARTURE_HOUR:
+            case TWO_POINTS_WITH_DEPARTURE_HOUR:
                 requestBody = getRequestBodyWithTwoPointsAndDepartureHour();
                 break;
-            case BETWEEN_TWO_POINTS_WITH_VENDOR_PREFS:
+            case TWO_POINTS_WITH_VENDOR_PREFS:
                 requestBody = getRequestBodyWithTwoPointsAndVendorPrefs();
                 break;
             case MULTILEG_FLIGHT_SEGMENT_WITH_VENDOR_PREFS:

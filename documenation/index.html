@@ -155,14 +155,17 @@ Use of this tool is pretty straightforward, but working with generated files may
 </p>
 <span class="bold">Execution requirements</span>
 
-<p> As Sabre Web Services definitions (provided in the form of WSDL files) use corresponding types of data structures, proper XML Schema files must be provided in same location as the WSDL file.
-It includes common schemas for SOAP communication protocol (available as Common Schemas asset at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> ) and request/response object pairs definition 
-(available also at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> as asset for each service or at
-    <a href="http://developer.sabre.com">http://developer.sabre.com</a>). </p>
+<p>
+    As Sabre Web Services definitions (provided in the form of WSDL files) use corresponding types of data structures, proper XML Schema files must be provided in same location as the WSDL file.
+    It includes common schemas for SOAP communication protocol (available as Common Schemas asset at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> ) and request/response object pairs definition
+    (available also at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> as asset for each service or at
+    <a href="http://developer.sabre.com">http://developer.sabre.com</a>).
+</p>
 
 <span class="bold">Generated code</span>
 
-<p> If all of the required files are available for code generation tool, after invocation it will by default generate one
+<p>
+    If all of the required files are available for code generation tool, after invocation it will by default generate one
     stub java class per service.
     The file will be placed in proper folder structure, according to specified output package and directory.
     The file will be named <span class="code"> &lt;serviceName&gt;ServiceStub.java </span>

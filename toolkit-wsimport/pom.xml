@@ -58,6 +58,7 @@
                 </executions>
             </plugin>
 
+            <!-- JAXB2 maven plugin -->
             <plugin>
                 <groupId>org.jvnet.jax-ws-commons</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
@@ -77,6 +78,7 @@
                             <wsdlFiles>
                                 <wsdlFile>SessionCreateRQ/SessionCreateRQ.wsdl</wsdlFile>
                                 <wsdlFile>SessionCloseRQ/SessionCloseRQ.wsdl</wsdlFile>
+                                <wsdlFile>OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailVersion}RQ.wsdl</wsdlFile>
                             </wsdlFiles>
                         </configuration>
                     </execution>
@@ -91,12 +93,12 @@
                                 <bindingFile>travel-itinerary-custom-binding.jxb</bindingFile>
                             </bindingFiles>
                             <wsdlFiles>
-                                    <wsdlFile>TravelItineraryReadLLSRQ/TravelItineraryReadLLS${TravelItineraryReadVersion}RQ.wsdl</wsdlFile>
+                                <wsdlFile>TravelItineraryReadLLSRQ/TravelItineraryReadLLS${TravelItineraryReadVersion}RQ.wsdl</wsdlFile>
                             </wsdlFiles>
                         </configuration>
                     </execution>
 
-                    <execution>
+                    <!--<execution>
                         <id>ota-air-avail-schemas</id>
                         <goals>
                             <goal>wsimport</goal>
@@ -106,7 +108,7 @@
                                     <wsdlFile>OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailVersion}RQ.wsdl</wsdlFile>
                             </wsdlFiles>
                         </configuration>
-                    </execution>
+                    </execution>-->
 
                     <execution>
                         <id>enhanced-air-book-schemas</id>

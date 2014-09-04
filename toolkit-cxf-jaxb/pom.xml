@@ -79,7 +79,7 @@
                                     <extraarg>jaxb</extraarg>
                                     <extraarg>-autoNameResolution</extraarg>
                                     <extraarg>-dns</extraarg>
-                                    <extraarg>false</extraarg>
+                                    <extraarg>true</extraarg>
                                     <extraarg>-client</extraarg>
                                 </extraargs>
                             </defaultOptions>

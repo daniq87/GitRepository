@@ -56,7 +56,6 @@ public class SessionCreateWrapper extends WebServiceGatewaySupport {
     public SessionCreateRS openSession() {
 
         LOGGER.info( "Opening session..." );
-
         SessionCreateRS sessionCreateRQ = (SessionCreateRS) getWebServiceTemplate().marshalSendAndReceive(
                 getRequestBody(),
                 new HeaderComposingCallback("SessionCreateRQ")

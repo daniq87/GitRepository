@@ -5,14 +5,12 @@ import com.sabre.sws.tools.wsdl.springws.soap.MessageHeader;
 import com.sabre.sws.tools.wsdl.springws.soap.Security;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
 import org.springframework.ws.soap.SoapMessage;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.namespace.QName;
 import javax.xml.transform.Source;
 
@@ -43,30 +41,24 @@ public class SessionCreateInterceptor implements ClientInterceptor {
         String token = null;
         String conversationId = null;
 
-        try {
+        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+        marshaller.setContextPath( getContextPath() );
 
-            JAXBContext jaxbContext = JAXBContext.newInstance(Security.class, MessageHeader.class);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        SoapMessage message = (SoapMessage) messageContext.getResponse();
+        Source securitySource = message.getSoapHeader().examineHeaderElements( securityQName ).next().getSource();
+        Source headerSource = message.getSoapHeader().examineHeaderElements( headerQName ).next().getSource();
 
-            SoapMessage message = (SoapMessage) messageContext.getResponse();
-            Source securitySource = message.getSoapHeader().examineHeaderElements( securityQName ).next().getSource();
-            Source headerSource = message.getSoapHeader().examineHeaderElements( headerQName ).next().getSource();
+        Security security = (Security) marshaller.unmarshal( securitySource );
+        MessageHeader header = (MessageHeader) marshaller.unmarshal( headerSource );
 
-            Security security = (Security) unmarshaller.unmarshal( securitySource );
-            MessageHeader header = (MessageHeader) unmarshaller.unmarshal( headerSource );
-
-            LOGGER.info( "Creating session..." );
-
-            if( !header.getAction().equalsIgnoreCase( "SessionCreateRS" ) ) {
-                throw new UnsupportedOperationException( "This interceptors works with SessionCreateRQ only" );
-            }
-
-            token = security.getBinarySecurityToken();
-            conversationId = header.getConversationId();
-
-        } catch (JAXBException e) {
-            e.printStackTrace();
+        if( !header.getAction().equalsIgnoreCase( "SessionCreateRS" ) ) {
+            throw new UnsupportedOperationException( "This interceptors works with SessionCreateRQ only" );
         }
+
+        LOGGER.info( "Creating session..." );
+
+        token = security.getBinarySecurityToken();
+        conversationId = header.getConversationId();
 
         if( token == null | conversationId == null ) {
             throw new WebServiceClientException( "Couldn't retrieve session token from message" ) {
@@ -92,5 +84,14 @@ public class SessionCreateInterceptor implements ClientInterceptor {
     @Override
     public void afterCompletion(MessageContext messageContext, Exception e) throws WebServiceClientException {
 
+    }
+
+    private String getContextPath() {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(Security.class.getPackage().getName()).append(":");
+        builder.append(MessageHeader.class.getPackage().getName()).append(":");
+
+        return builder.toString();
     }
 }
