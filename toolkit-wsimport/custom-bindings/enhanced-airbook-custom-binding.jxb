@@ -4,7 +4,7 @@
                xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
 
     <jaxb:bindings schemaLocation="../../target/wsdls/EnhancedAirBookRQ/EnhancedAirBook2.5.0RS.xsd" node="/xs:schema">
-        <jaxb:bindings node="//xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element[10]/xs:complexType">
+        <jaxb:bindings node="//xs:element/xs:complexType/xs:sequeence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element[10]/xs:complexType">
             <jaxb:class name="Vehicle1"/>
         </jaxb:bindings>
     </jaxb:bindings>

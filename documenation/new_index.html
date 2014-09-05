@@ -51,7 +51,7 @@
             <span class="bold"><a href="#ws-frameworks-anchor">Java web services frameworks</a></span>
             <ul>
                 <li>
-                    Apache Axis2
+                    <a href="#axis2-framework-anchor">Apache Axis2</a>
                     <ul>
                         <li><a href="#axis2-overview-anchor">Overview</a></li>
                         <li><a href="#axis2-using-anchor">Using</a></li>
@@ -61,7 +61,7 @@
                     </ul>
                 </li>
                 <li>
-                    Apache CXF
+                    <a href="#cxf-framework-anchor">Apache CXF</a>
                     <ul>
                         <li><a href="#cxf-overview-anchor">Overview</a></li>
                         <li><a href="#cxf-using-anchor">Using</a></li>
@@ -71,7 +71,7 @@
                     </ul>
                 </li>
                 <li>
-                    Spring Web Services
+                    <a href="#spring-ws-framework-anchor">Spring Web Services</a>
                     <ul>
                         <li><a href="#springws-overview-anchor">Overview</a></li>
                         <li><a href="#springws-using-anchor">Using</a></li>
@@ -81,7 +81,7 @@
                     </ul>
                 </li>
                 <li>
-                    wsimport
+                    <a href="#wsimport-framework-anchor">wsimport</a>
                     <ul>
                         <li><a href="#wsimport-overview-anchor">Overview</a></li>
                         <li><a href="#wsimport-using-anchor">Using</a></li>
@@ -92,14 +92,6 @@
                 </li>
             </ul>
         </li>
-        <li>
-            Java data binding frameworks
-            <ul>
-                <li>ADB</li>
-                <li>XMLBeans</li>
-                <li>JAXB</li>
-            </ul>
-        </li>
     </ul>
 
 
@@ -108,7 +100,15 @@
     <a name="overview-anchor"></a>
     <span class="header">Overview</span>
     <p>
+        This document describes some of the popular frameworks and tools for creating web services applications and
+        binding data and compares their suitability to work with Sabre&reg; Web Services. There is also a brief
+        guide on how to use each framework to build Sabre&reg; Web Services client application and a list of
+        problems that one may encounter when developing it. To see the working sample implementation of Sabre
+        Web Services client in each described technology, please refer to !!!sample project supplied by Sabre
+        Web Services team. It may be used as an example on how to use each framework or an application template.
 
+        <br /><br/>
+        <span class="comment">Mój typ to wsimport + CXF, ale czekam na decyzję. Kolejność zamienię, gdy już będzie wszystko wiadomo.</span>
     </p>
 
 <!-- Document content -->
@@ -144,10 +144,9 @@
         <a name="adb-execution-requirements-anchor"></a>
         <span class="bold"> Execution requirements </span><br/>
         <p>
-            As Sabre Web Services definitions (provided in the form of WSDL files) use corresponding types of data structures, proper XML Schema files must be provided in same location as the WSDL file.
-            It includes common schemas for SOAP communication protocol (available as Common Schemas asset at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> ) and request/response object pairs definition
-            (available also at <a href="https://drc.sabre.com/">https://drc.sabre.com/</a> as asset for each service or at
-            <a href="http://developer.sabre.com">http://developer.sabre.com</a>).
+            As Sabre&reg; Web Services definitions (provided in the form of WSDL files) use corresponding types of data structures, proper XML Schema files must be provided in same location as the WSDL file.
+            It includes common schemas for SOAP communication protocol (available as Common Schemas asset at <a href="http://developer.sabre.com">http://developer.sabre.com</a> ) and request/response object pairs definition
+            (also available at <a href="http://developer.sabre.com">http://developer.sabre.com</a>).
         </p>
 
         <!-- Generated Code -->
@@ -185,7 +184,7 @@
             be implemented for each service stub causing code repetition, or a header factory method using reflection
             and generic return type may be introduced, which would be difficult and error-prone. <br/><br />
             Because of the facts mentioned above, <span class="warning">ADB is not a recommended databinding framework
-            for working with Sabre Web Services.</span>
+            for working with Sabre&reg; Web Services.</span>
         </p>
 
     </div>
@@ -204,8 +203,8 @@
             In this case, classes are not generated per service, but rather per namespace. It eliminates the code duplication problem,
             causing code to be clearer and easier to use. <br />
             However, XMLBeans framework has another significant problem, which may cause it impossible to use with some of the
-            Sabre Web Services (described in separate section). One should keep that in mind when deciding to use XMLBeans,
-            because at some point being unable to consume specific Sabre Web Service may block development of whole application.
+            Sabre&reg; Web Services (described in separate section). One should keep that in mind when deciding to use XMLBeans,
+            because at some point being unable to consume specific Sabre&reg; Web Service may block development of whole application.
         </p>
 
         <!-- Using -->
@@ -259,7 +258,7 @@
         <span class="bold"> Known issues </span><br/>
         <p>
             Although using XMLBeans data binding results in more clear and easy-to-use code, it has a serious issue,
-            which cause it almost impossible to use with some of the Sabre Web Services. <br /> <br />
+            which cause it almost impossible to use with some of the Sabre&reg; Web Services. <br /> <br />
 
             To reflect the structure of XML Schema Definition, XMLBeans creates a series of nested interfaces.
             Each nested type will have a corresponding nested interface. The problem is, that at compile time the Java compiler
@@ -274,7 +273,7 @@
             make such nested class/interface impossible to compile, as the Java compiler will not be able to save compiled
             file on disk. There is no possibility to use any custom binding or change XMLBeans behavior in way that would
             allow generating Java stubs from deeply nested schemas. Therefore it is not possible to use XMLBeans with some of
-            the Sabre Web Services, that contain deeply nested schemas (e.g. EnhancedAirBook, PassengerDetailsRQ, TravelItineraryLLSRQ),
+            the Sabre&reg; Web Services, that contain deeply nested schemas (e.g. EnhancedAirBook, PassengerDetailsRQ, TravelItineraryLLSRQ),
             when using any common file system. On the other hand, changing operating system or switching to niche filesystem
             just to use one particular XML binding framework (while there are many others) seems to be an exaggeration. <br /><br />
 
@@ -295,7 +294,7 @@
             data binding framework for web services application.<br/><br />
 
             Because of the facts mentioned above, <span class="warning">XMLBeans is not a recommended databinding framework
-    for working with Sabre Web Services neither.</span>
+    for working with Sabre&reg; Web Services neither.</span>
         </p>
 
     </div>
@@ -312,7 +311,7 @@
         <p>
             JAXB data binding is a powerful tool with good customization capabilities, due to custom bindings mechanism.
             Thanks to that, if default behavior causes any problems, it may be easily changed. JAXB is a commercial standard
-            for Java XML binding and is a recommended tool for working with Sabre Web Services.
+            for Java XML binding and is a recommended tool for working with Sabre&reg; Web Services.
         </p>
 
         <!-- Using -->
@@ -349,13 +348,13 @@
         <p>
             Just like with two former data bindings, the main and only requirement is to provide all necessary files and
             their directories. In this case, along with schema and WSDL files, custom bindings (in form of .jxb files) should
-            be delivered. <br /><br />
+            be delivered (via proper execution parameter). <br /><br />
 
-            Some of Sabre Web services will require specyfing custom JAXB binding file during schema compilation. This is
+            Some of Sabre&reg; Web services will require specyfing custom JAXB binding file during schema compilation. This is
             because some schemas contain nested types with the same name as one of outer elements. JAXB compiles each
             complex type into a public static inner class and there cannot be two such classes with the same name.
             However, this may solved easily. The custom binding file has a form of a XML file (although the file
-            extension may be different, like *.jxb, to emphasize it's function) and the following structure:
+            extension may be different, like <span class="code">*.jxb</span>, to emphasize it's function) and the following structure:
         </p>
 
         <p>
@@ -378,6 +377,16 @@
 
         </p>
 
+        <p>
+            One can use this template to create custom bindings. It requires specifying 3 things:
+        </p>
+
+        <ul>
+            <li>Location of a schema file (if this does not match with the location of the file being compiled, error will occur) </li>
+            <li>XPath expression of a node whose name will be customized</li>
+            <li>Customized class name to bind node to</li>
+        </ul>
+
         <!-- Generated Code -->
         <a name="jaxb-generated-code-anchor"></a>
         <span class="bold"> Generated code </span><br/>
@@ -388,7 +397,7 @@
             default settings) to <span class="code">com.sabre.webservices.sabrexml._2011._10.PassengerDetailsRQ</span> class.
             This means no classes duplication and ability to reuse code throughout the application. JAXB generates nested public
             static classes to reflect the structure of a schema. Bindings of nodes and package names may be customized using binding files
-            (<a href="https://jaxb.java.net/guide/Customizing_Java_packages.html">here</a> are hints about package naming customization). <br /><br />
+            (<a href="https://jaxb.java.net/guide/Customizing_Java_packages.html">Check JAXB's section on Metro Project web page</a> for hints about package naming customization). <br /><br />
 
             The classes will be annotated with JAXB annotations, which means they may be reused by any other JAX-WS implementation.
             Because it is a widely used standard, it makes the code more generic, reusable and less tightly-coupled
@@ -398,9 +407,9 @@
         <a name="jaxb-known-issues-anchor"></a>
         <span class="bold"> Known issues </span><br/>
         <p>
-            Currently, there are no major issues concerning the use of CXF/JAXB tools with Sabre Web Services, that can't be solved
+            Currently, there are no major issues concerning the use of CXF/JAXB tools with Sabre&reg; Web Services, that can't be solved
             with a little or no effort (which usually boils down to creating custom binding file).
-            Therefore, <span class="warning"> JAXB is a recommended data binding tool to work with Sabre Web Services in Java language.</span>
+            Therefore, <span class="warning"> JAXB is a recommended data binding tool to work with Sabre&reg; Web Services in Java language.</span>
         </p>
 
     </div>
@@ -454,7 +463,7 @@
             to <span class="code">PATH</span> system variable will allow to run Axis2-related scripts easily. <br /><br />
             Using Axis2 as Maven dependency will be no surprise for Maven users. For information about versioning and
             dependencies, see <a href="http://mvnrepository.com/artifact/org.apache.axis2">Maven repository site</a>.
-            To see a working example with full set of dependencies, check !!!sample project, provided by Sabre Web Services Team.
+            To see a working example with full set of dependencies, check !!!sample project, provided by Sabre&reg; Web Services Team.
         </p>
 
         <!-- Typical flow in particular framework -->
@@ -502,7 +511,7 @@
             path to which is provided after <span class="code">-uri</span> option. Classes are generated into specified
             output directory (<span class="code">-o</span> option) under specified package (<span class="code">-p</span>).
             Proper data binding framework is used (<span class="code">-d</span>).
-            The command line tool is documented in detail <a href="http://axis.apache.org/axis2/java/core/docs/reference.html">HERE</a>.
+            The command line tool is documented in detail on <a href="http://axis.apache.org/axis2/java/core/docs/reference.html">Axis2's reference</a>.
             <br /><br />
 
             For the detailed parameters specification, see:
@@ -577,9 +586,9 @@
             In general, it provides same functionality as Axis2, which means the ability to send, process and receive messages,
             both to and from services. Similarly, CXF allows user to develop both client and server side application.
             It uses contract-first approach, which means creation of service implementation code based on service definition
-            (in form ow WSDL files and schema definition). What it means for Sabre Web Services consumer, is that Java client
+            (in form ow WSDL files and schema definition). What it means for Sabre&reg; Web Services consumer, is that Java client
             code can be generated easily based on WSDL and XSD files, available on
-            <a href="http://developer.sabre.com">Sabre Developer's Site</a>.
+            <a href="http://developer.sabre.com">Sabre&reg; Developer's Site</a>.
             <br />
             Client code will consist of classes similar to service stubs in Axis2, Services and PortTypes, allowing
             user to invoke services calls, and accompanying binding classes representing types defined in schemas.
@@ -636,7 +645,7 @@
         <span class="bold"> Developing client in detail </span><br/>
         <p>
             Client development starts with collecting services definitions and schema definitions (WSDL and XSD) files.
-            They are available for Sabre clients on web. Note, that code generation tool expect all the necessary schemas
+            They are available for Sabre&reg; clients on web. Note, that code generation tool expect all the necessary schemas
             to be present in the same directory as WSDL file. So be sure to place there not only the service specific files,
             but also those available as "Common Schemas" asset (they are needed to create SOAP envelope and message correctly).
             <br /><br />
@@ -650,7 +659,7 @@
             <br /><br />
             The next step is to create a client, which will utilize generated classes to access web services.
             This process requires a bit of knowledge how the CXF framework works. This will be covered here briefly. To see
-            a full working example, please refer to the !!!sample project, provided by Sabre Web Services Team (toolkit-cxf-jaxb module).
+            a full working example, please refer to the !!!sample project, provided by Sabre&reg; Web Services Team (toolkit-cxf-jaxb module).
             <br /><br />
             CXF generates two main classes for each service defined in WSDL file:
             <span class="code">&lt;ServiceName&gt;Service extends javax.xml.ws.Service</span> and
@@ -678,7 +687,7 @@
 
             After implementing logic to create requests and handle respones, one must define interceptors for services. Interceptors
             are necessary to get access to full SOAP envelope. Invoking methods on port class allows only to see response body,
-            which is not enough information to successfully consume Sabre Web Services. Typically, one has to access the
+            which is not enough information to successfully consume Sabre&reg; Web Services. Typically, one has to access the
             data in SOAP header, like <span class="code">&lt;eb:MessageHeader&gt;</span>
             (<span class="code">eb:Action</span> element, to check if the message contains correct or error response)
             and <span class="code">&lt;wsse:Security&gt;</span> (to obtain binary security token during session creation).
@@ -700,7 +709,7 @@
             it was created. However, this could be highly undesirable, especially during the development and testing phase,
             as this would be <span class="code">https://webservices.sabre.com/websvc</span> - it's a production endpoint and
             performing any operations on it may generate charges on customer's account and decrement real-time inventory.
-            During development, one would probably use Sabre test system or even mocked service. To change endpoint URL
+            During development, one would probably use Sabre&reg; test system or even mocked service. To change endpoint URL
             used by your service's client, please do as following (or see one of classes in
             <span class="code">com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers</span> package in !!!sample project):
             <br /><br />
@@ -730,7 +739,7 @@
 
     <!-- Spring Web Services -->
 
-    <a name="springws-framework-anchor"></a>
+    <a name="spring-ws-framework-anchor"></a>
     <span class="subheader">Spring Web Services</span><br/><br/> <!-- Framework name -->
     <div class="intend-level-1">
 
@@ -780,7 +789,7 @@
         <span class="bold"> Developing client in detail </span><br/>
         <p>
             When using Spring WS, only schema definitions are required, for developer takes care of creating the message.
-            In fact, the minimal set of schemas required to consume Sabre Web Services consists of request and response
+            In fact, the minimal set of schemas required to consume Sabre&reg; Web Services consists of request and response
             definitions for each service and schemas of security and message headers to build the envelope.
             <br />
             These files should be then compiled to Java classes. !!!sample project uses JAXB2 Maven plugin to achieve this.
@@ -840,12 +849,12 @@
             Callbacks mechanism allows developer to manipulate the message content after it was created, but before it is
             send. Send methods described above have overloaded versions that take one Callback
             parameter. Since Spring WS leaves construction of a message to the developer, it is a good point to
-            add all necessary headers into SOAP message. Sabre Web Services require two custom headers:
+            add all necessary headers into SOAP message. Sabre&reg; Web Services require two custom headers:
             <span class="code">eb:MessageHeader</span> and <span class="code">wsse:Security</span>.
             They can be easily inserted in SOAP Envelope using callback. Callback must implement <span class="code">
             org.springframework.ws.client.core.WebServiceMessageCallback</span> interface and thus implement
             <span class="code">void doWithMessage(WebServiceMessage webServiceMessage)</span> method.
-            The snippet below shows how to use this to compose correct message to work with Sabre Web Services:
+            The snippet below shows how to use this to compose correct message to work with Sabre&reg; Web Services:
         </p>
 
         <p class="snippet">
@@ -869,7 +878,7 @@
         </p>
 
         <p>
-            The !!!sample project uses this approach to create SOAP envelope and invoke Sabre Web Services.
+            The !!!sample project uses this approach to create SOAP envelope and invoke Sabre&reg; Web Services.
         </p>
 
         <p>
@@ -931,7 +940,7 @@
             objects. In that case the marshaller bean must contain information about all used classes and packages.
             It means that all names and identifiers used in JAXB annotations have to be unique. To achieve that,
             code generation tool should be executed with care and may require extensive configuration
-            to avoid names duplication (as Sabre Web Services schemas share many common data structures in every service).
+            to avoid names duplication (as Sabre&reg; Web Services schemas share many common data structures in every service).
         </p>
 
     </div>
@@ -1042,17 +1051,111 @@
         </ul>
 
         <p>
-            Note, that some of the
+            It is important to provide custom binding files for services that requires them. After <span class="code">wsimport</span>
+            is invoked, two kinds of artifacts are created:
         </p>
 
+        <ul>
+            <li>JAXB value types (JAXB-annotated Java classes that represent data types used in schemas)</li>
+            <li>JAX-WS artifacts: Services, Service Endpoint Interfaces and Services Endpoint Implementations (both latter referred to as SEI's)</li>
+        </ul>
 
+        <p>
+            They will be used to develop a client. The first thing to do is to construct objects that will represent
+            a web service request. For each web service call three objects must be constructed: message header,
+            security header containing either credentials (during session creation) or security token (after the session
+            is created) and a request body. <br /><br />
+
+            Next, the Service object (whose class name matches the service name defined in WSDL file) is used to obtain
+            a Service Endpoint Implementation object (whose class name matches port name defined in WSDL file).
+            This object contains a public method that allows to make web service call. The name of this method
+            is the same as operation name, defined in <span class="code">&lt;wsdl:operation&gt;</span> element in
+            <span class="code">&lt;wsdl:binding&gt;</span> section of the WSDL file. <br /><br/>
+
+            This method takes 3 parameters: <span class="code">MessageHeader</span> object wrapped in
+            <span class="code">Holder&lt;MessageHeader&gt;</span>, <span class="code">Security</span> object
+            wrapped in  <span class="code">Holder&lt;Security&gt;</span> and a request body (not wrapped).
+            The <span class="code">Holder&lt;&gt;</span> mechanism allows the parameters to work as both input and output
+            objects. During method invokation they are marshalled and inserted into message, and when the method returns
+            they are obtained from the response message, unmarshalled into objects and placed in <span class="code">Holder</span>s.
+            To get returned objects, use <span class="code">Holder</span> instance's <span class="code">value()</span> method. <br />
+            This is a convenient way of obtaining session token from <span class="code">SessionCreateRQ</span> service's response.
+
+            This example shows how to create a Sabre&reg; session and retrieve session token:
+
+        </p>
+
+        <!-- HTML generated using hilite.me --><div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">MessageHeader</span> <span style="color: #ffffff">header</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">getSessionCreateRQMessageHeader();</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">// create a valid object</span>
+<span style="color: #ffffff">Security</span> <span style="color: #ffffff">security</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">getSecurityHeader();</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">// create a valid object</span>
+<span style="color: #ffffff">SessionCreateRQ</span> <span style="color: #ffffff">requestBody</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">getSessionCreateRQ();</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">//create a valid object</span>
+
+<span style="color: #ffffff">Holder&lt;MessageHeader&gt;</span> <span style="color: #ffffff">headerHolder</span> <span style="color: #ffffff">=</span> <span style="color: #fb660a; font-weight: bold">new</span> <span style="color: #ffffff">Holder&lt;&gt;(header);</span>
+<span style="color: #ffffff">Holder&lt;Security&gt;</span> <span style="color: #ffffff">securityHolder</span> <span style="color: #ffffff">=</span> <span style="color: #fb660a; font-weight: bold">new</span> <span style="color: #ffffff">Holder&lt;&gt;(security);</span>
+
+<span style="color: #ffffff">SessionCreatePortType</span> <span style="color: #ffffff">port</span> <span style="color: #ffffff">=</span> <span style="color: #fb660a; font-weight: bold">new</span> <span style="color: #ffffff">SessionCreateRQService().</span><span style="color: #ff0086; font-weight: bold">getSessionCreatePortType</span><span style="color: #ffffff">();</span>
+
+<span style="color: #ffffff">SessionCreateRS</span> <span style="color: #ffffff">responseBody</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">port.</span><span style="color: #ff0086; font-weight: bold">sessionCreateRQ</span><span style="color: #ffffff">(headerHolder,</span> <span style="color: #ffffff">securityHolder,</span> <span style="color: #ffffff">getRequestBody());</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">// actual web service request</span>
+
+<span style="color: #008800; font-style: italic; background-color: #0f140f">// since now on, holders contain headers from response message</span>
+<span style="color: #ffffff">String</span> <span style="color: #ffffff">sessionToken</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">securityHolder.</span><span style="color: #ff0086; font-weight: bold">value</span><span style="color: #ffffff">().</span><span style="color: #ff0086; font-weight: bold">getBinarySecurityToken</span><span style="color: #ffffff">();</span>
+</pre></td></tr></table></div>
+
+        <p>
+            This pattern holds for every Sabre&reg; Web Service request with <span class="code">wsimport</span>:
+            create header, wrap them into holders, build request object, pass them all to SEI's method, get response object
+            as method's return value and access response's headers (if there's need to).
+        </p>
+
+        <p>
+            SOAP Handlers <br/><br/>
+
+            <span class="code">wsimport</span> provides easy-to-use handlers mechanism. It allows to manipulate the message
+            content after it's created and before it's send (when handling requests) or to handle message after it is
+            received (when handling responses). Using handler gives a developer access to whole message's content.
+            Classes used in handlers reside in <span class="code">javax.xml.soap</span> package and implement
+            <span class="code">org.w3c.dom</span> API, so it's possible to manipulate SOAP envelope elements this way. <br /><br />
+
+            SOAP handlers must implement <span class="code">javax.xml.ws.handler.soap.SOAPHandler</span> interface.
+            The most important method in terms of manipulating the message is <span class="code">public boolean handleMessage(MessageContext context)</span>.
+            One should implement this method in order to do the necessary message handling. <br /><br />
+
+            To add a handler to a web service call described in previous example, simply add the following lines before
+            service call method invokation:
+
+            <!-- HTML generated using hilite.me --><div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">1
+2
+3</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">List</span> <span style="color: #ffffff">&lt;SOAPHandler&gt;</span> <span style="color: #ffffff">handlers</span> <span style="color: #ffffff">=</span> <span style="color: #fb660a; font-weight: bold">new</span> <span style="color: #ffffff">ArrayList&lt;&gt;();</span>
+<span style="color: #ffffff">handlers.</span><span style="color: #ff0086; font-weight: bold">add</span><span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">new</span> <span style="color: #ffffff">YourCustomHandler());</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">// assuming YourCustomHandler implements SOAPHandler</span>
+<span style="color: #ffffff">((BindingProvider)port).</span><span style="color: #ff0086; font-weight: bold">getBinding</span><span style="color: #ffffff">().</span><span style="color: #ff0086; font-weight: bold">setHandlerChain</span><span style="color: #ffffff">(handlers);</span>
+</pre></td></tr></table></div> <br />
+
+        One can read more on handlers in wsimport on <a href="https://jax-ws.java.net/nonav/2.1.1/docs/handlers.html">JAX-WS docs</a>
+        and in <a href="https://jax-ws.java.net/articles/handlers_introduction.html">article on JAX-WS site</a>
+        </p>
+
+        <p>
+            All above concepts are implemented in !!!sample project, in <span class="code">toolkit-wsimport</span> module.
+        </p>
 
         <!-- TODO: decide which phrase to use for this section -->
         <!-- Known issues -->
         <a name="wsimport-known-issues-anchor"></a>
         <span class="bold"> Known issues </span><br/>
         <p>
-
+            Currently wsimport causes no troubles when used to consume Sabre&reg; Web Services. It is a JAX-WS implementation,
+            which is a widely used standard. It also uses JAXB data binding, which is portable, popular and well-documented.
         </p>
 
     </div>
