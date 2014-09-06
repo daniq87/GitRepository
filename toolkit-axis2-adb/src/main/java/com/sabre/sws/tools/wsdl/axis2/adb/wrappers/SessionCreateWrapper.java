@@ -15,6 +15,12 @@ import java.util.logging.Logger;
 
 /**
  * Created by SG0221139 on 7/11/2014.
+ *
+ * Wrapper classes are convenience classes for the purpose of constructing example requests
+ * Below pattern may be used to construct requests accordingly to Sabre client's application
+ * business logic, or may just serve as a demonstration on how to use Axis2 and ADB technologies
+ * to consume Sabre Web Services.
+ *
  */
 public class SessionCreateWrapper extends SessionCreateRQServiceStub {
 

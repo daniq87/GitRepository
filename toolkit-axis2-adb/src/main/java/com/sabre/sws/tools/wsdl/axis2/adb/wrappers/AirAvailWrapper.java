@@ -8,13 +8,23 @@ import com.sabre.sws.tools.wsdl.stubs.adb.OTA_AirAvailServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.rmi.RemoteException;
 
 /**
  * Created by SG0221139 on 7/11/2014.
+ *
+ * Wrapper classes are convenience classes for the purpose of constructing example requests
+ * Below pattern may be used to construct requests accordingly to Sabre client's application
+ * business logic, or may just serve as a demonstration on how to use Axis2 and ADB technologies
+ * to consume Sabre Web Services.
+ *
  */
 public class AirAvailWrapper extends OTA_AirAvailServiceStub {
+
+    private static final Logger LOGGER = LogManager.getLogger(AirAvailWrapper.class);
 
     private final IConfigurationProvider configuration;
     private String version = ServicesVersionsProvider.getOtaAirAvailVersion();
@@ -170,32 +180,36 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
 
         OTA_AirAvailRQ requestBody = getSampleRequestBody( requestIndex );
 
-        System.out.println( "\tExecuting AirAvail call for:" );
+        StringBuffer outputMessageBuffer = new StringBuffer();
 
-        System.out.println( "\t\t" + requestBody
-                .getOriginDestinationInformation()
-                .getFlightSegment()
-                .getDepartureDateTime()
-                .toString()
+        outputMessageBuffer.append("\tExecuting AirAvail call for:");
+
+        outputMessageBuffer.append("\t\t" + requestBody
+                        .getOriginDestinationInformation()
+                        .getFlightSegment()
+                        .getDepartureDateTime()
+                        .toString()
         );
 
-        System.out.println( "\t\tFrom: " +
-                 requestBody
-                    .getOriginDestinationInformation()
-                    .getFlightSegment()
-                    .getOriginLocation()
-                    .getLocationCode()
-                    .toString()
+        outputMessageBuffer.append("\t\tFrom: " +
+                        requestBody
+                                .getOriginDestinationInformation()
+                                .getFlightSegment()
+                                .getOriginLocation()
+                                .getLocationCode()
+                                .toString()
         );
 
-        System.out.println( "\t\tTo: " +
-            requestBody
-                .getOriginDestinationInformation()
-                .getFlightSegment()
-                .getDestinationLocation()
-                .getLocationCode()
-                .toString()
+        outputMessageBuffer.append("\t\tTo: " +
+                        requestBody
+                                .getOriginDestinationInformation()
+                                .getFlightSegment()
+                                .getDestinationLocation()
+                                .getLocationCode()
+                                .toString()
         );
+
+        LOGGER.info( outputMessageBuffer.toString() );
 
         return oTA_AirAvailRQ( requestBody, header, security );
     }

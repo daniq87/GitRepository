@@ -5,6 +5,7 @@ import org.opentravel.www.ota._2002._11.SessionCreateRQDocument;
 
 /**
  * Created by SG0221139 on 7/29/2014.
+ *
  */
 public class SessionCreateRQFactory {
 

@@ -48,7 +48,7 @@ public class PassengerDetailsWrapper extends WebServiceGatewaySupport {
     private PassengerDetailsRQ getRequestBody() {
 
         PassengerDetailsRQ request = new PassengerDetailsRQ();
-        request.setVersion(ServicesVersionsProvider.getPassengerDetailsVersion());
+        request.setVersion(serviceVersion);
 
         PassengerDetailsRQ.IgnoreOnError ignoreOnError = new PassengerDetailsRQ.IgnoreOnError();
         ignoreOnError.setInd( false );

@@ -136,6 +136,23 @@
                             <flattenFiles>true</flattenFiles>
                         </configuration>
                     </execution>
+
+                    <!-- OTA_AirAvailLLSRQ -->
+                    <execution>
+                        <id>PassengerDetailsRQ</id>
+                        <goals>
+                            <goal>wsdl2code</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/PassengerDetailsRQ/PassengerDetails${PassengerDetailsVersion}RQ.wsdl</wsdlFile>
+                            <databindingName>xmlbeans</databindingName>
+                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
+                            <flattenFiles>true</flattenFiles>
+                        </configuration>
+                    </execution>
+
                 </executions>
             </plugin>
 

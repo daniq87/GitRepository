@@ -15,6 +15,7 @@ public class SwsClient {
 
     public static void main( String ... args ) {
 
+        LOGGER.error( "Starting client action..." );
         try {
             new SessionCreateWrapper().openSession();
 

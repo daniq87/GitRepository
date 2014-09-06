@@ -8,6 +8,14 @@ import org.apache.axis2.databinding.types.NonNegativeInteger;
 import static com.sabre.sws.tools.wsdl.stubs.adb.SessionCreateRQServiceStub.*;
 /**
  * Created by SG0221139 on 7/11/2014.
+ *
+ * The purpose of helper classes in this package is to provide ready-to-use elements
+ * for corresponding wrapper classes. These are mostly session and authentication objects,
+ * that represent custom SOAP headers used by Sabre Web Services.
+ *
+ * This is due to code redundancy caused by the way ADB framework maps schema objects
+ * to Java classes. The issue is described in documentation, distributed with this project.
+ *
  */
 public class SessionCreateHelper {
 

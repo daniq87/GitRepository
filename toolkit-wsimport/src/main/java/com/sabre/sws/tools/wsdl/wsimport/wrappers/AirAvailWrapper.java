@@ -217,7 +217,6 @@ public class AirAvailWrapper {
 
         List<Handler> handlers = ((BindingProvider)port).getBinding().getHandlerChain();
 
-
         if( handlers == null ) {
             handlers = new ArrayList<>();
         }

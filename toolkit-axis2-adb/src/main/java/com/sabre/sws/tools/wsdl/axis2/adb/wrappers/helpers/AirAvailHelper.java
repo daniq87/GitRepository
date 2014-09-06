@@ -11,6 +11,14 @@ import static com.sabre.sws.tools.wsdl.stubs.adb.OTA_AirAvailServiceStub.*;
 
 /**
  * Created by SG0221139 on 7/14/2014.
+ *
+ * The purpose of helper classes in this package is to provide ready-to-use elements
+ * for corresponding wrapper classes. These are mostly session and authentication objects,
+ * that represent custom SOAP headers used by Sabre Web Services.
+ *
+ * This is due to code redundancy caused by the way ADB framework maps schema objects
+ * to Java classes. The issue is described in documentation, distributed with this project.
+ *
  */
 public class AirAvailHelper {
 
@@ -59,7 +67,6 @@ public class AirAvailHelper {
         buffer.append( Util.longRandomHexString() );
         String conversationID = buffer.toString();
 
-//        instance.setConversationId( toNonEmptyString( conversationID ) );
         instance.setConversationId( toNonEmptyString( SessionManager.getInstance().getConversationID() ) );
 
         // Set SERVICE element
@@ -92,24 +99,9 @@ public class AirAvailHelper {
 
         OTA_AirAvailRQ instance = new OTA_AirAvailRQ();
 
-        // Populate "OptionalQualifiers" field
-        /*instance.setOptionalQualifiers( new OptionalQualifiers_type0() );
-        instance.getOptionalQualifiers().setAdditionalAvailability(new AdditionalAvailability_type0());
-        instance.getOptionalQualifiers().setFlightQualifiers(new FlightQualifiers_type0());
-        instance.getOptionalQualifiers().getFlightQualifiers().setVendorPrefs(new VendorPrefs_type0());
-        instance.getOptionalQualifiers().setTimeQualifiers(new TimeQualifiers_type0());
-        instance.getOptionalQualifiers().getTimeQualifiers().setArrivalTime(new ArrivalTime_type0());
-        instance.getOptionalQualifiers().getTimeQualifiers().getArrivalTime().setWindowAfter(new Time());
-        instance.getOptionalQualifiers().getTimeQualifiers().getArrivalTime().setWindowBefore(new Time());
-        instance.getOptionalQualifiers().getTimeQualifiers().setDepartureTime( new DepartureTime_type0() );
-        instance.getOptionalQualifiers().getTimeQualifiers().getDepartureTime().setWindowAfter( new Time() {{ setTime( new String() ); }} );
-        instance.getOptionalQualifiers().getTimeQualifiers().getDepartureTime().setWindowBefore( new Time() {{ setTime( new String() ); }} );
-*/
         // Populate "OriginDestinationInformation" filed
         instance.setOriginDestinationInformation( new OriginDestinationInformation_type0() );
         instance.getOriginDestinationInformation().setFlightSegment( new FlightSegment_type0() );
-//        instance.getOriginDestinationInformation().getFlightSegment().setConnectionLocations( new ConnectionLocations_type0() );
-//        instance.getOriginDestinationInformation().getFlightSegment().getConnectionLocations().addConnectionLocation( new ConnectionLocation_type0() );
         instance.getOriginDestinationInformation().getFlightSegment().setDestinationLocation( new DestinationLocation_type0() );
         instance.getOriginDestinationInformation().getFlightSegment().setOriginLocation( new OriginLocation_type0() );
 
