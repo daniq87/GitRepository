@@ -144,8 +144,9 @@
         <a name="adb-execution-requirements-anchor"></a>
         <span class="bold"> Execution requirements </span><br/>
         <p>
-            As Sabre&reg; Web Services definitions (provided in the form of WSDL files) use corresponding types of data structures, proper XML Schema files must be provided in same location as the WSDL file.
-            It includes common schemas for SOAP communication protocol (available as Common Schemas asset at <a href="http://developer.sabre.com">http://developer.sabre.com</a> ) and request/response object pairs definition
+            As Sabre&reg; Web Services definitions (provided in the form of WSDL files) use corresponding types of data
+            structures, proper XML Schema files must be provided in the same location as the WSDL file.
+            It includes common schemas for SOAP communication protocol (available as Common Schemas resource at <a href="http://developer.sabre.com">http://developer.sabre.com</a> ) and request/response object pairs definition
             (also available at <a href="http://developer.sabre.com">http://developer.sabre.com</a>).
         </p>
 
@@ -211,17 +212,22 @@
         <a name="xmlbeans-using-anchor"></a>
         <span class="bold"> Using </span><br/>
         <p>
-            Just like ADB, XMLBeans data binding is available in Axis2 via <span class="code">WSDL2Java</span> command line tool
-            or <span class="code">wsdl2code</span> Maven plugin. They both provide same functionality and require similar
-            configuration.
+            Just like ADB, XMLBeans data binding is available in Axis2 and CXF via <span class="code">WSDL2Java</span> command line tool
+            or <span class="code">wsdl2code</span> Maven plugin in Axis2 or <span class="code">cxf-codegen-plugin</span>
+            in CXF. They both provide same functionality and require similar configuration. <br /><br />
+
+            To read about using XMLBeans binding from command line, go to
+            <a href="http://cxf.apache.org/docs/wsdl-to-java.html">WSDL 2 Java section on CXF website</a>.<br />
+            Maven plugin is described in <a href="http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html">
+            it's own section</a>
         </p>
 
         <!-- Execution requirements -->
         <a name="xmlbeans-execution-requirements-anchor"></a>
         <span class="bold"> Execution requirements </span><br/>
         <p>
-            As XMLBeans framework is invoked as part of Axis2 client generation, for data binding purposes, the flow is similar to
-            the one described in ADB section. The main (and in most cases, the only) change would be to change the data binding option
+            When using XMLBeans framework , the flow is similar to the one described in ADB section. The main
+            (and in most cases, the only) change would be to change the data binding option
             (the <span class="code">-d xmlbeans</span> command line option or
             <span class="code">&lt;databindingName&gt;xmlbeans&lt;/databindingName&gt;</span> in Maven configuration).
             Any additional files referenced from WSDL file must reside with it in it's directory.
@@ -258,7 +264,7 @@
         <span class="bold"> Known issues </span><br/>
         <p>
             Although using XMLBeans data binding results in more clear and easy-to-use code, it has a serious issue,
-            which cause it almost impossible to use with some of the Sabre&reg; Web Services. <br /> <br />
+            which makes it almost impossible to use with some of the Sabre&reg; Web Services. <br /> <br />
 
             To reflect the structure of XML Schema Definition, XMLBeans creates a series of nested interfaces.
             Each nested type will have a corresponding nested interface. The problem is, that at compile time the Java compiler
@@ -277,7 +283,7 @@
             when using any common file system. On the other hand, changing operating system or switching to niche filesystem
             just to use one particular XML binding framework (while there are many others) seems to be an exaggeration. <br /><br />
 
-            For the record, it should be mentioned that there is actually a way to use XMLBeans on any common filesystem
+            <!--For the record, it should be mentioned that there is actually a way to use XMLBeans on any common filesystem
             and avoid long file names issue. However, it is a workaround that requires developing specialized tools,
             like custom compilers or Maven plugins, that should be next incorporated into application build process.
             The trick is, that JVM itself does not preserve the 255 characters identifier length limit (it uses
@@ -289,9 +295,9 @@
             customized in-memory classloader. Another way is to compile problematic source code in-memory and redirect the output
             to byte arrays, which then would be used to create a JAR containing created classes. That way the storing phase would
             be omitted, as the only file written to filesystem would be the JAR, which holds no name limitations. <br />
-            Although those ways seem to solve the problem (they were not tested), once again, creaing custom compilers
+            Although those ways seem to solve the problem (they were not tested), once again, creating custom compilers
             and classloaders does not seem to be an adequate way of solving a problem caused by wrong choice of
-            data binding framework for web services application.<br/><br />
+            data binding framework for web services application.<br/><br />-->
 
             Because of the facts mentioned above, <span class="warning">XMLBeans is not a recommended databinding framework
     for working with Sabre&reg; Web Services neither.</span>
@@ -319,12 +325,16 @@
         <span class="bold"> Using </span><br/>
         <p>
             The main ability of JAXB, creating Java classes from XSD schemas, is available through
-            <span class="code">xjc</span> schema compiler, which may accessed in a variety of ways.
+            <span class="code">xjc</span> schema compiler, which may accessed in a variety of ways. <br />
+            Firstly, it is distributed as stand-alone command line tool with JDK since version 6. To use it this way,
+            just type <span class="code">xjc path/to/schema/file.xsd [-options]</span>. To see full list of xjc command line tool
+            options, check <a href="https://jaxb.java.net/2.2.4/docs/xjc.html">XJC documentation</a>.<br />
+
             When using JAXB as data binding framework to work with Apache CXF, it is generally advised to use
-            <span class="code">cxf-codegen-plugin</span> maven plugin with proper binding option.
-            <br /><br />
-            However, <span class="code">xjc</span> is also available as stand-alone command line tool distributed with JDK (1.6 or higher)
-            or via one of JAXB maven plugins:
+            <span class="code">cxf-codegen-plugin</span> maven plugin with proper binding option. <br />
+
+            <br />
+            <span class="code">xjc</span> is also available as JAXB maven plugins:
         </p>
         <ul>
             <li class="code">
@@ -346,8 +356,9 @@
         <a name="jaxb-execution-requirements-anchor"></a>
         <span class="bold"> Execution requirements </span><br/>
         <p>
-            Just like with two former data bindings, the main and only requirement is to provide all necessary files and
-            their directories. In this case, along with schema and WSDL files, custom bindings (in form of .jxb files) should
+            Just like with two former data bindings <!-- TODO: change, if it will come as first-->, the main and only
+            requirement is to provide all necessary files and their directories. In this case, along with schema and
+            WSDL files, custom bindings (in form of .jxb files) should
             be delivered (via proper execution parameter). <br /><br />
 
             Some of Sabre&reg; Web services will require specyfing custom JAXB binding file during schema compilation. This is
@@ -358,7 +369,7 @@
         </p>
 
         <p>
-            <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">1
+            <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table style="color: black;"><tr><td><pre style="margin: 0; line-height: 125%">1
 2
 3
 4
@@ -395,7 +406,7 @@
             attribute from schema to package name. For example, type <span class="code">PassengerDetailsRQ</span>, defined in
             <span class="code">http://webservices.sabre.com/sabreXML/2011/10</span> target namespace will be compiled (with
             default settings) to <span class="code">com.sabre.webservices.sabrexml._2011._10.PassengerDetailsRQ</span> class.
-            This means no classes duplication and ability to reuse code throughout the application. JAXB generates nested public
+            This means no class duplication and the ability to reuse the code throughout the application. JAXB generates nested public
             static classes to reflect the structure of a schema. Bindings of nodes and package names may be customized using binding files
             (<a href="https://jaxb.java.net/guide/Customizing_Java_packages.html">Check JAXB's section on Metro Project web page</a> for hints about package naming customization). <br /><br />
 
@@ -495,10 +506,11 @@
                 <li>As maven plugin</li>
             </ul>
         <p>
-            Usage of all of the above is similar. It requires specifying location of the WSDL and XML Schema files, output location for
-            the generated sources and package name for generated classes. Unless told differently, ADB generates one big stub class
-            per one web service definition (or, alternatively, one stub java class per one WSDL file). Parameters are passed as
-            command line options when running from command line. In case of invoking via Ant or Maven tool they are specified in adequate
+            Usage of all of the above is similar. It requires specifying location of the WSDL and XML Schema files,
+            output location for the generated sources and package name for generated classes. Unless told differently,
+            ADB (the default data binding for Axis2) generates one big stub class per one web service definition
+            (or, alternatively, one stub java class per one WSDL file). Parameters are passed ascommand line options
+            when running from command line. In case of invoking via Ant or Maven tool they are specified in adequate
             XML file (build.xml or pom.xml). <br /><br />
 
             Generating clients via command line tool is done by executing the following script: <br /><br/>
@@ -551,16 +563,24 @@
         <p>
             The example flow may look something like this:
         </p>
-        <p class="snippet">
-            SOAPHeader header = msgContext.getEnvelope().getHeader(); <br />
-            Iterator headerBlocksIterator = header.getHeadersToProcess(null); <br /><br />
-            while( headerBlocksIterator.hasNext() ) { <br />
-            &emsp;&emsp;SOAPHeaderBlock headerBlock = (SOAPHeaderBlock) headerBlocksIterator.next(); <br />
-            &emsp;&emsp;// process header block <br />
-            &emsp;&emsp;headerBlock.setProcessed();<br />
-            }<br />
-        </p>
+        <!-- HTML generated using hilite.me --><div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">SOAPHeader</span> <span style="color: #ffffff">header</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">msgContext.</span><span style="color: #ff0086; font-weight: bold">getEnvelope</span><span style="color: #ffffff">().</span><span style="color: #ff0086; font-weight: bold">getHeader</span><span style="color: #ffffff">();</span>
+<span style="color: #ffffff">Iterator</span> <span style="color: #ffffff">headerBlocksIterator</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">header.</span><span style="color: #ff0086; font-weight: bold">getHeadersToProcess</span><span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">null</span><span style="color: #ffffff">);</span>
 
+<span style="color: #fb660a; font-weight: bold">while</span><span style="color: #ffffff">(</span> <span style="color: #ffffff">headerBlocksIterator.</span><span style="color: #ff0086; font-weight: bold">hasNext</span><span style="color: #ffffff">()</span> <span style="color: #ffffff">)</span> <span style="color: #ffffff">{</span>
+<span style="color: #ffffff">  SOAPHeaderBlock</span> <span style="color: #ffffff">headerBlock</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">(SOAPHeaderBlock)</span> <span style="color: #ffffff">headerBlocksIterator.</span><span style="color: #ff0086; font-weight: bold">next</span><span style="color: #ffffff">();</span>
+<span style="color: #ffffff">  </span><span style="color: #008800; font-style: italic; background-color: #0f140f">// process header block</span>
+<span style="color: #ffffff">  headerBlock.</span><span style="color: #ff0086; font-weight: bold">setProcessed</span><span style="color: #ffffff">();</span>
+<span style="color: #ffffff">}</span>
+</pre></td></tr></table></div>
+
+        <br />
 
         <!-- TODO: decide which phrase to use for this section -->
         <!-- Known issues -->
@@ -582,15 +602,17 @@
         <span class="bold"> Overview </span><br/>
         <p>
 
-            Apache CXF is another framework designed strictly for the purpose of working with web services.
+            Apache CXF is another framework designed strictly for the purpose of working with web services. It implements the JAX-WS
+            specification.
             In general, it provides same functionality as Axis2, which means the ability to send, process and receive messages,
             both to and from services. Similarly, CXF allows user to develop both client and server side application.
-            It uses contract-first approach, which means creation of service implementation code based on service definition
+            It uses <span class="italic">contract-first</span> approach, which means creation of service implementation code based on service definition
             (in form ow WSDL files and schema definition). What it means for Sabre&reg; Web Services consumer, is that Java client
             code can be generated easily based on WSDL and XSD files, available on
             <a href="http://developer.sabre.com">Sabre&reg; Developer's Site</a>.
             <br />
-            Client code will consist of classes similar to service stubs in Axis2, Services and PortTypes, allowing
+            Client code will consist of classes similar to service stubs in Axis2, Services and PortTypes (which represent
+            JAX-WS service and service endpoint implementation artifacts, respectively), allowing
             user to invoke services calls, and accompanying binding classes representing types defined in schemas.
             Developer's role is to construct an object representing request to be invoked, pass it to a method representing
             service call, and then to process the response.
@@ -601,11 +623,21 @@
         <a name="cxf-using-anchor"></a>
         <span class="bold"> Using </span><br/><br/>
         <p>
+            To use CXF framework in a Java project, one can use either source or binary distribution.
+            They are both available at <a href="http://cxf.apache.org/download.html">CXF's download site</a>.<br />
+            It is also possible to use CXF via Maven dependency management system. It is actually the best way,
+            as it requires the least configuration effort. Dependencies that need to be placed in POM in order to
+            use Apache CXF are described <a href="http://cxf.apache.org/docs/using-cxf-with-maven.html">in project's documentation</a>. <br/><br />
+
+            Generally, using CXF to develop Sabre&reg; Web Services client application boils down to two separate things:
+            generating all the necessery Java classes from service definition in WSDL file (using CXF code generation feature)
+            and using CXF's classes in your client code to make web services call. <br />
+
             CXF's code generation feature may be used in one of three ways: <br />
         </p>
 
         <ul>
-            <li>As command line tool</li>
+            <li>As a command line tool</li>
             <li>As Maven goal</li>
             <li>Via WSDL2Java API at runtime</li>
         </ul>
@@ -631,7 +663,7 @@
             <!-- Typical flow list -->
             <ol>
                 <li>Collecting all necessary files (WSDL, XML and XSD) for each service</li>
-                <li>Generating services stubs code, using one of the data binding frameworks (e.g. XMLBeans, JAXB)</li>
+                <li>Generating services stubs code (JAX-WS artifacts), using one of the data binding frameworks (e.g. XMLBeans, JAXB)</li>
                 <li>Creating client, which will use generated code</li>
                 <li>Providing interceptors for messages</li>
                 <li>Invoking services via adequate methods calls</li>
@@ -647,23 +679,25 @@
             Client development starts with collecting services definitions and schema definitions (WSDL and XSD) files.
             They are available for Sabre&reg; clients on web. Note, that code generation tool expect all the necessary schemas
             to be present in the same directory as WSDL file. So be sure to place there not only the service specific files,
-            but also those available as "Common Schemas" asset (they are needed to create SOAP envelope and message correctly).
+            but also those available as "Common Schemas" resource (they are needed to create SOAP envelope and message correctly).
             <br /><br />
             When required files are gathered, <span class="code">wsdl2java</span> tool can be used to generate client code.
             Check documentation mentioned before for details on how to use this tool.
             <br /><br />
             On this stage, developer must decide which data binding framework to use for client code generation. The recommended
             one is JAXB, as it is quite easy to use and elastic, yet powerful. The ADB and XMLBeans frameworks have disadvantages
-            described in previous sections. However, the proper use of JAXB data binding requires taking additional steps
+            described in their sections. The proper use of JAXB data binding requires taking additional steps
             (creating custom binding files), as described in next section. However, this is not difficult thing to do.
+            The structure of binding file and it's usage is desribed in <a href="#jaxb-execution-requirements-anchor">JAXB section of this document.</a>
             <br /><br />
             The next step is to create a client, which will utilize generated classes to access web services.
-            This process requires a bit of knowledge how the CXF framework works. This will be covered here briefly. To see
-            a full working example, please refer to the !!!sample project, provided by Sabre&reg; Web Services Team (toolkit-cxf-jaxb module).
+            This process requires a bit of knowledge about how the CXF framework works. This will be covered here briefly. To see
+            a full working example, please refer to the !!!sample project, provided by Sabre&reg; Web Services Team
+            (<span class="code">toolkit-cxf-jaxb</span> module).
             <br /><br />
-            CXF generates two main classes for each service defined in WSDL file:
-            <span class="code">&lt;ServiceName&gt;Service extends javax.xml.ws.Service</span> and
-            <span class="code">&lt;ServiceName&gt;PortType</span>.
+            CXF generates two main data types (JAX-WS asrtifacts) for each service defined in WSDL file:
+            <span class="code">&lt;ServiceName&gt;Service extends javax.xml.ws.Service</span> class and
+            <span class="code">&lt;ServiceName&gt;PortType</span> interface.
             <br /><br />
             The first one provides two useful components:
         </p>
@@ -676,22 +710,28 @@
         </ul>
 
         <p>
+            The latter method takes 3 parameters: MessageHeader object wrapped in Holder<MessageHeader>,
+            Security object wrapped in Holder<Security> and a request body (not wrapped). The Holder<> mechanism
+            (based on javax.xml.ws.Holder class) allows
+            the parameters to work as both input and output objects. During method invokation they are marshalled
+            and inserted into message, and when the method returns they are obtained from the response message,
+            unmarshalled into objects and placed in Holders. To get returned objects, use Holder instance's value() method.
+
             So, based on !!!sample project, the invokation of Sabre's OTA_AirAvailLLSRQ would look something like this:
             <br /><br />
-            <span class="code">
-            &emsp;&emsp;OTAAirAvailService service = new OTAAirAvailService(); <br />
-            &emsp;&emsp;OTAAirAvailPortType port = service.getOTAAirAvailPortType(); <br />
-            &emsp;&emsp;OTAAirAvailRS serviceResponse = port.otaAirAvail(...); // set correct arguments <br />
-            </span>
-            <br />
+            <!-- HTML generated using hilite.me --><div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">1
+2
+3</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">  OTAAirAvailService</span> <span style="color: #ffffff">service</span> <span style="color: #ffffff">=</span> <span style="color: #fb660a; font-weight: bold">new</span> <span style="color: #ffffff">OTAAirAvailService();</span>
+<span style="color: #ffffff">  OTAAirAvailPortType</span> <span style="color: #ffffff">port</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">service.</span><span style="color: #ff0086; font-weight: bold">getOTAAirAvailPortType</span><span style="color: #ffffff">();</span>
+<span style="color: #ffffff">  OTAAirAvailRS</span> <span style="color: #ffffff">serviceResponse</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">port.</span><span style="color: #ff0086; font-weight: bold">otaAirAvail</span><span style="color: #ffffff">(...);</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">// set correct arguments </span>
+</pre></td></tr></table></div>
+
+        <br />
 
             After implementing logic to create requests and handle respones, one must define interceptors for services. Interceptors
             are necessary to get access to full SOAP envelope. Invoking methods on port class allows only to see response body,
-            which is not enough information to successfully consume Sabre&reg; Web Services. Typically, one has to access the
-            data in SOAP header, like <span class="code">&lt;eb:MessageHeader&gt;</span>
-            (<span class="code">eb:Action</span> element, to check if the message contains correct or error response)
-            and <span class="code">&lt;wsse:Security&gt;</span> (to obtain binary security token during session creation).
-            Interceptors allow exactly to do that.
+            which is not enough information to successfully consume Sabre&reg; Web Services. Typically, one would like to
+            access the data in SOAP envelope and header. Interceptors allow exactly to do that.
             <br/>
             In the !!!sample project, interceptor classes are derived from
             <span class="code">org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor</span> class, which
@@ -711,18 +751,23 @@
             performing any operations on it may generate charges on customer's account and decrement real-time inventory.
             During development, one would probably use Sabre&reg; test system or even mocked service. To change endpoint URL
             used by your service's client, please do as following (or see one of classes in
-            <span class="code">com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers</span> package in !!!sample project):
+            <span class="code">com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers</span> package in <span class="code">toolkit-cxf-jaxb</span>
+            module of a !!!sample project):
             <br /><br />
 
-            <span class="code">
-            &emsp;&emsp;String endpointURL = "http://some.test.url/svc"; <br />
-            &emsp;&emsp;OTAAirAvailService service = new OTAAirAvailService(); <br />
-            &emsp;&emsp;OTAAirAvailPortType port = service.getOTAAirAvailPortType(); <br />
-            &emsp;&emsp;BindingProvider bindingProvider = (BindingProvider) port;<br />
-            &emsp;&emsp;bindingProvider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);<br />
-            </span>
+                <!-- HTML generated using hilite.me --><div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="color: yellow;margin: 0; line-height: 125%">1
+2
+3
+4
+5</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">  String</span> <span style="color: #ffffff">endpointURL</span> <span style="color: #ffffff">=</span> <span style="color: #0086d2">&quot;http://some.test.url/svc&quot;</span><span style="color: #ffffff">;</span>
+<span style="color: #ffffff">  OTAAirAvailService</span> <span style="color: #ffffff">service</span> <span style="color: #ffffff">=</span> <span style="color: #fb660a; font-weight: bold">new</span> <span style="color: #ffffff">OTAAirAvailService();</span>
+<span style="color: #ffffff">  OTAAirAvailPortType</span> <span style="color: #ffffff">port</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">service.</span><span style="color: #ff0086; font-weight: bold">getOTAAirAvailPortType</span><span style="color: #ffffff">();</span>
+<span style="color: #ffffff">  BindingProvider</span> <span style="color: #ffffff">bindingProvider</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">(BindingProvider)</span> <span style="color: #ffffff">port;</span>
+<span style="color: #ffffff">  bindingProvider.</span><span style="color: #ff0086; font-weight: bold">getRequestContext</span><span style="color: #ffffff">().</span><span style="color: #ff0086; font-weight: bold">put</span><span style="color: #ffffff">(BindingProvider.</span><span style="color: #ff0086; font-weight: bold">ENDPOINT_ADDRESS_PROPERTY</span><span style="color: #ffffff">,</span> <span style="color: #ffffff">endpointURL);</span>
+</pre></td></tr></table></div>
 
-            <br /><br />
+
+                <br /><br />
             After all these steps are taken, one has to create a valid request object and pass it to port's method corresponding
             to the desired service, along with proper header holders (as in the !!!sample project).
             The method will return response object, which may be further processed to extract required information from it.
@@ -733,7 +778,7 @@
         <a name="cxf-known-issues-anchor"></a>
         <span class="bold"> Known issues </span><br/>
         <p>
-
+            <span class="comment">A może by tak zmienić tę sekcję na "summary"?</span>
         </p>
     </div>
 
@@ -749,7 +794,7 @@
         <p>
             Spring Web Services (Spring WS) is part of the Spring Framework responsible for working with web services.
             It benefits from that fact in many ways, simplifying and automating many things. However, Spring WS has a bit
-            different approach to building web services than previously described frameworks - it works on lower level,
+            different approach to building web services than previously described frameworks - it works on a lower level,
             exposing to user things, that they do behind the scenes. It gives more control over the process to the developer,
             but requires more effort.
             <br /><br />
@@ -857,25 +902,41 @@
             The snippet below shows how to use this to compose correct message to work with Sabre&reg; Web Services:
         </p>
 
-        <p class="snippet">
-            public class HeaderComposingCallback implements WebServiceMessageCallback { <br />
-            &emsp;@Override <br />
-            &emsp;public void doWithMessage(WebServiceMessage webServiceMessage) throws IOException, TransformerException {<br />
-            &emsp;&emsp;&emsp;MessageHeader header = ... // get MessageHeader object<br />
-            &emsp;&emsp;&emsp;Security security = ... // get Security object<br /><br />
+        <!-- HTML generated using hilite.me --><div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #fb660a; font-weight: bold">public</span> <span style="color: #fb660a; font-weight: bold">class</span> <span style="color: #ffffff">HeaderComposingCallback</span> <span style="color: #fb660a; font-weight: bold">implements</span> <span style="color: #ffffff">WebServiceMessageCallback</span> <span style="color: #ffffff">{</span>
+<span style="color: #ffffff"> @Override</span>
+<span style="color: #ffffff"> </span><span style="color: #fb660a; font-weight: bold">public</span> <span style="color: #cdcaa9; font-weight: bold">void</span> <span style="color: #ffffff">doWithMessage(WebServiceMessage</span> <span style="color: #ffffff">webServiceMessage)</span> <span style="color: #fb660a; font-weight: bold">throws</span> <span style="color: #ffffff">IOException,</span> <span style="color: #ffffff">TransformerException</span> <span style="color: #ffffff">{</span>
+<span style="color: #ffffff">   MessageHeader</span> <span style="color: #ffffff">header</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">...</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">// get MessageHeader object</span>
+<span style="color: #ffffff">   Security</span> <span style="color: #ffffff">security</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">...</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">// get Security object</span>
 
-            &emsp;&emsp;&emsp;StringBuilder builder = new StringBuilder();<br />
-            &emsp;&emsp;&emsp;builder.append(header.getClass().getPackage().getName()).append(":");<br />
-            &emsp;&emsp;&emsp;builder.append(security.getClass().getPackage().getName());<br />
-            &emsp;&emsp;&emsp;Jaxb2Marshaller marshaller = new Jaxb2Marshaller();<br />
-            &emsp;&emsp;&emsp;marshaller.setContextPath(builder.toString());<br /><br/>
+<span style="color: #ffffff">   StringBuilder</span> <span style="color: #ffffff">builder</span> <span style="color: #ffffff">=</span> <span style="color: #fb660a; font-weight: bold">new</span> <span style="color: #ffffff">StringBuilder();</span>
+<span style="color: #ffffff">   builder.</span><span style="color: #ff0086; font-weight: bold">append</span><span style="color: #ffffff">(header.</span><span style="color: #ff0086; font-weight: bold">getClass</span><span style="color: #ffffff">().</span><span style="color: #ff0086; font-weight: bold">getPackage</span><span style="color: #ffffff">().</span><span style="color: #ff0086; font-weight: bold">getName</span><span style="color: #ffffff">()).</span><span style="color: #ff0086; font-weight: bold">append</span><span style="color: #ffffff">(</span><span style="color: #0086d2">&quot;:&quot;</span><span style="color: #ffffff">);</span>
+<span style="color: #ffffff">   builder.</span><span style="color: #ff0086; font-weight: bold">append</span><span style="color: #ffffff">(security.</span><span style="color: #ff0086; font-weight: bold">getClass</span><span style="color: #ffffff">().</span><span style="color: #ff0086; font-weight: bold">getPackage</span><span style="color: #ffffff">().</span><span style="color: #ff0086; font-weight: bold">getName</span><span style="color: #ffffff">());</span>
+<span style="color: #ffffff">   Jaxb2Marshaller</span> <span style="color: #ffffff">marshaller</span> <span style="color: #ffffff">=</span> <span style="color: #fb660a; font-weight: bold">new</span> <span style="color: #ffffff">Jaxb2Marshaller();</span>
+<span style="color: #ffffff">   marshaller.</span><span style="color: #ff0086; font-weight: bold">setContextPath</span><span style="color: #ffffff">(builder.</span><span style="color: #ff0086; font-weight: bold">toString</span><span style="color: #ffffff">());</span>
 
-            &emsp;&emsp;&emsp;SoapHeader soapHeader = ((SoapMessage)webServiceMessage).getSoapHeader();<br />
-            &emsp;&emsp;&emsp;marshaller.marshal(header, soapHeader.getResult());<br />
-            &emsp;&emsp;&emsp;marshaller.marshal(security, soapHeader.getResult());<br />
-            &emsp;}<br />
-            }<br />
-        </p>
+<span style="color: #ffffff">   SoapHeader</span> <span style="color: #ffffff">soapHeader</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">((SoapMessage)webServiceMessage).</span><span style="color: #ff0086; font-weight: bold">getSoapHeader</span><span style="color: #ffffff">();</span>
+<span style="color: #ffffff">   marshaller.</span><span style="color: #ff0086; font-weight: bold">marshal</span><span style="color: #ffffff">(header,</span> <span style="color: #ffffff">soapHeader.</span><span style="color: #ff0086; font-weight: bold">getResult</span><span style="color: #ffffff">());</span>
+<span style="color: #ffffff">   marshaller.</span><span style="color: #ff0086; font-weight: bold">marshal</span><span style="color: #ffffff">(security,</span> <span style="color: #ffffff">soapHeader.</span><span style="color: #ff0086; font-weight: bold">getResult</span><span style="color: #ffffff">());</span>
+<span style="color: #ffffff"> }</span>
+<span style="color: #ffffff">}</span>
+</pre></td></tr></table></div>
+
 
         <p>
             The !!!sample project uses this approach to create SOAP envelope and invoke Sabre&reg; Web Services.
@@ -886,7 +947,7 @@
         </p>
 
         <p>
-            Spring Web Services provides also the interceptors mechanism. Using interceptors one may gain access
+            Spring Web Services provides also the interceptors mechanism. Using interceptors, one may gain access
             to <span class="code">MessageContext</span> object, which contains information about request and
             response messages, message exchange properties, endpoint and other useful data. As the interceptor
             allows to handle response message, it is a good mean of obtaining header information from it.
@@ -910,19 +971,25 @@
             code that need to be placed in <span class="code">handleResponse(MessageContext messageContext)</span> method:
         </p>
 
-        <p class="snippet">
+        <!-- HTML generated using hilite.me --><div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8
+9</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #ffffff"> SoapMessage</span> <span style="color: #ffffff">message</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">(SoapMessage)</span> <span style="color: #ffffff">messageContext.</span><span style="color: #ff0086; font-weight: bold">getResponse</span><span style="color: #ffffff">();</span>
+<span style="color: #ffffff"> Source</span> <span style="color: #ffffff">securitySource</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">message.</span><span style="color: #ff0086; font-weight: bold">getSoapHeader</span><span style="color: #ffffff">().</span><span style="color: #ff0086; font-weight: bold">examineHeaderElements</span><span style="color: #ffffff">(securityQName).</span><span style="color: #ff0086; font-weight: bold">next</span><span style="color: #ffffff">().</span><span style="color: #ff0086; font-weight: bold">getSource</span><span style="color: #ffffff">();</span>
+<span style="color: #ffffff"> Source</span> <span style="color: #ffffff">headerSource</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">message.</span><span style="color: #ff0086; font-weight: bold">getSoapHeader</span><span style="color: #ffffff">().</span><span style="color: #ff0086; font-weight: bold">examineHeaderElements</span><span style="color: #ffffff">(headerQName).</span><span style="color: #ff0086; font-weight: bold">next</span><span style="color: #ffffff">().</span><span style="color: #ff0086; font-weight: bold">getSource</span><span style="color: #ffffff">();</span>
+<span style="color: #ffffff"> Jaxb2Marshaller</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">...</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">// create marshaller as in example above</span>
+<span style="color: #ffffff"> Security</span> <span style="color: #ffffff">security</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">(Security)</span> <span style="color: #ffffff">marshaller.</span><span style="color: #ff0086; font-weight: bold">unmarshal</span><span style="color: #ffffff">(securitySource);</span>
+<span style="color: #ffffff"> MessageHeader</span> <span style="color: #ffffff">header</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">(MessageHeader)</span> <span style="color: #ffffff">marshaller.</span><span style="color: #ff0086; font-weight: bold">unmarshal</span><span style="color: #ffffff">(headerSource);</span>
 
-            &emsp;SoapMessage message = (SoapMessage) messageContext.getResponse();<br />
-            &emsp;Source securitySource = message.getSoapHeader().examineHeaderElements(securityQName).next().getSource();<br />
-            &emsp;Source headerSource = message.getSoapHeader().examineHeaderElements(headerQName).next().getSource();<br />
+<span style="color: #ffffff"> String</span> <span style="color: #ffffff">token</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">security.</span><span style="color: #ff0086; font-weight: bold">getBinarySecurityToken</span><span style="color: #ffffff">();</span>
+<span style="color: #ffffff"> String</span> <span style="color: #ffffff">conversationId</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">header.</span><span style="color: #ff0086; font-weight: bold">getConversationId</span><span style="color: #ffffff">();</span>
+</pre></td></tr></table></div>
 
-            &emsp;Jaxb2Marshaller = ... // create marshaller as in example above<br />
-
-            &emsp;Security security = (Security) marshaller.unmarshal(securitySource);<br />
-            &emsp;MessageHeader header = (MessageHeader) marshaller.unmarshal(headerSource);<br /><br />
-            &emsp;String token = security.getBinarySecurityToken();<br />
-            &emsp;String conversationId = header.getConversationId();<br />
-        </p>
 
         <p>
             To see a full working example of interceptor use, refer to !!!sample project, <span class="code">toolkit-spring-ws</span>
@@ -1026,7 +1093,7 @@
             they allow to make web service call. <br /><br />
 
             User may specify additional options during <span class="code">wsimport</span> execution.
-            Most important options are:
+            The most common options are:
         </p>
         <ul>
             <li><span class="code">-d &lt;directory&gt;&thinsp; </span>  - specifies output directory for generated files</li>
@@ -1116,6 +1183,16 @@
             This pattern holds for every Sabre&reg; Web Service request with <span class="code">wsimport</span>:
             create header, wrap them into holders, build request object, pass them all to SEI's method, get response object
             as method's return value and access response's headers (if there's need to).
+            <br /><br />
+            Note one important thing - by default, port class will use the endpoint URL specified in WSDL file, from which
+            it was created. However, this could be highly undesirable, especially during the development and testing phase,
+            as this would be <span class="code">https://webservices.sabre.com/websvc</span> - it's a production endpoint and
+            performing any operations on it may generate charges on customer's account and decrement real-time inventory.
+            During development, one would probably use Sabre&reg; test system or even mocked service. To change endpoint URL
+            used by your service's client, please do as following (or see one of classes in
+            <span class="code">com.sabre.sws.tools.wsdl.wsimport.wrappers</span> package in
+            <span class="code">toolkit-wsimport</span> !!!sample project):
+            <br /><br />
         </p>
 
         <p>

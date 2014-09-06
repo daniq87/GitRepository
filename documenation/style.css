@@ -82,3 +82,7 @@ li {
     font-style: italic;
     color: crimson;
 }
+
+table {
+    color: yellow;
+}
