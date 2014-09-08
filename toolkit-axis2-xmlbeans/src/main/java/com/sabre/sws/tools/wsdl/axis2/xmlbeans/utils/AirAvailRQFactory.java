@@ -7,6 +7,10 @@ import com.sabre.webservices.sabrexml._2011._10.OTAAirAvailRQDocument;
 
 /**
  * Created by SG0221139 on 9/6/2014.
+ *
+ * This class provides a method, that produces four distinct request bodies for OTA_AirAvailLLSRQ service.
+ * For each of four possible parameter value (enum AirAvailRequests) a corresponding request object is return.
+ *
  */
 public class AirAvailRQFactory {
 
@@ -22,38 +26,111 @@ public class AirAvailRQFactory {
         switch( requestType ) {
 
             case TWO_POINTS_WITH_DEPARTURE_DATE:
-                getTwoPointWithDepartureDateRequest( otaAirAvailRQ );
+                makeTwoPointWithDepartureDateRequest( otaAirAvailRQ );
                 break;
 
             case TWO_POINTS_WITH_DEPARTURE_HOUR:
-                getTwoPointsWithDepartureHourRequest( otaAirAvailRQ );
+                makeTwoPointsWithDepartureHourRequest( otaAirAvailRQ );
                 break;
 
             case TWO_POINTS_WITH_VENDOR_PREFS:
-                getTwoPointsWithVendorPrefsRequest( otaAirAvailRQ );
+                makeTwoPointsWithVendorPrefsRequest( otaAirAvailRQ );
                 break;
 
             case MULTILEG_FLIGHT_SEGMENT_WITH_VENDOR_PREFS:
-                getMultilegFlightSegmentWithVendorPrefsRequest( otaAirAvailRQ );
+                makeMultilegFlightSegmentWithVendorPrefsRequest( otaAirAvailRQ );
                 break;
         }
 
         return instance;
     }
 
-    private static void getTwoPointWithDepartureDateRequest( OTAAirAvailRQDocument.OTAAirAvailRQ request ) {
+    private static void makeTwoPointWithDepartureDateRequest( OTAAirAvailRQDocument.OTAAirAvailRQ request ) {
+
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation originDestinationInformation = request.addNewOriginDestinationInformation();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment flightSegment = originDestinationInformation.addNewFlightSegment();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.DestinationLocation destinationLocation = flightSegment.addNewDestinationLocation();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.OriginLocation originLocation = flightSegment.addNewOriginLocation();
+
+        destinationLocation.setLocationCode( "FRA" );
+        originLocation.setLocationCode( "DFW" );
+
+        flightSegment.setDepartureDateTime("12-21");
+
+        originDestinationInformation.setFlightSegment( flightSegment );
+    }
+
+    private static void makeTwoPointsWithDepartureHourRequest( OTAAirAvailRQDocument.OTAAirAvailRQ request ) {
+
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation originDestinationInformation = request.addNewOriginDestinationInformation();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment flightSegment = originDestinationInformation.addNewFlightSegment();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.DestinationLocation destinationLocation = flightSegment.addNewDestinationLocation();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.OriginLocation originLocation = flightSegment.addNewOriginLocation();
+
+        destinationLocation.setLocationCode( "FRA" );
+        originLocation.setLocationCode( "DFW" );
+
+        flightSegment.setDepartureDateTime( "12-21T18:00" );
+    }
+
+    private static void makeTwoPointsWithVendorPrefsRequest( OTAAirAvailRQDocument.OTAAirAvailRQ request ) {
+
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation originDestinationInformation = request.addNewOriginDestinationInformation();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment flightSegment = originDestinationInformation.addNewFlightSegment();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.DestinationLocation destinationLocation = flightSegment.addNewDestinationLocation();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.OriginLocation originLocation = flightSegment.addNewOriginLocation();
+
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OptionalQualifiers optionalQualifiers = request.addNewOptionalQualifiers();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OptionalQualifiers.FlightQualifiers flightQualifiers = optionalQualifiers.addNewFlightQualifiers();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OptionalQualifiers.FlightQualifiers.VendorPrefs vendorPrefs = flightQualifiers.addNewVendorPrefs();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OptionalQualifiers.FlightQualifiers.VendorPrefs.Airline airline = vendorPrefs.addNewAirline();
+
+        airline.setCode("AA");
+
+        flightSegment.setDepartureDateTime("12-21");
+        originLocation.setLocationCode("LHR");
+        destinationLocation.setLocationCode("DFW");
 
     }
 
-    private static void getTwoPointsWithDepartureHourRequest( OTAAirAvailRQDocument.OTAAirAvailRQ request ) {
+    private static void makeMultilegFlightSegmentWithVendorPrefsRequest( OTAAirAvailRQDocument.OTAAirAvailRQ request ) {
 
-    }
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation originDestinationInformation = request.addNewOriginDestinationInformation();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment flightSegment = originDestinationInformation.addNewFlightSegment();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.DestinationLocation destinationLocation = flightSegment.addNewDestinationLocation();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.OriginLocation originLocation = flightSegment.addNewOriginLocation();
 
-    private static void getTwoPointsWithVendorPrefsRequest( OTAAirAvailRQDocument.OTAAirAvailRQ request ) {
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OptionalQualifiers optionalQualifiers = request.addNewOptionalQualifiers();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OptionalQualifiers.FlightQualifiers flightQualifiers = optionalQualifiers.addNewFlightQualifiers();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OptionalQualifiers.FlightQualifiers.VendorPrefs vendorPrefs = flightQualifiers.addNewVendorPrefs();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.ConnectionLocations connectionLocations = flightSegment.addNewConnectionLocations();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.ConnectionLocations.CarrierSpecificDisplay carrierSpecificDisplay = connectionLocations.addNewCarrierSpecificDisplay();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.ConnectionLocations.ConnectionLocation connectionLocation = connectionLocations.addNewConnectionLocation();
 
-    }
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.ConnectionLocations.CarrierSpecificDisplay.LegOne legOne = carrierSpecificDisplay.addNewLegOne();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.ConnectionLocations.CarrierSpecificDisplay.LegOne.VendorPrefs vendorPrefsLegOne = legOne.addNewVendorPrefs();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OptionalQualifiers.FlightQualifiers.VendorPrefs.Airline airlineALegOne = vendorPrefs.addNewAirline();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OptionalQualifiers.FlightQualifiers.VendorPrefs.Airline airlineBLegOne = vendorPrefs.addNewAirline();
 
-    private static void getMultilegFlightSegmentWithVendorPrefsRequest( OTAAirAvailRQDocument.OTAAirAvailRQ request ) {
+        airlineALegOne.setCode("AA");
+        airlineBLegOne.setCode("BA");
+
+        vendorPrefsLegOne.setExcludeCodeshares( true );
+
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.ConnectionLocations.CarrierSpecificDisplay.LegTwo legTwo = carrierSpecificDisplay.addNewLegTwo();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.ConnectionLocations.CarrierSpecificDisplay.LegTwo.VendorPrefs vendorPrefsLegTwo = legTwo.addNewVendorPrefs();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.ConnectionLocations.CarrierSpecificDisplay.LegTwo.VendorPrefs.Airline airlineALegTwo = vendorPrefsLegTwo.addNewAirline();
+        OTAAirAvailRQDocument.OTAAirAvailRQ.OriginDestinationInformation.FlightSegment.ConnectionLocations.CarrierSpecificDisplay.LegTwo.VendorPrefs.Airline airlineBLegTwo = vendorPrefsLegTwo.addNewAirline();
+
+        airlineALegTwo.setCode("AA");
+        airlineBLegTwo.setCode("BA");
+        vendorPrefsLegTwo.setExcludeCodeshares( true );
+
+        connectionLocation.setLocationCode("LAX");
+        flightSegment.setDepartureDateTime( "12-21T18:00" );
+
+        destinationLocation.setLocationCode( "SYD" );
+        originLocation.setLocationCode( "DFW" );
 
     }
 

@@ -45,7 +45,6 @@
     <build>
 
         <!--   P  L   U   G   I   N   S   -->
-
         <plugins>
 
             <!-- Skip antrun plugin execution from parent POM -->

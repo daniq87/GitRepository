@@ -28,7 +28,7 @@ public class ErrorHandler extends AbstractHandler {
         SOAPHeader  header = envelope.getHeader();
         SOAPBody body = envelope.getBody();
 
-        if( ! body.hasFault() ) {
+        if( ! envelope.hasFault() ) {
             return InvocationResponse.CONTINUE;
         }
 

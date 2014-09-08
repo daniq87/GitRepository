@@ -1,5 +1,9 @@
 package com.sabre.sws.tools.wsdl.wsimport.wrappers;
 
+import com.sabre.services.stl.v01.ProblemInformation;
+import com.sabre.services.stl.v01.SystemSpecificResults;
+import com.sabre.services.stl_header.v120.CompletionCodes;
+import com.sabre.services.stl_header.v120.MessageCondition;
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import com.sabre.sws.tools.wsdl.wsimport.handlers.LoggingHandler;
@@ -9,6 +13,8 @@ import com.sabre.webservices.sabrexml._2011._10.PassengerDetailsRQ;
 import com.sabre.webservices.sabrexml._2011._10.PassengerDetailsRS;
 import https.webservices_sabre_com.websvc.PassengerDetailsPortType;
 import https.webservices_sabre_com.websvc.PassengerDetailsService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ebxml.namespaces.messageheader.MessageHeader;
 import org.xmlsoap.schemas.ws._2002._12.secext.Security;
 
@@ -25,6 +31,8 @@ import java.util.List;
  */
 public class PassengerDetailsWrapper {
 
+    private static final Logger LOGGER = LogManager.getLogger(PassengerDetailsWrapper.class);
+
     private static final String actionString = "PassengerDetailsRQ";
 
     public PassengerDetailsRS executeSampleRequest() {
@@ -35,7 +43,24 @@ public class PassengerDetailsWrapper {
 
         PassengerDetailsRQ requestBody = getRequestBody();
 
-        return port.passengerDetailsRQ( new Holder<>(header), new Holder<>(security), requestBody );
+        Holder<MessageHeader> messageHeaderHolder = new Holder<>(header);
+        Holder<Security> securityHolder = new Holder<>(security);
+
+        PassengerDetailsRS passengerDetailsRS = port.passengerDetailsRQ(messageHeaderHolder, securityHolder, requestBody);
+        if( !passengerDetailsRS.getApplicationResults().getStatus().equals(CompletionCodes.COMPLETE) ) {
+
+            StringBuffer buffer = new StringBuffer("PassengerDetailsRQ request is incomplete\n");
+
+            for( ProblemInformation p : passengerDetailsRS.getApplicationResults().getError() ) {
+                for(SystemSpecificResults s : p.getSystemSpecificResults()) {
+                    for( MessageCondition m : s.getMessage() ) {
+                        buffer.append( "Element: " ).append(s.getElement()).append( ", Message: " ).append( m.getValue()).append("\n");
+                    }
+                }
+            }
+            LOGGER.error( buffer.toString() );
+        }
+        return passengerDetailsRS;
     }
 
     private PassengerDetailsRQ getRequestBody() {

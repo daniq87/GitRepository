@@ -57,7 +57,6 @@ public class EnhancedAirBookHelper {
         instance.setFrom( from );
 
         // Instantiate and set TO element
-        To to = new To();
         To_type0 to_type0 = new To_type0();
         PartyId_type0 toParty = new PartyId_type0();
         toParty.setString( Util.getToString() );
@@ -72,9 +71,7 @@ public class EnhancedAirBookHelper {
         StringBuffer buffer = new StringBuffer( Util.getTimestamp() );
         buffer.append( "-" );
         buffer.append( Util.longRandomHexString() );
-        String conversationID = buffer.toString();
 
-//        instance.setConversationId( toNonEmptyString( conversationID ) );
         instance.setConversationId( toNonEmptyString( SessionManager.getInstance().getConversationID() ) );
 
         // Set SERVICE element
@@ -138,7 +135,6 @@ public class EnhancedAirBookHelper {
         flightSegment.setOriginLocation( originLocation );
 
         flightSegment.setFlightNumber( "8865" );
-//        flightSegment.setArrivalDateTime( "12-22T11:45" );
         flightSegment.setDepartureDateTime( new DateTime() {{ setDateTime( "2014-12-21T16:10" ); }} ); // does not work without specifying a year
         flightSegment.setNumberInParty( "2" );
         flightSegment.setStatus( "GK" );
@@ -150,7 +146,6 @@ public class EnhancedAirBookHelper {
 
 
         //  Create and populate OTA_AirPriceRQ
-
         OTA_AirPriceRQ_type0 airPriceRQ = new OTA_AirPriceRQ_type0();
         airPriceRQ.setHaltOnError( true );
 
@@ -169,8 +164,6 @@ public class EnhancedAirBookHelper {
         passenger2.setQuantity( "1" );
 
         pricingQualifiers.addPassengerType( passenger1 );
-//        pricingQualifiers.addPassengerType( passenger2 );
-
         optionalQualifiers.setPricingQualifiers( pricingQualifiers );
         priceRequestInfo.setOptionalQualifiers(optionalQualifiers);
         airPriceRQ.setPriceRequestInformation( priceRequestInfo );
@@ -181,8 +174,6 @@ public class EnhancedAirBookHelper {
         RedisplayReservation_type1 redisplay = new RedisplayReservation_type1();
         redisplay.setWaitInterval(  new BigInteger( "4000" ) );
         postProcessing.setRedisplayReservation( redisplay );
-
-        // Populate remaining fields to avoid NullPointerExceptions
 
         return instance;
     }

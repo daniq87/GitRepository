@@ -1,6 +1,7 @@
 package com.sabre.sws.tools.wsdl.springws.wrappers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.requestcontent.TravelItineraryReadContent;
 import com.sabre.sws.tools.wsdl.springws.callbacks.HeaderComposingCallback;
 import com.sabre.sws.tools.wsdl.springws.interceptors.FaultInterceptor;
 import com.sabre.sws.tools.wsdl.springws.interceptors.LoggingInterceptor;
@@ -55,7 +56,7 @@ public class TravelItineraryReadWrapper extends WebServiceGatewaySupport {
         body.setMessagingDetails( details );
 
         TravelItineraryReadRQ.UniqueID uid = new TravelItineraryReadRQ.UniqueID();
-        uid.setID( "HNDAGG" );
+        uid.setID(TravelItineraryReadContent.getPNR());
         body.setUniqueID(uid);
 
         return body;

@@ -1,0 +1,154 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <title>Sample Sabre&reg; Web Services client application documentation</title>
+</head>
+
+<body>
+
+    <!-- Index of content
+    <a name="#index-of-content-anchor"></a>
+    <span class="header"></span>
+    <div class="intend-level-1">
+
+    </div>
+    -->
+
+
+    <!-- Index of content-->
+    <a name="#index-of-content-anchor"></a>
+    <span class="header">Index of content</span>
+    <div class="intend-level-1">
+
+    </div> <br />
+
+    <!-- Overview -->
+    <a name="#index-of-content-anchor"></a>
+    <span class="header">Overview</span>
+    <div class="intend-level-1">
+        <p>
+            This document describes sample Sabre Web Services client application, provided by Sabre Web Services
+            development team. It is a multi-module Java application that uses Maven for dependency and plugin
+            management. Each module represents a single client application using one framework for working
+            with web services and one data binding technology. Each of frameworks used is described in the
+            <a href="new_index.html">overview</a>, that is distributed with this document. This document focuses
+            solely on the application code and design. However, general description and client development guide
+            for each framework is contained in the mentioned overview.
+        </p>
+
+        <span class="bold">Technologies used & versioning</span>
+        <p>
+            Sample project was compiled and tested with Java 7 (update 60) and Apache Maven 3.2.2. It uses the
+            following technologies:
+        </p>
+
+        <span class="bold">Data binding technologies:</span>
+        <ul>
+            <li>Apache ADB (distributed with Axis2 1.6.2)</li>
+            <li>Apache XMLBeans (distributed with Axis2 1.6.2)</li>
+            <li>JAXB (2.2 version)</li>
+        </ul>
+
+        <span class="bold">Web services frameworks:</span>
+        <ul>
+            <li>Apache Axis2 (1.6.2 version)</li>
+            <li>Apache CXF (3.0.1 version)</li>
+            <li>Sping Web Services (2.2.0 RELEASE version)</li>
+            <li>wsimport (distributed with jaxws-maven-plugin 2.3 version)</li>
+        </ul>
+
+        <span class="bold">Sabre Web Services consumed</span>
+        <p>
+            The following set of Sabre Web Services is consumed by the client application, whenever it is possible
+            (to see why it is not always  possible, see <a href="new_index.html#xmlbeans-known-issues-anchor">
+            frameworks overview</a>):
+        </p>
+        <ul>
+            <li>
+                Session management
+                <ul>
+                    <li>SessionCreateRQ</li>
+                    <li>SessionCloseRQ</li>
+                </ul>
+            </li>
+            <li>
+                Low-level services
+                <ul>
+                    <li>TravelItineraryReadLLSRQ</li>
+                    <li>OTA_AirAvailLLSRQ</li>
+                </ul>
+            </li>
+            <li>
+                Orchestrated Services
+                <ul>
+                    <li>PassengerDetailsRQ</li>
+                    <li>EnhancedAirBookRQ</li>
+                </ul>
+            </li>
+        </ul>
+
+        <p>
+            In each moudle, an identical set of requests is being processed (when it is possible).
+        </p>
+
+        <span class="bold">Structure</span>
+
+        <p>
+            The project has the following structure (simplified):
+        </p>
+
+        <p class="snippet">
+            ├───.idea<br />
+            ├───documenation<br />
+            ├───resources<br />
+            ├───target<br />
+            │   ├───antrun<br />
+            │   ├───common_schemas<br />
+            │   └───wsdls<br />
+            │     &nbsp;  ├───AirSeatLLSRQ<br />
+            │     &nbsp;  ├───EnhancedAirBookRQ<br />
+            │     &nbsp;  ├───OTA_AirAvailLLSRQ<br />
+            │     &nbsp;  ├───PassengerDetailsRQ<br />
+            │     &nbsp;  ├───SessionCloseRQ<br />
+            │     &nbsp;  ├───SessionCreateRQ<br />
+            │     &nbsp;  └───TravelItineraryReadLLSRQ<br />
+            ├───toolkit-axis2-adb<br />
+            ├───toolkit-axis2-xmlbeans<br />
+            ├───toolkit-commons<br />
+            ├───toolkit-cxf-jaxb<br />
+            ├───toolkit-spring-ws<br />
+            └───toolkit-wsimport<br />
+        </p>
+
+        <p>
+            Starting from the bottom, there are module directories for each frameworks combination.
+            The parent module is responsible for managing resources that are common for all child modules:
+        </p>
+
+        <ul>
+            <li><span class="code">.properties</span> files, which include
+            <span class="code">connection.properties</span> and <span class="code">service-versions.properties</span>
+                The former holds information about client's identity (credentials required to open a session) and the
+                latter - versions of services, that are used. These files reside in <span class="code"> resources/</span>
+                directory
+            </li>
+            <li>
+                Common schemas - <span class="code">.xsd</span> files that describe XML data types used in SOAP-based
+                communication. They are placed under <span class="code">target/common_schemas/</span> directory.
+            </li>
+            <li>WSDL files (services definitions) and service-specific schemas for each Sabre Web Service used.
+            A proper set of files for each service is placed in <span class="code">/target/wsdls/&lt;serviceName&gt;</span> </li>
+        </ul>
+
+    </div>
+
+</body>
+</html>

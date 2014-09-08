@@ -20,7 +20,7 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
 
     private final IConfigurationProvider configuration;
 
-    private final String actionStrin = "OTA_AirAvailLLSRQ";
+    private final String actionString = "OTA_AirAvailLLSRQ";
 
     public AirAvailWrapper( IConfigurationProvider configuration ) throws AxisFault {
         super(ConfigurationContextFactory.createConfigurationContextFromFileSystem(null, null),
@@ -29,11 +29,13 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         MessageHandlerManager.addStub( this );
     }
 
-    public OTAAirAvailRSDocument executeSampleRequest( AirAvailRequests request ) throws RemoteException {
+    public OTAAirAvailRSDocument executeSampleRequest( AirAvailRequests requestType ) throws RemoteException {
+
+        MessageHandlerManager.addStub( this );
 
         return oTA_AirAvailRQ(
-                AirAvailRQFactory.getOTAAirAvailRequest( configuration ),
-                MessageHeaderFactory.getMessageHeader( configuration, actionStrin ),
+                AirAvailRQFactory.getOTAAirAvailRequest( configuration, requestType ),
+                MessageHeaderFactory.getMessageHeader( configuration, actionString),
                 SecurityFactory.getSecuirtyDocument( configuration, false )
         );
 

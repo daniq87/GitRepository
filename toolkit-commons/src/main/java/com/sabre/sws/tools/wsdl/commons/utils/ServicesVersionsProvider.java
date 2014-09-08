@@ -28,10 +28,10 @@ public class ServicesVersionsProvider {
             InputStream inputStream = ServicesVersionsProvider.class.getResourceAsStream( servicesVersionsFileName );
             properties.load( inputStream );
 
-            OTA_AIR_AVAIL_VERSION = properties.getProperty( "OTA_AirAvailVersion" );
-            TRAVEL_ITINERARY_VERSION = properties.getProperty( "TravelItineraryReadVersion" );
-            ENHANCED_AIR_BOOK_VERSION = properties.getProperty( "EnhancedAirBookVersion" );
-            PASSENGER_DETAILS_VERSION = properties.getProperty( "PassengerDetailsVersion" );
+            OTA_AIR_AVAIL_VERSION = properties.getProperty( "OTA_AirAvailLLSRQVersion" );
+            TRAVEL_ITINERARY_VERSION = properties.getProperty( "TravelItineraryReadLLSRQVersion" );
+            ENHANCED_AIR_BOOK_VERSION = properties.getProperty( "EnhancedAirBookRQVersion" );
+            PASSENGER_DETAILS_VERSION = properties.getProperty( "PassengerDetailsRQVersion" );
 
         } catch (IOException e) {
             LOGGER.fatal( "Couldn't read services versions from file", e );

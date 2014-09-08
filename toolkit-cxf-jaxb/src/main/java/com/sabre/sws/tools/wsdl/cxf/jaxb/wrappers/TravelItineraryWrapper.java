@@ -2,6 +2,7 @@ package com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
+import com.sabre.sws.tools.wsdl.commons.utils.requestcontent.TravelItineraryReadContent;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.SecurityFactory;
 import com.sabre.webservices.sabrexml._2011._10.TravelItineraryReadRQ;
@@ -77,7 +78,7 @@ public class TravelItineraryWrapper {
         body.setMessagingDetails( details );
 
         TravelItineraryReadRQ.UniqueID uid = new TravelItineraryReadRQ.UniqueID();
-        uid.setID( "HNDAGG" );
+        uid.setID(TravelItineraryReadContent.getPNR());
         body.setUniqueID(uid);
 
         return body;

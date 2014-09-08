@@ -8,6 +8,11 @@ import java.util.GregorianCalendar;
 
 /**
  * Created by SG0221139 on 7/29/2014.
+ *
+ * This is a helper class with static method, that returns an instance of MessageHeaderDocument.
+ * It is used by wrapper classes to construct full SOAP message and make web service call
+ * using Apache Axis2 framework and XMLBeans data binding.
+ *
  */
 public class MessageHeaderFactory {
 
