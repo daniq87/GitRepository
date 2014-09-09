@@ -92,24 +92,24 @@
                                     <wsdl>${project.parent.basedir}/target/wsdls/SessionCreateRQ/SessionCreateRQ.wsdl</wsdl>
                                 </wsdlOption>
                                 <wsdlOption>
-                                    <wsdl>${project.parent.basedir}/target/wsdls/TravelItineraryReadLLSRQ/TravelItineraryReadLLS${TravelItineraryReadVersion}RQ.wsdl</wsdl>
+                                    <wsdl>${project.parent.basedir}/target/wsdls/TravelItineraryReadLLSRQ/TravelItineraryReadLLS${TravelItineraryReadLLSRQVersion}RQ.wsdl</wsdl>
                                     <extraargs>
                                         <extraarg>-b</extraarg>
                                         <extraarg>${project.basedir}/custom-bindings/travel-itinerary-custom-binding.jxb</extraarg>
                                     </extraargs>
                                 </wsdlOption>
                                 <wsdlOption>
-                                    <wsdl>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailVersion}RQ.wsdl</wsdl>
+                                    <wsdl>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailLLSRQVersion}RQ.wsdl</wsdl>
                                 </wsdlOption>
                                 <wsdlOption>
-                                    <wsdl>${project.parent.basedir}/target/wsdls/EnhancedAirBookRQ/EnhancedAirBook${EnhancedAirBookVersion}RQ.wsdl</wsdl>
+                                    <wsdl>${project.parent.basedir}/target/wsdls/EnhancedAirBookRQ/EnhancedAirBook${EnhancedAirBookRQVersion}RQ.wsdl</wsdl>
                                     <extraargs>
                                         <extraarg>-b</extraarg>
                                         <extraarg>${project.basedir}/custom-bindings/enhanced-airbook-custom-binding.jxb</extraarg>
                                     </extraargs>
                                 </wsdlOption>
                                 <wsdlOption>
-                                    <wsdl>${project.parent.basedir}/target/wsdls/PassengerDetailsRQ/PassengerDetails${PassengerDetailsVersion}RQ.wsdl</wsdl>
+                                    <wsdl>${project.parent.basedir}/target/wsdls/PassengerDetailsRQ/PassengerDetails${PassengerDetailsRQVersion}RQ.wsdl</wsdl>
                                     <extraargs>
                                         <extraarg>-b</extraarg>
                                         <extraarg>${project.basedir}/custom-bindings/passenger-details-custom-binding.jxb</extraarg>

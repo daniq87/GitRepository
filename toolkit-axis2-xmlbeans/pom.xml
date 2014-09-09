@@ -97,7 +97,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailVersion}RQ.wsdl</wsdlFile>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailLLSRQVersion}RQ.wsdl</wsdlFile>
                             <databindingName>xmlbeans</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
                             <flattenFiles>true</flattenFiles>

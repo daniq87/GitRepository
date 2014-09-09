@@ -23,15 +23,75 @@
     -->
 
 
+<!--
+    <a name="toolkit--anchor"></a>
+    <span class="subheader code">toolkit-</span>
+    <div class="intend-level-1">
+
+        <a name="-pom-anchor"></a>
+        <span class="bold">POM file and build lifecycle</span>
+        <p>
+
+        </p>
+
+        <a name="-client-anchor"></a>
+        <span class="bold"><span class="code">SwsClient</span> class</span>
+        <p>
+
+        </p>
+
+        <a name="-wrappers-anchor"></a>
+        <span class="bold">Wrapper classes</span>
+        <p>
+
+        </p>
+
+        <a name="-handlers-interceptors-anchor"></a>
+        <span class="bold">Handlers Interceptors ???</span>
+        <p>
+
+        </p>
+
+    </div>
+
+-->
+
     <!-- Index of content-->
-    <a name="#index-of-content-anchor"></a>
+    <a name="index-of-content-anchor"></a>
     <span class="header">Index of content</span>
     <div class="intend-level-1">
+
+        <ul>
+            <li>
+                <a href="#index-of-content-anchor">Index of content</a>
+            </li>
+            <li>
+                <a href="#overview-anchor">Overview</a>
+                <ul>
+                    <li><a href="#technologies-versioning-anchor">Technologies used & versioning</a></li>
+                    <li><a href="#data-bindings-anchor">Data binding technologies</a></li>
+                    <li><a href="#ws-frameworks-anchor">Web services frameworks</a></li>
+                    <li><a href="#sws-consumed-anchor">Sabre Web Services consumed</a></li>
+                    <li><a href="#structure-anchor">Structure</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#template-and-ideas-anchor">Module template and common ideas</a>
+                <ul>
+                    <li><a href="#swsclient-class-anchor"><span class="code">SwsClient</span> class</a></li>
+                    <li><a href="#wrappers-anchor">Wrapper classes</a></li>
+                    <li><a href="#handlers-interceptors-anchor">Handlers/interceptors</a></li>
+                    <li><a href="#lifecycle-anchor">POM build lifecycle</a></li>
+                </ul>
+            </li>
+            <li><a href="#building-flow-anchor">Project building flow</a> </li>
+            <li><a href="#client-execution-anchor">Client application execution</a> </li>
+        </ul>
 
     </div> <br />
 
     <!-- Overview -->
-    <a name="#index-of-content-anchor"></a>
+    <a name="overview-anchor"></a>
     <span class="header">Overview</span>
     <div class="intend-level-1">
         <p>
@@ -44,12 +104,14 @@
             for each framework is contained in the mentioned overview.
         </p>
 
+        <a name="technologies-versioning-anchor"></a>
         <span class="bold">Technologies used & versioning</span>
         <p>
             Sample project was compiled and tested with Java 7 (update 60) and Apache Maven 3.2.2. It uses the
             following technologies:
         </p>
 
+        <a name="data-bindings-anchor"></a>
         <span class="bold">Data binding technologies:</span>
         <ul>
             <li>Apache ADB (distributed with Axis2 1.6.2)</li>
@@ -57,6 +119,7 @@
             <li>JAXB (2.2 version)</li>
         </ul>
 
+        <a name="ws-frameworks-anchor"></a>
         <span class="bold">Web services frameworks:</span>
         <ul>
             <li>Apache Axis2 (1.6.2 version)</li>
@@ -65,6 +128,7 @@
             <li>wsimport (distributed with jaxws-maven-plugin 2.3 version)</li>
         </ul>
 
+        <a name="sws-consumed-anchor"></a>
         <span class="bold">Sabre Web Services consumed</span>
         <p>
             The following set of Sabre Web Services is consumed by the client application, whenever it is possible
@@ -96,9 +160,10 @@
         </ul>
 
         <p>
-            In each moudle, an identical set of requests is being processed (when it is possible).
+            In each module, an identical set of requests is being processed (when it is possible).
         </p>
 
+        <a name="structure-anchor"></a>
         <span class="bold">Structure</span>
 
         <p>
@@ -130,6 +195,18 @@
 
         <p>
             Starting from the bottom, there are module directories for each frameworks combination.
+            Each module is described in details in a separate section. The common characteristics and shared design
+            ideas are described in next section. <br /><br />
+
+            The <span class="code">commons</span> module contains utilities and tools used throughout the
+            application and not specific for a particular module. <br /> <br />
+
+            Each client module (every except of parent module and <span class="code">toolkit-commons</span> module)
+            depends on parent module (which provides shared resources, like services definitions and authorization data)
+            and on <span class="code">toolkit-commons</span> module, which is responsible for session management
+            and provides utilities for other modules).
+            <br /><br />
+
             The parent module is responsible for managing resources that are common for all child modules:
         </p>
 
@@ -148,7 +225,262 @@
             A proper set of files for each service is placed in <span class="code">/target/wsdls/&lt;serviceName&gt;</span> </li>
         </ul>
 
+        <p>
+            To get the outline of how those resources are used in a project's lifecycle, check the !!!builidng flow
+            section.
+        </p>
+
     </div>
+
+    <!-- Template and common ideas -->
+    <a name="template-and-ideas-anchor"></a>
+    <span class="header">Module template and common ideas</span>
+    <div class="intend-level-1">
+        <p>
+            Every client module utilizes the same design concept, which consists of four main parts:
+        </p>
+        <ul>
+            <li>SwsClient class</li>
+            <li>Wrapper classes</li>
+            <li>Handlers/interceptors</li>
+            <li>POM build lifecycle</li>
+        </ul>
+
+        <!-- SwsClient Class-->
+        <a name="swsclient-class-anchor"></a>
+        <span class="bold">SwsClient class</span>
+        <p>
+            <span class="code">SwsClient</span> class is the entry point of each module (each client application).
+            So, there are 5 such classes:
+        </p>
+
+        <ul>
+            <li><span class="code">com.sabre.sws.tools.wsdl.axis2.adb.client.SwsClient</span></li>
+            <li><span class="code">com.sabre.sws.tools.wsdl.axis2.xmlbeans.client.SwsClient</span></li>
+            <li><span class="code">com.sabre.sws.tools.wsdl.cxf.jaxb.client.SwsClient</span></li>
+            <li><span class="code">com.sabre.sws.tools.wsdl.springws.client.SwsClient</span></li>
+            <li><span class="code">com.sabre.sws.tools.wsdl.wsimport.client.SwsClient</span></li>
+        </ul>
+        <p>
+            Each <span class="code">SwsClient</span> class contains a <span class="code">main()</span> method, that
+            triggers the application setup, session creation, services calls and session termination. In other words,
+            this method's invokation traverses through the whole lifecycle of a module. <br />
+            Each module has it's own <span class="code">client</span> package, in which client class reside.
+        </p>
+
+        <!-- Wrappers -->
+        <a name="wrappers-anchor"></a>
+        <span class="bold">Wrapper classes</span>
+        <p>
+            Wrapper class is a top-level abstraction over a web service call in each technology set. It has convenience
+            public methods, that allow direct ivocation of a web service call. Those methods are:
+        </p>
+
+        <ul>
+            <li><span class="code">openSession()</span> / <span class="code">closeSession()</span> in session services wrappers</li>
+            <li><span class="code">executeSampleRequest(AirAvailRequests requestType)</span> in OTA_AirAvailLLSRQ service wrappers </li>
+            <li><span class="code">executeSampleRequest()</span> in other services</li>
+        </ul>
+
+        <p>
+            Wrapper classes encapsulate the whole web service call logic in a particular framework, usually extending some
+            stub (helper) class or using delegation on an object of some framework-specific<!--TODO--> class.
+            They also usually take care of all the necessary initialization - enpoint setting, handlers/interceptors chain
+            management, headers creation and any other action, that is required to develop a Sabre Web Services
+            client application.
+        </p>
+
+        <!-- Handlers / interceptors-->
+        <a name="handlers-interceptors-anchor"></a>
+        <span class="bold">Handlers / interceptors</span>
+        <p>
+            Handlers and interceptors mechanisms are quite similar. They are usually placed in a chain of some kind
+            and/or divided into phases. In each phase an appropriate set of handlers or interceptors is run.
+            They usually implement an interface with one or more public methods, that take message context as an argument,
+            and is called during handler invokation. Message context provides access to request and response messages,
+            but also additional information associated with message exchange. <br />
+            Because handlers are called after the message is created, but before it is sent, they are a good mean of
+            message manipulating and modification. For example, they can be used to place custom header elements
+            into a message (when sending a request) or reading those headers from the response message. <br />
+        </p>
+
+        <!-- POM build lifecycle -->
+        <a name="lifecycle-anchor"></a>
+        <span class="bold">POM build lifecycle</span>
+        <p>
+            Each module follows similar lifecycle pattern, which is dependant on the one of parent module's, so it will
+            be described first. <br /><br />
+
+            <span>Parent module</span><br /><br />
+
+            Parent module creates <span class="code">target</span> folder in project's root directory, with the
+            following structure:
+        </p>
+
+        <a name="parent-module-structure-anchor"></a>
+        <p class="snippet">
+            ├───target <br />
+            │&nbsp;├───antrun<br />
+            │&nbsp;├───common_schemas<br />
+            │&nbsp;└───wsdls<br />
+            │    &nbsp;&nbsp;├───AirSeatLLSRQ<br />
+            │    &nbsp;&nbsp;├───EnhancedAirBookRQ<br />
+            │    &nbsp;&nbsp;├───OTA_AirAvailLLSRQ<br />
+            │    &nbsp;&nbsp;├───PassengerDetailsRQ<br />
+            │    &nbsp;&nbsp;├───SessionCloseRQ<br />
+            │    &nbsp;&nbsp;├───SessionCreateRQ<br />
+            │    &nbsp;&nbsp;└───TravelItineraryReadLLSRQ<br />
+        </p>
+
+        <p>
+            In the first step, using ANT task and Maven antrun plugin, parent module downloads common schemas from
+            Sabre servers and places them under <span class="code">common_schemas/</span> directory. Subsequently,
+            these files are distributed into each services' directory, so that each location contains a complete
+            set of files required for generating Java code from them. <br />
+            In the next step the service-specific schemas and WSDL files are downloaded and placed in appropriate
+            directories (<span class="code">target/wsdls/&lt;service-name&gt;</span>) . As stated in
+            <a href="#structure-anchor">structure section</a>, there is a
+            <span class="code">service-versions.properties</span> file in <span class="code">resources/</span>
+            directory. That file contains service versions, that are used to download WSDLs and schemas, so that
+            during each execution desired versions of services definitions are downloaded. This file is read by
+            a <span class="code">properties-maven-plugin</span> that creates maven properties based on it's contents.
+            These properties are then used to download the right files. <br /><br />
+        </p>
+
+        <span>Child modules</span><br /><br />
+
+        <p>
+            Child (client) modules follow the
+            <a href="http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html">
+            Maven standard directory layout</a> (with some modifications), which is presented (in simplified form) below:
+        </p>
+
+        <p class="snippet">
+            ────toolkit-&lt;framework-name&gt; <br />
+            &nbsp;&nbsp;├───configuration<br />
+            &nbsp;&nbsp;├───custom-bindings<br />
+            &nbsp;&nbsp;├───src<br />
+            &nbsp;&nbsp;│&nbsp;├───main<br />
+            &nbsp;&nbsp;│&nbsp;│&nbsp;└───java<br />
+            &nbsp;&nbsp;│      │<br />
+            &nbsp;&nbsp;│&nbsp;└───test<br />
+            &nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└───java<br />
+            &nbsp;&nbsp;└───target<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;├───classes<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;└───generated-sources<br />
+
+        </p>
+
+        <p>
+            The <span class="code">configuration</span> directory contains <span class="code">log4j2.xml</span> file.
+            This is a configuration file for Log4j that allows to change logging settings in a module.
+            More information about Log4j configuration is available in
+            <a href="http://logging.apache.org/log4j/2.x/manual/configuration.html">Log4j manual</a>. <br />
+
+            The <span class="code">custom-bidnings</span> folder holds custom JABX binding files (if applicable). It is
+            present in modules that use JAXB data binding. These files contain hardcoded location of WSDL files,
+            so it is important to update them whenever this location changes (eg. when new service's version
+            is used).<br /><br />
+
+            Sources for client application reside in <span class="code">src</span> directory. <br /><br />
+
+            The <span class="code bold">&lt;module-name&gt;/target/generated-sources</span> directory is an important one.
+            During each module's lifecycle defined in POM, Maven runs code generation plugin that reads schemas and WSDL
+            files provided by parent module. That plugin compiles schemas into Java sources and generates service clients,
+            that are placed in <span class="code">&lt;module-name&gt;/target/generated-sources</span>(and the proper subdirectories structure, according to
+            the sources packaging structure). After that, generated sources are part of the project and related classes
+            are available to use in the client application. Usually, each framework creates
+            <span class="code">&lt;module-name&gt;/target/generated-sources/&lt;data-binding-name&gt;</span> subdirectory, but this may
+            vary (situation for each module is described in the right section).
+        </p>
+
+    </div>
+
+    <a name="building-flow-anchor"></a>
+    <span class="subheader">Project building flow</span><br/>
+    <div class="intend-level-1">
+        <p>
+            Executing <span class="code">mvn clean compile</span> on project's root module (<span class="code">wsdl-toolkit</span>)
+            will cause the following:
+        </p>
+
+        <ol>
+            <li>
+                Root module (<span class="code">wsdl-toolkit</span>) setup
+                <ol>
+                    <li>Reading services version from <span class="code">resources/service-version.properties</span> </li>
+                    <li><a href="#parent-module-structure-anchor">Directory structure</a> creation</li>
+                    <li>Downloading common schemas to <span class="code">target/common_schemas/</span> </li>
+                    <li>Downloading service-specific schemas and WSDLs to proper directories</li>
+                </ol>
+            </li>
+            <li>
+                <span class="code">tookit-commons</span> module build
+                <ol>
+                    <li>Copying <span class="code">.properties</span> files to
+                    <span class="code">toolkit-commons/target/classes</span> (so that they are  available for objects)</li>
+                    <li>Compiling sources</li>
+                </ol>
+            </li>
+            <li>
+                Child (client) modules build
+                <ol>
+                    <li>Reading services versions from <span class="code">../resources/service-versions.properties</span> </li>
+                    <li>Generating Java code from schemas and WSDL files</li>
+                    <li>Compiling sources</li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+    <a name="client-execution-anchor"></a>
+    <span class="subheader">Client application execution</span>
+    <div class="intend-level-1">
+        <p>
+            To build and run client from command line one must execute Maven <span class="code">compile</span> goal
+            on the root module. This will setup the directories, download all necessary files, build common
+            utilities classes, generate sources and compile clients. To achieve this, run: <br /><br />
+
+            <span class="code">mvn clean install</span> <br /><br />
+
+            from project's root directory. <br /><br />
+            As mentioned earlier, the entry point of each client application is <span class="code">SwsClient</span>'s
+            <span class="code">main()</span> method. Having the whole project compiled, to run a particular client,
+            execute (from project root directory): <br /><br />
+
+            <span class="code">mvn exec:java -pl &lt;module-name&gt; -Dexec.mainClass=&lt;SwsClient package&gt;</span> <br/><br />
+
+            For example, to execute a client that uses Axis2 and XMLBeans, execute the following from project root directory: <br /><br />
+
+            <span class="code">mvn clean install</span><br />
+            <span class="code">mvn exec:java -pl toolkit-axis2-xmlbeans -Dexec.mainClass=com.sabre.sws.tools.wsdl.axis2.xmlbeans.client.SwsClient</span><br /><br />
+
+            After the whole project is compiled for the first time, it does not need to be recompiled again, until configuration
+            changes occur.
+        </p>
+    </div><br />
+
+    <a name="modules-description"></a>
+    <span class="header">Modules description</span><br /><br />
+
+    <a name="toolkit-commons-anchor"></a>
+    <span class="subheader" style="font-family: 'Courier New'">toolkit-commons</span><br /><br />
+    <div class="intend-level-1">
+
+        <a name="commons-pom-anchor"></a>
+        <span class="bold">POM file and build lifecycle</span>
+        <p>
+
+        </p>
+
+        <a name="-handlers-interceptors-anchor"></a>
+        <span class="bold">Handlers Interceptors ???</span>
+        <p>
+
+        </p>
+
+    </div>
+
 
 </body>
 </html>

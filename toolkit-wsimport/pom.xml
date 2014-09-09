@@ -20,6 +20,7 @@
     <build>
         <plugins>
 
+            <!-- P R O P E R T I E S    P L U G I N -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
@@ -78,7 +79,7 @@
                             <wsdlFiles>
                                 <wsdlFile>SessionCreateRQ/SessionCreateRQ.wsdl</wsdlFile>
                                 <wsdlFile>SessionCloseRQ/SessionCloseRQ.wsdl</wsdlFile>
-                                <wsdlFile>OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailVersion}RQ.wsdl</wsdlFile>
+                                <wsdlFile>OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailLLSRQVersion}RQ.wsdl</wsdlFile>
                             </wsdlFiles>
                         </configuration>
                     </execution>
@@ -93,7 +94,7 @@
                                 <bindingFile>travel-itinerary-custom-binding.jxb</bindingFile>
                             </bindingFiles>
                             <wsdlFiles>
-                                <wsdlFile>TravelItineraryReadLLSRQ/TravelItineraryReadLLS${TravelItineraryReadVersion}RQ.wsdl</wsdlFile>
+                                <wsdlFile>TravelItineraryReadLLSRQ/TravelItineraryReadLLS${TravelItineraryReadLLSRQVersion}RQ.wsdl</wsdlFile>
                             </wsdlFiles>
                         </configuration>
                     </execution>
@@ -105,7 +106,7 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
-                                    <wsdlFile>OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailVersion}RQ.wsdl</wsdlFile>
+                                    <wsdlFile>OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailLLSRQVersion}RQ.wsdl</wsdlFile>
                             </wsdlFiles>
                         </configuration>
                     </execution>-->
@@ -120,7 +121,7 @@
                                 <bindingFile>enhanced-airbook-custom-binding.jxb</bindingFile>
                             </bindingFiles>
                             <wsdlFiles>
-                                    <wsdlFile>EnhancedAirBookRQ/EnhancedAirBook${EnhancedAirBookVersion}RQ.wsdl</wsdlFile>
+                                    <wsdlFile>EnhancedAirBookRQ/EnhancedAirBook${EnhancedAirBookRQVersion}RQ.wsdl</wsdlFile>
                             </wsdlFiles>
                         </configuration>
                     </execution>
@@ -135,7 +136,7 @@
                                 <bindingFile>passenger-details-custom-binding.jxb</bindingFile>
                             </bindingFiles>
                             <wsdlFiles>
-                                    <wsdlFile>PassengerDetailsRQ/PassengerDetails${PassengerDetailsVersion}RQ.wsdl</wsdlFile>
+                                    <wsdlFile>PassengerDetailsRQ/PassengerDetails${PassengerDetailsRQVersion}RQ.wsdl</wsdlFile>
                             </wsdlFiles>
                         </configuration>
                     </execution>

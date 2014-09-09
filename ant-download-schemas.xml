@@ -102,8 +102,8 @@
 
     <target name="download-lls-schemas" >
 
-        <download_swso_schemas servicename="EnhancedAirBook" serviceversion="${EnhancedAirBookVersion}" />
-        <download_swso_schemas servicename="PassengerDetails" serviceversion="${PassengerDetailsVersion}" />
+        <download_swso_schemas servicename="EnhancedAirBook" serviceversion="${EnhancedAirBookRQVersion}" />
+        <download_swso_schemas servicename="PassengerDetails" serviceversion="${PassengerDetailsRQVersion}" />
 
     </target>
 
@@ -111,8 +111,8 @@
 
     <target name="download-swso-schemas" >
 
-        <download_sws_schemas servicename="OTA_AirAvailLLS" serviceversion="${OTA_AirAvailVersion}" />
-        <download_sws_schemas servicename="TravelItineraryReadLLS" serviceversion="${TravelItineraryReadVersion}" />
+        <download_sws_schemas servicename="OTA_AirAvailLLS" serviceversion="${OTA_AirAvailLLSRQVersion}" />
+        <download_sws_schemas servicename="TravelItineraryReadLLS" serviceversion="${TravelItineraryReadLLSRQVersion}" />
 
     </target>
 

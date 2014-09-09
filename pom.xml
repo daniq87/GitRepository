@@ -90,6 +90,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Properties Plugin -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
