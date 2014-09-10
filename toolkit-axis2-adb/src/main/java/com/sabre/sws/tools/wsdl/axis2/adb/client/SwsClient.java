@@ -4,9 +4,7 @@ import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.*;
 import com.sabre.sws.tools.wsdl.commons.handlers.ErrorHandler;
 import com.sabre.sws.tools.wsdl.commons.handlers.MustUnderstandHandler;
 import com.sabre.sws.tools.wsdl.commons.handlers.OutputHandler;
-import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
-import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
-import com.sabre.sws.tools.wsdl.commons.utils.Util;
+import com.sabre.sws.tools.wsdl.commons.utils.*;
 import com.sabre.sws.tools.wsdl.stubs.adb.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,9 +46,9 @@ public class SwsClient {
 
         LOGGER.info( "Starting client action");
 
-        addHandlers();
+        addCloseSessionOnExitShutdownHook();
 
-        SessionCloseWrapper sessionClose;
+        addHandlers();
 
         try {
 
@@ -70,15 +68,27 @@ public class SwsClient {
 
             // Close session
             try {
-
                 LOGGER.info( "\nClosing session..." );
-                sessionClose = new SessionCloseWrapper(configuration);
-                SessionCloseRQServiceStub.SessionCloseRS sessionCloseRS = sessionClose.closeSession();
-
+                closeSession();
             } catch ( RemoteException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private static void addCloseSessionOnExitShutdownHook() {
+        Runtime.getRuntime().addShutdownHook( new Thread( new Runnable() {
+            @Override
+            public void run() {
+                if(SessionManager.getInstance().isSessionActive()) {
+                    try {
+                        closeSession();
+                    } catch (RemoteException e) {
+                        LOGGER.error( e );
+                    }
+                }
+            }
+        }));
     }
 
     private static void addHandlers() {
@@ -105,10 +115,10 @@ public class SwsClient {
         LOGGER.info( "Executing AirAvail Request..." );
         airAvail = new AirAvailWrapper( configuration );
 
-        OTA_AirAvailServiceStub.OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest( 0 );
+        OTA_AirAvailServiceStub.OTA_AirAvailRS airAvailRS = airAvail.executeSampleRequest(AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_DATE );
         processAirAvailInfo( airAvailRS );
 
-        airAvailRS = airAvail.executeSampleRequest( 1 );
+        airAvailRS = airAvail.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_HOUR );
         processAirAvailInfo( airAvailRS );
 
     }
@@ -142,6 +152,15 @@ public class SwsClient {
         LOGGER.info( "Executing PassengerDetails request..." );
         passengerDetails = new PassengerDetailsRQWrapper( configuration );
         PassengerDetailsServiceStub.PassengerDetailsRS passengerDetailsRS = passengerDetails.executeSampleRequest();
+
+    }
+
+    private static void closeSession() throws RemoteException {
+
+        SessionCloseWrapper sessionClose;
+        sessionClose = new SessionCloseWrapper(configuration);
+
+        SessionCloseRQServiceStub.SessionCloseRS sessionCloseRS = sessionClose.closeSession();
 
     }
 

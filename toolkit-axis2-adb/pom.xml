@@ -68,7 +68,7 @@
             <!--Clean Plugin -->
             <!--Deletes stub files, if any-->
 
-            <plugin>
+  <!--          <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>2.4.1</version>
@@ -89,7 +89,7 @@
                         </fileset>
                     </filesets>
                 </configuration>
-            </plugin>
+            </plugin>               -->
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -139,7 +139,7 @@
                             <wsdlFile>${project.parent.basedir}/target/wsdls/EnhancedAirBookRQ/EnhancedAirBook2.5.0RQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
+                            <!--<flattenFiles>true</flattenFiles>-->
                         </configuration>
                     </execution>
 
@@ -156,7 +156,7 @@
                             <wsdlFile>${project.parent.basedir}/target/wsdls/PassengerDetailsRQ/PassengerDetails2.2.1RQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
+                            <!--<flattenFiles>true</flattenFiles>-->
                         </configuration>
                     </execution>
 
@@ -174,7 +174,7 @@
                             <wsdlFile>${project.parent.basedir}/target/wsdls/TravelItineraryReadLLSRQ/TravelItineraryReadLLS2.0.0RQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
+                            <!--<flattenFiles>true</flattenFiles>-->
                         </configuration>
                     </execution>
 
@@ -190,7 +190,7 @@
                             <wsdlFile>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS2.1.1RQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
+                            <!--<flattenFiles>true</flattenFiles>-->
                         </configuration>
                     </execution>
 
@@ -206,7 +206,7 @@
                             <wsdlFile>${project.parent.basedir}/target/wsdls/SessionCloseRQ/SessionCloseRQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
+                            <!--<flattenFiles>true</flattenFiles>-->
                         </configuration>
                     </execution>
 
@@ -222,7 +222,7 @@
                             <wsdlFile>${project.parent.basedir}/target/wsdls/SessionCreateRQ/SessionCreateRQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
+                            <!--<flattenFiles>true</flattenFiles>-->
                         </configuration>
                     </execution>
                 </executions>
@@ -230,8 +230,8 @@
 <!--
              Build-helper plugin
              Adds generated .java files to source dir-->
-
-            <plugin>
+<!--TODO:: clean this mess!-->
+<!--            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <version>1.9</version>
@@ -249,7 +249,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>           -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

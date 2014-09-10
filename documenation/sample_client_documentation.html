@@ -2,7 +2,7 @@
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 
 <head>
 
@@ -25,7 +25,7 @@
 
 <!--
     <a name="toolkit--anchor"></a>
-    <span class="subheader code">toolkit-</span>
+    <span class="subheader" style="font-family: 'Courier New'">toolkit-</span><br /><br />
     <div class="intend-level-1">
 
         <a name="-pom-anchor"></a>
@@ -455,7 +455,7 @@
             <span class="code">mvn clean install</span><br />
             <span class="code">mvn exec:java -pl toolkit-axis2-xmlbeans -Dexec.mainClass=com.sabre.sws.tools.wsdl.axis2.xmlbeans.client.SwsClient</span><br /><br />
 
-            After the whole project is compiled for the first time, it does not need to be recompiled again, until configuration
+            After the whole project is buikt for the first time, it does not need to be recompiled again, until configuration
             changes occur.
         </p>
     </div><br />
@@ -470,17 +470,303 @@
         <a name="commons-pom-anchor"></a>
         <span class="bold">POM file and build lifecycle</span>
         <p>
+            There are no special POM elements for this module, in exception of already mentioned resources copying.
+        </p>
+
+        <a name="commons-handlers-interceptors-anchor"></a>
+        <span class="bold">Handlers</span>
+        <p>
+            <span class="code">toolkit-commons</span> module contains set of Apache Axis2 handlers. As there are
+            two modules that use this framework it is reasonable to reuse this code. They reside in <span class="code">handlers</span>
+            subpackage under <span class="code">com.sabre.sws.tools.wsdl.commons</span> package. <br />
+            There are three handler types: <br />
+        </p>
+        <ul>
+            <li>
+                <span class="code">ErrorHandler</span> - checks whether there is <span class="code">fault</span> element
+                in the message and logs faults, if any
+            </li>
+            <li>
+                <span class="code">MustUnderstandHandler</span> - reads message's elements that are marked with
+                <span class="code">mustUnderstand="1"</span> attribute value. Performs error check and reads header data,
+                including session token. Takes care of session management.
+            </li>
+            <li><span class="code">OutputHandler</span> - Logs SOAP elements using Log4j API </li>
+        </ul>
+
+        <a name="utility-content-anchor"></a>
+        <span class="bold">Utility classes</span>
+        <ul>
+            <li>
+                <span class="code">enum AirAvailRequests</span> - used to specify type of OTA_AirAvailLLSRQ service call
+            </li>
+            <li>
+                <span class="code">interface IConfigurationProvider</span> - interface that provides Sabre client
+                authentication data for services
+            </li>
+            <li>
+                <span class="code">interface IEditableConfiguration extends IConfigurationProvider</span> - extends
+                the former interface with settings capabilities
+            </li>
+            <li>
+                <span class="code">PropertiesFileConfigurationSource</span> implementation of <span class="code">
+                IConfigurationProvider</span> that reads authentication information from the input stream associated with
+                <span class="code">.properties</span> file
+            </li>
+            <li>
+                <span class="code">MessageHandlerManager</span> - Axis2-related modules convinience class, that takes
+                care of handler chain management</li>
+            <li>
+                <span class="code">ServiceVersionsProvider</span> - class with static getter methods, that provides
+                currently used services' versions. Their values are obtained from a <span class="code">.properties</span>file
+            </li>
+            <li>
+                <span class="code">SessionManager</span> - singleton class that holds information about currently
+                opened session (the session is set during SessionCreateRQ service call and closed by a SessionCloseRQ
+                service call). When the session is active, <span class="code">SessionManager</span>'s instance provides
+                session token.
+            </li>
+            <li>
+                <span class="code">Util</span> - provides miscellaneous utility functions, mainly for the message header
+                composing methods, but also shares an <span class="code">IConfigurationProvider</span> implementation
+            </li>
+            <li>
+                <span class="code">XMLPrettifier</span> - contains a single static, public method, that takes a string
+                as an argument. This string is supposed to contain an XML content. The method returns
+                formatted XML as a string.
+            </li>
+        </ul>
+    </div>
+
+    <a name="toolkit-axis2-adb-anchor"></a>
+    <span class="subheader" style="font-family: 'Courier New'">toolkit-axis2-adb</span><br /><br />
+    <div class="intend-level-1">
+
+        <a name="axis2-adb-pom-anchor"></a>
+        <span class="bold">POM file and build lifecycle</span>
+        <p>
+            There are two main customizations in this module's POM file:
+            <span class=" code">properties-maven-plugin</span> and <span class="code">axis2-wsdl2code-maven-plugin</span>.
+            The former reads services versions properties from <span class="code">.properties</span> file in parent module,
+            the latter is responsible for generating Axis2 artifacts based on a WSDL files and XSD schemas.
+
+            This plugin generates service stubs, that encapsulate web service call logic and contain inner classes,
+            that represent data types used. Sources are generated to
+            <span class="code">toolkit-axis2-adb/target/generated-sources/stubs/src</span> directory, which is added
+            to classpath and contains the subdirectories structure corresponding with output package parameter.
+            This plugin section contains one <span class="code">&lt;execution&gt;</span> element per one WSDL file.
+            They have the same structure: <br/>
+        </p>
+
+        <p class="snippet">
+            &lt;execution&gt;<br />
+            &nbsp;&nbsp;&lt;id&gt;id-service_name&lt;/id&gt;<br />
+            &nbsp;&nbsp;&lt;goals&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;goal&gt;wsdl2code&lt;/goal&gt;<br />
+            &nbsp;&nbsp;&lt;/goals&gt;<br />
+            &nbsp;&nbsp;&lt;phase&gt;generate-sources&lt;/phase&gt;<br />
+            &nbsp;&nbsp;&lt;configuration&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;packageName&gt;com.sabre.sws.tools.wsdl.stubs.adb&lt;/packageName&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;wsdlFile&gt;${project.parent.basedir}/target/wsdls/ServiceNameRQ/ServiceName${service_version}.wsdl&lt;/wsdlFile&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;databindingName&gt;adb&lt;/databindingName&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;outputDirectory&gt;target/generated-sources/stubs&lt;/outputDirectory&gt;<br />
+            &nbsp;&nbsp;&lt;/configuration&gt;<br />
+            &lt;/execution&gt;<br />
+        </p>
+
+        <p>
+            To achieve the same using command line, firstly make sure, that Apache Axis2 is in the system and both
+            <span class="code">JAVA_HOME</span> and <span class="code">AXIS2_HOME</span> system variables are set and
+            <span class="code"> AXIS2_HOME/bin</span> is in the <span class="code">PATH</span>. Then run from command line: <br /><br />
+
+            <span class="code">wsdl2java -uri {project_root_directory}/target/wsdls/ServiceNameRQ/ServiceName{service_version}.wsdl -p com.sabre.sws.tools.wsdl.stubs.adb -d adb
+                -o {project_root_directory}/toolkit-axis2-adb/target/generated-sources/stubs</span> <br /><br />
+
+            Axis2 installation is described in <a href="http://axis.apache.org/axis2/java/core/docs/installationguide.html#standalone1">
+            it's domunetation</a>
+        </p>
+
+        <a name="axis2-adb-client-anchor"></a>
+        <span class="bold"><span class="code">SwsClient</span> class</span>
+        <p>
+            The construction of <span class="code">SwsClient</span>'s <span class="code">main()</span> method is
+            pretty straightforward: it adds a set of handlers to <span class="code">HandlerManager</span> (every
+            created stub will use these handlers), opens session, calls tested services and closes the session, and
+            if <span class="code">RemoteException</span> is thrown, it is catched and logged. Output from services
+            is processed and logged to the command line (depending on the set level of logging). <br /><br />
+
+            To execute it from command line, run (from the project root directory, after building the whole project
+            with <span class="code">mvn clean install</span>): <br /><br />
+
+            <span class="code">mvn exec:java -pl toolkit-axis2-adb -Dexec.mainClass=com.sabre.sws.tools.wsdl.axis2.adb.client.SwsClient</span><br /><br />
+
+            Note, that only two OTA_AirAvailRequests are invoked. This is due to the bug in the ADB data binding
+            (described in <a href="new_index.html#adb-known-issues-anchor">frameworks overview</a>) that causes
+            optional attributes to be always present in marshaled objects. In OTA_AirAvailLLSRQ service, some of
+            those attributes are mutually exclusive, causing error when executing requests containg them.
+        </p>
+
+        <a name="axis2-adb-wrappers-anchor"></a>
+        <span class="bold">Wrapper classes</span>
+        <p>
+            Wrapper classes extend stub classes generated by Axis2 code generation tool, and those classes extend
+            <span class="code">org.apache.axis2.client.Stub</span> abstract class. Stub classes encapsulate all elements
+            that allow to make web service call - including data types, structures and web methods.
+            Wrapper classes extend stub classes to hide this mechanism and provide a public method <span class="code">
+            executeSampleRequest()</span> to directly execute a web service call. Wrappers' constructors are in charge
+            of proper enpoint URL setting (based on provided implementation of <span class="code">IConfigurationProvider</span>)
+            and handler chain management (each wrapper's constructor passes a <span class="code">this</span> reference
+            to handler manager).
+        </p>
+
+        <a name="axis2-adb-handlers-interceptors-anchor"></a>
+        <span class="bold">Handlers</span>
+        <p>
+            This module uses <a href="#commons-handlers-interceptors-anchor">already desscribed</a> handlers and handler
+            manager from <span class="code">toolkit-commons</span> package.
+        </p>
+
+    </div>
+
+    <a name="toolkit-axis2-xmlbeans-anchor"></a>
+    <span class="subheader" style="font-family: 'Courier New'">toolkit-axis2-xmlbeans</span><br /><br />
+    <div class="intend-level-1">
+
+        <a name="axis2-xmlbeans-pom-anchor"></a>
+        <span class="bold">POM file and build lifecycle</span>
+        <p>
+            One important element in this module's POM is the execution of Maven antrun plugin, that copies
+            <span class="code">toolkit-axis2-xmlbeans/target/generated-sources/stubs/schemaorg_apache_xmlbeans/system</span> directory
+            to <span class="code">toolkit-axis2-xmlbeans/target/classes/schemaorg_apache_xmlbeans/system</span>.
+            Due to a bug in <span class="code">axis2-wsdl2code-maven-plugin</span>, this directory in source locations
+            contains compiled <span class="code">.class</span> files, that need to be moved to <span class="code">classes</span>
+            directory. ANT script for this operation can be found in <span class="code">toolkit-axis2-xmlbeans/ant-copy-typesystemholder-class.xml</span>
+            <br /><br />
+
+            There is also an <span class="code">axis2-wsdl2code-maven-plugin</span> entry, which is the same as the one in
+            <span class="code">toolkit-axis2-adb</span> module, with the only difference being data binding type.
+            So, this module's <span class="code">&lt;databindingName&gt;</span> parameter looks like this: <br />
+            <span class="code">&lt;databindingName&gt;xmlbeans&lt;/databindingName&gt;</span>, and command line
+            input: <br /> <br />
+
+            <span class="code">wsdl2java -uri {project_root_directory}/target/wsdls/ServiceNameRQ/ServiceName{service_version}.wsdl -p com.sabre.sws.tools.wsdl.stubs.xmlbeans -d xmlbeans
+                -o {project_root_directory}/toolkit-axis2-xmlbeans/target/generated-sources/stubs</span> <br /><br />
+
+            However, there are only 3 of 6 services used in this module, due to an XMLBeans issue described in
+            <a href="new_index.html#xmlbeans-known-issues-anchor">technologies overview document</a> distributed with
+            this project.
+
+            As in previous module, there is also an execution of properties plugin, that reads properties from file
+            located in the parent module.
 
         </p>
 
-        <a name="-handlers-interceptors-anchor"></a>
+        <a name="axis2-xmlbeans-client-anchor"></a>
+        <span class="bold"><span class="code">SwsClient</span> class</span>
+        <p>
+            The <span class="code">main()</span> method follows the same pattern as one in <span class="code">toolkit-axis2-adb</span>
+            module. There is an invokation of handler-managing method, session is opened, service is called, session is closed,
+            and any exception thrown is caught and logged.
+        </p>
+
+        <a name="axis2-xmlbeans-wrappers-anchor"></a>
+        <span class="bold">Wrapper classes</span>
+        <p>
+            Because this module, as <span class="code">toolkit-axis2-adb</span>, uses Axis2 framework, the construction
+            of wrapper classes is almost identical. They extend stub classes, take care of communication with handler
+            manager and have a public <span class="code">executeSampleRequest()</span> method. The only difference is
+            that in described module request objects are constructed by static factories, that reside in
+            <span class="code">com.sabre.sws.tools.wsdl.axis2.xmlbeans.utils</span> package and use XMLBeans API
+            to build them.
+        </p>
+
+        <a name="axis2-xmlbeans-handlers-interceptors-anchor"></a>
+        <span class="bold">Handlers</span>
+        <p>
+            This module uses <a href="#commons-handlers-interceptors-anchor">already desscribed</a> handlers and handler
+            manager from <span class="code">toolkit-commons</span> package.
+        </p>
+    </div>
+
+    <a name="toolkit-cxf-jaxb-anchor"></a>
+    <span class="subheader" style="font-family: 'Courier New'">toolkit-cxf-jaxb</span><br /><br />
+    <div class="intend-level-1">
+
+        <a name="cxf-jaxb-pom-anchor"></a>
+        <span class="bold">POM file and build lifecycle</span>
+        <p>
+            The only non-standard (framework-specific) thing in POM is CXF code generation plugin. It has one execution
+            that consists of sections foreach service and one global section that contains common options for each
+            section. These common options are:
+
+            <table class="mvn-cmdln-table">
+                <tr>
+                    <th>Maven option</th>
+                    <th>Command line equivalent</th>
+                    <th>Purpose</th>
+                </tr>
+                <tr>
+                    <td><span class="code">&lt;extraarg&gt;-db&lt;/extraarg&gt;<br />&lt;extraarg&gt;jaxb&lt;/extraarg&gt;</span></td>
+                    <td><span class="code">-db jaxb</span></td>
+                    <td>Use JAXB data binding</td>
+                </tr>
+               <tr>
+                    <td><span class="code">&lt;extraarg&gt;-autoNameResouletion&lt;/extraarg&gt;</span></td>
+                    <td><span class="code">-autoNameResouletion</span></td>
+                    <td>Automatically resolve naming conflicts</td>
+                </tr>
+               <tr>
+                    <td><span class="code">&lt;extraarg&gt;-dns&lt;/extraarg&gt;<br />&lt;extraarg&gt;true&lt;/extraarg&gt;</span></td>
+                    <td><span class="code">-dns true</span></td>
+                    <td>Enable default package-namespace mapping</td>
+                </tr>
+                <tr>
+                    <td><span class="code">&lt;extraarg&gt;-client&lt;/extraarg&gt;</span></td>
+                    <td><span class="code">-client</span> </td>
+                    <td>Generates starting point code for a client mainline</td>
+                </tr>
+            </table> <br />
+
+            Some of these sections use custom binding files to compile schemas to Java classes. To have artifacts for 
+            one service generated, insert the following template into <span class="code">&lt;wsdlOptions&gt;</span> 
+            element in plugin's configuration in POM: <br /><br />
+
+            <span class="code">
+                &lt;wsdlOption&gt;<br />
+                &nbsp;&nbsp;&lt;wsdl&gt;${project.parent.basedir}/target/wsdls/ServiceNameRQ/ServiceName{service_version}RQ.wsdl&lt;/wsdl&gt;<br />
+                &nbsp;&nbsp;&lt;extraargs&gt;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;extraarg&gt;-b&lt;/extraarg&gt;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;extraarg&gt;${project.basedir}/custom-bindings/custom-binding-file-name.jxb&lt;/extraarg&gt;<br />
+                &nbsp;&nbsp;&lt;/extraargs&gt;<br />
+                &lt;/wsdlOption&gt;<br />
+            </span> <br /><br />
+
+        To get the same result using command line, download CXF's binaries from <a href="http://cxf.apache.org/download.html">CXF's download site</a>,
+        go to <span class="code">bin/</span> under CXF's installation directory (or place it in <span class="code">PATH</span>
+        and and set <span class="code">CXF_HOME</span> system variable), then execute: <br/> <br />
+
+        <span class="code">wsdl2java -db jaxb -autoNameResoultion -dns true -client -b path/to/binding/file.jxb -d {project_root_directory}/toolkit-cxf-jaxb/target/generated-sources</span>
+        </p>
+
+        <a name="cxf-jaxb-client-anchor"></a>
+        <span class="bold"><span class="code">SwsClient</span> class</span>
+        <p>
+
+        </p>
+
+        <a name="cxf-jaxb-wrappers-anchor"></a>
+        <span class="bold">Wrapper classes</span>
+        <p>
+
+        </p>
+
+        <a name="cxf-jaxb-handlers-interceptors-anchor"></a>
         <span class="bold">Handlers Interceptors ???</span>
         <p>
 
         </p>
 
     </div>
-
 
 </body>
 </html>

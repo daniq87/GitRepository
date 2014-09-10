@@ -86,3 +86,14 @@ li {
 table {
     color: yellow;
 }
+
+table.mvn-cmdln-table {
+    border: 1px solid black;
+}
+
+table.mvn-cmdln-table th, table.mvn-cmdln-table td {
+    color: black;
+    padding: 7px;
+    border: 1px solid black;
+
+}

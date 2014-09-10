@@ -10,6 +10,8 @@ import com.sabre.sws.tools.wsdl.commons.utils.AirAvailRequests;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.opentravel.www.ota._2002._11.SessionCreateRSDocument;
 
 import java.rmi.RemoteException;
@@ -39,6 +41,8 @@ import java.rmi.RemoteException;
  */
 public class SwsClient {
 
+    private static final Logger LOGGER = LogManager.getLogger( SwsClient.class );
+
     private static final IConfigurationProvider configuration = Util.getConfigurationProvider();
 
     public static void main( String ... args ) {
@@ -51,12 +55,14 @@ public class SwsClient {
             executeOTAAirAvailRequests();
 
         } catch ( RemoteException e ) {
-            e.printStackTrace();
+            LOGGER.error( e );
+        } catch (Exception e ) {
+
         } finally {
-            try {
+        try {
                 closeSession();
             } catch ( RemoteException e ) {
-                e.printStackTrace();
+                LOGGER.error( e );
             }
         }
     }

@@ -8,7 +8,7 @@ import java.util.Properties;
  * Created by SG0221139 on 7/11/2014.
  */
 
-public class PropertiesFileConfigurationSource implements IConfigurationProvider {
+public class InputStreamConfigurationSource implements IConfigurationProvider {
 
     private final String username;
     private final String password;
@@ -19,7 +19,7 @@ public class PropertiesFileConfigurationSource implements IConfigurationProvider
     private final String endpoint;
     private final int maxConnections;
 
-    public PropertiesFileConfigurationSource( InputStream inputStream ) throws IOException {
+    public InputStreamConfigurationSource(InputStream inputStream) throws IOException {
 
         Properties properties = new Properties();
         properties.load( inputStream );

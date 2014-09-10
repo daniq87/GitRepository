@@ -24,7 +24,7 @@ public class Util {
 
     static {
         try {
-            configuration = new PropertiesFileConfigurationSource( Util.class.getResourceAsStream( configurationFileName ) );
+            configuration = new InputStreamConfigurationSource( Util.class.getResourceAsStream( configurationFileName ) );
             LOGGER.info( "Configuration loaded" );
         } catch( IOException e ) {
             LOGGER.fatal( "Error reading configuration from a file", e);

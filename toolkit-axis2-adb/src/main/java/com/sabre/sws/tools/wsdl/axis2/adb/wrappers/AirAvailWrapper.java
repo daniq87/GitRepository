@@ -1,5 +1,6 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 
+import com.sabre.sws.tools.wsdl.commons.utils.AirAvailRequests;
 import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.AirAvailHelper;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
@@ -41,7 +42,7 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         MessageHandlerManager.addStub( this );
     }
 
-    private OTA_AirAvailRQ getSampleRequestBody1() {
+    private OTA_AirAvailRQ getRequestWithTwoPointsAndDepartureDate() {
         OTA_AirAvailRQ requestBody = new AirAvailHelper().geEmptytAirAvailRQInstance( configuration );
         requestBody.setVersion( version );
 
@@ -56,7 +57,7 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         return requestBody;
     }
 
-    private OTA_AirAvailRQ getSampleRequestBody2() {
+    private OTA_AirAvailRQ getRequestWithTwoPointsAndDepartureHour() {
         OTA_AirAvailRQ requestBody = new AirAvailHelper().geEmptytAirAvailRQInstance( configuration );
         requestBody.setVersion( version );
 
@@ -68,7 +69,7 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         return requestBody;
     }
 
-    private OTA_AirAvailRQ getSampleRequestBody3() {
+    private OTA_AirAvailRQ getRequestWithTwoPointsAndVendroPrefs() {
         OTA_AirAvailRQ requestBody = new AirAvailHelper().geEmptytAirAvailRQInstance( configuration );
         requestBody.setVersion( version );
 
@@ -90,7 +91,7 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         return requestBody;
     }
 
-    private OTA_AirAvailRQ getSampleRequestBody4() {
+    private OTA_AirAvailRQ getRequestWithMultilegFlightSegmentAndVendorPrefs() {
         OTA_AirAvailRQ requestBody = new AirAvailHelper().geEmptytAirAvailRQInstance( configuration );
         requestBody.setVersion( version );
 
@@ -139,46 +140,44 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         return requestBody;
     }
 
-    private OTA_AirAvailRQ getSampleRequestBody( int index ) {
+    private OTA_AirAvailRQ getSampleRequestBody( AirAvailRequests requestType ) {
 
-        OTA_AirAvailRQ requestBody;
+        OTA_AirAvailRQ requestBody = null;
 
-        switch ( index ) {
+        switch ( requestType ) {
 
-            case 0:         // 121DECDFWLHR
+            case TWO_POINTS_WITH_DEPARTURE_DATE:         // 121DECDFWLHR
 
-                requestBody = getSampleRequestBody1();
+                requestBody = getRequestWithTwoPointsAndDepartureDate();
                 break;
 
-            case 1:
+            case TWO_POINTS_WITH_DEPARTURE_HOUR:
 
-                requestBody = getSampleRequestBody2();
+                requestBody = getRequestWithTwoPointsAndDepartureHour();
                 break;
 
-            case 2:          // 121DECDFWLHR‡*AA
+            case TWO_POINTS_WITH_VENDOR_PREFS:          // 121DECDFWLHR‡*AA
 
-                requestBody = getSampleRequestBody3();
+                requestBody = getRequestWithTwoPointsAndVendroPrefs();
                 break;
 
-            case 3:
+            case MULTILEG_FLIGHT_SEGMENT_WITH_VENDOR_PREFS:
 
-                requestBody = getSampleRequestBody4();
+                requestBody = getRequestWithMultilegFlightSegmentAndVendorPrefs();
                 break;
 
-            default:
-                throw new UnsupportedOperationException( "Invalid sample request index" );
         }
         return requestBody;
     }
 
-    public OTA_AirAvailRS executeSampleRequest( int requestIndex ) throws RemoteException {
+    public OTA_AirAvailRS executeSampleRequest( AirAvailRequests requestType ) throws RemoteException {
 
         AirAvailHelper helper = new AirAvailHelper();
 
         Security7 security = helper.getSecuirityInstance( configuration );
         MessageHeader header = helper.getMessageHeaderInstance( configuration );
 
-        OTA_AirAvailRQ requestBody = getSampleRequestBody( requestIndex );
+        OTA_AirAvailRQ requestBody = getSampleRequestBody( requestType );
 
         StringBuffer outputMessageBuffer = new StringBuffer();
 
