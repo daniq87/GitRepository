@@ -44,7 +44,7 @@ public class TravelItineraryWrapper {
 
         setEndpointFromConfiguration(port);
 
-        addInterceptors( port );
+        addHandlers(port);
 
         return port;
     }
@@ -55,7 +55,7 @@ public class TravelItineraryWrapper {
 
     }
 
-    private void addInterceptors( TravelItineraryReadPortType port ) {
+    private void addHandlers(TravelItineraryReadPortType port) {
 
         List<Handler> handlers = ((BindingProvider)port).getBinding().getHandlerChain();
 

@@ -47,6 +47,12 @@ public class PassengerDetailsWrapper {
         Holder<Security> securityHolder = new Holder<>(security);
 
         PassengerDetailsRS passengerDetailsRS = port.passengerDetailsRQ(messageHeaderHolder, securityHolder, requestBody);
+
+        logErrorsIfAny(passengerDetailsRS);
+        return passengerDetailsRS;
+    }
+
+    private void logErrorsIfAny(PassengerDetailsRS passengerDetailsRS) {
         if( !passengerDetailsRS.getApplicationResults().getStatus().equals(CompletionCodes.COMPLETE) ) {
 
             StringBuffer buffer = new StringBuffer("PassengerDetailsRQ request is incomplete\n");
@@ -60,7 +66,6 @@ public class PassengerDetailsWrapper {
             }
             LOGGER.error( buffer.toString() );
         }
-        return passengerDetailsRS;
     }
 
     private PassengerDetailsRQ getRequestBody() {
@@ -87,7 +92,7 @@ public class PassengerDetailsWrapper {
         PassengerDetailsPortType port = service.getPassengerDetailsPortType();
 
         setEndpointFromConfiguration( port );
-        addInterceptors( port );
+        addHandlers(port);
 
         return port;
     }
@@ -98,7 +103,7 @@ public class PassengerDetailsWrapper {
         bindingProvider.getRequestContext().put( BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint );
     }
 
-    private void addInterceptors( PassengerDetailsPortType port ) {
+    private void addHandlers(PassengerDetailsPortType port) {
 
         List<Handler> handlers = ((BindingProvider)port).getBinding().getHandlerChain();
 

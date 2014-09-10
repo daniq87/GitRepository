@@ -3,7 +3,7 @@ package com.sabre.sws.tools.wsdl.wsimport.wrappers;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import com.sabre.sws.tools.wsdl.wsimport.handlers.LoggingHandler;
-import com.sabre.sws.tools.wsdl.wsimport.handlers.SessionCloseIncomingInterceptor;
+import com.sabre.sws.tools.wsdl.wsimport.handlers.SessionCloseIncomingHandler;
 import com.sabre.sws.tools.wsdl.wsimport.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.wsimport.utils.SecurityFactory;
 import https.webservices_sabre_com.websvc.SessionClosePortType;
@@ -84,7 +84,7 @@ public class SessionCloseWrapper {
             handlers = new ArrayList<>();
         }
 
-        handlers.add( new SessionCloseIncomingInterceptor() );
+        handlers.add( new SessionCloseIncomingHandler() );
         handlers.add( new LoggingHandler() );
 
         ((BindingProvider)port).getBinding().setHandlerChain( handlers );

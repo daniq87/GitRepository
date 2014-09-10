@@ -45,20 +45,8 @@ public class SessionCreateWrapper {
         SessionCreateRQService service = new SessionCreateRQService();
         SessionCreatePortType stub = service.getSessionCreatePortType();
 
-        // Redirect service call to endpoint defined in connection.properties
-        // This is important, as the default endpoint is https://webservices.sabre.com/websvc
-        BindingProvider bindingProvider = (BindingProvider) stub;
-        bindingProvider.getRequestContext().put( BindingProvider.ENDPOINT_ADDRESS_PROPERTY, Util.getConfigurationProvider().getEndpoint() );
-
-        // Set Interceptors
-        Client client = ClientProxy.getClient(stub);
-        Endpoint endpoint = client.getEndpoint();
-
-        endpoint.getOutInterceptors().add( new LoggingOutInterceptor(Phase.PRE_STREAM) );
-        endpoint.getInInterceptors().add( new SessionCreateIncomingInterceptor() );
-        endpoint.getInInterceptors().add( new LoggingInInterceptor() );
-        endpoint.getInInterceptors().add( new LLSErrorInterceptor() );
-
+        setEndpointUrl((BindingProvider) stub);
+        setInterceptors(stub);
 
         SessionCreateRS rs = stub.sessionCreateRQ( headerHolder, securityHolder, body );
 
@@ -66,5 +54,22 @@ public class SessionCreateWrapper {
         LOGGER.info( "Token from session manager: " + SessionManager.getInstance().getToken() );
 
         return rs;
+    }
+
+    private void setEndpointUrl(BindingProvider stub) {
+        // Redirect service call to endpoint defined in connection.properties
+        // This is important, as the default endpoint is https://webservices.sabre.com/websvc
+        BindingProvider bindingProvider = stub;
+        bindingProvider.getRequestContext().put( BindingProvider.ENDPOINT_ADDRESS_PROPERTY, Util.getConfigurationProvider().getEndpoint() );
+    }
+
+    private void setInterceptors(SessionCreatePortType stub) {
+        Client client = ClientProxy.getClient(stub);
+        Endpoint endpoint = client.getEndpoint();
+
+        endpoint.getOutInterceptors().add( new LoggingOutInterceptor(Phase.PRE_STREAM) );
+        endpoint.getInInterceptors().add( new SessionCreateIncomingInterceptor() );
+        endpoint.getInInterceptors().add( new LoggingInInterceptor() );
+        endpoint.getInInterceptors().add( new LLSErrorInterceptor() );
     }
 }

@@ -62,12 +62,12 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--</plugin>-->
 
-            <plugin>
+            <!--<plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
@@ -82,7 +82,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
             <!-- JAXB2 Maven Plugin -->
 
@@ -97,7 +97,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <schemaLanguage>WSDL</schemaLanguage>
+                            <schemaLanguage>XMLSCHEMA</schemaLanguage>
                             <forceRegenerate>true</forceRegenerate>
                             <schemaDirectory>${project.parent.basedir}/target/</schemaDirectory>
                             <generateDirectory>${project.build.directory}/generated-sources/xjc-1</generateDirectory>
@@ -118,7 +118,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <schemaLanguage>WSDL</schemaLanguage>
+                            <schemaLanguage>XMLSCHEMA</schemaLanguage>
                             <forceRegenerate>true</forceRegenerate>
                             <schemaDirectory>${project.parent.basedir}/target/</schemaDirectory>
                             <generateDirectory>${project.build.directory}/generated-sources/xjc-1</generateDirectory>
@@ -133,7 +133,7 @@
                         <id>air-avail-schemas</id>
                         <goals><goal>generate</goal></goals>
                         <configuration>
-                            <schemaLanguage>WSDL</schemaLanguage>
+                            <schemaLanguage>XMLSCHEMA</schemaLanguage>
                             <forceRegenerate>true</forceRegenerate>
                             <bindingDirectory>${project.basedir}/custom-bindings</bindingDirectory>
                             <bindingIncludes>
@@ -154,7 +154,7 @@
                         <id>travel-itinerary-schemas</id>
                         <goals><goal>generate</goal></goals>
                         <configuration>
-                            <schemaLanguage>WSDL</schemaLanguage>
+                            <schemaLanguage>XMLSCHEMA</schemaLanguage>
                             <forceRegenerate>true</forceRegenerate>
                             <bindingDirectory>${project.basedir}/custom-bindings</bindingDirectory>
                             <bindingIncludes>
@@ -172,7 +172,7 @@
                         <id>passenger-details-schemas</id>
                         <goals><goal>generate</goal></goals>
                         <configuration>
-                            <schemaLanguage>WSDL</schemaLanguage>
+                            <schemaLanguage>XMLSCHEMA</schemaLanguage>
                             <forceRegenerate>true</forceRegenerate>
                             <bindingDirectory>${project.basedir}/custom-bindings</bindingDirectory>
                             <bindingIncludes>
@@ -190,7 +190,7 @@
                         <id>enhanced-air-book-schemas</id>
                         <goals><goal>generate</goal></goals>
                         <configuration>
-                            <schemaLanguage>WSDL</schemaLanguage>
+                            <schemaLanguage>XMLSCHEMA</schemaLanguage>
                             <forceRegenerate>true</forceRegenerate>
                             <bindingDirectory>${project.basedir}/custom-bindings</bindingDirectory>
                             <bindingIncludes>

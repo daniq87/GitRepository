@@ -44,7 +44,7 @@ public class EnhancedAirBookWrapper {
         EnhancedAirBookPortType port = service.getEnhancedAirBookPortType();
 
         setEndpointFromConfiguration( port );
-        addInterceptors( port );
+        addHandlers(port);
 
         return port;
     }
@@ -57,7 +57,7 @@ public class EnhancedAirBookWrapper {
         bindingProvider.getRequestContext().put( BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL );
     }
 
-    private void addInterceptors( EnhancedAirBookPortType port ) {
+    private void addHandlers(EnhancedAirBookPortType port) {
 
         List<Handler> handlers = ((BindingProvider)port).getBinding().getHandlerChain();
 

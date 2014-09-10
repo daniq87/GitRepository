@@ -4,7 +4,7 @@ import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import com.sabre.sws.tools.wsdl.wsimport.handlers.LoggingHandler;
-import com.sabre.sws.tools.wsdl.wsimport.handlers.SessionCreateIncomingInterceptor;
+import com.sabre.sws.tools.wsdl.wsimport.handlers.SessionCreateIncomingHandler;
 import com.sabre.sws.tools.wsdl.wsimport.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.wsimport.utils.SecurityFactory;
 import https.webservices_sabre_com.websvc.SessionCreatePortType;
@@ -87,7 +87,7 @@ public class SessionCreateWrapper {
             handlers = new ArrayList<>();
         }
 
-        handlers.add( new SessionCreateIncomingInterceptor() );
+        handlers.add( new SessionCreateIncomingHandler() );
         handlers.add( new LoggingHandler() );
 
         ((BindingProvider)port).getBinding().setHandlerChain( handlers );

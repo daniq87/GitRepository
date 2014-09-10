@@ -200,7 +200,7 @@ public class AirAvailWrapper {
         OTAAirAvailPortType port = service.getOTAAirAvailPortType();
 
         setEndpointFromConfiguration( port );
-        addInterceptors( port );
+        addHandlers(port);
 
         return port;
     }
@@ -213,7 +213,7 @@ public class AirAvailWrapper {
         bindingProvider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
     }
 
-    private void addInterceptors( OTAAirAvailPortType port ) {
+    private void addHandlers(OTAAirAvailPortType port) {
 
         List<Handler> handlers = ((BindingProvider)port).getBinding().getHandlerChain();
 

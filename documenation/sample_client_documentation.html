@@ -71,7 +71,7 @@
                     <li><a href="#technologies-versioning-anchor">Technologies used & versioning</a></li>
                     <li><a href="#data-bindings-anchor">Data binding technologies</a></li>
                     <li><a href="#ws-frameworks-anchor">Web services frameworks</a></li>
-                    <li><a href="#sws-consumed-anchor">Sabre Web Services consumed</a></li>
+                    <li><a href="#sws-consumed-anchor">Sabre&reg; Web Services consumed</a></li>
                     <li><a href="#structure-anchor">Structure</a></li>
                 </ul>
             </li>
@@ -95,7 +95,7 @@
     <span class="header">Overview</span>
     <div class="intend-level-1">
         <p>
-            This document describes sample Sabre Web Services client application, provided by Sabre Web Services
+            This document describes sample Sabre&reg; Web Services client application, provided by Sabre&reg; Web Services
             development team. It is a multi-module Java application that uses Maven for dependency and plugin
             management. Each module represents a single client application using one framework for working
             with web services and one data binding technology. Each of frameworks used is described in the
@@ -129,9 +129,9 @@
         </ul>
 
         <a name="sws-consumed-anchor"></a>
-        <span class="bold">Sabre Web Services consumed</span>
+        <span class="bold">Sabre&reg; Web Services consumed</span>
         <p>
-            The following set of Sabre Web Services is consumed by the client application, whenever it is possible
+            The following set of Sabre&reg; Web Services is consumed by the client application, whenever it is possible
             (to see why it is not always  possible, see <a href="new_index.html#xmlbeans-known-issues-anchor">
             frameworks overview</a>):
         </p>
@@ -221,7 +221,7 @@
                 Common schemas - <span class="code">.xsd</span> files that describe XML data types used in SOAP-based
                 communication. They are placed under <span class="code">target/common_schemas/</span> directory.
             </li>
-            <li>WSDL files (services definitions) and service-specific schemas for each Sabre Web Service used.
+            <li>WSDL files (services definitions) and service-specific schemas for each Sabre&reg; Web Service used.
             A proper set of files for each service is placed in <span class="code">/target/wsdls/&lt;serviceName&gt;</span> </li>
         </ul>
 
@@ -286,7 +286,7 @@
             Wrapper classes encapsulate the whole web service call logic in a particular framework, usually extending some
             stub (helper) class or using delegation on an object of some framework-specific<!--TODO--> class.
             They also usually take care of all the necessary initialization - enpoint setting, handlers/interceptors chain
-            management, headers creation and any other action, that is required to develop a Sabre Web Services
+            management, headers creation and any other action, that is required to develop a Sabre&reg; Web Services
             client application.
         </p>
 
@@ -334,7 +334,7 @@
 
         <p>
             In the first step, using ANT task and Maven antrun plugin, parent module downloads common schemas from
-            Sabre servers and places them under <span class="code">common_schemas/</span> directory. Subsequently,
+            Sabre&reg; servers and places them under <span class="code">common_schemas/</span> directory. Subsequently,
             these files are distributed into each services' directory, so that each location contains a complete
             set of files required for generating Java code from them. <br />
             In the next step the service-specific schemas and WSDL files are downloaded and placed in appropriate
@@ -463,6 +463,8 @@
     <a name="modules-description"></a>
     <span class="header">Modules description</span><br /><br />
 
+    <!-- T O O L K I T   C O M M O N S -->
+
     <a name="toolkit-commons-anchor"></a>
     <span class="subheader" style="font-family: 'Courier New'">toolkit-commons</span><br /><br />
     <div class="intend-level-1">
@@ -501,7 +503,7 @@
                 <span class="code">enum AirAvailRequests</span> - used to specify type of OTA_AirAvailLLSRQ service call
             </li>
             <li>
-                <span class="code">interface IConfigurationProvider</span> - interface that provides Sabre client
+                <span class="code">interface IConfigurationProvider</span> - interface that provides Sabre&reg; client
                 authentication data for services
             </li>
             <li>
@@ -537,6 +539,8 @@
             </li>
         </ul>
     </div>
+
+    <!-- T O O L K I T    A X I S 2    A D B  -->
 
     <a name="toolkit-axis2-adb-anchor"></a>
     <span class="subheader" style="font-family: 'Courier New'">toolkit-axis2-adb</span><br /><br />
@@ -603,7 +607,7 @@
             Note, that only two OTA_AirAvailRequests are invoked. This is due to the bug in the ADB data binding
             (described in <a href="new_index.html#adb-known-issues-anchor">frameworks overview</a>) that causes
             optional attributes to be always present in marshaled objects. In OTA_AirAvailLLSRQ service, some of
-            those attributes are mutually exclusive, causing error when executing requests containg them.
+            those attributes are mutually exclusive, causing error when executing requests containing them.
         </p>
 
         <a name="axis2-adb-wrappers-anchor"></a>
@@ -627,6 +631,8 @@
         </p>
 
     </div>
+
+    <!-- T O O L K I T    A X I S 2     X M L B E A N S -->
 
     <a name="toolkit-axis2-xmlbeans-anchor"></a>
     <span class="subheader" style="font-family: 'Courier New'">toolkit-axis2-xmlbeans</span><br /><br />
@@ -666,7 +672,13 @@
         <p>
             The <span class="code">main()</span> method follows the same pattern as one in <span class="code">toolkit-axis2-adb</span>
             module. There is an invokation of handler-managing method, session is opened, service is called, session is closed,
-            and any exception thrown is caught and logged.
+            and any exception thrown is caught and logged. <br /><br />
+
+            To execute it from command line, run (from the project root directory, after building the whole project
+            with <span class="code">mvn clean install</span>): <br /><br />
+
+            <span class="code">mvn exec:java -pl toolkit-axis2-xmlbeans -Dexec.mainClass=com.sabre.sws.tools.wsdl.axis2.xmlbeans.client.SwsClient</span><br /><br />
+
         </p>
 
         <a name="axis2-xmlbeans-wrappers-anchor"></a>
@@ -687,6 +699,8 @@
             manager from <span class="code">toolkit-commons</span> package.
         </p>
     </div>
+
+    <!-- T O O L K I T    C X F   J A X B  -->
 
     <a name="toolkit-cxf-jaxb-anchor"></a>
     <span class="subheader" style="font-family: 'Courier New'">toolkit-cxf-jaxb</span><br /><br />
@@ -751,22 +765,262 @@
         <a name="cxf-jaxb-client-anchor"></a>
         <span class="bold"><span class="code">SwsClient</span> class</span>
         <p>
+            This class uses the standard template for client classes, <a href="<!--TODO-->"> as described earlier</a>. <br /><br />
+
+            To execute it from command line, run (from the project root directory, after building the whole project
+            with <span class="code">mvn clean install</span>): <br /><br />
+
+            <span class="code">mvn exec:java -pl toolkit-cxf-jaxb -Dexec.mainClass=com.sabre.sws.tools.wsdl.cxf.jaxb.client.SwsClient</span><br /><br />
 
         </p>
 
         <a name="cxf-jaxb-wrappers-anchor"></a>
         <span class="bold">Wrapper classes</span>
         <p>
-
+            Wrapper classes do not extend any class. Instead, they internally create JAX-WS artifacts (services
+            and service enpoint implementations), configure them (through setting interceptors chain and enpoint Url)
+            and use to make web service call. To the outside, they publish a traditional <span class="code">executeSampleRequest()</span>
+            method. Message headers objects are provided by static factory methods of classes from
+            <span class="code">com.sabre.sws.tools.wsdl.cxf.jaxb.utils</span> package.
         </p>
 
         <a name="cxf-jaxb-handlers-interceptors-anchor"></a>
-        <span class="bold">Handlers Interceptors ???</span>
+        <span class="bold">Interceptors</span>
         <p>
-
+            Interceptors in this module extend <span class="code">org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor</span>
+            class, that is standard CXF's base class to use as SOAP messages interceptor. Via it's
+            <span class="code">handleMessage(SOAPMessage message)</span> method it gives access to complete SOAP message,
+            with complete SOAP envelope and all headers. If any data from those members is required, <span class="code">
+            handleMessage</span> method is a good place to obtain them. <br />
+            Interceptors are organized in phases, that are executed in a sequence. It is important to add interceptor
+            to a correct phase, so that all expected information is present during processing. More information on
+            phases and interceptors in CXF is available in <a href="http://cxf.apache.org/docs/interceptors.html">CXF's documentation</a>.
         </p>
 
     </div>
+
+    <!-- T O O L K I T    S P R I N G    W S -->
+
+    <a name="toolkit-springws-anchor"></a>
+    <span class="subheader" style="font-family: 'Courier New'">toolkit-spring-ws</span><br /><br />
+    <div class="intend-level-1">
+
+        <a name="springws-pom-anchor"></a>
+        <span class="bold">POM file and build lifecycle</span>
+        <p>
+            Besides standard elements, POM for this module contains the <span class="code">maven-jaxb2-plugin</span>,
+            that generates JAX-WS artifacts from XSD schemas. The set of classes generated is rather minimalistic,
+            as Spring Web Services requires only the definitions of requests, responses and headers.
+            Files for each service are gathered in a separate execution, to avoid naming conflicts (every
+            response and request definition contains common schemas elements) and ensure no file is skipped.
+            From the same reason, each execution writes to it's own subdirectory in <span class="code">generated-sources</span>
+            folder. Sources for each service go to a separate package. A single execution entry looks like this: <br /><br />
+
+            <!--<span class="code">
+            &lt;execution&gt;<br />
+            &nbsp;&nbsp;&lt;id&gt;travel-itinerary-schemas&lt;/id&gt;<br />
+            &nbsp;&nbsp;&lt;goals&gt;&lt;goal&gt;generate&lt;/goal&gt;&lt;/goals&gt;<br />
+            &nbsp;&nbsp;&lt;configuration&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;schemaLanguage&gt;WSDL&lt;/schemaLanguage&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;forceRegenerate&gt;true&lt;/forceRegenerate&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;bindingDirectory&gt;${project.basedir}/custom-bindings&lt;/bindingDirectory&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;bindingIncludes&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;include&gt;**/travel-itinerary-custom-binding.jxb&lt;/include&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;/bindingIncludes&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;schemaDirectory&gt;${project.parent.basedir}/target/&lt;/schemaDirectory&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;generateDirectory&gt;${project.build.directory}/generated-sources/xjc-3&lt;/generateDirectory&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;generatePackage&gt;com.sabre.sws.tools.wsdl.springws.travelitinerary&lt;/generatePackage&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;schemaIncludes&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;include&gt;**/wsdls/TravelItineraryReadLLSRQ/*RQRS.xsd&lt;/include&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;/schemaIncludes&gt;<br />
+            &nbsp;&nbsp;&lt;/configuration&gt;<br />
+            &lt;/execution&gt;<br />
+            </span>-->
+
+            <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table style="color: black;"><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #000080; font-weight: bold">&lt;execution&gt;</span>
+  <span style="color: #000080; font-weight: bold">&lt;id&gt;</span>travel-itinerary-schemas<span style="color: #000080; font-weight: bold">&lt;/id&gt;</span>
+  <span style="color: #000080; font-weight: bold">&lt;goals&gt;&lt;goal&gt;</span>generate<span style="color: #000080; font-weight: bold">&lt;/goal&gt;&lt;/goals&gt;</span>
+  <span style="color: #000080; font-weight: bold">&lt;configuration&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;schemaLanguage&gt;</span>XMLSCHEMA<span style="color: #000080; font-weight: bold">&lt;/schemaLanguage&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;forceRegenerate&gt;</span>true<span style="color: #000080; font-weight: bold">&lt;/forceRegenerate&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;bindingDirectory&gt;</span>${project.basedir}/custom-bindings<span style="color: #000080; font-weight: bold">&lt;/bindingDirectory&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;bindingIncludes&gt;</span>
+      <span style="color: #000080; font-weight: bold">&lt;include&gt;</span>**/service-name-custom-binding.jxb<span style="color: #000080; font-weight: bold">&lt;/include&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;/bindingIncludes&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;schemaDirectory&gt;</span>${project.parent.basedir}/target/<span style="color: #000080; font-weight: bold">&lt;/schemaDirectory&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;generateDirectory&gt;</span>${project.build.directory}/generated-sources/xjc-N<span style="color: #000080; font-weight: bold">&lt;/generateDirectory&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;generatePackage&gt;</span>com.sabre.sws.tools.wsdl.springws.packagename<span style="color: #000080; font-weight: bold">&lt;/generatePackage&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;schemaIncludes&gt;</span>
+      <span style="color: #000080; font-weight: bold">&lt;include&gt;</span>**/wsdls/ServiceNameRQ/*RQRS.xsd<span style="color: #000080; font-weight: bold">&lt;/include&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;/schemaIncludes&gt;</span>
+  <span style="color: #000080; font-weight: bold">&lt;/configuration&gt;</span>
+<span style="color: #000080; font-weight: bold">&lt;/execution&gt;</span>
+</pre></td></tr></table></div> <br /><br />
+
+        The equivalent command line input is: <br /><br />
+
+        <span class="code">xjc {project_root_directory}/target/wsdls/ServiceNameRQ/ServiceNameRQRS.xsd -d {project_root_directory}/toolkit-spring-ws/target/generated-sources/xjc-3 -p com.sabre.sws.tools.wsdl.springws.packagename -b {project_root_directory}/toolkit-spring-ws/custom-bindings/service-name-custom-binding.jxb</span>
+
+        </p>
+
+        <a name="springws-client-anchor"></a>
+        <span class="bold"><span class="code">SwsClient</span> class</span>
+        <p>
+            This class uses the standard template for client classes, <a href="<!--TODO-->"> as described earlier</a>. <br /><br />
+
+            To execute it from command line, run (from the project root directory, after building the whole project
+            with <span class="code">mvn clean install</span>): <br /><br />
+
+            <span class="code">mvn exec:java -pl toolkit-spring-ws -Dexec.mainClass=com.sabre.sws.tools.wsdl.springws.client.SwsClient</span><br /><br />
+
+        </p>
+
+        <a name="springws-wrappers-anchor"></a>
+        <span class="bold">Wrapper classes</span>
+        <p>
+            Wrapper classes extend <span class="code">org.springframework.ws.client.core.support.WebServiceGatewaySupport</span>
+            convenience class, that is used to easily make web services call using Spring Web Services.
+            They use their superclasses's methods to set interceptors and make web services calls. The method that
+            is directly responsible for calling a web service takes only request's body and marshals it into a SOAP message.
+            Any additional headers must be inserted into SOAP header separately. This project uses a callback
+            (<span class="code">HeaderComposingCallback implements org.springframework.ws.client.core.WebServiceMessageCallback</span>)
+            that takes care of header management after the message is created.
+        </p>
+
+        <a name="springws-handlers-interceptors-anchor"></a>
+        <span class="bold">Interceptors and callbacks</span>
+        <p>
+            As mentioned before, one part of message manipulation mechanism in Spring WS module are callbacks.
+            Callbacks get access to outgoing message only, after they are created, but before they are sent.
+            So it is a good place to insert SOAP headers into request message. To see the working implementation, see
+            <span class="code">com.sabre.sws.tools.wsdl.springws.callbacks.HeaderComposingCallback</span> class. <br /><br/>
+
+            Callbacks are limited to working only with outgoing message. If there's need to get access to incoming message's
+            SOAP envelope, or the exchange context, one should use the interceptor. Interceptors implement
+            <span class="code">org.springframework.ws.client.support.interceptor.ClientInterceptor</span> interface,
+            which among others, has two useful methods: <span class="code">boolean handleRequest(MessageContext context)</span>
+            and <span class="code">boolean handleResponse(MessageContext context)</span>. One can use these methods to
+            handle messages, modificate them and read additional parameters from message context. <br /><br />
+
+            There are four types of interceptors in <span class="code">toolkit-spring-ws</span> module:
+        </p>
+
+        <ul>
+            <li><span class="code">LoggingInterceptor</span> - logs raw SOAP messages to output (depending on Log4j configuration)</li>
+            <li><span class="code">FaultInterceptor</span> - logs faults, if message contains any</li>
+            <li><span class="code">SessionCreateInterceptor</span> - intercepts SessionCreateRS response, validates it and notifies <span class="code">SessionManager</span> about newly open session and it's token </li>
+            <li><span class="code">SessionCloseInterceptor</span> - intercepts SessionCloseRS response, validates it and closes session in <span class="code">SessionManager</span> </li>
+        </ul>
+
+    </div>
+
+    <!-- T O O L K I T    W S I M P O R T  -->
+
+    <a name="toolkit-wsimport-anchor"></a>
+    <span class="subheader" style="font-family: 'Courier New'">toolkit-wsimport</span><br /><br />
+    <div class="intend-level-1">
+
+        <a name="wsimport-pom-anchor"></a>
+        <span class="bold">POM file and build lifecycle</span>
+        <p>
+            The <span class="code">wsimport</span> tool is executed through the <span class="code">jaxws-maven-plugin</span>,
+            which is a part of a <a href="https://jax-ws.java.net/">JAX-WS reference implementation</a> in Glassfish project.
+            It allows generating JAX-WS artifacts (e.g. services, SEIs, JAXB data types) from WSDL files.
+            Plugin section contains one <span class="code">&lt;execution&gt;</span> element for all WSDL files,
+            that do not require custom binding (session services and OTA_AirAvailLLSRQ) and separate elements for each
+            WSDL file that use custom JAXB binding file. Single execution element has the following structure: <br /><br/>
+
+            <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table style="color:black;"><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #000080; font-weight: bold">&lt;execution&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;id&gt;</span>service-name-schemas<span style="color: #000080; font-weight: bold">&lt;/id&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;goals&gt;</span>
+        <span style="color: #000080; font-weight: bold">&lt;goal&gt;</span>wsimport<span style="color: #000080; font-weight: bold">&lt;/goal&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;/goals&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;configuration&gt;</span>
+        <span style="color: #000080; font-weight: bold">&lt;bindingFiles&gt;</span>
+            <span style="color: #000080; font-weight: bold">&lt;bindingFile&gt;</span>service-name-custom-binding.jxb<span style="color: #000080; font-weight: bold">&lt;/bindingFile&gt;</span>
+        <span style="color: #000080; font-weight: bold">&lt;/bindingFiles&gt;</span>
+        <span style="color: #000080; font-weight: bold">&lt;wsdlFiles&gt;</span>
+            <span style="color: #000080; font-weight: bold">&lt;wsdlFile&gt;</span>ServiceNameRQ/ServiceName{service_version}RQ.wsdl<span style="color: #000080; font-weight: bold">&lt;/wsdlFile&gt;</span>
+        <span style="color: #000080; font-weight: bold">&lt;/wsdlFiles&gt;</span>
+    <span style="color: #000080; font-weight: bold">&lt;/configuration&gt;</span>
+<span style="color: #000080; font-weight: bold">&lt;/execution&gt;</span>
+</pre></td></tr></table></div> <br /><br />
+
+            In executions that do not use custom binding, the <span class="code">&lt;bindingFiles&gt;</span>
+            element is simply ommited. <br /><br />
+
+        The other elements in this module's POM are ones described <!--TODO:--> earlier.
+
+        </p>
+
+        <a name="wsimport-client-anchor"></a>
+        <span class="bold"><span class="code">SwsClient</span> class</span>
+        <p>
+            This class uses the standard template for client classes, <a href="<!--TODO-->"> as described earlier</a>. <br /><br />
+
+            To execute it from command line, run (from the project root directory, after building the whole project
+            with <span class="code">mvn clean install</span>): <br /><br />
+
+            <span class="code">mvn exec:java -pl toolkit-wsimport -Dexec.mainClass=com.sabre.sws.tools.wsdl.wsimport.client.SwsClient</span><br /><br />
+
+        </p>
+
+        <a name="wsimport-wrappers-anchor"></a>
+        <span class="bold">Wrapper classes</span>
+        <p>
+            Wrapper classes are similar in internal design to those in <span class="code">toolkit-cxf-jaxb</span> module.
+            They do not extend any class. They create JAX-WS artifacts, configure them (by setting handlers
+            and endpoint Url) and use to make web service calls. The implementation is hidden in private methods,
+            and the only way of accesing a web service is the <span class="code">executeSampleRequest()</span> method.
+        </p>
+
+        <a name="wsimport-handlers-interceptors-anchor"></a>
+        <span class="bold">Handlers</span>
+        <p>
+            Handlers in <span class="code">wsimport</span> must implement <span class="code">javax.xml.ws.handler.soap.SOAPHandler</span>.
+            It's most important method is <span class="code">boolean handleMessage(MessageContext context)</span>, which
+            receives message context and can process it or any information contained within it, including the messages
+            going in and out. There are 3 types of handlers in <span class="code">toolkit-wsimport</span> module:
+        </p>
+
+        <ul>
+            <li><span class="code">LoggingHandler</span> - logs raw SOAP messages to output (depending on Log4j configuration) </li>
+            <li><span class="code">SessionCreateIncomingHandler</span> - intercepts SessionCreateRS response, validates it and notifies <span class="code">SessionManager</span> about newly open session and it's token</li>
+            <li><span class="code">SessionCloseIncomingHandler</span> - intercepts SessionCloseRS response, validates it and closes session in <span class="code">SessionManager</span></li>
+        </ul>
+
+    </div>
+
 
 </body>
 </html>

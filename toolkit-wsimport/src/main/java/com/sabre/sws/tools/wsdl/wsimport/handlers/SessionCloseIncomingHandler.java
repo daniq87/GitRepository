@@ -18,9 +18,9 @@ import java.util.Set;
 /**
  * Created by SG0221139 on 9/2/2014.
  */
-public class SessionCloseIncomingInterceptor implements SOAPHandler {
+public class SessionCloseIncomingHandler implements SOAPHandler {
 
-    private static final Logger LOGGER = LogManager.getLogger( SessionCloseIncomingInterceptor.class );
+    private static final Logger LOGGER = LogManager.getLogger( SessionCloseIncomingHandler.class );
 
     @Override
     public Set<QName> getHeaders() {
