@@ -108,7 +108,7 @@
         Web Services team. It may be used as an example on how to use each framework or an application template.
 
         <br /><br/>
-        <span class="comment">Mój typ to wsimport + CXF, ale czekam na decyzję. Kolejność zamienię, gdy już będzie wszystko wiadomo.</span>
+        <span class="comment">Mój typ to wsimport + JAXB, ale czekam na decyzję. Kolejność zamienię, gdy już będzie wszystko wiadomo.</span>
     </p>
 
 <!-- Document content -->
@@ -144,10 +144,10 @@
         <a name="adb-execution-requirements-anchor"></a>
         <span class="bold"> Execution requirements </span><br/>
         <p>
-            As Sabre&reg; Web Services definitions (provided in the form of WSDL files) use corresponding types of data
+            As Sabre&reg; Web Services definitions (provided in the form of WSDL files) use corresponding types and data
             structures, proper XML Schema files must be provided in the same location as the WSDL file.
-            It includes common schemas for SOAP communication protocol (available as Common Schemas resource at <a href="http://developer.sabre.com">http://developer.sabre.com</a> ) and request/response object pairs definition
-            (also available at <a href="http://developer.sabre.com">http://developer.sabre.com</a>).
+            It includes common schemas for SOAP communication protocol and request/response object pairs definition
+            (available at <a href="http://developer.sabre.com">http://developer.sabre.com</a>).
         </p>
 
         <!-- Generated Code -->
@@ -157,7 +157,7 @@
             If all of the required files are available for code generation tool, after invocation it will by default generate one
             stub java class per service.
             The file will be placed in proper folder structure, according to specified output package and directory.
-            The file will be named <span class="code"> &lt;serviceName&gt;ServiceStub.java </span>
+            The file will be named <span class="code"> &lt;serviceName&gt;ServiceStub.java</span>.
             The stub will contain static inner classes for each complex type. Any element or attribute encapsulated by this complex type
             will become a field in that class. Simple types restrictions are handled by replacing the relevant type with the basetype.
             Generated classes follow the bean convention, with <span class="code">setAttribute</span> and
@@ -172,7 +172,7 @@
         <p>
             Beacuse all used structures are compiled into a stub class as static innter classes, the generated
             files may be quite large (up to hundreds of thousands of lines, depending on service definition
-            complexity ) and therefore problematic to work with, for example some IDE settings changes may be necessary. <br />
+            complexity) and therefore problematic to work with, for example some IDE settings changes may be necessary. <br />
             What is more, ADB does not handle optional attributes in schema definitions well. In generated SOAP messages optional
             attributes are always present, with values set to their defaults, which may not be desired behavior. In particular cases
             optional attributes may be mutually exclusive and sending request containing them to server may cause the server
@@ -219,7 +219,7 @@
             To read about using XMLBeans binding from command line, go to
             <a href="http://cxf.apache.org/docs/wsdl-to-java.html">WSDL 2 Java section on CXF website</a>.<br />
             Maven plugin is described in <a href="http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html">
-            it's own section</a>
+            it's own section</a> of that site.
         </p>
 
         <!-- Execution requirements -->
@@ -237,9 +237,8 @@
         <a name="xmlbeans-generated-code-anchor"></a>
         <span class="bold"> Generated code </span><br/>
         <p>
-            XMLBeans will generate one stub class per service (one stub class per one WSDL file). That stub will encapsulate
-            methods for invoking service calls defined in WSDL file. Unlike ADB, XMLBeans will generate classes per
-            XML structure namespace, which means one class for <span class="code">eb:MessageHeader</span> and
+            Unlike ADB, XMLBeans will generate classes per XML structure's namespace, which means one class for
+            <span class="code">eb:MessageHeader</span> and
             one class for <span class="code">wsse:Security</span>. Creating these objects can be done globally and the
             proper factory method may be reused in every service. <br /><br />
 
@@ -325,7 +324,7 @@
         <span class="bold"> Using </span><br/>
         <p>
             The main ability of JAXB, creating Java classes from XSD schemas, is available through
-            <span class="code">xjc</span> schema compiler, which may accessed in a variety of ways. <br />
+            <span class="code">xjc</span> schema compiler, which may be accessed in a variety of ways. <br />
             Firstly, it is distributed as stand-alone command line tool with JDK since version 6. To use it this way,
             just type <span class="code">xjc path/to/schema/file.xsd [-options]</span>. To see full list of xjc command line tool
             options, check <a href="https://jaxb.java.net/2.2.4/docs/xjc.html">XJC documentation</a>.<br />
@@ -481,7 +480,7 @@
         <a name="axis2-typical-flow-anchor"></a>
         <span class="bold"> Typical flow </span><br/>
         <p>
-            Consuming web services with Axis2 contains of the following steps:
+            Consuming web services with Axis2 constists of the following steps:
         </p>
             <!-- Typical flow list -->
             <ol>
@@ -509,7 +508,7 @@
             Usage of all of the above is similar. It requires specifying location of the WSDL and XML Schema files,
             output location for the generated sources and package name for generated classes. Unless told differently,
             ADB (the default data binding for Axis2) generates one big stub class per one web service definition
-            (or, alternatively, one stub java class per one WSDL file). Parameters are passed ascommand line options
+            (or, alternatively, one stub java class per one WSDL file). Parameters are passed as command line options
             when running from command line. In case of invoking via Ant or Maven tool they are specified in adequate
             XML file (build.xml or pom.xml). <br /><br />
 
@@ -582,13 +581,12 @@
 
         <br />
 
-        <!-- TODO: decide which phrase to use for this section -->
         <!-- Known issues -->
-        <a name="axis2-known-issues-anchor"></a>
+        <!--<a name="axis2-known-issues-anchor"></a>
         <span class="bold"> Known issues </span><br/><br/>
         <p class="intend-level-2">
 
-        </p>
+        </p>-->
 
     </div>
 
@@ -657,7 +655,7 @@
         <a name="cxf-typical-flow-anchor"></a>
         <span class="bold"> Typical flow </span><br/>
         <p>
-            Using CXF to consume web services is generally no different than using Axis2:
+            Using CXF to consume web services is generally no different than using Axis2 and invloves:
         </p>
 
             <!-- Typical flow list -->
@@ -679,7 +677,7 @@
             Client development starts with collecting services definitions and schema definitions (WSDL and XSD) files.
             They are available for Sabre&reg; clients on web. Note, that code generation tool expect all the necessary schemas
             to be present in the same directory as WSDL file. So be sure to place there not only the service specific files,
-            but also those available as "Common Schemas" resource (they are needed to create SOAP envelope and message correctly).
+            but also common schemas (they are needed to create SOAP envelope and message correctly).
             <br /><br />
             When required files are gathered, <span class="code">wsdl2java</span> tool can be used to generate client code.
             Check documentation mentioned before for details on how to use this tool.
@@ -710,12 +708,14 @@
         </ul>
 
         <p>
-            The latter method takes 3 parameters: MessageHeader object wrapped in Holder<MessageHeader>,
-            Security object wrapped in Holder<Security> and a request body (not wrapped). The Holder<> mechanism
-            (based on javax.xml.ws.Holder class) allows
+            The latter method takes 3 parameters: <span class="code">MessageHeader</span> object wrapped in <span class="code">Holder&lt;MessageHeader&gt;</span>,
+            <span class="code">Security</span> object wrapped in <span class="code">Holder&lt;Security&gt;</span> and a request body (not wrapped).
+            The <span class="code">Holder&lt;&gt;</span> mechanism
+            (based on <span class="code">javax.xml.ws.Holder</span> class) allows
             the parameters to work as both input and output objects. During method invokation they are marshalled
             and inserted into message, and when the method returns they are obtained from the response message,
-            unmarshalled into objects and placed in Holders. To get returned objects, use Holder instance's value() method.
+            unmarshaled into objects and placed in Holders. To get returned objects, use Holder instance's
+            <span class="code">value()</span> method.
 
             So, based on !!!sample project, the invokation of Sabre's OTA_AirAvailLLSRQ would look something like this:
             <br /><br />
@@ -793,9 +793,9 @@
         <span class="bold"> Overview </span><br/>
         <p>
             Spring Web Services (Spring WS) is part of the Spring Framework responsible for working with web services.
-            It benefits from that fact in many ways, simplifying and automating many things. However, Spring WS has a bit
+            It benefits from that fact in many ways, simplifying and automating many things. However, Spring WS takes a bit
             different approach to building web services than previously described frameworks - it works on a lower level,
-            exposing to user things, that they do behind the scenes. It gives more control over the process to the developer,
+            exposing to user things, that other frameworks do behind the scenes. It gives more control over the process to the developer,
             but requires more effort.
             <br /><br />
             Spring WS also uses <span class="italic">contract-first </span> approach, so user is encouraged to develop client code
