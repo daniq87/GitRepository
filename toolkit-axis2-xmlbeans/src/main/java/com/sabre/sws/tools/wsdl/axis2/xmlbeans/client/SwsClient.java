@@ -6,10 +6,7 @@ import com.sabre.sws.tools.wsdl.axis2.xmlbeans.wrappers.SessionCreateWrapper;
 import com.sabre.sws.tools.wsdl.commons.handlers.ErrorHandler;
 import com.sabre.sws.tools.wsdl.commons.handlers.MustUnderstandHandler;
 import com.sabre.sws.tools.wsdl.commons.handlers.OutputHandler;
-import com.sabre.sws.tools.wsdl.commons.utils.AirAvailRequests;
-import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
-import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
-import com.sabre.sws.tools.wsdl.commons.utils.Util;
+import com.sabre.sws.tools.wsdl.commons.utils.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.opentravel.www.ota._2002._11.SessionCreateRSDocument;
@@ -48,6 +45,7 @@ public class SwsClient {
     public static void main( String ... args ) {
 
         addHandlers();
+        addCloseSessionOnExitShutdownHook();
 
         try {
             openSession();
@@ -65,6 +63,21 @@ public class SwsClient {
                 LOGGER.error( e );
             }
         }
+    }
+
+    private static void addCloseSessionOnExitShutdownHook() {
+        Runtime.getRuntime().addShutdownHook( new Thread( new Runnable() {
+            @Override
+            public void run() {
+                if(SessionManager.getInstance().isSessionActive()) {
+                    try {
+                        closeSession();
+                    } catch (RemoteException e) {
+                        LOGGER.error( e );
+                    }
+                }
+            }
+        }));
     }
 
     public static void addHandlers() {

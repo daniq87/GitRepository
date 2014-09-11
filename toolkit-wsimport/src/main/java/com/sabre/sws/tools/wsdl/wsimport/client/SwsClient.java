@@ -15,7 +15,9 @@ public class SwsClient {
 
     public static void main( String ... args ) {
 
-        LOGGER.error( "Starting client action..." );
+        addCloseSessionOnExitShutdownHook();
+
+        LOGGER.info( "Starting client action..." );
         try {
             new SessionCreateWrapper().openSession();
 
@@ -25,12 +27,27 @@ public class SwsClient {
             invokePassengerDetailsRequest();
 
         } catch ( Exception e ) {
-            LOGGER.error( e );
+            LOGGER.info( e );
         } finally {
             if( SessionManager.getInstance().isSessionActive() ) {
-                new SessionCloseWrapper().closeSession();
+                closeSession();
             }
         }
+    }
+
+    private static void addCloseSessionOnExitShutdownHook() {
+        Runtime.getRuntime().addShutdownHook( new Thread( new Runnable() {
+            @Override
+            public void run() {
+                if(SessionManager.getInstance().isSessionActive()) {
+                    closeSession();
+                }
+            }
+        }));
+    }
+
+    private static void closeSession() {
+        new SessionCloseWrapper().closeSession();
     }
 
     private static void invokeAirAvailRequests() {

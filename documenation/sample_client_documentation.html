@@ -86,6 +86,64 @@
             </li>
             <li><a href="#building-flow-anchor">Project building flow</a> </li>
             <li><a href="#client-execution-anchor">Client application execution</a> </li>
+            <li>
+                <a href="#modules-description">Modules description</a>
+                <ul>
+                    <li>
+                        <a href="#toolkit-commons-anchor">toolkit-commons</a>
+                        <ul>
+                            <li><a href="#commons-pom-anchor">POM file and build lifecycle</a></li>
+                            <li><a href="#commons-handlers-interceptors-anchor">Handlers</a></li>
+                            <li><a href="#utility-content-anchor">Utility classes</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#toolkit-axis2-adb-anchor">toolkit-axis2-adb</a>
+                        <ul>
+                            <li><a href="#axis2-adb-pom-anchor">POM file and build lifecycle</a></li>
+                            <li><a href="#axis2-adb-client-anchor"><span class="code">SwsClient</span> class</a></li>
+                            <li><a href="#axis2-adb-wrappers-anchor">Wrapper classes</a></li>
+                            <li><a href="#axis2-adb-handlers-interceptors-anchor">Handlers</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#toolkit-axis2-xmlbeans-anchor">toolkit-axis2-xmlbeans</a>
+                        <ul>
+                            <li><a href="#axis2-xmlbeans-client-anchor">POM file and build lifecycle</a></li>
+                            <li><a href="#axis2-xmlbeans-client-anchor"><span class="code">SwsClient</span> class</a></li>
+                            <li><a href="#axis2-xmlbeans-wrappers-anchor">Wrapper classes</a></li>
+                            <li><a href="#axis2-xmlbeans-handlers-interceptors-anchor">Handlers</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#toolkit-cxf-jaxb-anchor">toolkit-cxf-jaxb</a>
+                        <ul>
+                            <li><a href="#cxf-jaxb-pom-anchor">POM file and build lifecycle</a></li>
+                            <li><a href="#cxf-jaxb-client-anchor"><span class="code">SwsClient</span> class</a></li>
+                            <li><a href="#cxf-jaxb-wrappers-anchor">Wrapper classes</a></li>
+                            <li><a href="#cxf-jaxb-handlers-interceptors-anchor">Handlers</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#toolkit-springws-anchor">toolkit-spring-ws</a>
+                        <ul>
+                            <li><a href="#springws-pom-anchor">POM file and build lifecycle</a></li>
+                            <li><a href="#springws-client-anchor"><span class="code">SwsClient</span> class</a></li>
+                            <li><a href="#springws-client-anchor">Wrapper classes</a></li>
+                            <li><a href="#springws-handlers-interceptors-anchor">Handlers</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#toolkit-wsimport-anchor">toolkit-wsimport</a>
+                        <ul>
+                            <li><a href="#wsimport-pom-anchor">POM file and build lifecycle</a></li>
+                            <li><a href="#wsimport-client-anchor"><span class="code">SwsClient</span> class</a></li>
+                            <li><a href="#wsimport-wrappers-anchor">Wrapper classes</a></li>
+                            <li><a href="#wsimport-handlers-interceptors-anchor">Handlers</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
         </ul>
 
     </div> <br />
@@ -146,15 +204,15 @@
             <li>
                 Low-level services
                 <ul>
-                    <li>TravelItineraryReadLLSRQ</li>
-                    <li>OTA_AirAvailLLSRQ</li>
+                    <li>TravelItineraryReadLLSRQ (2.0.0 version)</li>
+                    <li>OTA_AirAvailLLSRQ (2.1.1 version)</li>
                 </ul>
             </li>
             <li>
                 Orchestrated Services
                 <ul>
-                    <li>PassengerDetailsRQ</li>
-                    <li>EnhancedAirBookRQ</li>
+                    <li>PassengerDetailsRQ (2.2.1 version)</li>
+                    <li>EnhancedAirBookRQ (2.5.0 version)</li>
                 </ul>
             </li>
         </ul>
@@ -204,7 +262,7 @@
             Each client module (every except of parent module and <span class="code">toolkit-commons</span> module)
             depends on parent module (which provides shared resources, like services definitions and authorization data)
             and on <span class="code">toolkit-commons</span> module, which is responsible for session management
-            and provides utilities for other modules).
+            and provides utilities for other modules.
             <br /><br />
 
             The parent module is responsible for managing resources that are common for all child modules:
@@ -240,7 +298,7 @@
             Every client module utilizes the same design concept, which consists of four main parts:
         </p>
         <ul>
-            <li>SwsClient class</li>
+            <li><span class="code">SwsClient</span> class</li>
             <li>Wrapper classes</li>
             <li>Handlers/interceptors</li>
             <li>POM build lifecycle</li>
@@ -265,7 +323,12 @@
             Each <span class="code">SwsClient</span> class contains a <span class="code">main()</span> method, that
             triggers the application setup, session creation, services calls and session termination. In other words,
             this method's invokation traverses through the whole lifecycle of a module. <br />
-            Each module has it's own <span class="code">client</span> package, in which client class reside.
+            Each module has it's own <span class="code">client</span> package, in which client class reside. <br /><br />
+
+            Each main method starts with the invokation of <span class="code">addCloseSessionOnExitShutdownHook()</span>
+            method, which add shutdown hook that checks if the session is open, and if so, closes it. This may
+            not seem necessary, as only a single session is used, but it is generally a good practice to close sessions
+            properly and don't lave open sessions to timeout.
         </p>
 
         <!-- Wrappers -->
@@ -273,7 +336,7 @@
         <span class="bold">Wrapper classes</span>
         <p>
             Wrapper class is a top-level abstraction over a web service call in each technology set. It has convenience
-            public methods, that allow direct ivocation of a web service call. Those methods are:
+            public methods, that allow direct invocation of a web service call. Those methods are:
         </p>
 
         <ul>
@@ -284,8 +347,8 @@
 
         <p>
             Wrapper classes encapsulate the whole web service call logic in a particular framework, usually extending some
-            stub (helper) class or using delegation on an object of some framework-specific<!--TODO--> class.
-            They also usually take care of all the necessary initialization - enpoint setting, handlers/interceptors chain
+            stub (helper) class or using delegation on an object of some framework-specific class.
+            They also usually take care of all the necessary initialization - endpoint setting, handlers/interceptors chain
             management, headers creation and any other action, that is required to develop a Sabre&reg; Web Services
             client application.
         </p>
@@ -299,16 +362,19 @@
             They usually implement an interface with one or more public methods, that take message context as an argument,
             and is called during handler invokation. Message context provides access to request and response messages,
             but also additional information associated with message exchange. <br />
-            Because handlers are called after the message is created, but before it is sent, they are a good mean of
+            Because handlers are called in many distinct phases of message processing, e.g. after the message is created,
+            but before it is sent, they are a good mean of
             message manipulating and modification. For example, they can be used to place custom header elements
             into a message (when sending a request) or reading those headers from the response message. <br />
+            Handlers and interceptors are managed by wrapper classes that make sure the web service call is
+            accompanied by a proper set of handlers or interceptors.
         </p>
 
         <!-- POM build lifecycle -->
         <a name="lifecycle-anchor"></a>
         <span class="bold">POM build lifecycle</span>
         <p>
-            Each module follows similar lifecycle pattern, which is dependant on the one of parent module's, so it will
+            Each module follows similar lifecycle pattern, which is dependant on the one of module's parent, so it will
             be described first. <br /><br />
 
             <span>Parent module</span><br /><br />
@@ -377,7 +443,7 @@
             More information about Log4j configuration is available in
             <a href="http://logging.apache.org/log4j/2.x/manual/configuration.html">Log4j manual</a>. <br />
 
-            The <span class="code">custom-bidnings</span> folder holds custom JABX binding files (if applicable). It is
+            The <span class="code">custom-bindings</span> folder holds custom JAXB binding files (if applicable). It is
             present in modules that use JAXB data binding. These files contain hardcoded location of WSDL files,
             so it is important to update them whenever this location changes (eg. when new service's version
             is used).<br /><br />
@@ -387,12 +453,24 @@
             The <span class="code bold">&lt;module-name&gt;/target/generated-sources</span> directory is an important one.
             During each module's lifecycle defined in POM, Maven runs code generation plugin that reads schemas and WSDL
             files provided by parent module. That plugin compiles schemas into Java sources and generates service clients,
-            that are placed in <span class="code">&lt;module-name&gt;/target/generated-sources</span>(and the proper subdirectories structure, according to
+            that are placed in <span class="code">&lt;module-name&gt;/target/generated-sources</span> (and the proper subdirectories structure, according to
             the sources packaging structure). After that, generated sources are part of the project and related classes
             are available to use in the client application. Usually, each framework creates
             <span class="code">&lt;module-name&gt;/target/generated-sources/&lt;data-binding-name&gt;</span> subdirectory, but this may
-            vary (situation for each module is described in the right section).
+            vary (situation for each module is described in the right section). <br /><br />
+
+            Each module's POM contains some common elements:
         </p>
+
+        <ul>
+            <li>
+                The execution of <span class="code">properties-maven-plugin</span>, that reads properties from file
+                held in a parent module
+            </li>
+            <li>
+                The <span class="code">maven-antrun-plugin</span> element, that overrides it's execution from parent module
+            </li>
+        </ul>
 
     </div>
 
@@ -455,7 +533,7 @@
             <span class="code">mvn clean install</span><br />
             <span class="code">mvn exec:java -pl toolkit-axis2-xmlbeans -Dexec.mainClass=com.sabre.sws.tools.wsdl.axis2.xmlbeans.client.SwsClient</span><br /><br />
 
-            After the whole project is buikt for the first time, it does not need to be recompiled again, until configuration
+            After the whole project is built for the first time, it does not need to be recompiled again, until configuration
             changes occur.
         </p>
     </div><br />
@@ -520,7 +598,7 @@
                 care of handler chain management</li>
             <li>
                 <span class="code">ServiceVersionsProvider</span> - class with static getter methods, that provides
-                currently used services' versions. Their values are obtained from a <span class="code">.properties</span>file
+                currently used services' versions. Their values are obtained from a <span class="code">.properties</span> file
             </li>
             <li>
                 <span class="code">SessionManager</span> - singleton class that holds information about currently
@@ -587,7 +665,7 @@
                 -o {project_root_directory}/toolkit-axis2-adb/target/generated-sources/stubs</span> <br /><br />
 
             Axis2 installation is described in <a href="http://axis.apache.org/axis2/java/core/docs/installationguide.html#standalone1">
-            it's domunetation</a>
+            it's documentation</a>
         </p>
 
         <a name="axis2-adb-client-anchor"></a>
@@ -979,7 +1057,7 @@
             In executions that do not use custom binding, the <span class="code">&lt;bindingFiles&gt;</span>
             element is simply ommited. <br /><br />
 
-        The other elements in this module's POM are ones described <!--TODO:--> earlier.
+        The other elements in this module's POM are ones <a href="#lifecycle-anchor">described earlier</a> .
 
         </p>
 
