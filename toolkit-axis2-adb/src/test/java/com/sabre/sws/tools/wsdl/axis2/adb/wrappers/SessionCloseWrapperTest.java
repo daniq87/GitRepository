@@ -73,7 +73,6 @@ public class SessionCloseWrapperTest extends AbstractWebServiceTestClass {
                 );
 
         MessageHandlerManager.addDispatchPhaseHandler( new MustUnderstandHandler() );
-        MessageHandlerManager.addStub( instance );
 
         // when
         SessionCloseRQServiceStub.SessionCloseRS response = instance.closeSession();

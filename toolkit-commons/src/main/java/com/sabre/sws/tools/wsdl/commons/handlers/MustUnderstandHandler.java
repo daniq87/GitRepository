@@ -62,6 +62,8 @@ public class MustUnderstandHandler extends AbstractHandler {
                         conversationID = streamReader.getElementText();
                     }
                     if( isSessionCreateRS && streamReader.getName().getLocalPart().equals( "BinarySecurityToken" ) ) {
+                        isSessionCreateRS = false;
+                        LOGGER.info( "Opening new session..." );
                         SessionManager.getInstance().startSession( streamReader.getElementText() );
                         SessionManager.getInstance().setConversationID( conversationID );
                         LOGGER.info( "Started session" );

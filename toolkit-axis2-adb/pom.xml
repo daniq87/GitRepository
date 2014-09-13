@@ -90,32 +90,6 @@
                 </executions>
             </plugin>
 
-            <!--Clean Plugin -->
-            <!--Deletes stub files, if any-->
-
-  <!--          <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.4.1</version>
-                <executions>
-                    <execution>
-                        <phase>clean</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <verbose>true</verbose>
-                    <filesets>
-                        <fileset>
-                            <directory>target/generated-sources/stubs</directory>
-                            <includes>
-                                <include>*.java</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>               -->
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
@@ -252,29 +226,6 @@
                     </execution>
                 </executions>
             </plugin>
-<!--
-             Build-helper plugin
-             Adds generated .java files to source dir-->
-<!--TODO:: clean this mess!-->
-<!--            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.9</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>target/generated-sources/stubs</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>           -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

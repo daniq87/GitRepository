@@ -53,8 +53,6 @@ public class HeaderComposingCallback implements WebServiceMessageCallback {
 
         SoapHeader soapHeader = ((SoapMessage)webServiceMessage).getSoapHeader();
 
-//        JAXBContext context = JAXBContext.newInstance( MessageHeader.class, Security.class ); // TODO
-//        Marshaller marshaller = context.createMarshaller();
         marshaller.marshal( header, soapHeader.getResult() );
         marshaller.marshal( security, soapHeader.getResult() );
 

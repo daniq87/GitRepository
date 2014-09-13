@@ -157,7 +157,7 @@
             development team. It is a multi-module Java application that uses Maven for dependency and plugin
             management. Each module represents a single client application using one framework for working
             with web services and one data binding technology. Each of frameworks used is described in the
-            <a href="new_index.html">overview</a>, that is distributed with this document. This document focuses
+            <a href="index.html">overview</a>, that is distributed with this document. This document focuses
             solely on the application code and design. However, general description and client development guide
             for each framework is contained in the mentioned overview.
         </p>
@@ -190,7 +190,7 @@
         <span class="bold">Sabre&reg; Web Services consumed</span>
         <p>
             The following set of Sabre&reg; Web Services is consumed by the client application, whenever it is possible
-            (to see why it is not always  possible, see <a href="new_index.html#xmlbeans-known-issues-anchor">
+            (to see why it is not always  possible, see <a href="index.html#xmlbeans-known-issues-anchor">
             frameworks overview</a>):
         </p>
         <ul>
@@ -683,7 +683,7 @@
             <span class="code">mvn exec:java -pl toolkit-axis2-adb -Dexec.mainClass=com.sabre.sws.tools.wsdl.axis2.adb.client.SwsClient</span><br /><br />
 
             Note, that only two OTA_AirAvailRequests are invoked. This is due to the bug in the ADB data binding
-            (described in <a href="new_index.html#adb-known-issues-anchor">frameworks overview</a>) that causes
+            (described in <a href="index.html#adb-known-issues-anchor">frameworks overview</a>) that causes
             optional attributes to be always present in marshaled objects. In OTA_AirAvailLLSRQ service, some of
             those attributes are mutually exclusive, causing error when executing requests containing them.
         </p>
@@ -737,7 +737,7 @@
                 -o {project_root_directory}/toolkit-axis2-xmlbeans/target/generated-sources/stubs</span> <br /><br />
 
             However, there are only 3 of 6 services used in this module, due to an XMLBeans issue described in
-            <a href="new_index.html#xmlbeans-known-issues-anchor">technologies overview document</a> distributed with
+            <a href="index.html#xmlbeans-known-issues-anchor">technologies overview document</a> distributed with
             this project.
 
             As in previous module, there is also an execution of properties plugin, that reads properties from file

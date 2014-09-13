@@ -1,7 +1,5 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 
-import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
-import com.sabre.sws.tools.wsdl.commons.handlers.MustUnderstandHandler;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.stubs.adb.SessionCreateRQServiceStub;
 import org.apache.axis2.AxisFault;
@@ -71,8 +69,9 @@ public class SessionCreateWrapperTest extends AbstractWebServiceTestClass {
                 );
 
         // when
-        MessageHandlerManager.addDispatchPhaseHandler( new MustUnderstandHandler() );
-        MessageHandlerManager.addStub( instance );
+        if( SessionManager.getInstance().isSessionActive() ) {
+            SessionManager.getInstance().endSession();
+        }
         SessionCreateRQServiceStub.SessionCreateRS response = instance.openSession();
 
         // then
