@@ -47,6 +47,31 @@
         <!--   P  L   U   G   I   N   S   -->
         <plugins>
 
+            <!-- R E S O U R C E S    P L U G I N -->
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-log4j-conf</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/configuration</directory>
+                                    <include>**/log4j2.xml</include>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- Skip antrun plugin execution from parent POM -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

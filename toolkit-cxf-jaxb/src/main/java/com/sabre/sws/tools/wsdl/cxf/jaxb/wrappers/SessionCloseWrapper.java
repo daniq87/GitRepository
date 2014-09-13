@@ -1,6 +1,8 @@
 package com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
+import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.LoggingInInterceptor;
+import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.LoggingOutInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.SessionCloseIncomingInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.SecurityFactory;
@@ -44,6 +46,8 @@ public class SessionCloseWrapper {
         Client client = ClientProxy.getClient( stub );
         Endpoint endpoint = client.getEndpoint();
         endpoint.getInInterceptors().add( new SessionCloseIncomingInterceptor() );
+        endpoint.getInInterceptors().add( new LoggingInInterceptor() );
+        endpoint.getOutInterceptors().add( new LoggingOutInterceptor() );
 
         // Invoke
         SessionCloseRS response = stub.sessionCloseRQ( headerHolder, securityHolder, body );

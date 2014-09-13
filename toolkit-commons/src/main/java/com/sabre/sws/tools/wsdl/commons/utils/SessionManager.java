@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * Created by SG0221139 on 7/11/2014.
+ *
+ * This is singleton SessionManager class.
  */
 public class SessionManager {
 
@@ -29,11 +31,20 @@ public class SessionManager {
 
     public void startSession( String token ) {
 
+        if( sessionIsActive ) {
+            throw new IllegalStateException("Session already open");
+        }
+
         this.sessionIsActive = true;
         this.sessionToken = token;
     }
 
     public void endSession() {
+
+        if( !sessionIsActive ) {
+            throw new IllegalStateException("There is no open session");
+        }
+
         this.sessionIsActive = false;
         this.sessionToken = null;
         this.conversationID = null;

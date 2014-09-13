@@ -3,6 +3,8 @@ package com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
+import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.LoggingInInterceptor;
+import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.LoggingOutInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.SWSOResponseInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.SecurityFactory;
@@ -13,8 +15,6 @@ import https.webservices_sabre_com.websvc.PassengerDetailsService;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.endpoint.Endpoint;
 import org.apache.cxf.frontend.ClientProxy;
-import org.apache.cxf.interceptor.LoggingInInterceptor;
-import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.ebxml.namespaces.messageheader.MessageHeader;
 import org.xmlsoap.schemas.ws._2002._12.secext.Security;
 
@@ -81,8 +81,8 @@ public class PassengerDetailsWrapper {
         Client client = ClientProxy.getClient( port );
         Endpoint endpoint = client.getEndpoint();
 
-        endpoint.getInInterceptors().add( new LoggingInInterceptor() );
         endpoint.getInInterceptors().add( new SWSOResponseInterceptor() );
+        endpoint.getInInterceptors().add( new LoggingInInterceptor() );
         endpoint.getOutInterceptors().add( new LoggingOutInterceptor() );
     }
 

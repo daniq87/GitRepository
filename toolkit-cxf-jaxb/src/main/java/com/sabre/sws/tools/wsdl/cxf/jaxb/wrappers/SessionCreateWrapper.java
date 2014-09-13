@@ -3,6 +3,8 @@ package com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.LLSErrorInterceptor;
+import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.LoggingInInterceptor;
+import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.LoggingOutInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.SessionCreateIncomingInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.SecurityFactory;
@@ -12,9 +14,6 @@ import https.webservices_sabre_com.websvc.SessionCreateRQService;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.endpoint.Endpoint;
 import org.apache.cxf.frontend.ClientProxy;
-import org.apache.cxf.interceptor.LoggingInInterceptor;
-import org.apache.cxf.interceptor.LoggingOutInterceptor;
-import org.apache.cxf.phase.Phase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ebxml.namespaces.messageheader.MessageHeader;
@@ -67,9 +66,9 @@ public class SessionCreateWrapper {
         Client client = ClientProxy.getClient(stub);
         Endpoint endpoint = client.getEndpoint();
 
-        endpoint.getOutInterceptors().add( new LoggingOutInterceptor(Phase.PRE_STREAM) );
-        endpoint.getInInterceptors().add( new SessionCreateIncomingInterceptor() );
         endpoint.getInInterceptors().add( new LoggingInInterceptor() );
+        endpoint.getOutInterceptors().add( new LoggingOutInterceptor() );
+        endpoint.getInInterceptors().add( new SessionCreateIncomingInterceptor() );
         endpoint.getInInterceptors().add( new LLSErrorInterceptor() );
     }
 }
