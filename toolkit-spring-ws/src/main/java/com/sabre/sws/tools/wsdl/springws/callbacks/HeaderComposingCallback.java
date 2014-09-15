@@ -15,6 +15,10 @@ import java.io.IOException;
 
 /**
  * Created by SG0221139 on 8/14/2014.
+ *
+ * This is a callback class for working with Spring Web Services.
+ * It plays a crucial role in consuming Sabre Web Services using Spring WS framework.
+ * The doWithMessage() methods TODO
  */
 public class HeaderComposingCallback implements WebServiceMessageCallback {
 
@@ -51,10 +55,10 @@ public class HeaderComposingCallback implements WebServiceMessageCallback {
     @Override
     public void doWithMessage(WebServiceMessage webServiceMessage) throws IOException, TransformerException {
 
-        SoapHeader soapHeader = ((SoapMessage)webServiceMessage).getSoapHeader();
+        SoapHeader soapHeaderElement = ((SoapMessage)webServiceMessage).getSoapHeader();
 
-        marshaller.marshal( header, soapHeader.getResult() );
-        marshaller.marshal( security, soapHeader.getResult() );
+        marshaller.marshal(header, soapHeaderElement.getResult());
+        marshaller.marshal(security, soapHeaderElement.getResult());
 
     }
 

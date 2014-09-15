@@ -35,7 +35,7 @@ public class SessionCreateWrapper {
     public SessionCreateRS openSession() {
 
         MessageHeader header = MessageHeaderFactory.getMessageHeader(Util.getConfigurationProvider(), "SessionCreateRQ" );
-        Security security = SecurityFactory.getSecurity(Util.getConfigurationProvider(), true);
+        Security security = SecurityFactory.getSecurityWithCredentials(Util.getConfigurationProvider());
         SessionCreateRQ body = SessionCreateFactory.getSessionCreate(Util.getConfigurationProvider());
 
         Holder<MessageHeader> headerHolder = new Holder<>( header );

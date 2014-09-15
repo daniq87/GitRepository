@@ -28,7 +28,7 @@ public class SessionCloseWrapper {
     public SessionCloseRS closeSession() {
 
         MessageHeader header = MessageHeaderFactory.getMessageHeader( Util.getConfigurationProvider(), "SessionCloseRQ");
-        Security security = SecurityFactory.getSecurity( Util.getConfigurationProvider(), false );
+        Security security = SecurityFactory.getSecurityWithSessionToken();
         SessionCloseRQ body = SessionCloseFactory.getSessionClose( Util.getConfigurationProvider() );
 
         Holder<MessageHeader> headerHolder = new Holder<>( header );

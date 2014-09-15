@@ -12,6 +12,10 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * Created by SG0221139 on 7/16/2014.
+ *
+ * This is a logger class for Apache Axis2 framework.
+ * It is responsible for logging the messages going in and out.
+ *
  */
 public class OutputHandler extends AbstractHandler {
 

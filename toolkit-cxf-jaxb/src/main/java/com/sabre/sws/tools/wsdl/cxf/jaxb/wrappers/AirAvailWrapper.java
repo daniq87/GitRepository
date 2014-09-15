@@ -33,7 +33,7 @@ public class AirAvailWrapper {
 
         IConfigurationProvider configuration = Util.getConfigurationProvider();
 
-        Security security = SecurityFactory.getSecurity( configuration, false );
+        Security security = SecurityFactory.getSecurityWithSessionToken();
         MessageHeader header = MessageHeaderFactory.getMessageHeader( configuration, serviceAction );
 
         OTAAirAvailRQ requestBody = getRequestBody( requestType );

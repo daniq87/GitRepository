@@ -2,6 +2,10 @@ package com.sabre.sws.tools.wsdl.commons.utils;
 
 /**
  * Created by SG0221139 on 8/21/2014.
+ * This enum type represents four types of available OTA_AirAvailLLSRQ requests.
+ * It is used by the wrapper classes to which request should be made
+ * and which request body should be returned by the factory methods.
+ *
  */
 public enum AirAvailRequests {
 

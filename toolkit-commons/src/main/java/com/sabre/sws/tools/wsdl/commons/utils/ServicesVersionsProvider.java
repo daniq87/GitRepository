@@ -9,6 +9,8 @@ import java.util.Properties;
 
 /**
  * Created by SG0221139 on 7/28/2014.
+ *
+ * This class loads loads services' version from .properties file and make it available for the application code.
  */
 public class ServicesVersionsProvider {
 

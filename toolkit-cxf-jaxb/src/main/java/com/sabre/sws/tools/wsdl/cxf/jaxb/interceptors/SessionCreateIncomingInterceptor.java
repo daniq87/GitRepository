@@ -16,6 +16,13 @@ import javax.xml.namespace.QName;
 
 /**
  * Created by SG0221139 on 8/7/2014.
+ *
+ * This is an interceptor class for Sabre Web Services' CXF client application.
+ * It traverses the message header's structure and checks if the current message
+ * is a part of the SessionCreateRQ response. If so, the session information
+ * (session token and conversation ID) is retrieved from the header and
+ * and stored in SessionManager's instance.
+ *
  */
 
 public class SessionCreateIncomingInterceptor extends AbstractSoapInterceptor {

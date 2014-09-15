@@ -8,8 +8,8 @@ import com.sabre.webservices.sabrexml._2011._10.OTAAirAvailRQDocument;
 /**
  * Created by SG0221139 on 9/6/2014.
  *
- * This class provides a method, that produces four distinct request bodies for OTA_AirAvailLLSRQ service.
- * For each of four possible parameter value (enum AirAvailRequests) a corresponding request object is return.
+ * This class provides a static method, that produces four distinct request bodies for OTA_AirAvailLLSRQ service.
+ * For each of four possible parameter value (enum AirAvailRequests) a corresponding request object is returned.
  *
  */
 public class AirAvailRQFactory {

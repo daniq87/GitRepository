@@ -34,7 +34,7 @@ public class PassengerDetailsWrapper {
 
         PassengerDetailsPortType port = getConfiguredPort();
         IConfigurationProvider configuration = Util.getConfigurationProvider();
-        Security security = SecurityFactory.getSecurity( configuration, false );
+        Security security = SecurityFactory.getSecurityWithSessionToken();
         MessageHeader header = MessageHeaderFactory.getMessageHeader( configuration, actionString );
 
         PassengerDetailsRQ requestBody = getRequestBody();

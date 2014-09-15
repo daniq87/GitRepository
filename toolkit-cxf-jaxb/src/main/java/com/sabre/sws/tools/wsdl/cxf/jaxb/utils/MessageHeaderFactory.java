@@ -33,9 +33,7 @@ public class MessageHeaderFactory {
         instance.setTo( to );
 
         instance.setCPAId( configuration.getPCC() );
-
         instance.setAction( Util.getServiceTypeString() );
-
         instance.setAction( action );
 
         MessageData messageData = new MessageData();

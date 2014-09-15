@@ -13,6 +13,16 @@ import java.util.List;
 
 /**
  * Created by SG0221139 on 7/16/2014.
+ *
+ * This class manages handlers and stubs within Apache Axis2 application.
+ *
+ * In constructor, each wrapper class (that extend Axis2's stub class) registers itself in manager
+ * by passing  it's "this" reference to manager's addStub() method.
+ *
+ * The client application registers a proper set of handlers in SwsClient class' main() method.
+ *
+ * The manager configures each stub to contain the defined handler set.
+ *
  */
 public class MessageHandlerManager {
 

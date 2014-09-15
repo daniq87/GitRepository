@@ -15,6 +15,9 @@ import java.io.*;
 
 /**
  * Created by SG0221139 on 9/11/2014.
+ *
+ * This is an interceptor class for Sabre Web Services' CXF client application.
+ * It is responsible for logging out messages' content.
  */
 public class LoggingOutInterceptor extends AbstractSoapInterceptor {
 

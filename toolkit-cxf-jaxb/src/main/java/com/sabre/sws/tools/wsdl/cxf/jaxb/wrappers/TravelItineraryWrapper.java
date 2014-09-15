@@ -29,7 +29,7 @@ public class TravelItineraryWrapper {
 
     public TravelItineraryReadRS executeSampleRequest() {
 
-        Security security = SecurityFactory.getSecurity(Util.getConfigurationProvider(), false);
+        Security security = SecurityFactory.getSecurityWithSessionToken();
         MessageHeader header = MessageHeaderFactory.getMessageHeader( Util.getConfigurationProvider(), actionString );
         TravelItineraryReadRQ body = getRequestBody();
 

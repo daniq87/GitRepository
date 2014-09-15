@@ -6,7 +6,9 @@ import org.apache.logging.log4j.Logger;
 /**
  * Created by SG0221139 on 7/11/2014.
  *
- * This is singleton SessionManager class.
+ * This is a singleton SessionManager class. It provides access to shared session's information.
+ * Wrapper classes make Sabre Web Services calls within the open session.
+ * Session token is obtained via SessionManager instance.
  */
 public class SessionManager {
 

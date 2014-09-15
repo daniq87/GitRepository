@@ -18,6 +18,12 @@ import java.util.Iterator;
 
 /**
  * Created by SG0221139 on 7/11/2014.
+ *
+ * This is a handler class for Apache Axis2 framework.
+ * It processes header elements marked with the mustUnderstand="1" attribute
+ * and takes care of session management (it reads header action and
+ * tests if it concerns session management.
+ *
  */
 
 public class MustUnderstandHandler extends AbstractHandler {

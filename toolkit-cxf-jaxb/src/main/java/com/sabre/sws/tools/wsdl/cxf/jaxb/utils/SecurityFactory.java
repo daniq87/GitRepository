@@ -13,22 +13,25 @@ public class SecurityFactory {
 
     }
 
-    public static Security getSecurity( IConfigurationProvider configuration, boolean creatingSession ) {
+    public static Security getSecurityWithCredentials( IConfigurationProvider configuration) {
 
         Security instance = new Security();
 
-        if( creatingSession ) {
-            Security.UsernameToken token = new Security.UsernameToken();
+        Security.UsernameToken token = new Security.UsernameToken();
 
-            token.setDomain( configuration.getDomain() );
-            token.setOrganization(configuration.getOrganization());
-            token.setPassword(configuration.getPassword());
-            token.setUsername(configuration.getUsername());
+        token.setDomain( configuration.getDomain() );
+        token.setOrganization(configuration.getOrganization());
+        token.setPassword(configuration.getPassword());
+        token.setUsername(configuration.getUsername());
 
-            instance.setUsernameToken( token );
-        } else {
-            instance.setBinarySecurityToken(SessionManager.getInstance().getToken() );
-        }
+        instance.setUsernameToken( token );
+
+        return instance;
+    }
+
+    public static Security getSecurityWithSessionToken() {
+        Security instance = new Security();
+        instance.setBinarySecurityToken(SessionManager.getInstance().getToken() );
         return instance;
     }
 
