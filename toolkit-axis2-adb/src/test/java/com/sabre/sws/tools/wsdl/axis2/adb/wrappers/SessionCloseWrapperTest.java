@@ -1,7 +1,7 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 
-import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.commons.handlers.MustUnderstandHandler;
+import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.stubs.adb.SessionCloseRQServiceStub;
 import org.apache.axis2.AxisFault;
@@ -30,7 +30,9 @@ public class SessionCloseWrapperTest extends AbstractWebServiceTestClass {
 
     @Before
     public void createInstance() throws AxisFault {
+        MessageHandlerManager.erase();
         instance = new SessionCloseWrapper( configuration );
+        MessageHandlerManager.addDispatchPhaseHandler(new MustUnderstandHandler());
     }
 
     @After
@@ -71,8 +73,6 @@ public class SessionCloseWrapperTest extends AbstractWebServiceTestClass {
                                         responseBuffer.toString()
                                 )
                 );
-
-        MessageHandlerManager.addDispatchPhaseHandler( new MustUnderstandHandler() );
 
         // when
         SessionCloseRQServiceStub.SessionCloseRS response = instance.closeSession();

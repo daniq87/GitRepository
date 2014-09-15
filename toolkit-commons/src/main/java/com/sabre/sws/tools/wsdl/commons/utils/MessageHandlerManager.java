@@ -20,14 +20,24 @@ public class MessageHandlerManager {
 
     private final static List<Stub> stubs = new ArrayList<> ();
 
-    private final static Phase errorPhase = new Phase( "Error Phase" );
-    private final static Phase logPhase = new Phase( "Log Phase" );
-    private final static Phase dispatchPhase = new Phase( "Dispatch Phase" );
+    private static Phase errorPhase = new Phase( "Error Phase" );
+    private static Phase logPhase = new Phase( "Log Phase" );
+    private static Phase dispatchPhase = new Phase( "Dispatch Phase" );
 
-    private final static List<Phase> phases = Arrays.asList( logPhase, errorPhase, dispatchPhase );
+    private static List<Phase> phases = Arrays.asList( logPhase, errorPhase, dispatchPhase );
 
     // Private c-tor
     private MessageHandlerManager() {}
+
+    public static void erase() {
+        stubs.clear();
+
+        errorPhase = new Phase( "Error Phase" );
+        logPhase = new Phase( "Log Phase" );
+        dispatchPhase = new Phase( "Dispatch Phase" );
+
+        phases = Arrays.asList( logPhase, errorPhase, dispatchPhase );
+    }
 
     public static void addStub( Stub stub ) {
         LOGGER.info( "Add stub" );
