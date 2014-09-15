@@ -45,7 +45,6 @@ public class SessionCreateWrapperTest extends AbstractWebServiceTestClass {
         LOGGER.info( "Test begin" );
 
         // given
-
         StringBuffer responseBuffer = new StringBuffer();
         String testResponseLocation = "src/test/resources/test_responses/session_create_test_response.xml";
         try {
