@@ -17,7 +17,6 @@ public class InputStreamConfigurationSource implements IConfigurationProvider {
     private final String PCC;
 
     private final String endpoint;
-    private final int maxConnections;
 
     public InputStreamConfigurationSource(InputStream inputStream) throws IOException {
 
@@ -31,7 +30,6 @@ public class InputStreamConfigurationSource implements IConfigurationProvider {
         this.PCC = properties.getProperty( "PCC" );
 
         this.endpoint = properties.getProperty( "endpoint" );
-        this.maxConnections = Integer.parseInt( properties.getProperty("max_connections") );
 
         inputStream.close();
 

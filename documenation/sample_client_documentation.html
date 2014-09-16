@@ -85,7 +85,14 @@
                 </ul>
             </li>
             <li><a href="#building-flow-anchor">Project building flow</a> </li>
-            <li><a href="#client-execution-anchor">Client application execution</a> </li>
+            <li>
+                <a href="#client-execution-anchor">Client application execution</a>
+                <ul>
+                    <li><a href="#execution-requirements-anchor">Execution requirements</a></li>
+                    <li><a href="#execution-script-anchor">Execution script (bash)</a></li>
+                    <li><a href="#execution-maven-anchor">Maven execution</a></li>
+                </ul>
+            </li>
             <li>
                 <a href="#modules-description">Modules description</a>
                 <ul>
@@ -514,8 +521,59 @@
     <a name="client-execution-anchor"></a>
     <span class="subheader">Client application execution</span>
     <div class="intend-level-1">
+
         <p>
-            To build and run client from command line one must execute Maven <span class="code">compile</span> goal
+            <a name="execution-requirements-anchor"></a>
+            <span class="bold">Execution requirements</span> <br/><br/>
+
+            Sample application opens Sabre&reg; Web Services session within which it makes
+            service calls. In order to open session, user credentials are necessary. It includes
+            username, password, domain and PCC (organization). These data must be specified by user before
+            launching application. They should be put into <span class="code">wsdl-toolkit/resources/connection.properties</span>
+            file. This file also allows to specify an endpoint Url address (by default it is <span class="code">https://sws-sts.cert.sabre.com</span>)
+            to which web service calls are sent. Settings in <span class="code">connection.properties</span>
+            are global, so changing it in this one place takes effect in the whole application. <br /><br />
+
+            Among others, client application makes a call to TravelItineraryReadLLSRQ service. The request
+            contains a single PNR number, and retrieves information about it. The valid PNR number must be specified
+            by the user. A place for it is in <span class="code">wsdl-toolkit/resources/request-data.properties</span>
+            file (the <span class="code">pnr</span> property). <br /><br />
+
+            File <span class="code">wsdl-toolkit/resources/service-versions.properties</span> contains information about
+            service versions. Default values are provided, but one may change it if necessary. Those versions
+            are also used in parent module's POM and are part of schema locations in custom binding files,
+            so apply all the required changes when they change.
+        </p>
+
+        <p>
+            <a name="execution-script-anchor"></a>
+            <span class="bold">Script execution</span> <br/><br/>
+
+            The sample application contains a shell script that allows to build application and execute it.
+            It is located in project's root directory. The script's name is <span class="code">run</span>.
+            Executing it without any additional parameters displays information on how to use it. <br />
+            The first thing to do is to execute this script with <span class="code">build</span> argument:
+            <br /><br />
+            <span class="code">run build</span> <br/> <br />
+
+            It will clean all directories and build the project. Effectively, it is done via <span class="code">mvn clean install</span>
+            command, so to see what's going under the hood, check <a href="#lifecycle-anchor">POM lifecycle section</a>. <br /><br />
+
+            After built, the use of the script is the following: <br /><br />
+
+            <span class="code">run name_of_module_to_execute [fresh]</span> <br /><br />
+
+            This will run chosen module's <span class="code">main()</span> method. If instead of module's name
+            <span class="code">all</span> appears, all modules are executed in a sequence. The use of <span class="code">fresh</span>
+            parameter couses the module to be recompiled before execution.
+
+        </p>
+
+        <p>
+            <a name="execution-maven-anchor"></a>
+            <span class="bold">Maven execution</span> <br/><br/>
+
+            To build and run client from command line without script one must execute Maven <span class="code">compile</span> goal
             on the root module. This will setup the directories, download all necessary files, build common
             utilities classes, generate sources and compile clients. To achieve this, run: <br /><br />
 
