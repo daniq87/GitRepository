@@ -40,8 +40,6 @@ public class SwsClient {
 
     private static final Logger LOGGER = LogManager.getLogger(SwsClient.class.getName());
 
-    private static final boolean enableMonitor = true;
-
     public static void main( String ... args ) {
 
         LOGGER.info( "Starting client action");

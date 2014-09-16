@@ -24,8 +24,6 @@ public class SoapMessageUtils {
             messageContentInputStream.close();
             message.setContent(InputStream.class,messageCopyStream.getInputStream());
             messageCopyStream.close();
-
-            IOUtils.copy(messageContentInputStream, messageCopyStream);
         }
         return messageCopyStream;
     }
