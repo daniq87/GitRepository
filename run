@@ -1,0 +1,77 @@
+#!/bin/bash
+
+if [[ $# -eq 0  ]]
+  
+  then
+
+    # help here    
+    echo "Some help"    
+
+  else
+
+    case $1 in
+
+	"build" )
+
+   	    echo "Build the whole project"
+
+            mvn clean
+            mvn install
+           
+	;;
+       "all" )
+
+	    if [ $# -eq 2 ] && [ $2 == "fresh" ]; then
+		mvn clean;
+		mvn compile;
+	    fi		
+
+            mvn exec:java -pl toolkit-axis2-adb -Dexec.mainClass=com.sabre.sws.tools.wsdl.axis2.adb.client.SwsClient
+            mvn exec:java -pl toolkit-axis2-xmlbeans -Dexec.mainClass=com.sabre.sws.tools.wsdl.axis2.xmlbeans.client.SwsClient
+            mvn exec:java -pl toolkit-cxf-jaxb -Dexec.mainClass=com.sabre.sws.tools.wsdl.cxf.jaxb.client.SwsClient
+            mvn exec:java -pl toolkit-spring-ws -Dexec.mainClass=com.sabre.sws.tools.wsdl.springws.client.SwsClient
+            mvn exec:java -pl toolkit-wsimport -Dexec.mainClass=com.sabre.sws.tools.wsdl.wsimport.client.SwsClient
+	;;
+	"toolkit-axis2-adb" )
+
+	    if [ $# -eq 2 ] && [ $2 == "fresh" ]; then
+		mvn compile -f toolkit-axis2-adb/pom.xml
+   	    fi
+
+            mvn exec:java -pl toolkit-axis2-adb -Dexec.mainClass=com.sabre.sws.tools.wsdl.axis2.adb.client.SwsClient
+	;;
+	"toolkit-axis2-xmlbeans" )
+
+	    if [ $# -eq 2 ] && [ $2 == "fresh" ]; then
+		mvn compile -f toolkit-axis2-xmlbeans/pom.xml
+	    fi
+	
+	    mvn exec:java -pl toolkit-axis2-xmlbeans -Dexec.mainClass=com.sabre.sws.tools.wsdl.axis2.xmlbeans.client.SwsClient
+	;;
+	"toolkit-cxf-jaxb" )
+
+	    if [ $# -eq 2 ] && [ $2 == "fresh" ]; then
+		mvn compile -f toolkit-cxf-jaxb/pom.xml
+	    fi
+
+	    mvn exec:java -pl toolkit-cxf-jaxb -Dexec.mainClass=com.sabre.sws.tools.wsdl.cxf.jaxb.client.SwsClient	
+	;;
+	"toolkit-spring-ws" )
+
+
+	    if [ $# -eq 2 ] && [ $2 == "fresh" ]; then
+		mvn compile -f toolkit-spring-ws/pom.xml
+	    fi
+
+	    mvn exec:java -pl toolkit-spring-ws -Dexec.mainClass=com.sabre.sws.tools.wsdl.springws.client.SwsClient
+	;;
+	"toolkit-wsimport" )
+
+	    if [ $# -eq 2 ] && [ $2 == "fresh" ]; then
+		mvn compile -f toolkit-wsimport/pom.xml
+	    fi
+	    
+	    mvn exec:java -pl toolkit-wsimport -Dexec.mainClass=com.sabre.sws.tools.wsdl.wsimport.client.SwsClient	
+	;;
+esac
+fi 
