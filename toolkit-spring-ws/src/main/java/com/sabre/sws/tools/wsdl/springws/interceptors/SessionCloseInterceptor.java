@@ -6,28 +6,21 @@ import com.sabre.sws.tools.wsdl.springws.soap.Security;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.ws.client.WebServiceClientException;
-import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
-import org.springframework.ws.soap.SoapMessage;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.namespace.QName;
-import javax.xml.transform.Source;
 
 /**
  * Created by SG0221139 on 8/18/2014.
+ *
+ * This is an interceptor class for working with Spring Web Services framework.
+ * It's responsibility is to ensure that processed message is a SessionCloseRQ response
+ * message, validate if session being closed is the active one and inform SessionManager
+ * instance about closing session.
  */
-public class SessionCloseInterceptor implements ClientInterceptor {
+public class SessionCloseInterceptor extends AbstractSessionInterceptor {
 
     private static final Logger LOGGER = LogManager.getLogger( SessionCloseInterceptor.class );
-
-    private static final String securityNs = "http://schemas.xmlsoap.org/ws/2002/12/secext";
-    private static final String securityLocalName = "Security";
-
-    private static final String headerNs = "http://www.ebxml.org/namespaces/messageHeader";
-    private static final String headerLocalName = "MessageHeader";
 
     @Override
     public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
@@ -37,25 +30,14 @@ public class SessionCloseInterceptor implements ClientInterceptor {
     @Override
     public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
 
-        QName securityQName = new QName( securityNs, securityLocalName );
-        QName headerQName = new QName( headerNs, headerLocalName );
-
         String token = null;
         String conversationId = null;
 
         try {
+            Security security = extractSecurityFromMessageContext(messageContext);
+            MessageHeader header = extractMessageHeaderFromMessageContext(messageContext);
 
-            JAXBContext jaxbContext = JAXBContext.newInstance(Security.class, MessageHeader.class);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
-            SoapMessage message = (SoapMessage) messageContext.getResponse();
-            Source securitySource = message.getSoapHeader().examineHeaderElements( securityQName ).next().getSource();
-            Source headerSource = message.getSoapHeader().examineHeaderElements( headerQName ).next().getSource();
-
-            Security security = (Security) unmarshaller.unmarshal( securitySource );
-            MessageHeader header = (MessageHeader) unmarshaller.unmarshal( headerSource );
-
-            if( !header.getAction().equalsIgnoreCase( "SessionCloseRS" ) ) {
+            if( !isSessionCloseRS(header)) {
                 throw new UnsupportedOperationException( "This interceptors works with SessionCloseRQ only" );
             }
 
@@ -70,34 +52,14 @@ public class SessionCloseInterceptor implements ClientInterceptor {
             throw new WebServiceClientException( "Couldn't retrieve session token from message" ) {};
         }
 
-        String currentSessionToken = SessionManager.getInstance().getToken();
-        String currentSessionConversationId = SessionManager.getInstance().getConversationID();
-
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("Closing Session").append("\n");
-        buffer.append("Session token: " + token).append("\n");
-        buffer.append("Conversation-Id: " + conversationId).append("\n");
-
-        String logMessage = buffer.toString();
-        LOGGER.info( logMessage );
-
-        if( !( currentSessionConversationId.equals(conversationId)
-                && currentSessionToken.equals(token) ) ) {
+        if( !tokenAndConvIdFromMessageMatchCurrentSessions(token, conversationId)) {
             throw new WebServiceClientException( "SessionClose request was not invoked for current session" ) {};
         }
 
+        logTokenAndConversationIdFromMessage(token, conversationId);
         SessionManager.getInstance().endSession();
 
         return true;
     }
 
-    @Override
-    public boolean handleFault(MessageContext messageContext) throws WebServiceClientException {
-        return false;
-    }
-
-    @Override
-    public void afterCompletion(MessageContext messageContext, Exception e) throws WebServiceClientException {
-
-    }
 }

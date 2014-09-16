@@ -15,6 +15,10 @@ import java.util.Set;
 
 /**
  * Created by SG0221139 on 9/2/2014.
+ *
+ * This is a handler class for working with wsimport Sabre Web Services client.
+ * It's a logging handler, that logs formatted SOAP message using standard logger.
+ *
  */
 public class LoggingHandler implements SOAPHandler {
 
@@ -28,28 +32,42 @@ public class LoggingHandler implements SOAPHandler {
     @Override
     public boolean handleMessage(MessageContext context) {
 
-        boolean outbound = ((Boolean)context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)).booleanValue();
-
-        StringBuffer buffer = new StringBuffer("\n\n");
-        if( outbound ) {
-            buffer.append( "Outgoing message:" ).append( "\n\n" );
-        } else {
-            buffer.append( "Ingoing message:" ).append( "\n\n" );
-        }
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
-            ((SOAPMessageContext) context).getMessage().writeTo(bos);
-            String messageText = XMLPrettifier.pretify( new String(bos.toByteArray()) );
-            buffer.append( messageText ).append( "\n\n" );
-
-            LOGGER.debug( buffer.toString() );
+            String logMessage = composeLogMessage(context);
+            LOGGER.debug( logMessage );
 
         } catch (SOAPException | IOException e) {
-            e.printStackTrace();
+            LOGGER.error( e );
         }
-
         return true;
+    }
+
+    private String composeLogMessage(MessageContext messageContext) throws SOAPException, IOException {
+
+        SOAPMessageContext soapMessageContext = (SOAPMessageContext) messageContext;
+
+        boolean outbound = isMessageOutbound(soapMessageContext);
+
+        StringBuffer logMessageBuffer = new StringBuffer("\n\n");
+        if( outbound ) {
+            logMessageBuffer.append("Outgoing message:").append( "\n\n" );
+        } else {
+            logMessageBuffer.append("Ingoing message:").append( "\n\n" );
+        }
+        String rawMessage = getRawMessage(soapMessageContext);
+        String formattedMessage = XMLPrettifier.pretify(rawMessage);
+        logMessageBuffer.append(formattedMessage).append("\n\n");
+        return logMessageBuffer.toString();
+    }
+
+    private String getRawMessage(SOAPMessageContext context) throws SOAPException, IOException {
+        ByteArrayOutputStream messageContentStream = new ByteArrayOutputStream();
+        context.getMessage().writeTo(messageContentStream);
+        return new String(messageContentStream.toByteArray());
+    }
+
+    private boolean isMessageOutbound(MessageContext context) {
+        return ((Boolean)context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)).booleanValue();
     }
 
     @Override

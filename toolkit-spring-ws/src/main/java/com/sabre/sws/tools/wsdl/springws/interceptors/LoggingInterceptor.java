@@ -12,6 +12,9 @@ import java.io.IOException;
 
 /**
  * Created by SG0221139 on 8/18/2014.
+ *
+ * This is an interceptor class for working with Spring Web Services framework.
+ * It's responsibility is to log messages going in and out using standard system logger.
  */
 public class LoggingInterceptor implements ClientInterceptor {
 
@@ -21,12 +24,9 @@ public class LoggingInterceptor implements ClientInterceptor {
     public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
 
         try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            messageContext.getRequest().writeTo( outputStream );
-            String responseText = outputStream.toString( "UTF-8" );
-            LOGGER.debug("\nOutgoing request message:\n" + XMLPrettifier.pretify(responseText));
+            logRequestMessage(messageContext);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error( e );
             return false;
         }
         return true;
@@ -35,15 +35,34 @@ public class LoggingInterceptor implements ClientInterceptor {
     @Override
     public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
         try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            messageContext.getResponse().writeTo( outputStream );
-            String responseText = outputStream.toString( "UTF-8" );
-            LOGGER.debug("\nIncoming response message:\n" + XMLPrettifier.pretify(responseText));
+            logResponseMessage(messageContext);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error( e );
             return false;
         }
         return true;
+    }
+
+    private void logRequestMessage(MessageContext messageContext) throws IOException {
+        String responseText = getRawRequestMessage(messageContext);
+        LOGGER.debug("\nOutgoing request message:\n" + XMLPrettifier.pretify(responseText));
+    }
+
+    private void logResponseMessage(MessageContext messageContext) throws IOException {
+        String responseText = getRawResponseMessage(messageContext);
+        LOGGER.debug("\nIncoming response message:\n" + XMLPrettifier.pretify(responseText));
+    }
+
+    private String getRawResponseMessage(MessageContext messageContext) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        messageContext.getResponse().writeTo( outputStream );
+        return outputStream.toString( "UTF-8" );
+    }
+
+    private String getRawRequestMessage(MessageContext messageContext) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        messageContext.getRequest().writeTo( outputStream );
+        return outputStream.toString( "UTF-8" );
     }
 
     @Override

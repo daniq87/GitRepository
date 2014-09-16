@@ -27,14 +27,20 @@ public class BeansConfiguration {
         return marshaller;
     }
 
-    @Bean
-    public SessionCreateWrapper sessionCreateWrapper() {
+    private String getSessionServiceContextPath() {
 
         StringBuffer buffer = new StringBuffer();
+
         buffer.append("com.sabre.sws.tools.wsdl.springws.session:");
         buffer.append( "com.sabre.sws.tools.wsdl.springws.soap:" );
 
-        String contextPath = buffer.toString();
+        return buffer.toString();
+    }
+
+    @Bean
+    public SessionCreateWrapper sessionCreateWrapper() {
+
+        String contextPath = getSessionServiceContextPath();
 
         SessionCreateWrapper sessionCreateWrapper = new SessionCreateWrapper();
         configureWebServiceGateway( sessionCreateWrapper, getMarshaller(contextPath) );
@@ -45,11 +51,7 @@ public class BeansConfiguration {
     @Bean
     public SessionCloseWrapper sessionCloseWrapper() {
 
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("com.sabre.sws.tools.wsdl.springws.session:");
-        buffer.append( "com.sabre.sws.tools.wsdl.springws.soap:" );
-
-        String contextPath = buffer.toString();
+        String contextPath = getSessionServiceContextPath();
 
         SessionCloseWrapper sessionCloseWrapper = new SessionCloseWrapper();
         configureWebServiceGateway( sessionCloseWrapper, getMarshaller(contextPath) );
@@ -61,7 +63,8 @@ public class BeansConfiguration {
     public AirAvailWrapper airAvailWrapper() {
 
         AirAvailWrapper airAvailWrapper = new AirAvailWrapper();
-        configureWebServiceGateway( airAvailWrapper, getMarshaller("com.sabre.sws.tools.wsdl.springws.airavail") );
+        String contextPath = "com.sabre.sws.tools.wsdl.springws.airavail";
+        configureWebServiceGateway( airAvailWrapper, getMarshaller(contextPath) );
 
         return airAvailWrapper;
     }
@@ -70,7 +73,8 @@ public class BeansConfiguration {
     public TravelItineraryReadWrapper travelItineraryReadWrapper() {
 
         TravelItineraryReadWrapper travelItineraryReadWrapper = new TravelItineraryReadWrapper();
-        configureWebServiceGateway( travelItineraryReadWrapper, getMarshaller("com.sabre.sws.tools.wsdl.springws.travelitinerary") );
+        String contextPath = "com.sabre.sws.tools.wsdl.springws.travelitinerary";
+        configureWebServiceGateway( travelItineraryReadWrapper, getMarshaller(contextPath) );
 
         return travelItineraryReadWrapper;
     }
@@ -79,7 +83,8 @@ public class BeansConfiguration {
     public EnhancedAirBookWrapper enhancedAirBookWrapper() {
 
         EnhancedAirBookWrapper enhancedAirBookWrapper = new EnhancedAirBookWrapper();
-        configureWebServiceGateway( enhancedAirBookWrapper, getMarshaller("com.sabre.sws.tools.wsdl.springws.enhancedairbook") );
+        String contextPath = "com.sabre.sws.tools.wsdl.springws.enhancedairbook";
+        configureWebServiceGateway( enhancedAirBookWrapper, getMarshaller(contextPath) );
 
         return  enhancedAirBookWrapper;
     }
@@ -88,7 +93,8 @@ public class BeansConfiguration {
     public PassengerDetailsWrapper passengerDetailsWrapper() {
 
         PassengerDetailsWrapper passengerDetailsWrapper = new PassengerDetailsWrapper();
-        configureWebServiceGateway( passengerDetailsWrapper, getMarshaller("com.sabre.sws.tools.wsdl.springws.passengerdetails") );
+        String contextPath = "com.sabre.sws.tools.wsdl.springws.passengerdetails";
+        configureWebServiceGateway( passengerDetailsWrapper, getMarshaller(contextPath) );
 
         return passengerDetailsWrapper;
     }

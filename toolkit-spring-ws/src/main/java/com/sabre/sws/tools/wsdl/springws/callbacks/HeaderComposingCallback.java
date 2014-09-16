@@ -18,7 +18,10 @@ import java.io.IOException;
  *
  * This is a callback class for working with Spring Web Services.
  * It plays a crucial role in consuming Sabre Web Services using Spring WS framework.
- * The doWithMessage() methods TODO
+ * By default, Spring WS has no mechanism that would allow to compose custom headers
+ * into the message. This callback inserts wsse:Security and eb:MessageHeader headers
+ * into processed message.
+ * The doWithMessage() method marshals proper header objects into the message.
  */
 public class HeaderComposingCallback implements WebServiceMessageCallback {
 
