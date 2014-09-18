@@ -39,22 +39,12 @@ public class SessionCloseIncomingHandler implements SOAPHandler {
 
         if( inbound ) {
             try {
-                String tokenFromMessage = getTokenFromMessageContext(context);
-                if( !stringMatchesCurrentSessionToken(tokenFromMessage)  ) {
-                    throw new RuntimeException( "Closed session is not the active one" );
-                }
-                SessionManager.getInstance().endSession();
-
+                closeSessionIfTokensMatch(context);
             } catch (SOAPException e) {
                 LOGGER.error( "Error getting content from SOAP message", e );
             }
         }
         return true;
-    }
-
-    private boolean isMessageInbound(MessageContext context) {
-        boolean outbound = ((Boolean)context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)).booleanValue();
-        return !outbound;
     }
 
     @Override
@@ -65,6 +55,19 @@ public class SessionCloseIncomingHandler implements SOAPHandler {
     @Override
     public void close(MessageContext context) {
 
+    }
+
+    private void closeSessionIfTokensMatch(MessageContext context) throws SOAPException {
+        String tokenFromMessage = getTokenFromMessageContext(context);
+        if( !stringMatchesCurrentSessionToken(tokenFromMessage)  ) {
+            throw new RuntimeException( "Closed session is not the active one" );
+        }
+        SessionManager.getInstance().endSession();
+    }
+
+    private boolean isMessageInbound(MessageContext context) {
+        boolean outbound = ((Boolean)context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)).booleanValue();
+        return !outbound;
     }
 
     private boolean stringMatchesCurrentSessionToken(String inputString) {

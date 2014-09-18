@@ -40,15 +40,23 @@ public class SessionCreateIncomingHandler implements SOAPHandler {
 
         if( inbound ) {
             try {
-                String token = getTokenFromContext(context);
-                String conversationId = getConversationIdFromContext(context);
-                tryOpenSessionWithTokenAndConvIdIfNoneActive(token, conversationId);
+                openSessionUsingMessageData(context);
             } catch (SOAPException e) {
-                LOGGER.fatal( "Couldn't open session", e );
-                throw new RuntimeException( "Couldn't open session", e );
+                logAndRethrowException(e);
             }
         }
         return true;
+    }
+
+    private void logAndRethrowException(SOAPException e) {
+        LOGGER.fatal( "Couldn't open session", e );
+        throw new RuntimeException( "Couldn't open session", e );
+    }
+
+    private void openSessionUsingMessageData(MessageContext context) throws SOAPException {
+        String token = getTokenFromContext(context);
+        String conversationId = getConversationIdFromContext(context);
+        tryOpenSessionWithTokenAndConvIdIfNoneActive(token, conversationId);
     }
 
     private void tryOpenSessionWithTokenAndConvIdIfNoneActive(String token, String conversationId) {
@@ -70,14 +78,16 @@ public class SessionCreateIncomingHandler implements SOAPHandler {
 
     private String getTokenFromContext(MessageContext context) throws SOAPException {
         SOAPHeader header = ((SOAPMessageContext) context).getMessage().getSOAPHeader();
-        NodeList nodeList = header.getChildNodes();
-        Node securityNode = getSecurityNodeFromList(nodeList);
-        return getTokenFromNode(securityNode);
+        NodeList headerChildNodes = header.getChildNodes();
+        Node securityNode = getSecurityNodeFromList(headerChildNodes);
+        String sessionToken = getTokenFromSecurityNode(securityNode);
+        return sessionToken;
     }
 
     private void openSessionWithTokenAndConvId(String token, String conversationId) {
         SessionManager.getInstance().startSession( token );
         SessionManager.getInstance().setConversationID( conversationId );
+
         LOGGER.debug( "Session was successfully opened. Session token:\n" + token );
     }
 
@@ -93,10 +103,11 @@ public class SessionCreateIncomingHandler implements SOAPHandler {
     private String getConversationIdFromSOAPBody(SOAPBody body) {
         Node responseBodyNode = body.getFirstChild();
         Node conversationIdNode = responseBodyNode.getFirstChild();
-        return conversationIdNode.getTextContent();
+        String conversationId = conversationIdNode.getTextContent();
+        return conversationId;
     }
 
-    private String getTokenFromNode(Node node) {
+    private String getTokenFromSecurityNode(Node node) {
         return node.getFirstChild().getTextContent();
     }
 

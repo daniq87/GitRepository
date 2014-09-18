@@ -50,7 +50,6 @@ public class LLSErrorInterceptor extends AbstractSoapInterceptor {
         if( headerHasError( streamReader ) ) {
             handleMessageFault( streamReader );
         }
-
     }
 
     private boolean headerHasError( XMLStreamReader streamReader ) throws XMLStreamException {
@@ -88,15 +87,14 @@ public class LLSErrorInterceptor extends AbstractSoapInterceptor {
         while( streamReader.hasNext() && !isFaultEnd(streamReader) ) {
 
             if(isCurrentElementFaultcode(streamReader)) {
-                faultCode = new String( streamReader.getElementText() );
+                faultCode = streamReader.getElementText();
             }
             if(isCurrentElementFaultString(streamReader)) {
-                faultString = new String( streamReader.getElementText() );
+                faultString = streamReader.getElementText();
             }
             if(isCurrentElementStacktrace(streamReader)) {
-                stackTrace = new String( streamReader.getElementText() );
+                stackTrace = streamReader.getElementText();
             }
-
             streamReader.next();
         }
 

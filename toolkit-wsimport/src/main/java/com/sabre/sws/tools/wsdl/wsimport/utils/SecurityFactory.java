@@ -15,12 +15,7 @@ public class SecurityFactory {
     public static Security getCredentialsSecurity() {
 
         Security security = new Security();
-        Security.UsernameToken usernameToken = new Security.UsernameToken();
-
-        usernameToken.setDomain(configuration.getDomain());
-        usernameToken.setOrganization(configuration.getOrganization());
-        usernameToken.setPassword(configuration.getPassword());
-        usernameToken.setUsername(configuration.getUsername());
+        Security.UsernameToken usernameToken = getUsernameToken();
         security.setUsernameToken(usernameToken);
 
         return security;
@@ -34,4 +29,13 @@ public class SecurityFactory {
         return security;
     }
 
+    private static Security.UsernameToken getUsernameToken() {
+        Security.UsernameToken usernameToken = new Security.UsernameToken();
+
+        usernameToken.setDomain(configuration.getDomain());
+        usernameToken.setOrganization(configuration.getOrganization());
+        usernameToken.setPassword(configuration.getPassword());
+        usernameToken.setUsername(configuration.getUsername());
+        return usernameToken;
+    }
 }

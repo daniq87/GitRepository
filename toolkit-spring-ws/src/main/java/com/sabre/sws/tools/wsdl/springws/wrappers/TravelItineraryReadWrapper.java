@@ -1,7 +1,7 @@
 package com.sabre.sws.tools.wsdl.springws.wrappers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
-import com.sabre.sws.tools.wsdl.commons.utils.requestcontent.TravelItineraryReadContent;
+import com.sabre.sws.tools.wsdl.commons.utils.requests.TravelItineraryReadContent;
 import com.sabre.sws.tools.wsdl.springws.callbacks.HeaderComposingCallback;
 import com.sabre.sws.tools.wsdl.springws.interceptors.FaultInterceptor;
 import com.sabre.sws.tools.wsdl.springws.interceptors.LoggingInterceptor;

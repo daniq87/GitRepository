@@ -2,7 +2,7 @@ package com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
-import com.sabre.sws.tools.wsdl.commons.utils.requestcontent.TravelItineraryReadContent;
+import com.sabre.sws.tools.wsdl.commons.utils.requests.TravelItineraryReadContent;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.LoggingInInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.LoggingOutInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.MessageHeaderFactory;

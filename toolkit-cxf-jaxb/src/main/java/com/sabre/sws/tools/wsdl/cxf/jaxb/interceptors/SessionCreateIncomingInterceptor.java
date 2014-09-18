@@ -34,6 +34,8 @@ public class SessionCreateIncomingInterceptor extends AbstractSoapInterceptor {
 
     private static final String headerNs = "http://www.ebxml.org/namespaces/messageHeader";
     private static final String headerLocalName = "MessageHeader";
+    private static final QName securityQName = new QName( securityNs, securityLocalName );;
+    private static final QName headerQName = new QName( headerNs, headerLocalName );
 
     public SessionCreateIncomingInterceptor() {
         super( Phase.PROTOCOL );
@@ -43,34 +45,58 @@ public class SessionCreateIncomingInterceptor extends AbstractSoapInterceptor {
     @Override
     public void handleMessage(SoapMessage message) throws Fault {
 
-        QName securityQName = new QName( securityNs, securityLocalName );
-        if( message.hasHeader( securityQName ) ) {
-            Header header = message.getHeader( securityQName );
-            Element securityHeaderElement = (Element) header.getObject();
-            Node tokenNode = securityHeaderElement.getFirstChild();
-            if( tokenNode != null ) {
-                String token = tokenNode.getTextContent();
-                SessionManager.getInstance().startSession( token );
+        openSessionUsingTokenFromMessage(message);
+    }
 
-                QName headerQName = new QName( headerNs, headerLocalName );
-                Header messageHeader = message.getHeader( headerQName );
-                Element messageHeaderElement = (Element) messageHeader.getObject();
-                Node messageHeaderNode = messageHeaderElement.getFirstChild();
+    private void openSessionUsingTokenFromMessage(SoapMessage message) {
+        String token = getTokenFromMessage( message );
+        String conversationId = getConversationIdFromMessage( message );
 
-                if( messageHeaderNode != null ) {
-                    String conversationId = messageHeaderNode.getTextContent();
-                    SessionManager.getInstance().setConversationID( conversationId );
-                }
-
-            } else {
-                Throwable t = new RuntimeException( "Authentication failed - no token found in response" );
-                throw new Fault( t );
-            }
-        } else {
-            Throwable t = new RuntimeException( "Invalid response - no wsse:Security header was found" );
+        if( anyIsNull( token, conversationId ) ){
+            Throwable t = new RuntimeException( "Authentication failed - no session information found in response" );
             throw new Fault( t );
         }
 
+        SessionManager.getInstance().startSession( token );
+        SessionManager.getInstance().setConversationID( conversationId );
+    }
+
+    private String getTokenFromMessage(SoapMessage message) {
+
+        String token = null;
+
+        if( message.hasHeader(securityQName) ) {
+            Header header = message.getHeader(securityQName);
+            Element securityHeaderElement = (Element) header.getObject();
+            Node tokenNode = securityHeaderElement.getFirstChild();
+            if (tokenNode != null) {
+                token = tokenNode.getTextContent();
+            }
+        }
+        return token;
+    }
+
+    private String getConversationIdFromMessage( SoapMessage message ) {
+
+        String conversationId = null;
+
+        Header messageHeader = message.getHeader(headerQName);
+        Element messageHeaderElement = (Element) messageHeader.getObject();
+        Node messageHeaderNode = messageHeaderElement.getFirstChild();
+
+        if( messageHeaderNode != null ) {
+            conversationId = messageHeaderNode.getTextContent();
+        }
+        return conversationId;
+    }
+
+    private boolean anyIsNull( Object ... objects ) {
+        for( Object o : objects ) {
+            if( o == null ) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

@@ -4,7 +4,7 @@ import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.TravelItineraryHelper
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
-import com.sabre.sws.tools.wsdl.commons.utils.requestcontent.TravelItineraryReadContent;
+import com.sabre.sws.tools.wsdl.commons.utils.requests.TravelItineraryReadContent;
 import com.sabre.sws.tools.wsdl.stubs.adb.TravelItineraryReadServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;

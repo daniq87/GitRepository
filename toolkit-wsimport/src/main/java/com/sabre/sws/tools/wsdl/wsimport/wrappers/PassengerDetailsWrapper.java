@@ -42,7 +42,6 @@ public class PassengerDetailsWrapper {
         MessageHeader header = MessageHeaderFactory.getMessageHeader(actionString);
 
         PassengerDetailsRQ requestBody = getRequestBody();
-
         Holder<MessageHeader> messageHeaderHolder = new Holder<>(header);
         Holder<Security> securityHolder = new Holder<>(security);
 

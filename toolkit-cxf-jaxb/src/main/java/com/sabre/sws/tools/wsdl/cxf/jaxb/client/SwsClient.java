@@ -39,28 +39,32 @@ public class SwsClient {
 
         try {
             openSession();
-
-            invokeTravelItineraryRequest();
-            invokeAirAvailRequests();
-            invokeEnhancedAirBookRequest();
-            invokePassengerDetailsRequest();
-
+            invokeServicesRequests();
         } catch ( Exception e ) {
             LOGGER.error( "Exception caught:", e );
         } finally {
-            if( SessionManager.getInstance().isSessionActive() ) {
-                closeSession();
-            }
+            closeSessionIfOpen();
         }
+    }
+
+    private static void closeSessionIfOpen() {
+        if( SessionManager.getInstance().isSessionActive() ) {
+            closeSession();
+        }
+    }
+
+    private static void invokeServicesRequests() {
+        invokeTravelItineraryRequest();
+        invokeAirAvailRequests();
+        invokeEnhancedAirBookRequest();
+        invokePassengerDetailsRequest();
     }
 
     private static void addCloseSessionOnExitShutdownHook() {
         Runtime.getRuntime().addShutdownHook( new Thread( new Runnable() {
             @Override
             public void run() {
-                if(SessionManager.getInstance().isSessionActive()) {
-                    closeSession();
-                }
+                closeSessionIfOpen();
             }
         }));
     }
@@ -77,11 +81,9 @@ public class SwsClient {
 
         AirAvailWrapper airAvailWrapper = new AirAvailWrapper();
 
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_DATE);
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_HOUR);
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_VENDOR_PREFS);
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.MULTILEG_FLIGHT_SEGMENT_WITH_VENDOR_PREFS );
-
+        for( AirAvailRequests requestType : AirAvailRequests.values() ) {
+            airAvailWrapper.executeSampleRequest( requestType );
+        }
     }
 
     private static void invokeTravelItineraryRequest() {

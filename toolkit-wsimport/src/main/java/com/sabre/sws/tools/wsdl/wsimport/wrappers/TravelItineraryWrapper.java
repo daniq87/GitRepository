@@ -2,7 +2,7 @@ package com.sabre.sws.tools.wsdl.wsimport.wrappers;
 
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
-import com.sabre.sws.tools.wsdl.commons.utils.requestcontent.TravelItineraryReadContent;
+import com.sabre.sws.tools.wsdl.commons.utils.requests.TravelItineraryReadContent;
 import com.sabre.sws.tools.wsdl.wsimport.handlers.LoggingHandler;
 import com.sabre.sws.tools.wsdl.wsimport.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.wsimport.utils.SecurityFactory;

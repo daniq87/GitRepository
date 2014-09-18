@@ -46,7 +46,6 @@ public class SWSOResponseInterceptor extends AbstractSoapInterceptor {
                 Throwable t = new Throwable( "Couldn't parse service response" );
                 throw new Fault( t );
             }
-
         } catch (IOException e) {
             throw new Fault(e);
         }
@@ -55,13 +54,11 @@ public class SWSOResponseInterceptor extends AbstractSoapInterceptor {
     private void findAndHandleErrors( XMLStreamReader streamReader ) throws XMLStreamException {
 
         while( streamReader.hasNext() ) {
-
             if( streamReader.hasName() && streamReader.getName().getLocalPart().equalsIgnoreCase( "error" ) ) {
                 handleSingleError( streamReader );
             }
             streamReader.next();
         }
-
     }
 
     private void handleSingleError( XMLStreamReader streamReader ) throws XMLStreamException {
@@ -74,11 +71,11 @@ public class SWSOResponseInterceptor extends AbstractSoapInterceptor {
 
         do {
             if( isCurrentTagMessage(streamReader) ) {
-                errorMessage = new String( streamReader.getElementText() );
+                errorMessage = streamReader.getElementText();
             } else if( isCurrentTagShortText(streamReader) ) {
-                errorShortText = new String( streamReader.getElementText() );
+                errorShortText = streamReader.getElementText();
             } else if( isCurrentTagElement( streamReader) ) {
-                errorElement = new String( streamReader.getElementText() );
+                errorElement = streamReader.getElementText();
             }
             streamReader.next();
         } while( isNotYetEndOfDocument(streamReader) && isCurrentErrorSectionNotEnded(streamReader));
@@ -86,15 +83,12 @@ public class SWSOResponseInterceptor extends AbstractSoapInterceptor {
         if( errorMessage != null ) {
             errorMessageBuffer.append("Error message: ").append( errorMessage ).append( "\n" );
         }
-
         if( errorShortText != null ) {
             errorMessageBuffer.append("Short text: ").append( errorShortText ).append( "\n" );
         }
-
         if( errorElement != null ) {
             errorMessageBuffer.append("In element: ").append( errorElement ).append( "\n" );
         }
-
         LOGGER.error(errorMessageBuffer.toString());
 
     }

@@ -20,7 +20,7 @@ import javax.xml.stream.XMLStreamReader;
  */
 public class ErrorHandler extends AbstractHandler {
 
-    Logger LOGGER = LogManager.getLogger( ErrorHandler.class.getName() );
+    private static final Logger LOGGER = LogManager.getLogger( ErrorHandler.class.getName() );
 
     @Override
     public InvocationResponse invoke(MessageContext messageContext) throws AxisFault {

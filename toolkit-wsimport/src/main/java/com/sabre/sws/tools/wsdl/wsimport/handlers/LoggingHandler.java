@@ -42,6 +42,16 @@ public class LoggingHandler implements SOAPHandler {
         return true;
     }
 
+    @Override
+    public boolean handleFault(MessageContext context) {
+        return false;
+    }
+
+    @Override
+    public void close(MessageContext context) {
+
+    }
+
     private String composeLogMessage(MessageContext messageContext) throws SOAPException, IOException {
 
         SOAPMessageContext soapMessageContext = (SOAPMessageContext) messageContext;
@@ -63,20 +73,11 @@ public class LoggingHandler implements SOAPHandler {
     private String getRawMessage(SOAPMessageContext context) throws SOAPException, IOException {
         ByteArrayOutputStream messageContentStream = new ByteArrayOutputStream();
         context.getMessage().writeTo(messageContentStream);
-        return new String(messageContentStream.toByteArray());
+        String messageText = new String(messageContentStream.toByteArray());
+        return messageText;
     }
 
     private boolean isMessageOutbound(MessageContext context) {
         return ((Boolean)context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)).booleanValue();
-    }
-
-    @Override
-    public boolean handleFault(MessageContext context) {
-        return false;
-    }
-
-    @Override
-    public void close(MessageContext context) {
-
     }
 }

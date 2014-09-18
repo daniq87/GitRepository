@@ -23,6 +23,7 @@ import java.io.IOException;
  * into processed message.
  * The doWithMessage() method marshals proper header objects into the message.
  */
+
 public class HeaderComposingCallback implements WebServiceMessageCallback {
 
     private final String actionString;

@@ -1,4 +1,4 @@
-package com.sabre.sws.tools.wsdl.commons.utils.requestcontent;
+package com.sabre.sws.tools.wsdl.commons.utils.requests;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

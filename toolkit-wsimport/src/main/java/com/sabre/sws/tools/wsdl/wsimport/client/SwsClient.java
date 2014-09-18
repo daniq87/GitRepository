@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
  * One may use this template to make own Sabre Web Services calls and process their result
  * to implement any business logic that is needed.
  */
+
 public class SwsClient {
 
     private static final Logger LOGGER = LogManager.getLogger( SwsClient.class );
@@ -38,32 +39,38 @@ public class SwsClient {
 
         LOGGER.info( "Starting client action..." );
         try {
-            new SessionCreateWrapper().openSession();
-
-            invokeAirAvailRequests();
-            invokeTravelItineraryRequest();
-            invokeEnhancedAirBookRequest();
-            invokePassengerDetailsRequest();
-
+            openSession();
+            invokeServicesRequests();
         } catch ( Exception e ) {
-            LOGGER.info( e );
+            LOGGER.error(e);
         } finally {
-            if( SessionManager.getInstance().isSessionActive() ) {
-                closeSession();
-            }
+            closeSessionIfActive();
         }
+    }
+
+    private static void closeSessionIfActive() {
+        if( SessionManager.getInstance().isSessionActive() ) {
+            closeSession();
+        }
+    }
+
+    private static void invokeServicesRequests() {
+        invokeAirAvailRequests();
+        invokeTravelItineraryRequest();
+        invokeEnhancedAirBookRequest();
+        invokePassengerDetailsRequest();
     }
 
     private static void addCloseSessionOnExitShutdownHook() {
         Runtime.getRuntime().addShutdownHook( new Thread( new Runnable() {
             @Override
             public void run() {
-                if(SessionManager.getInstance().isSessionActive()) {
-                    closeSession();
-                }
+                closeSessionIfActive();
             }
         }));
     }
+
+    private static void openSession() { new SessionCreateWrapper().openSession(); }
 
     private static void closeSession() {
         new SessionCloseWrapper().closeSession();
@@ -73,11 +80,9 @@ public class SwsClient {
 
         AirAvailWrapper airAvailWrapper = new AirAvailWrapper();
 
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_DATE);
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_HOUR);
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.TWO_POINTS_WITH_VENDOR_PREFS);
-        airAvailWrapper.executeSampleRequest( AirAvailRequests.MULTILEG_FLIGHT_SEGMENT_WITH_VENDOR_PREFS );
-
+        for( AirAvailRequests requestType : AirAvailRequests.values() ) {
+            airAvailWrapper.executeSampleRequest( requestType );
+        }
     }
 
     private static void invokeTravelItineraryRequest() {

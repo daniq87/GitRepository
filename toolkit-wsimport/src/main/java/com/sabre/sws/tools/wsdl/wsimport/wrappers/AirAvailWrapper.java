@@ -31,12 +31,14 @@ public class AirAvailWrapper {
 
         Security security = SecurityFactory.getTokenSecurity();
         MessageHeader header = MessageHeaderFactory.getMessageHeader(serviceAction);
-
         OTAAirAvailRQ requestBody = getRequestBody( requestType );
 
         OTAAirAvailPortType port = getConfiguredPort();
 
-        return port.otaAirAvailRQ( new Holder<>(header), new Holder<>(security), requestBody );
+        Holder<MessageHeader> headerHolder = new Holder<>(header);
+        Holder<Security> securityHolder = new Holder<>(security);
+
+        return port.otaAirAvailRQ(headerHolder, securityHolder, requestBody );
     }
 
     private OTAAirAvailRQ getRequestBody( AirAvailRequests requestType ) {
@@ -135,6 +137,7 @@ public class AirAvailWrapper {
         flightSegment.setDestinationLocation( destinationLocation );
         flightSegment.setOriginLocation( originLocation );
         originDestinationInformation.setFlightSegment(flightSegment);
+        requestBody.setOriginDestinationInformation( originDestinationInformation );
 
         return requestBody;
     }

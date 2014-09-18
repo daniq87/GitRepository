@@ -26,6 +26,8 @@ public class SessionCloseIncomingInterceptor extends AbstractSoapInterceptor {
     private static final String securityNs = "http://schemas.xmlsoap.org/ws/2002/12/secext";
     private static final String securityLocalName = "Security";
 
+    private static final QName securityQName = new QName( securityNs, securityLocalName );
+
     public SessionCloseIncomingInterceptor() {
         super( Phase.READ );
         addAfter( SoapActionInInterceptor.class.getName() );
@@ -34,28 +36,37 @@ public class SessionCloseIncomingInterceptor extends AbstractSoapInterceptor {
     @Override
     public void handleMessage(SoapMessage message) throws Fault {
 
-        QName securityQName = new QName( securityNs, securityLocalName );
-        if( message.hasHeader( securityQName ) ) {
-            Header header = message.getHeader( securityQName );
-            Element securityHeaderElement = (Element) header.getObject();
-            Node tokenNode = securityHeaderElement.getFirstChild();
-
+        if( hasSecurityHeader( message ) ) {
+            Node tokenNode = getTokenNode(message);
             if( tokenNode != null ) {
-
                 String token = tokenNode.getTextContent();
-
-                if( ! SessionManager.getInstance().isSessionActive() || ! SessionManager.getInstance().getToken().equals( token ) ) {
-                    Throwable t = new RuntimeException( "Can't close session that isn't currently open" );
-                    throw new Fault( t );
-                }
-
-                SessionManager.getInstance().endSession();
-
+                closeSessionIfTokenMatches(token);
             } else {
                 Throwable e = new RuntimeException( "There is no open session" );
                 throw new Fault( e );
             }
         }
+    }
 
+    private void closeSessionIfTokenMatches(String token) {
+        if( ! matchesCurrentSessionToken(token) ) {
+            Throwable t = new RuntimeException( "Can't close session that isn't currently open" );
+            throw new Fault( t );
+        }
+        SessionManager.getInstance().endSession();
+    }
+
+    private boolean matchesCurrentSessionToken(String token) {
+        return SessionManager.getInstance().isSessionActive() || SessionManager.getInstance().getToken().equals( token );
+    }
+
+    private Node getTokenNode(SoapMessage message) {
+        Header header = message.getHeader( securityQName );
+        Element securityHeaderElement = (Element) header.getObject();
+        return securityHeaderElement.getFirstChild();
+    }
+
+    private boolean hasSecurityHeader(SoapMessage message) {
+        return message.hasHeader( securityQName );
     }
 }
