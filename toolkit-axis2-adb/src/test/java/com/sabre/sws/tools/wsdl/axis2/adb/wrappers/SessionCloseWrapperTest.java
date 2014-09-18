@@ -30,6 +30,9 @@ public class SessionCloseWrapperTest extends AbstractWebServiceTestClass {
 
     @Before
     public void createInstance() throws AxisFault {
+        if( SessionManager.getInstance().isSessionActive() ) {
+            SessionManager.getInstance().endSession();
+        }
         MessageHandlerManager.erase();
         instance = new SessionCloseWrapper( configuration );
         MessageHandlerManager.addDispatchPhaseHandler(new MustUnderstandHandler());
