@@ -33,6 +33,7 @@ if [[ $# -eq 0  ]]
 
 	    if [ $# -eq 2 ] && [ $2 == "fresh" ]; then
 		mvn clean;
+		mvn install -pl toolkit-commons
 		mvn compile;
 	    fi		
 
