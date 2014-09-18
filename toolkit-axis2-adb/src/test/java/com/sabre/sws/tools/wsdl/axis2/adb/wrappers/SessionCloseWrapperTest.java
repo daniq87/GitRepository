@@ -41,6 +41,9 @@ public class SessionCloseWrapperTest extends AbstractWebServiceTestClass {
     @After
     public void destroyInstance() {
         instance = null;
+        if( SessionManager.getInstance().isSessionActive() ) {
+            SessionManager.getInstance().endSession();
+        }
     }
 
     @Test
