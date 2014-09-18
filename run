@@ -4,8 +4,18 @@ if [[ $# -eq 0  ]]
   
   then
 
-    # help here    
-    echo "Some help"    
+    	echo -e "\nThis script runs sample Sabre(R) Web Services clients"
+	echo -e "\nUsage:"
+	echo -e "\n\trun build\t-\tbuilds whole project (required before the first execution)"
+	echo -e "\n\trun module_to_run [fresh] - runs selected module"
+	echo -e "\n\tthe \"fresh\" parameter causes module recompilation before run"
+	echo -e "\nPossible modules to run:\n"
+	echo -e "\ttoolkit-axis2-adb\tAxis2 module with adb databinding"    
+	echo -e "\ttoolkit-axis2-xmlbeans\tAxis2 module with xmlbeans databinding"
+	echo -e "\ttoolkit-cxf-jaxb\tCXF module with JAXB databinding"
+	echo -e "\ttoolkit-spring-ws\tSpring Web Services  module with JAXB databinding"    
+	echo -e "\ttoolkit-wsimport\twsimport module with JAXB databinding"
+	echo -e "\tall\t\t\trun all module sequently"
 
   else
 
