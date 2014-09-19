@@ -42,6 +42,11 @@
     color: red;
 }
 
+.reccommended {
+    font-weight: bold;
+    color: green;
+}
+
 .intend-level-1 {
     padding-left: 25px;
     width: 98%;
