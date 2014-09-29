@@ -38,7 +38,8 @@ public class LoggingInInterceptor extends AbstractSoapInterceptor {
     private void logMessageContent(SoapMessage message) throws IOException {
         CachedOutputStream messageCopyStream = SoapMessageUtils.copyMessageIntoStream(message);
         String formattedMessage = XMLPrettifier.pretify(messageCopyStream.getInputStream());
-        LOGGER.info( formattedMessage );
+        String logMessage = "Incoming response:\n\n" + formattedMessage;
+        LOGGER.info(logMessage);
     }
 
 }

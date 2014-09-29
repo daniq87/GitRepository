@@ -45,12 +45,12 @@ public class LoggingInterceptor implements ClientInterceptor {
 
     private void logRequestMessage(MessageContext messageContext) throws IOException {
         String responseText = getRawRequestMessage(messageContext);
-        LOGGER.debug("\nOutgoing request message:\n" + XMLPrettifier.pretify(responseText));
+        LOGGER.debug("\nOutgoing request:\n" + XMLPrettifier.pretify(responseText));
     }
 
     private void logResponseMessage(MessageContext messageContext) throws IOException {
         String responseText = getRawResponseMessage(messageContext);
-        LOGGER.debug("\nIncoming response message:\n" + XMLPrettifier.pretify(responseText));
+        LOGGER.debug("\nIncoming response:\n" + XMLPrettifier.pretify(responseText));
     }
 
     private String getRawResponseMessage(MessageContext messageContext) throws IOException {

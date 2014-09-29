@@ -66,7 +66,7 @@ public class SessionCloseIncomingHandler implements SOAPHandler {
     }
 
     private boolean isMessageInbound(MessageContext context) {
-        boolean outbound = ((Boolean)context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)).booleanValue();
+        boolean outbound = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
         return !outbound;
     }
 

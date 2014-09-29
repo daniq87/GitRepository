@@ -63,7 +63,8 @@ public class LoggingOutInterceptor extends AbstractSoapInterceptor {
         IOUtils.closeQuietly(replaceInStream);
 
         String formattedLogMessage = XMLPrettifier.pretify(currentEnvelopeMessage);
-        LOGGER.info( formattedLogMessage );
+        String logMessage = "Outgoing request:\n\n" + formattedLogMessage;
+        LOGGER.info(logMessage);
 
         originalMessageOutputStream.flush();
         message.setContent(OutputStream.class, originalMessageOutputStream);

@@ -60,9 +60,9 @@ public class LoggingHandler implements SOAPHandler {
 
         StringBuffer logMessageBuffer = new StringBuffer("\n\n");
         if( outbound ) {
-            logMessageBuffer.append("Outgoing message:").append( "\n\n" );
+            logMessageBuffer.append("Outgoing request:").append( "\n\n" );
         } else {
-            logMessageBuffer.append("Ingoing message:").append( "\n\n" );
+            logMessageBuffer.append("Incoming response:").append( "\n\n" );
         }
         String rawMessage = getRawMessage(soapMessageContext);
         String formattedMessage = XMLPrettifier.pretify(rawMessage);
