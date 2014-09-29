@@ -70,11 +70,10 @@
                 <artifactId>axis2-wsdl2code-maven-plugin</artifactId>
                 <version>1.6.2</version>
                 <executions>
-<!--
 
-                    &lt;!&ndash; Orchestrated Services &ndash;&gt;
+                    <!-- Orchestrated Services -->
 
-                    &lt;!&ndash;EnhancedAirBook (Orchestrated)&ndash;&gt;
+                    <!--EnhancedAirBook (Orchestrated)-->
 
                     <execution>
                         <id>EnhancedAirBookRQ</id>
@@ -91,7 +90,7 @@
                         </configuration>
                     </execution>
 
-                    &lt;!&ndash;PassengerDetails (Orchestrated)&ndash;&gt;
+                    <!--PassengerDetails (Orchestrated)-->
 
                     <execution>
                         <id>PassengerDetailsRQ</id>
@@ -108,9 +107,9 @@
                         </configuration>
                     </execution>
 
-                    &lt;!&ndash;Low Level Services&ndash;&gt;
+                    <!--Low Level Services-->
 
-                    &lt;!&ndash;TravelItineraryReadLLS&ndash;&gt;
+                    <!--TravelItineraryReadLLS-->
                     <execution>
                         <id>TravelItineraryReadLLSRQ</id>
                         <goals>
@@ -126,7 +125,7 @@
                         </configuration>
                     </execution>
 
-                    &lt;!&ndash;OTA_AirAvailLLS&ndash;&gt;
+                    <!--OTA_AirAvailLLS-->
                     <execution>
                         <id>AirAvail</id>
                         <goals>
@@ -141,7 +140,6 @@
                             <flattenFiles>true</flattenFiles>
                         </configuration>
                     </execution>
--->
 
                     <!--SessionCloseRQ-->
                     <execution>
