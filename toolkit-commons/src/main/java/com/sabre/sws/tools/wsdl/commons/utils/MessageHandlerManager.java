@@ -31,10 +31,12 @@ public class MessageHandlerManager {
     private final static List<Stub> stubs = new ArrayList<> ();
 
     private static Phase errorPhase = new Phase( "Error Phase" );
-    private static Phase logPhase = new Phase( "Log Phase" );
+    private static Phase logInPhase = new Phase( "Log In Phase" );
+    private static Phase logOutPhase = new Phase( "Log Out Phase" );
     private static Phase dispatchPhase = new Phase( "Dispatch Phase" );
 
-    private static List<Phase> phases = Arrays.asList( logPhase, errorPhase, dispatchPhase );
+    private static List<Phase> outPhases = Arrays.asList( logOutPhase );
+    private static List<Phase> inPhases = Arrays.asList( logInPhase, errorPhase, dispatchPhase );
 
     // Private c-tor
     private MessageHandlerManager() {}
@@ -43,44 +45,57 @@ public class MessageHandlerManager {
         stubs.clear();
 
         errorPhase = new Phase( "Error Phase" );
-        logPhase = new Phase( "Log Phase" );
+        logInPhase = new Phase( "Log In Phase" );
+        logOutPhase = new Phase( "Log Out Phase" );
         dispatchPhase = new Phase( "Dispatch Phase" );
 
-        phases = Arrays.asList( logPhase, errorPhase, dispatchPhase );
+        outPhases = Arrays.asList( logOutPhase );
+        inPhases = Arrays.asList( logInPhase, errorPhase, dispatchPhase );
     }
 
     public static void addStub( Stub stub ) {
-        LOGGER.info( "Add stub" );
+        LOGGER.debug( "Add stub" );
 
         if( !stubs.contains(stub) ) {
             stubs.add( stub );
-            stub._getServiceClient().getAxisConfiguration().setInPhasesUptoAndIncludingPostDispatch(Collections.unmodifiableList(phases));
-            stub._getServiceClient().getAxisConfiguration().setGlobalOutPhase(Collections.unmodifiableList(phases));
+            stub._getServiceClient().getAxisConfiguration().setInPhasesUptoAndIncludingPostDispatch(Collections.unmodifiableList(inPhases));
+            stub._getServiceClient().getAxisConfiguration().setGlobalOutPhase(Collections.unmodifiableList(outPhases));
         }
     }
 
     public static void addErrorPhaseHandler( AbstractHandler handler ) {
-        LOGGER.info( "Add Error" );
+        LOGGER.debug( "Add Error" );
 
         if( !errorPhase.getHandlers().contains(handler)) {
             errorPhase.addHandler( handler );
 
             for( Stub stub : stubs ) {
-                stub._getServiceClient().getAxisConfiguration().setInPhasesUptoAndIncludingPostDispatch( phases );
-                stub._getServiceClient().getAxisConfiguration().setGlobalOutPhase( phases );
+                stub._getServiceClient().getAxisConfiguration().setInPhasesUptoAndIncludingPostDispatch( inPhases );
+                stub._getServiceClient().getAxisConfiguration().setGlobalOutPhase( outPhases );
             }
         }
     }
 
-    public static void addLogPhaseHandler( AbstractHandler handler ) {
-        LOGGER.info( "Add Log" );
+    public static void addLogPhaseOutHandler( AbstractHandler handler ) {
+        LOGGER.debug( "Add Log Out" );
 
-        if( !logPhase.getHandlers().contains(handler)) {
-            logPhase.addHandler(handler);
+        if( !logOutPhase.getHandlers().contains(handler)) {
+            logOutPhase.addHandler(handler);
 
             for( Stub stub : stubs ) {
-                stub._getServiceClient().getAxisConfiguration().setGlobalOutPhase( phases );
-                stub._getServiceClient().getAxisConfiguration().setInPhasesUptoAndIncludingPostDispatch( phases );
+                stub._getServiceClient().getAxisConfiguration().setGlobalOutPhase( outPhases );
+            }
+        }
+    }
+
+    public static void addLogPhaseInHandler( AbstractHandler handler ) {
+        LOGGER.debug( "Add Log In" );
+
+        if( !logInPhase.getHandlers().contains(handler)) {
+            logInPhase.addHandler(handler);
+
+            for( Stub stub : stubs ) {
+                stub._getServiceClient().getAxisConfiguration().setInPhasesUptoAndIncludingPostDispatch( inPhases );
             }
         }
     }
@@ -93,8 +108,8 @@ public class MessageHandlerManager {
             dispatchPhase.addHandler(handler);
 
             for( Stub stub : stubs ) {
-                stub._getServiceClient().getAxisConfiguration().setGlobalOutPhase( phases );
-                stub._getServiceClient().getAxisConfiguration().setInPhasesUptoAndIncludingPostDispatch( phases );
+                stub._getServiceClient().getAxisConfiguration().setGlobalOutPhase( outPhases );
+                stub._getServiceClient().getAxisConfiguration().setInPhasesUptoAndIncludingPostDispatch( inPhases );
             }
         }
     }

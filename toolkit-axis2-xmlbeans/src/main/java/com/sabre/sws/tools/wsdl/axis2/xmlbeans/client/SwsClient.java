@@ -81,7 +81,8 @@ public class SwsClient {
     }
 
     public static void addHandlers() {
-        MessageHandlerManager.addLogPhaseHandler( new OutputHandler() );
+        MessageHandlerManager.addLogPhaseInHandler( new OutputHandler(OutputHandler.IN_HANDLER) );
+        MessageHandlerManager.addLogPhaseOutHandler( new OutputHandler(OutputHandler.OUT_HANDLER) );
         MessageHandlerManager.addErrorPhaseHandler( new ErrorHandler() );
         MessageHandlerManager.addDispatchPhaseHandler( new MustUnderstandHandler() );
     }
@@ -98,12 +99,9 @@ public class SwsClient {
 
     public static void executeOTAAirAvailRequests() throws RemoteException {
 
-        AirAvailWrapper airAvailWrapper = new AirAvailWrapper(configuration);
-
-        airAvailWrapper.executeSampleRequest(AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_DATE);
-        airAvailWrapper.executeSampleRequest(AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_HOUR);
-        airAvailWrapper.executeSampleRequest(AirAvailRequests.TWO_POINTS_WITH_VENDOR_PREFS);
-//        airAvailWrapper.executeSampleRequest(AirAvailRequests.MULTILEG_FLIGHT_SEGMENT_WITH_VENDOR_PREFS); // TODO
+        new AirAvailWrapper(configuration).executeSampleRequest(AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_DATE);
+        new AirAvailWrapper(configuration).executeSampleRequest(AirAvailRequests.TWO_POINTS_WITH_DEPARTURE_HOUR);
+        new AirAvailWrapper(configuration).executeSampleRequest(AirAvailRequests.TWO_POINTS_WITH_VENDOR_PREFS);
     }
 
 }

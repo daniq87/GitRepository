@@ -88,7 +88,8 @@ public class SwsClient {
 
     private static void addHandlers() {
 
-        MessageHandlerManager.addLogPhaseHandler(new OutputHandler());
+        MessageHandlerManager.addLogPhaseInHandler(new OutputHandler(OutputHandler.IN_HANDLER));
+        MessageHandlerManager.addLogPhaseOutHandler(new OutputHandler(OutputHandler.OUT_HANDLER));
         MessageHandlerManager.addErrorPhaseHandler(new ErrorHandler());
         MessageHandlerManager.addDispatchPhaseHandler(new MustUnderstandHandler());
     }

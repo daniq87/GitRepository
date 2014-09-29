@@ -31,8 +31,6 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
 
     public OTAAirAvailRSDocument executeSampleRequest( AirAvailRequests requestType ) throws RemoteException {
 
-        MessageHandlerManager.addStub( this );
-
         return oTA_AirAvailRQ(
                 AirAvailRQFactory.getOTAAirAvailRequest( configuration, requestType ),
                 MessageHeaderFactory.getMessageHeader( configuration, actionString),

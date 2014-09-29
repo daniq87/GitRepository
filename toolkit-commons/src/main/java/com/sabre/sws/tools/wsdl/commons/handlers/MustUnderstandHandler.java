@@ -33,7 +33,7 @@ public class MustUnderstandHandler extends AbstractHandler {
     @Override
     public Handler.InvocationResponse invoke(MessageContext msgContext) throws AxisFault {
 
-        LOGGER.info( "MustUnderstandHandler invoke" );
+        LOGGER.info( "MustUnderstandHandler invoke: " + this.getClass().getCanonicalName() );
 
         SOAPEnvelope envelope = msgContext.getEnvelope();
         SOAPHeader header = envelope.getHeader();
@@ -51,7 +51,6 @@ public class MustUnderstandHandler extends AbstractHandler {
         XMLStreamReader streamReader =  header.getXMLStreamReader();
 
         try {
-
             boolean isSessionCreateRS = false;
 
             while( streamReader.hasNext() ) {
@@ -84,7 +83,8 @@ public class MustUnderstandHandler extends AbstractHandler {
 
         Iterator headerBlocksIterator = header.getHeadersToProcess(null);
         while( headerBlocksIterator.hasNext() ) {
-            ((SOAPHeaderBlock) headerBlocksIterator.next()).setProcessed();
+            SOAPHeaderBlock next = (SOAPHeaderBlock) headerBlocksIterator.next();
+            next.setProcessed();
         }
 
         return InvocationResponse.CONTINUE;

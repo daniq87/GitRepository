@@ -19,6 +19,19 @@ import org.apache.logging.log4j.Logger;
  */
 public class OutputHandler extends AbstractHandler {
 
+    public static final int OUT_HANDLER = 1;
+    public static final int IN_HANDLER = 2;
+
+    private final int HANDLER_TYPE;
+
+    public OutputHandler( int handlerType ) {
+        super();
+        if( handlerType != OUT_HANDLER && handlerType != IN_HANDLER ) {
+            throw new IllegalArgumentException();
+        }
+        this.HANDLER_TYPE = handlerType;
+    }
+
     private static final Logger LOGGER = LogManager.getLogger(OutputHandler.class.getName());
 
     @Override
@@ -26,11 +39,19 @@ public class OutputHandler extends AbstractHandler {
 
         LOGGER.info( "OutputHandler invoke" );
 
+        System.out.println(messageContext.getProperties().keySet());
         SOAPEnvelope envelope = messageContext.getEnvelope();
         SOAPHeader header = envelope.getHeader();
         SOAPBody body = envelope.getBody();
 
         StringBuffer buffer = new StringBuffer();
+
+        if( this.HANDLER_TYPE == OUT_HANDLER ) {
+            buffer.append( "\nOutgoing request:\n" );
+        } else {
+            buffer.append( "\nIncoming response:\n");
+        }
+
         buffer.append( XMLPrettifier.pretify(header.toString()) );
         buffer.append( XMLPrettifier.pretify(body.toString()) );
         String formattedMessage = buffer.toString();
