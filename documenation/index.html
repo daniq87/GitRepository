@@ -59,11 +59,10 @@
         binding data and compares their suitability to work with Sabre&reg; Web Services. There is also a brief
         guide on how to use each framework to build Sabre&reg; Web Services client application and a list of
         problems that one may encounter when developing it. To see the working sample implementation of Sabre
-        Web Services client in each described technology, please refer to !!!sample project supplied by Sabre
+        Web Services client in each described technology, please refer to <a href="sample_client_documentation.html">sample project</a> supplied by Sabre
         Web Services team. It may be used as an example on how to use each framework or an application template.
 
         <br /><br/>
-        <span class="comment">Mój typ to wsimport + JAXB, ale czekam na decyzję. Kolejność zamienię, gdy już będzie wszystko wiadomo.</span>
     </p>
 
 <!-- Document content -->
@@ -565,7 +564,7 @@
         During development, one would probably use Sabre&reg; test system or even mocked service. To change endpoint URL
         used by your service's client, please do as following (or see one of classes in
         <span class="code">com.sabre.sws.tools.wsdl.wsimport.wrappers</span> package in
-        <span class="code">toolkit-wsimport</span> !!!sample project):
+        <span class="code">toolkit-wsimport</span> <a href="sample_client_documentation.html">sample project</a>):
         <br /><br />
     </p>
 
@@ -597,7 +596,7 @@
     </p>
 
     <p>
-        All above concepts are implemented in !!!sample project, in <span class="code">toolkit-wsimport</span> module.
+        All above concepts are implemented in <a href="sample_client_documentation.html">sample project</a>, in <span class="code">toolkit-wsimport</span> module.
     </p>
 
     <!-- Summary -->
@@ -711,7 +710,7 @@
             <br /><br />
             The next step is to create a client, which will utilize generated classes to access web services.
             This process requires a bit of knowledge about how the CXF framework works. This will be covered here briefly. To see
-            a full working example, please refer to the !!!sample project, provided by Sabre&reg; Web Services Team
+            a full working example, please refer to the <a href="sample_client_documentation.html">sample project</a>, provided by Sabre&reg; Web Services Team
             (<span class="code">toolkit-cxf-jaxb</span> module).
             <br /><br />
             CXF generates two main data types (JAX-WS asrtifacts) for each service defined in WSDL file:
@@ -738,7 +737,7 @@
             unmarshaled into objects and placed in Holders. To get returned objects, use Holder instance's
             <span class="code">value()</span> method.
 
-            So, based on !!!sample project, the invokation of Sabre's OTA_AirAvailLLSRQ would look something like this:
+            So, based on <a href="sample_client_documentation.html">sample project</a>, the invokation of Sabre's OTA_AirAvailLLSRQ would look something like this:
             <br /><br />
             <!-- HTML generated using hilite.me --><div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">1
 2
@@ -754,14 +753,14 @@
         which is not enough information to successfully consume Sabre&reg; Web Services. Typically, one would like to
         access the data in SOAP envelope and header. Interceptors allow exactly to do that.
         <br/>
-        In the !!!sample project, interceptor classes are derived from
+        In the <a href="sample_client_documentation.html">sample project</a>, interceptor classes are derived from
         <span class="code">org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor</span> class, which
         provides means of accessing full SOAP message via <span class="code">handleMessage(SoapMessage message)</span> method.
         It is possible to get full information from SOAP message as stream, however, this will leave the message empty.
         To avoid error on further processing, data must be copied and placed back into the message
         (see <span class="code">LLSErrorInterceptor</span> class from
         <span class="code">com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors</span> package in
-        <span class="code">toolkit-cxf-jaxb</span> module in !!!sample project).
+        <span class="code">toolkit-cxf-jaxb</span> module in <a href="sample_client_documentation.html">sample project</a>).
         Interceptor must be placed in a correct phase, so that the expected data is present in the message as it is being processed.
         For the detailed information about phases and interceptor chains, please refer to the
         <a href="http://cxf.apache.org/docs/interceptors.html"> CXF's documentation</a>.
@@ -773,7 +772,7 @@
         During development, one would probably use Sabre&reg; test system or even mocked service. To change endpoint URL
         used by your service's client, please do as following (or see one of classes in
         <span class="code">com.sabre.sws.tools.wsdl.cxf.jaxb.wrappers</span> package in <span class="code">toolkit-cxf-jaxb</span>
-        module of a !!!sample project):
+        module of a <a href="sample_client_documentation.html">sample project</a>):
         <br /><br />
 
         <!-- HTML generated using hilite.me --><div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="color: yellow;margin: 0; line-height: 125%">1
@@ -790,16 +789,15 @@
 
         <br /><br />
         After all these steps are taken, one has to create a valid request object and pass it to port's method corresponding
-        to the desired service, along with proper header holders (as in the !!!sample project).
+        to the desired service, along with proper header holders (as in the <a href="sample_client_documentation.html">sample project</a>).
         The method will return response object, which may be further processed to extract required information from it.
         </p>
 
         <!-- Summary -->
         <a name="cxf-known-issues-anchor"></a>
         <span class="bold"> Summary </span><br/>
-        <p>
-            <span class="comment">A może by tak zmienić tę sekcję na "summary"?</span> <!--TODO-->
-        </p>
+
+        <br />
     </div>
 
 
@@ -848,7 +846,7 @@
             to <span class="code">PATH</span> system variable will allow to run Axis2-related scripts easily. <br /><br />
             Using Axis2 as Maven dependency will be no surprise for Maven users. For information about versioning and
             dependencies, see <a href="http://mvnrepository.com/artifact/org.apache.axis2">Maven repository site</a>.
-            To see a working example with full set of dependencies, check !!!sample project, provided by Sabre&reg; Web Services Team.
+            To see a working example with full set of dependencies, check <a href="sample_client_documentation.html">sample project</a>, provided by Sabre&reg; Web Services Team.
         </p>
 
         <!-- Typical flow in particular framework -->
@@ -985,7 +983,7 @@
         Spring WS also uses <span class="italic">contract-first </span> approach, so user is encouraged to develop client code
         based on existing service definition. Main difference is, that Spring WS handles marshalling and sending of a single object
         well, but requires more effort to compose the message consisting of multiple elements. This will be covered in following
-        section, and the full working implementation may be seen in !!!sample project, at <span class="code">toolkit-spring-ws</span>
+        section, and the full working implementation may be seen in <a href="sample_client_documentation.html">sample project</a>, at <span class="code">toolkit-spring-ws</span>
         module.
     </p>
 
@@ -1021,7 +1019,7 @@
         In fact, the minimal set of schemas required to consume Sabre&reg; Web Services consists of request and response
         definitions for each service and schemas of security and message headers to build the envelope.
         <br />
-        These files should be then compiled to Java classes. !!!sample project uses JAXB2 Maven plugin to achieve this.
+        These files should be then compiled to Java classes. <a href="sample_client_documentation.html">sample project</a> uses JAXB2 Maven plugin to achieve this.
         Spring WS provides one main class to send and receive web services message: <span class="code">WebServiceTemplate</span>,
         which resides in <span class="code">org.springframework.ws.client.core</span> package.
         This class contains many methods to invoke web services calls. Two most important of them are
@@ -1050,7 +1048,7 @@
         <span class="code">WebServiceTemplate</span> and exposes convenient bean properties to enable easy configuration.
         However, this is not mandatory. <br /><br />
 
-        To get comprehensive information on Spring WS client development, please check !!!sample project
+        To get comprehensive information on Spring WS client development, please check <a href="sample_client_documentation.html">sample project</a>
         (<span class="code">toolkit-spring-ws</span> module) or some of the following:
     </p>
 
@@ -1123,7 +1121,7 @@
 
 
     <p>
-        The !!!sample project uses this approach to create SOAP envelope and invoke Sabre&reg; Web Services.
+        The <a href="sample_client_documentation.html">sample project</a> uses this approach to create SOAP envelope and invoke Sabre&reg; Web Services.
     </p>
 
     <p>
@@ -1135,7 +1133,7 @@
         to <span class="code">MessageContext</span> object, which contains information about request and
         response messages, message exchange properties, endpoint and other useful data. As the interceptor
         allows to handle response message, it is a good mean of obtaining header information from it.
-        In !!!sample project this capability is utilized to retrieve session token from SessionCreateRQ
+        In <a href="sample_client_documentation.html">sample project</a> this capability is utilized to retrieve session token from SessionCreateRQ
         service's response. <br/><br />
         Interceptor must implement <span class="code">org.springframework.ws.client.support.interceptor.ClientInterceptor</span>
         interface with four methods:
@@ -1176,7 +1174,7 @@
 
 
     <p>
-        To see a full working example of interceptor use, refer to !!!sample project, <span class="code">toolkit-spring-ws</span>
+        To see a full working example of interceptor use, refer to <a href="sample_client_documentation.html">sample project</a>, <span class="code">toolkit-spring-ws</span>
         module.
     </p>
 
