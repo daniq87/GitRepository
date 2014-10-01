@@ -4,6 +4,7 @@ import com.sabre.sws.tools.wsdl.axis2.xmlbeans.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.axis2.xmlbeans.utils.SecurityFactory;
 import com.sabre.sws.tools.wsdl.axis2.xmlbeans.utils.SessionCreateRQFactory;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.stubs.xmlbeans.SessionCreateRQServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContextFactory;
@@ -22,10 +23,15 @@ public class SessionCreateWrapper extends SessionCreateRQServiceStub {
         super(ConfigurationContextFactory.createConfigurationContextFromFileSystem( null, null ),
                 configuration.getEndpoint() );
         this.configuration = configuration;
+        MessageHandlerManager.addStub( this );
 
     }
 
     public SessionCreateRSDocument openSession() throws RemoteException {
-        return sessionCreateRQ(SessionCreateRQFactory.getSessionCreateRQ( configuration ), MessageHeaderFactory.getMessageHeader( configuration ), SecurityFactory.getSecuirtyDocument( configuration ) );
+        return sessionCreateRQ(
+                SessionCreateRQFactory.getSessionCreateRQ( configuration ),
+                MessageHeaderFactory.getMessageHeader( configuration, "SessionCreateRQ" ),
+                SecurityFactory.getSecuirtyDocument( configuration, true )
+        );
     }
 }

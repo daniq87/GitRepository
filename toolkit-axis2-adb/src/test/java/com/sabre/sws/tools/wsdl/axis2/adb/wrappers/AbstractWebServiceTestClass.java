@@ -3,6 +3,8 @@ package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 import com.sabre.sws.tools.wsdl.commons.utils.EditablePropertiesFileConfigurationSource;
 import com.sabre.sws.tools.wsdl.commons.utils.IEditableConfiguration;
 import org.apache.axis2.AxisFault;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.mockserver.integration.ClientAndProxy;
@@ -19,6 +21,8 @@ import static org.mockserver.integration.ClientAndServer.startClientAndServer;
  * Created by SG0221139 on 7/25/2014.
  */
 public class AbstractWebServiceTestClass {
+
+    private static final Logger LOGGER = LogManager.getLogger( AbstractWebServiceTestClass.class );
 
     protected static ClientAndProxy proxy;
     protected static ClientAndServer mockServer;
@@ -41,8 +45,8 @@ public class AbstractWebServiceTestClass {
             e.printStackTrace();
         }
 
-        ServerSocket ssa = null;
-        ServerSocket ssb = null;
+        ServerSocket ssa;
+        ServerSocket ssb;
 
         try {
             // ServerSocker( 0 ) constructor finds and allocates free port at runtime
@@ -58,7 +62,7 @@ public class AbstractWebServiceTestClass {
         }
 
         mockServer = startClientAndServer( serverPortNumber );
-        System.out.println( "Port number: " + serverPortNumber );
+        LOGGER.debug("Port number: " + serverPortNumber);
         proxy = startClientAndProxy( proxyPortNumber );
     }
 

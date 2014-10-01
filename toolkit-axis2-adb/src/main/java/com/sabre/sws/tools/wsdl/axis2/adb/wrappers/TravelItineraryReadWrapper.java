@@ -1,19 +1,31 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 
-import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.TravelItineraryHelper;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
+import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
+import com.sabre.sws.tools.wsdl.commons.utils.requests.TravelItineraryReadContent;
 import com.sabre.sws.tools.wsdl.stubs.adb.TravelItineraryReadServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.rmi.RemoteException;
 
 /**
  * Created by SG0221139 on 7/16/2014.
+ *
+ * Wrapper classes are convenience classes for the purpose of constructing example requests
+ * Below pattern may be used to construct requests accordingly to Sabre client's application
+ * business logic, or may just serve as a demonstration on how to use Axis2 and ADB technologies
+ * to consume Sabre Web Services.
+ *
  */
 public class TravelItineraryReadWrapper extends TravelItineraryReadServiceStub {
+
+    private static final Logger LOGGER = LogManager.getLogger(TravelItineraryReadWrapper.class);
 
     private final IConfigurationProvider configuration;
 
@@ -41,9 +53,12 @@ public class TravelItineraryReadWrapper extends TravelItineraryReadServiceStub {
 
         security = helper.getSecuirityInstance( configuration );
         header = helper.getMessageHeaderInstance( configuration );
-        requestBody = helper.getTravelItineraryRQ("HNDAGG");
 
-        System.out.println( "Invoking TravelItineraryRead for PNR: HNDAGG" );
+        String PNR = TravelItineraryReadContent.getPNR();
+
+        requestBody = helper.getTravelItineraryRQ( PNR );
+
+        LOGGER.info( "Invoking TravelItineraryRead for PNR: " + PNR );
         responseBody = travelItineraryReadRQ( requestBody, header, security );
 
         return responseBody;
@@ -53,7 +68,7 @@ public class TravelItineraryReadWrapper extends TravelItineraryReadServiceStub {
 
         TravelItineraryReadRQ instance = new TravelItineraryReadRQ();
 
-        instance.setVersion( "2.0.0" );         // TODO: this and other versionings should be external dependency
+        instance.setVersion(ServicesVersionsProvider.getTravelItineraryVersion());
 
         MessagingDetails_type0 msgDetails = new MessagingDetails_type0();
         Transaction_type0 transaction = new Transaction_type0();

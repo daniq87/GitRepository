@@ -1,0 +1,104 @@
+.header {
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+.subheader {
+    font-size: 17pt;
+    font-weight: bold;
+}
+
+.caption {
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.section {
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.code {
+    font-family: "Courier New";
+    font-size: small;
+}
+
+.snippet {
+    font-family: "Courier New";
+    font-size: small;
+    margin-left: 50px;
+}
+
+.warning {
+    font-weight: bold;
+    color: red;
+}
+
+.reccommended {
+    font-weight: bold;
+    color: green;
+}
+
+.intend-level-1 {
+    padding-left: 25px;
+    width: 98%;
+}
+
+.intend-level-2 {
+    padding-left: 40px;
+    width: 100%;
+}
+
+.intend-level-3 {
+    padding-left: 55px;
+    width: 100%;
+}
+
+.intend-level-4 {
+    padding-left: 70px;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #2040ee;
+}
+
+
+ul {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+li {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.comment {
+    font-style: italic;
+    color: crimson;
+}
+
+table {
+    color: yellow;
+}
+
+table.mvn-cmdln-table {
+    border: 1px solid black;
+}
+
+table.mvn-cmdln-table th, table.mvn-cmdln-table td {
+    color: black;
+    padding: 7px;
+    border: 1px solid black;
+
+}

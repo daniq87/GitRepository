@@ -1,6 +1,7 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 
-import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
+import com.sabre.sws.tools.wsdl.commons.utils.AirAvailRequests;
+import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.axis2.adb.wrappers.helpers.AirAvailHelper;
 import com.sabre.sws.tools.wsdl.commons.utils.IConfigurationProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
@@ -8,13 +9,23 @@ import com.sabre.sws.tools.wsdl.stubs.adb.OTA_AirAvailServiceStub;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.rmi.RemoteException;
 
 /**
  * Created by SG0221139 on 7/11/2014.
+ *
+ * Wrapper classes are convenience classes for the purpose of constructing example requests
+ * Below pattern may be used to construct requests accordingly to Sabre client's application
+ * business logic, or may just serve as a demonstration on how to use Axis2 and ADB technologies
+ * to consume Sabre Web Services.
+ *
  */
 public class AirAvailWrapper extends OTA_AirAvailServiceStub {
+
+    private static final Logger LOGGER = LogManager.getLogger(AirAvailWrapper.class);
 
     private final IConfigurationProvider configuration;
     private String version = ServicesVersionsProvider.getOtaAirAvailVersion();
@@ -31,7 +42,7 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         MessageHandlerManager.addStub( this );
     }
 
-    private OTA_AirAvailRQ getSampleRequestBody1() {
+    private OTA_AirAvailRQ getRequestWithTwoPointsAndDepartureDate() {
         OTA_AirAvailRQ requestBody = new AirAvailHelper().geEmptytAirAvailRQInstance( configuration );
         requestBody.setVersion( version );
 
@@ -46,7 +57,7 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         return requestBody;
     }
 
-    private OTA_AirAvailRQ getSampleRequestBody2() {
+    private OTA_AirAvailRQ getRequestWithTwoPointsAndDepartureHour() {
         OTA_AirAvailRQ requestBody = new AirAvailHelper().geEmptytAirAvailRQInstance( configuration );
         requestBody.setVersion( version );
 
@@ -55,11 +66,10 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         requestBody.getOriginDestinationInformation().getFlightSegment().getDestinationLocation().setLocationCode( "FRA" );
         requestBody.getOriginDestinationInformation().getFlightSegment().getOriginLocation().setLocationCode( "DFW" );
 
-
         return requestBody;
     }
 
-    private OTA_AirAvailRQ getSampleRequestBody3() {
+    private OTA_AirAvailRQ getRequestWithTwoPointsAndVendroPrefs() {
         OTA_AirAvailRQ requestBody = new AirAvailHelper().geEmptytAirAvailRQInstance( configuration );
         requestBody.setVersion( version );
 
@@ -67,7 +77,6 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         requestBody.getOptionalQualifiers().setFlightQualifiers( new FlightQualifiers_type0() );
 
         VendorPrefs_type0 vendorPrefs = new VendorPrefs_type0();
-//                vendorPrefs.setExclude( true );
         Airline_type0 airline = new Airline_type0();
         airline.setCode( "AA" );
         vendorPrefs.addAirline( airline );
@@ -79,38 +88,10 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         requestBody.getOriginDestinationInformation().getFlightSegment().getDestinationLocation().setLocationCode( "LHR" );
         requestBody.getOriginDestinationInformation().getFlightSegment().getOriginLocation().setLocationCode( "DFW" );
 
-        // Debug
-
-        requestBody = new OTA_AirAvailRQ();
-        requestBody.setVersion( version );
-        requestBody.setOptionalQualifiers( new OptionalQualifiers_type0() );
-        requestBody.getOptionalQualifiers().setFlightQualifiers( new FlightQualifiers_type0() );
-        requestBody.getOptionalQualifiers().getFlightQualifiers().setVendorPrefs( new VendorPrefs_type0() );
-        requestBody.getOptionalQualifiers().getFlightQualifiers().getVendorPrefs().setExclude( true );
-        Airline_type0 airlinee = new Airline_type0();
-        airlinee.setCode( "AA" );
-        requestBody.getOptionalQualifiers().getFlightQualifiers().getVendorPrefs().addAirline( airlinee );
-
-        requestBody.setOriginDestinationInformation( new OriginDestinationInformation_type0());
-        requestBody.getOriginDestinationInformation().setFlightSegment( new FlightSegment_type0() );
-        DateOrTime departureTime = new DateOrTime();
-        departureTime.setDateOrTime( "12-21" );
-        requestBody.getOriginDestinationInformation().getFlightSegment().setDepartureDateTime( departureTime );
-        DestinationLocation_type0 dest = new DestinationLocation_type0();
-        dest.setLocationCode( "LHR" );
-        OriginLocation_type0 origin = new OriginLocation_type0();
-        origin.setLocationCode( "DFW" );
-
-        requestBody.getOriginDestinationInformation().getFlightSegment().setDestinationLocation( dest );
-        requestBody.getOriginDestinationInformation().getFlightSegment().setOriginLocation( origin );
-
-        // /Debug
-
-
         return requestBody;
     }
 
-    private OTA_AirAvailRQ getSampleRequestBody4() {
+    private OTA_AirAvailRQ getRequestWithMultilegFlightSegmentAndVendorPrefs() {
         OTA_AirAvailRQ requestBody = new AirAvailHelper().geEmptytAirAvailRQInstance( configuration );
         requestBody.setVersion( version );
 
@@ -159,73 +140,75 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
         return requestBody;
     }
 
-    private OTA_AirAvailRQ getSampleRequestBody( int index ) {
+    private OTA_AirAvailRQ getSampleRequestBody( AirAvailRequests requestType ) {
 
-        OTA_AirAvailRQ requestBody;
+        OTA_AirAvailRQ requestBody = null;
 
-        switch ( index ) {
+        switch ( requestType ) {
 
-            case 0:         // 121DECDFWLHR
+            case TWO_POINTS_WITH_DEPARTURE_DATE:         // 121DECDFWLHR
 
-                requestBody = getSampleRequestBody1();
+                requestBody = getRequestWithTwoPointsAndDepartureDate();
                 break;
 
-            case 1:
+            case TWO_POINTS_WITH_DEPARTURE_HOUR:
 
-                requestBody = getSampleRequestBody2();
+                requestBody = getRequestWithTwoPointsAndDepartureHour();
                 break;
 
-            case 2:          // 121DECDFWLHR‡*AA
+            case TWO_POINTS_WITH_VENDOR_PREFS:          // 121DECDFWLHR‡*AA
 
-                requestBody = getSampleRequestBody3();
+                requestBody = getRequestWithTwoPointsAndVendroPrefs();
                 break;
 
-            case 3:
+            case MULTILEG_FLIGHT_SEGMENT_WITH_VENDOR_PREFS:
 
-                requestBody = getSampleRequestBody4();
+                requestBody = getRequestWithMultilegFlightSegmentAndVendorPrefs();
                 break;
 
-            default:
-                throw new UnsupportedOperationException( "Invalid sample request index" );
         }
         return requestBody;
     }
 
-    public OTA_AirAvailRS executeSampleRequest( int requestIndex ) throws RemoteException {
+    public OTA_AirAvailRS executeSampleRequest( AirAvailRequests requestType ) throws RemoteException {
 
         AirAvailHelper helper = new AirAvailHelper();
 
         Security7 security = helper.getSecuirityInstance( configuration );
         MessageHeader header = helper.getMessageHeaderInstance( configuration );
 
-        OTA_AirAvailRQ requestBody = getSampleRequestBody( requestIndex );
+        OTA_AirAvailRQ requestBody = getSampleRequestBody( requestType );
 
-        System.out.println( "\tExecuting AirAvail call for:" );
+        StringBuffer outputMessageBuffer = new StringBuffer();
 
-        System.out.println( "\t\t" + requestBody
-                .getOriginDestinationInformation()
-                .getFlightSegment()
-                .getDepartureDateTime()
-                .toString()
+        outputMessageBuffer.append("\tExecuting AirAvail call for:");
+
+        outputMessageBuffer.append("\t\t" + requestBody
+                        .getOriginDestinationInformation()
+                        .getFlightSegment()
+                        .getDepartureDateTime()
+                        .toString()
         );
 
-        System.out.println( "\t\tFrom: " +
-                 requestBody
-                    .getOriginDestinationInformation()
-                    .getFlightSegment()
-                    .getOriginLocation()
-                    .getLocationCode()
-                    .toString()
+        outputMessageBuffer.append("\t\tFrom: " +
+                        requestBody
+                                .getOriginDestinationInformation()
+                                .getFlightSegment()
+                                .getOriginLocation()
+                                .getLocationCode()
+                                .toString()
         );
 
-        System.out.println( "\t\tTo: " +
-            requestBody
-                .getOriginDestinationInformation()
-                .getFlightSegment()
-                .getDestinationLocation()
-                .getLocationCode()
-                .toString()
+        outputMessageBuffer.append("\t\tTo: " +
+                        requestBody
+                                .getOriginDestinationInformation()
+                                .getFlightSegment()
+                                .getDestinationLocation()
+                                .getLocationCode()
+                                .toString()
         );
+
+        LOGGER.info( outputMessageBuffer.toString() );
 
         return oTA_AirAvailRQ( requestBody, header, security );
     }

@@ -45,9 +45,34 @@
     <build>
 
         <!--   P  L   U   G   I   N   S   -->
-
         <plugins>
 
+            <!-- R E S O U R C E S    P L U G I N -->
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-log4j-conf</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/configuration</directory>
+                                    <include>**/log4j2.xml</include>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Skip antrun plugin execution from parent POM -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -65,32 +90,6 @@
                 </executions>
             </plugin>
 
-            <!--Clean Plugin -->
-            <!--Deletes stub files, if any-->
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.4.1</version>
-                <executions>
-                    <execution>
-                        <phase>clean</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <verbose>true</verbose>
-                    <filesets>
-                        <fileset>
-                            <directory>target/generated-sources/stubs</directory>
-                            <includes>
-                                <include>*.java</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
@@ -104,7 +103,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>../service-versions.properties</file>
+                                <file>${project.parent.basedir}/resources/service-versions.properties</file>
                             </files>
                         </configuration>
                     </execution>
@@ -139,7 +138,7 @@
                             <wsdlFile>${project.parent.basedir}/target/wsdls/EnhancedAirBookRQ/EnhancedAirBook2.5.0RQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
+                            <!--<flattenFiles>true</flattenFiles>-->
                         </configuration>
                     </execution>
 
@@ -156,7 +155,7 @@
                             <wsdlFile>${project.parent.basedir}/target/wsdls/PassengerDetailsRQ/PassengerDetails2.2.1RQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
+                            <!--<flattenFiles>true</flattenFiles>-->
                         </configuration>
                     </execution>
 
@@ -174,7 +173,7 @@
                             <wsdlFile>${project.parent.basedir}/target/wsdls/TravelItineraryReadLLSRQ/TravelItineraryReadLLS2.0.0RQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
+                            <!--<flattenFiles>true</flattenFiles>-->
                         </configuration>
                     </execution>
 
@@ -190,7 +189,7 @@
                             <wsdlFile>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS2.1.1RQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
+                            <!--<flattenFiles>true</flattenFiles>-->
                         </configuration>
                     </execution>
 
@@ -206,7 +205,7 @@
                             <wsdlFile>${project.parent.basedir}/target/wsdls/SessionCloseRQ/SessionCloseRQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
+                            <!--<flattenFiles>true</flattenFiles>-->
                         </configuration>
                     </execution>
 
@@ -222,30 +221,7 @@
                             <wsdlFile>${project.parent.basedir}/target/wsdls/SessionCreateRQ/SessionCreateRQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-<!--
-             Build-helper plugin
-             Adds generated .java files to source dir-->
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.9</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>target/generated-sources/stubs</source>
-                            </sources>
+                            <!--<flattenFiles>true</flattenFiles>-->
                         </configuration>
                     </execution>
                 </executions>
@@ -262,42 +238,57 @@
 
     <dependencies>
 
+        <!-- ADDITIONAL DEPENDENCIES -->
+
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-impl</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-api</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+
         <dependency>
             <groupId>com.sabre.sws.tools</groupId>
             <artifactId>toolkit-commons</artifactId>
             <version>1.0.0</version>
         </dependency>
 
+        <!-- INHERITED FROM DEPENDENCY-MANAGEMENT FROM PARENT POM -->
+
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
             <version>4.3</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2</artifactId>
-            <version>1.6.2</version>
+            <version>${axis2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2-kernel</artifactId>
-            <version>1.6.2</version>
+            <version>${axis2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2-adb</artifactId>
-            <version>1.6.2</version>
+            <version>${axis2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2-transport-http</artifactId>
-            <version>1.6.2</version>
+            <version>${axis2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2-transport-local</artifactId>
-            <version>1.6.2</version>
+            <version>${axis2.version}</version>
         </dependency>
 
     </dependencies>

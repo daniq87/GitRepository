@@ -1,0 +1,186 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>wsdl-toolkit</artifactId>
+        <groupId>com.sabre.sws.tools</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>toolkit-wsimport</artifactId>
+    <packaging>jar</packaging>
+
+    <name>toolkit-wsimport</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+
+            <!-- R E S O U R C E S    P L U G I N -->
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-log4j-conf</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/configuration</directory>
+                                    <include>**/log4j2.xml</include>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- P R O P E R T I E S    P L U G I N -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <executions>
+                    <execution>
+                        <id>download-properties</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${project.parent.basedir}/resources/service-versions.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Maven ANTrun plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>download-files</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- JAXB2 maven plugin -->
+            <plugin>
+                <groupId>org.jvnet.jax-ws-commons</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <wsdlDirectory>${project.parent.basedir}/target/wsdls</wsdlDirectory>
+                    <bindingDirectory>${project.basedir}/custom-bindings</bindingDirectory>
+                </configuration>
+                <executions>
+
+                    <execution>
+                        <id>session-schemas</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>SessionCreateRQ/SessionCreateRQ.wsdl</wsdlFile>
+                                <wsdlFile>SessionCloseRQ/SessionCloseRQ.wsdl</wsdlFile>
+                                <wsdlFile>OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailLLSRQVersion}RQ.wsdl</wsdlFile>
+                            </wsdlFiles>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>travel-itinerary-schemas</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <bindingFiles>
+                                <bindingFile>travel-itinerary-custom-binding.jxb</bindingFile>
+                            </bindingFiles>
+                            <wsdlFiles>
+                                <wsdlFile>TravelItineraryReadLLSRQ/TravelItineraryReadLLS${TravelItineraryReadLLSRQVersion}RQ.wsdl</wsdlFile>
+                            </wsdlFiles>
+                        </configuration>
+                    </execution>
+
+                    <!--<execution>
+                        <id>ota-air-avail-schemas</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                    <wsdlFile>OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailLLSRQVersion}RQ.wsdl</wsdlFile>
+                            </wsdlFiles>
+                        </configuration>
+                    </execution>-->
+
+                    <execution>
+                        <id>enhanced-air-book-schemas</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <bindingFiles>
+                                <bindingFile>enhanced-airbook-custom-binding.jxb</bindingFile>
+                            </bindingFiles>
+                            <wsdlFiles>
+                                    <wsdlFile>EnhancedAirBookRQ/EnhancedAirBook${EnhancedAirBookRQVersion}RQ.wsdl</wsdlFile>
+                            </wsdlFiles>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>passenger-details-schemas</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <bindingFiles>
+                                <bindingFile>passenger-details-custom-binding.jxb</bindingFile>
+                            </bindingFiles>
+                            <wsdlFiles>
+                                    <wsdlFile>PassengerDetailsRQ/PassengerDetails${PassengerDetailsRQVersion}RQ.wsdl</wsdlFile>
+                            </wsdlFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.sabre.sws.tools</groupId>
+            <artifactId>toolkit-commons</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
+</project>

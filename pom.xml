@@ -10,6 +10,9 @@
         <module>toolkit-commons</module>
         <module>toolkit-axis2-adb</module>
         <module>toolkit-axis2-xmlbeans</module>
+        <module>toolkit-cxf-jaxb</module>
+        <module>toolkit-spring-ws</module>
+        <module>toolkit-wsimport</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -17,6 +20,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <axis2.version>1.6.2</axis2.version>
     </properties>
 
      <repositories>
@@ -69,12 +73,7 @@
     </pluginRepositories>
 
     <build>
-        <resources>
-            <resource>
-                <directory>toolkit-axis2-adb/src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
+
         <plugins>
 
             <!-- Compiler Plugin -->
@@ -91,6 +90,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Properties Plugin -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
@@ -104,7 +104,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>service-versions.properties</file>
+                                <file>resources/service-versions.properties</file>
                             </files>
                         </configuration>
                     </execution>
@@ -163,7 +163,11 @@
     </build>
     <dependencyManagement>
         <dependencies>
-            <!-- can be replaced with logback -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>2.3</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
@@ -179,25 +183,35 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>1.7.7</version>
             </dependency>
-
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
                 <version>1.9.5</version>
             </dependency>
             <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+            </dependency>
+            <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
                 <version>1.6.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mock-server</groupId>
+                <artifactId>mockserver-netty</artifactId>
+                <version>3.4</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
-
     </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>2.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -210,17 +224,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.ws.commons.axiom</groupId>
-            <artifactId>axiom-impl</artifactId>
-            <version>1.2.14</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.ws.commons.axiom</groupId>
-            <artifactId>axiom-api</artifactId>
-            <version>1.2.14</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -230,17 +233,9 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.mock-server</groupId>
             <artifactId>mockserver-netty</artifactId>
-            <version>3.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jdom</groupId>
-            <artifactId>jdom2</artifactId>
-            <version>2.0.5</version>
         </dependency>
 
     </dependencies>

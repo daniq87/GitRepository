@@ -1,0 +1,23 @@
+<!--
+    This script copies missing TypeSystemHolder.class files together with their
+    package structure from ${project.basedir}/target/generated-sources/stubs
+    to ${project.basedir}/target/classes, so they are in classpath.
+
+    This is due to a known and reported, but not yet fixed bug in
+    axis2-wsdl2code-maven-plugin maven plugin.
+
+    https://issues.apache.org/jira/browse/AXIS2-313
+    https://issues.apache.org/jira/browse/AXIS2-4547
+-->
+
+<project>
+
+    <target name="copy-typesystemholder-class" >
+
+        <delete dir="${project.basedir}/target/classes/schemaorg_apache_xmlbeans/system" />
+        <copydir src="target/generated-sources/stubs/schemaorg_apache_xmlbeans/system"
+                 dest="target/classes/schemaorg_apache_xmlbeans/system" />
+
+    </target>
+
+</project>

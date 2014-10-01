@@ -18,6 +18,12 @@ import java.util.Iterator;
 
 /**
  * Created by SG0221139 on 7/11/2014.
+ *
+ * This is a handler class for Apache Axis2 framework.
+ * It processes header elements marked with the mustUnderstand="1" attribute
+ * and takes care of session management (it reads header action and
+ * tests if it concerns session management.
+ *
  */
 
 public class MustUnderstandHandler extends AbstractHandler {
@@ -27,7 +33,7 @@ public class MustUnderstandHandler extends AbstractHandler {
     @Override
     public Handler.InvocationResponse invoke(MessageContext msgContext) throws AxisFault {
 
-        LOGGER.info( "MustUnderstandHandler invoke" );
+        LOGGER.info( "MustUnderstandHandler invoke: " + this.getClass().getCanonicalName() );
 
         SOAPEnvelope envelope = msgContext.getEnvelope();
         SOAPHeader header = envelope.getHeader();
@@ -45,7 +51,6 @@ public class MustUnderstandHandler extends AbstractHandler {
         XMLStreamReader streamReader =  header.getXMLStreamReader();
 
         try {
-
             boolean isSessionCreateRS = false;
 
             while( streamReader.hasNext() ) {
@@ -62,6 +67,8 @@ public class MustUnderstandHandler extends AbstractHandler {
                         conversationID = streamReader.getElementText();
                     }
                     if( isSessionCreateRS && streamReader.getName().getLocalPart().equals( "BinarySecurityToken" ) ) {
+                        isSessionCreateRS = false;
+                        LOGGER.info( "Opening new session..." );
                         SessionManager.getInstance().startSession( streamReader.getElementText() );
                         SessionManager.getInstance().setConversationID( conversationID );
                         LOGGER.info( "Started session" );
@@ -76,7 +83,8 @@ public class MustUnderstandHandler extends AbstractHandler {
 
         Iterator headerBlocksIterator = header.getHeadersToProcess(null);
         while( headerBlocksIterator.hasNext() ) {
-            ((SOAPHeaderBlock) headerBlocksIterator.next()).setProcessed();
+            SOAPHeaderBlock next = (SOAPHeaderBlock) headerBlocksIterator.next();
+            next.setProcessed();
         }
 
         return InvocationResponse.CONTINUE;

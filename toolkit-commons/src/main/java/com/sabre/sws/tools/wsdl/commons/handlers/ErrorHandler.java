@@ -2,7 +2,6 @@ package com.sabre.sws.tools.wsdl.commons.handlers;
 
 import org.apache.axiom.soap.SOAPBody;
 import org.apache.axiom.soap.SOAPEnvelope;
-import org.apache.axiom.soap.SOAPHeader;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.handlers.AbstractHandler;
@@ -14,10 +13,14 @@ import javax.xml.stream.XMLStreamReader;
 
 /**
  * Created by SG0221139 on 7/15/2014.
+ *
+ * This is a handler class for Apache Axis2 framework.
+ * It checks whether message's body contains any Fault sections,
+ * and if so, it logs it using standard logger.
  */
 public class ErrorHandler extends AbstractHandler {
 
-    Logger LOGGER = LogManager.getLogger( ErrorHandler.class.getName() );
+    private static final Logger LOGGER = LogManager.getLogger( ErrorHandler.class.getName() );
 
     @Override
     public InvocationResponse invoke(MessageContext messageContext) throws AxisFault {
@@ -25,10 +28,9 @@ public class ErrorHandler extends AbstractHandler {
         LOGGER.info( "ErrorHandler invoke" );
 
         SOAPEnvelope envelope = messageContext.getEnvelope();
-        SOAPHeader  header = envelope.getHeader();
         SOAPBody body = envelope.getBody();
 
-        if( ! body.hasFault() ) {
+        if( ! envelope.hasFault() ) {
             return InvocationResponse.CONTINUE;
         }
 
@@ -37,17 +39,19 @@ public class ErrorHandler extends AbstractHandler {
         XMLStreamReader streamReader = body.getXMLStreamReader();
 
         try {
+            StringBuffer messageBuffer = new StringBuffer();
             while( streamReader.hasNext() ) {
 
                 if( streamReader.hasName() && streamReader.getName().getLocalPart().equalsIgnoreCase( "faultcode" ) ) {
-                    LOGGER.info( "faultcode: " + streamReader.getElementText() );
+                    messageBuffer.append("faultcode: " + streamReader.getElementText()).append("\n");
                 } else if( streamReader.hasName() && streamReader.getName().getLocalPart().equalsIgnoreCase( "faultstring" ) ) {
-                    LOGGER.info( "faultstring: " + streamReader.getElementText() );
+                    messageBuffer.append( "faultstring: " + streamReader.getElementText() ).append("\n");
                 } else if( streamReader.hasName() && streamReader.getName().getLocalPart().equalsIgnoreCase( "stacktrace" ) ) {
-                    LOGGER.info( "stacktrace: " + streamReader.getElementText() );
+                    messageBuffer.append( "stacktrace: " + streamReader.getElementText() ).append("\n");
                 }
                 streamReader.next();
             }
+            LOGGER.error( messageBuffer.toString() );
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }

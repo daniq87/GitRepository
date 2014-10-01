@@ -13,6 +13,14 @@ import static com.sabre.sws.tools.wsdl.stubs.adb.EnhancedAirBookServiceStub.*;
 
 /**
  * Created by SG0221139 on 7/21/2014.
+ *
+ * The purpose of helper classes in this package is to provide ready-to-use elements
+ * for corresponding wrapper classes. These are mostly session and authentication objects,
+ * that represent custom SOAP headers used by Sabre Web Services.
+ *
+ * This is due to code redundancy caused by the way ADB framework maps schema objects
+ * to Java classes. The issue is described in documentation, distributed with this project.
+ *
  */
 public class EnhancedAirBookHelper {
 
@@ -49,7 +57,6 @@ public class EnhancedAirBookHelper {
         instance.setFrom( from );
 
         // Instantiate and set TO element
-        To to = new To();
         To_type0 to_type0 = new To_type0();
         PartyId_type0 toParty = new PartyId_type0();
         toParty.setString( Util.getToString() );
@@ -64,9 +71,7 @@ public class EnhancedAirBookHelper {
         StringBuffer buffer = new StringBuffer( Util.getTimestamp() );
         buffer.append( "-" );
         buffer.append( Util.longRandomHexString() );
-        String conversationID = buffer.toString();
 
-//        instance.setConversationId( toNonEmptyString( conversationID ) );
         instance.setConversationId( toNonEmptyString( SessionManager.getInstance().getConversationID() ) );
 
         // Set SERVICE element
@@ -83,7 +88,7 @@ public class EnhancedAirBookHelper {
         // Populate and set MESSAGE_DATA element
         MessageData_type0 messageData = new MessageData_type0();
 
-        String messageID = Util.longRandomHexString();
+        String messageID = new StringBuffer("EnhancedAirBook-").append(Util.longRandomHexString()).toString();
         messageData.setMessageId( toNonEmptyString(messageID ) );
 
         Timestamp timestamp = new Timestamp();
@@ -130,9 +135,8 @@ public class EnhancedAirBookHelper {
         flightSegment.setOriginLocation( originLocation );
 
         flightSegment.setFlightNumber( "8865" );
-//        flightSegment.setArrivalDateTime( "12-22T11:45" );
         flightSegment.setDepartureDateTime( new DateTime() {{ setDateTime( "2014-12-21T16:10" ); }} ); // does not work without specifying a year
-        flightSegment.setNumberInParty( "1" );
+        flightSegment.setNumberInParty( "2" );
         flightSegment.setStatus( "GK" );
         flightSegment.setResBookDesigCode( "Y" );
 
@@ -142,7 +146,6 @@ public class EnhancedAirBookHelper {
 
 
         //  Create and populate OTA_AirPriceRQ
-
         OTA_AirPriceRQ_type0 airPriceRQ = new OTA_AirPriceRQ_type0();
         airPriceRQ.setHaltOnError( true );
 
@@ -161,8 +164,6 @@ public class EnhancedAirBookHelper {
         passenger2.setQuantity( "1" );
 
         pricingQualifiers.addPassengerType( passenger1 );
-//        pricingQualifiers.addPassengerType( passenger2 );
-
         optionalQualifiers.setPricingQualifiers( pricingQualifiers );
         priceRequestInfo.setOptionalQualifiers(optionalQualifiers);
         airPriceRQ.setPriceRequestInformation( priceRequestInfo );
@@ -173,8 +174,6 @@ public class EnhancedAirBookHelper {
         RedisplayReservation_type1 redisplay = new RedisplayReservation_type1();
         redisplay.setWaitInterval(  new BigInteger( "4000" ) );
         postProcessing.setRedisplayReservation( redisplay );
-
-        // Populate remaining fields to avoid NullPointerExceptions
 
         return instance;
     }

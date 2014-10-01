@@ -13,6 +13,14 @@ import static com.sabre.sws.tools.wsdl.stubs.adb.TravelItineraryReadServiceStub.
 
 /**
  * Created by SG0221139 on 7/16/2014.
+ *
+ * The purpose of helper classes in this package is to provide ready-to-use elements
+ * for corresponding wrapper classes. These are mostly session and authentication objects,
+ * that represent custom SOAP headers used by Sabre Web Services.
+ *
+ * This is due to code redundancy caused by the way ADB framework maps schema objects
+ * to Java classes. The issue is described in documentation, distributed with this project.
+ *
  */
 public class TravelItineraryHelper {
 
@@ -73,7 +81,7 @@ public class TravelItineraryHelper {
         // Populate and set MESSAGE_DATA element
         MessageData_type0 messageData = new MessageData_type0();
 
-        String messageID = Util.longRandomHexString();
+        String messageID = new StringBuffer("TravelItinerary-").append(Util.longRandomHexString()).toString();
         messageData.setMessageId( toNonEmptyString(messageID ) );
 
         Timestamp timestamp = new Timestamp();

@@ -1,7 +1,7 @@
 package com.sabre.sws.tools.wsdl.axis2.adb.wrappers;
 
-import com.sabre.sws.tools.wsdl.axis2.adb.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.commons.handlers.MustUnderstandHandler;
+import com.sabre.sws.tools.wsdl.commons.utils.MessageHandlerManager;
 import com.sabre.sws.tools.wsdl.commons.utils.SessionManager;
 import com.sabre.sws.tools.wsdl.stubs.adb.SessionCreateRQServiceStub;
 import org.apache.axis2.AxisFault;
@@ -29,7 +29,9 @@ public class SessionCreateWrapperTest extends AbstractWebServiceTestClass {
 
     @Before
     public void createInstance() throws AxisFault {
+        MessageHandlerManager.erase();
         instance = new SessionCreateWrapper( configuration );
+        MessageHandlerManager.addDispatchPhaseHandler( new MustUnderstandHandler() );
     }
 
     @After
@@ -43,7 +45,6 @@ public class SessionCreateWrapperTest extends AbstractWebServiceTestClass {
         LOGGER.info( "Test begin" );
 
         // given
-
         StringBuffer responseBuffer = new StringBuffer();
         String testResponseLocation = "src/test/resources/test_responses/session_create_test_response.xml";
         try {
@@ -71,8 +72,9 @@ public class SessionCreateWrapperTest extends AbstractWebServiceTestClass {
                 );
 
         // when
-        MessageHandlerManager.addHandler( new MustUnderstandHandler() );
-        MessageHandlerManager.addStub( instance );
+        if( SessionManager.getInstance().isSessionActive() ) {
+            SessionManager.getInstance().endSession();
+        }
         SessionCreateRQServiceStub.SessionCreateRS response = instance.openSession();
 
         // then

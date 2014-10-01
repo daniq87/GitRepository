@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>toolkit-axis2-xmlbeans</artifactId>
-    <!--<packaging>jar</packaging>-->
+    <packaging>jar</packaging>
 
     <name>toolkit-axis2-xmlbeans</name>
     <url>http://maven.apache.org</url>
@@ -24,6 +24,31 @@
 
     <build>
         <plugins>
+
+            <!-- R E S O U R C E S    P L U G I N -->
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-log4j-conf</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/configuration</directory>
+                                    <include>**/log4j2.xml</include>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -62,6 +87,21 @@
                             <skip>true</skip>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-typesystemholder-class</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                            <target>
+                                <ant antfile="${project.basedir}/ant-copy-typesystemholder-class.xml">
+                                    <target name="copy-typesystemholder-class" />
+                                </ant>
+                            </target>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
 
@@ -70,60 +110,7 @@
                 <artifactId>axis2-wsdl2code-maven-plugin</artifactId>
                 <version>1.6.2</version>
                 <executions>
-
-                    <!-- Orchestrated Services -->
-
-                    <!--EnhancedAirBook (Orchestrated)-->
-
-                    <execution>
-                        <id>EnhancedAirBookRQ</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/EnhancedAirBookRQ/EnhancedAirBook2.5.0RQ.wsdl</wsdlFile>
-                            <databindingName>xmlbeans</databindingName>
-                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
-
-                    <!--PassengerDetails (Orchestrated)-->
-
-                    <execution>
-                        <id>PassengerDetailsRQ</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/PassengerDetailsRQ/PassengerDetails2.2.1RQ.wsdl</wsdlFile>
-                            <databindingName>xmlbeans</databindingName>
-                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
-
                     <!--Low Level Services-->
-
-                    <!--TravelItineraryReadLLS-->
-                    <execution>
-                        <id>TravelItineraryReadLLSRQ</id>
-                        <goals>
-                            <goal>wsdl2code</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/TravelItineraryReadLLSRQ/TravelItineraryReadLLS2.0.0RQ.wsdl</wsdlFile>
-                            <databindingName>xmlbeans</databindingName>
-                            <outputDirectory>target/generated-sources/stubs</outputDirectory>
-                            <flattenFiles>true</flattenFiles>
-                        </configuration>
-                    </execution>
 
                     <!--OTA_AirAvailLLS-->
                     <execution>
@@ -134,7 +121,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <packageName>com.sabre.sws.tools.wsdl.stubs.xmlbeans</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS2.1.1RQ.wsdl</wsdlFile>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailLLSRQVersion}RQ.wsdl</wsdlFile>
                             <databindingName>xmlbeans</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
                             <flattenFiles>true</flattenFiles>
@@ -172,6 +159,7 @@
                             <flattenFiles>true</flattenFiles>
                         </configuration>
                     </execution>
+
                 </executions>
             </plugin>
 
@@ -208,7 +196,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>../service-versions.properties</file>
+                                <file>${project.parent.basedir}/resources/service-versions.properties</file>
                             </files>
                         </configuration>
                     </execution>
@@ -221,17 +209,24 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
+        <!-- ADDITIONAL DEPENDENCIES -->
 
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2-xmlbeans</artifactId>
-            <version>1.6.2</version>
+            <version>${axis2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-local</artifactId>
+            <version>${axis2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-http</artifactId>
+            <version>${axis2.version}</version>
         </dependency>
 
         <dependency>
@@ -253,6 +248,18 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-impl</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-api</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.ws.commons.schema</groupId>
             <artifactId>XmlSchema</artifactId>
             <version>1.4.7</version>
@@ -264,16 +271,11 @@
             <version>3.0.3</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2-transport-local</artifactId>
-            <version>1.6.2</version>
-        </dependency>
+        <!-- INHERITED FROM DEPENDENCY-MANAGEMENT FROM PARENT POM -->
 
         <dependency>
-            <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2-transport-http</artifactId>
-            <version>1.6.2</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
         </dependency>
 
     </dependencies>
