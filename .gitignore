@@ -4,4 +4,4 @@ target
 .classpath
 *.log
 logs/
-resources-dev
+./resources-dev/*
