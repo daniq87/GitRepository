@@ -8,8 +8,8 @@ import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.LoggingOutInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.interceptors.SWSOResponseInterceptor;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.cxf.jaxb.utils.SecurityFactory;
-import com.sabre.webservices.sabrexml._2011._10.EnhancedAirBookRQ;
-import com.sabre.webservices.sabrexml._2011._10.EnhancedAirBookRS;
+import com.sabre.services.sp.eab.v3.EnhancedAirBookRQ;
+import com.sabre.services.sp.eab.v3.EnhancedAirBookRS;
 import https.webservices_sabre_com.websvc.EnhancedAirBookPortType;
 import https.webservices_sabre_com.websvc.EnhancedAirBookService;
 import org.apache.cxf.endpoint.Client;
@@ -36,6 +36,7 @@ public class EnhancedAirBookWrapper {
         Security security = SecurityFactory.getSecurityWithSessionToken();
         MessageHeader header = MessageHeaderFactory.getMessageHeader( configuration, actionString );
         EnhancedAirBookRQ requestBody = getRequestBody();
+        requestBody.setHaltOnError( true );
 
         EnhancedAirBookPortType port = getConfiguredPort();
 
@@ -88,7 +89,6 @@ public class EnhancedAirBookWrapper {
     private EnhancedAirBookRQ.OTAAirBookRQ getOTAAirBookRQ() {
 
         EnhancedAirBookRQ.OTAAirBookRQ airBookRQ = new EnhancedAirBookRQ.OTAAirBookRQ();
-        airBookRQ.setHaltOnError( false );
 
         EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation originDestinationInformation = new EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation();
         originDestinationInformation.getFlightSegment().add( getFlightSegment() );
@@ -132,7 +132,6 @@ public class EnhancedAirBookWrapper {
     private EnhancedAirBookRQ.OTAAirPriceRQ getOTAAirPriceRQ() {
 
         EnhancedAirBookRQ.OTAAirPriceRQ airPriceRQ = new EnhancedAirBookRQ.OTAAirPriceRQ();
-        airPriceRQ.setHaltOnError( true );
 
         EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation priceRequestInformation = new EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation();
         priceRequestInformation.setRetain( true );

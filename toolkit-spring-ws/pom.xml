@@ -181,15 +181,11 @@
                         <configuration>
                             <schemaLanguage>XMLSCHEMA</schemaLanguage>
                             <forceRegenerate>true</forceRegenerate>
-                            <bindingDirectory>${project.basedir}/custom-bindings</bindingDirectory>
-                            <bindingIncludes>
-                                <include>**/travel-itinerary-custom-binding.jxb</include>
-                            </bindingIncludes>
                             <schemaDirectory>${project.parent.basedir}/target/</schemaDirectory>
                             <generateDirectory>${project.build.directory}/generated-sources/xjc-3</generateDirectory>
                             <generatePackage>com.sabre.sws.tools.wsdl.springws.travelitinerary</generatePackage>
                             <schemaIncludes>
-                                <include>**/wsdls/TravelItineraryReadLLSRQ/*RQRS.xsd</include>
+                                <include>**/wsdls/TravelItineraryReadRQ/*RQRS*.xsd</include>
                             </schemaIncludes>
                         </configuration>
                     </execution>

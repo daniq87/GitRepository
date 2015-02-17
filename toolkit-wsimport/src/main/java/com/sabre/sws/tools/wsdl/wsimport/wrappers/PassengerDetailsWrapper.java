@@ -1,16 +1,16 @@
 package com.sabre.sws.tools.wsdl.wsimport.wrappers;
 
-import com.sabre.services.stl.v01.ProblemInformation;
-import com.sabre.services.stl.v01.SystemSpecificResults;
 import com.sabre.services.stl_header.v120.CompletionCodes;
-import com.sabre.services.stl_header.v120.MessageCondition;
+import com.sabre.services.stl_messagecommon.v02_01.MessageCondition;
+import com.sabre.services.stl_payload.v02_01.ProblemInformation;
+import com.sabre.services.stl_payload.v02_01.SystemSpecificResults;
 import com.sabre.sws.tools.wsdl.commons.utils.ServicesVersionsProvider;
 import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import com.sabre.sws.tools.wsdl.wsimport.handlers.LoggingHandler;
 import com.sabre.sws.tools.wsdl.wsimport.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.wsimport.utils.SecurityFactory;
-import com.sabre.webservices.sabrexml._2011._10.PassengerDetailsRQ;
-import com.sabre.webservices.sabrexml._2011._10.PassengerDetailsRS;
+import com.sabre.services.sp.pd.v3.PassengerDetailsRQ;
+import com.sabre.services.sp.pd.v3.PassengerDetailsRS;
 import https.webservices_sabre_com.websvc.PassengerDetailsPortType;
 import https.webservices_sabre_com.websvc.PassengerDetailsService;
 import org.apache.logging.log4j.LogManager;
@@ -70,11 +70,9 @@ public class PassengerDetailsWrapper {
     private PassengerDetailsRQ getRequestBody() {
 
         PassengerDetailsRQ request = new PassengerDetailsRQ();
+        request.setHaltOnError( true );
+        request.setIgnoreOnError( false );
         request.setVersion(ServicesVersionsProvider.getPassengerDetailsVersion());
-
-        PassengerDetailsRQ.IgnoreOnError ignoreOnError = new PassengerDetailsRQ.IgnoreOnError();
-        ignoreOnError.setInd( false );
-        request.setIgnoreOnError( ignoreOnError );
 
         request.setMiscSegmentSellRQ( getMiscSegmentSellRQ() );
         request.setPostProcessing( getPostProcessing() );
@@ -116,7 +114,6 @@ public class PassengerDetailsWrapper {
     private PassengerDetailsRQ.MiscSegmentSellRQ getMiscSegmentSellRQ() {
 
         PassengerDetailsRQ.MiscSegmentSellRQ miscSegmentSellRQ = new PassengerDetailsRQ.MiscSegmentSellRQ();
-        miscSegmentSellRQ.setHaltOnError( true );
         PassengerDetailsRQ.MiscSegmentSellRQ.MiscSegment miscSegment = new PassengerDetailsRQ.MiscSegmentSellRQ.MiscSegment();
         miscSegment.setText( "RETENTION SEGMENT" );
         miscSegment.setType( "OTH" );
@@ -141,10 +138,8 @@ public class PassengerDetailsWrapper {
     private PassengerDetailsRQ.PostProcessing getPostProcessing() {
 
         PassengerDetailsRQ.PostProcessing postProcessing = new PassengerDetailsRQ.PostProcessing();
-        postProcessing.setHaltOnError( true );
         postProcessing.setRedisplayReservation( true );
         PassengerDetailsRQ.PostProcessing.EndTransactionRQ endTransactionRQ = new PassengerDetailsRQ.PostProcessing.EndTransactionRQ();
-        endTransactionRQ.setHaltOnError( true );
         PassengerDetailsRQ.PostProcessing.EndTransactionRQ.Source source = new PassengerDetailsRQ.PostProcessing.EndTransactionRQ.Source();
         source.setReceivedFrom( "SWSTesting" );
         endTransactionRQ.setSource( source );
@@ -161,7 +156,6 @@ public class PassengerDetailsWrapper {
         specialReqDetails.setAddRemarkRQ( getAddRemarkRQ() );
 
         PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ specialServiceRQ = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ();
-        specialServiceRQ.setHaltOnError( true );
         PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo specialServiceInfo = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo();
         PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight secureFlight = new PassengerDetailsRQ.SpecialReqDetails.SpecialServiceRQ.SpecialServiceInfo.SecureFlight();
         secureFlight.setSSRCode( "DOCS" );
@@ -190,7 +184,6 @@ public class PassengerDetailsWrapper {
     private PassengerDetailsRQ.SpecialReqDetails.AddRemarkRQ getAddRemarkRQ() {
 
         PassengerDetailsRQ.SpecialReqDetails.AddRemarkRQ addRemarkRQ = new PassengerDetailsRQ.SpecialReqDetails.AddRemarkRQ();
-        addRemarkRQ.setHaltOnError( true );
 
         PassengerDetailsRQ.SpecialReqDetails.AddRemarkRQ.RemarkInfo remarkInfo = new PassengerDetailsRQ.SpecialReqDetails.AddRemarkRQ.RemarkInfo();
         PassengerDetailsRQ.SpecialReqDetails.AddRemarkRQ.RemarkInfo.FOPRemark fopRemark = new PassengerDetailsRQ.SpecialReqDetails.AddRemarkRQ.RemarkInfo.FOPRemark();
@@ -227,7 +220,6 @@ public class PassengerDetailsWrapper {
     private PassengerDetailsRQ.PriceQuoteInfo getPriceQuoteInfo() {
 
         PassengerDetailsRQ.PriceQuoteInfo priceQuoteInfo = new PassengerDetailsRQ.PriceQuoteInfo();
-        priceQuoteInfo.setHaltOnError( true );
         PassengerDetailsRQ.PriceQuoteInfo.Link link = new PassengerDetailsRQ.PriceQuoteInfo.Link();
         link.setNameNumber( "1.1" );
         link.setRecord( "1" );

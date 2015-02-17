@@ -5,8 +5,8 @@ import com.sabre.sws.tools.wsdl.commons.utils.Util;
 import com.sabre.sws.tools.wsdl.wsimport.handlers.LoggingHandler;
 import com.sabre.sws.tools.wsdl.wsimport.utils.MessageHeaderFactory;
 import com.sabre.sws.tools.wsdl.wsimport.utils.SecurityFactory;
-import com.sabre.webservices.sabrexml._2011._10.EnhancedAirBookRQ;
-import com.sabre.webservices.sabrexml._2011._10.EnhancedAirBookRS;
+import com.sabre.services.sp.eab.v3.EnhancedAirBookRQ;
+import com.sabre.services.sp.eab.v3.EnhancedAirBookRS;
 import https.webservices_sabre_com.websvc.EnhancedAirBookPortType;
 import https.webservices_sabre_com.websvc.EnhancedAirBookService;
 import org.ebxml.namespaces.messageheader.MessageHeader;
@@ -73,6 +73,7 @@ public class EnhancedAirBookWrapper {
     private EnhancedAirBookRQ getRequestBody() {
 
         EnhancedAirBookRQ requestBody = new EnhancedAirBookRQ();
+        requestBody.setHaltOnError( false );
         requestBody.setVersion( ServicesVersionsProvider.getEnhancedAirBookVersion() );
 
         requestBody.setOTAAirBookRQ( getOTAAirBookRQ() );
@@ -85,7 +86,6 @@ public class EnhancedAirBookWrapper {
     private EnhancedAirBookRQ.OTAAirBookRQ getOTAAirBookRQ() {
 
         EnhancedAirBookRQ.OTAAirBookRQ airBookRQ = new EnhancedAirBookRQ.OTAAirBookRQ();
-        airBookRQ.setHaltOnError( false );
 
         EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation originDestinationInformation = new EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation();
         originDestinationInformation.getFlightSegment().add( getFlightSegment() );
@@ -129,7 +129,6 @@ public class EnhancedAirBookWrapper {
     private EnhancedAirBookRQ.OTAAirPriceRQ getOTAAirPriceRQ() {
 
         EnhancedAirBookRQ.OTAAirPriceRQ airPriceRQ = new EnhancedAirBookRQ.OTAAirPriceRQ();
-        airPriceRQ.setHaltOnError( true );
 
         EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation priceRequestInformation = new EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation();
         priceRequestInformation.setRetain( true );

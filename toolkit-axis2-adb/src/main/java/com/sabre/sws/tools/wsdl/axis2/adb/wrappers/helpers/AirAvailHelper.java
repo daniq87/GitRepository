@@ -31,8 +31,8 @@ public class AirAvailHelper {
         return instance;
     }
 
-    public Security7 getSecuirityInstance( IConfigurationProvider configuration ) {
-        Security7 instance = new Security7();
+    public Security3 getSecuirityInstance( IConfigurationProvider configuration ) {
+        Security3 instance = new Security3();
         instance.setBinarySecurityToken(SessionManager.getInstance().getToken());
 
         return instance;

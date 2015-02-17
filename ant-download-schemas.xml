@@ -15,10 +15,10 @@
         <attribute name="servicename" />
         <attribute name="serviceversion" />
         <sequential>
-            <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/@{servicename}@{serviceversion}RQ.wsdl" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.wsdl" />
-            <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/@{servicename}@{serviceversion}RQ.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.xsd" />
-            <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/@{servicename}@{serviceversion}RS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RS.xsd" />
-            <get src="http://wsdl-crt.int.sabre.com/wsdl/swso/@{servicename}@{serviceversion}RQRS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQRS.xsd" />
+            <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/ServicesPlatform/@{servicename}@{serviceversion}RQ.wsdl" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.wsdl" />
+            <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/ServicesPlatform/@{servicename}@{serviceversion}RQ.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.xsd" />
+            <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/ServicesPlatform/@{servicename}@{serviceversion}RS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RS.xsd" />
+            <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/ServicesPlatform/@{servicename}@{serviceversion}RQRS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQRS.xsd" />
             </sequential>
     </macrodef>
 
@@ -30,6 +30,17 @@
             <get src="http://wsdl-crt.int.sabre.com/wsdl/tpfc/@{servicename}@{serviceversion}RQ.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQ.xsd" />
             <get src="http://wsdl-crt.int.sabre.com/wsdl/tpfc/@{servicename}@{serviceversion}RS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RS.xsd" />
             <get src="http://wsdl-crt.int.sabre.com/wsdl/tpfc/@{servicename}@{serviceversion}RQRS.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}@{serviceversion}RQRS.xsd" />
+        </sequential>
+    </macrodef>
+
+    <macrodef name="download_pnr_schemas">
+        <attribute name="servicename" />
+        <attribute name="serviceversion" />
+        <sequential>
+            <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/pnrservices/@{servicename}RQ@{serviceversion}.wsdl" dest="target/wsdls/@{servicename}RQ/@{servicename}RQ@{serviceversion}.wsdl" />
+            <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/pnrservices/@{servicename}RQ@{serviceversion}.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}RQ@{serviceversion}.xsd" />
+            <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/pnrservices/@{servicename}RS@{serviceversion}.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}RS@{serviceversion}.xsd" />
+            <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/pnrservices/@{servicename}RQRS@{serviceversion}.xsd" dest="target/wsdls/@{servicename}RQ/@{servicename}RQRS@{serviceversion}.xsd" />
         </sequential>
     </macrodef>
 
@@ -54,8 +65,10 @@
 
 
         <mkdir dir="target/wsdls/EnhancedAirBookRQ"/>
+        <mkdir dir="target/wsdls/EnhancedAirBookRQ/built-ins"/>
         <mkdir dir="target/wsdls/PassengerDetailsRQ"/>
-        <mkdir dir="target/wsdls/TravelItineraryReadLLSRQ"/>
+        <mkdir dir="target/wsdls/PassengerDetailsRQ/built-ins"/>
+        <mkdir dir="target/wsdls/TravelItineraryReadRQ"/>
         <mkdir dir="target/wsdls/AirSeatLLSRQ"/>
         <mkdir dir="target/wsdls/OTA_AirAvailLLSRQ"/>
         <mkdir dir="target/wsdls/SessionCloseRQ"/>
@@ -79,6 +92,11 @@
         <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/xlink.xsd" dest="target/common_schemas/xlink.xsd"/>
         <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/xml.xsd" dest="target/common_schemas/xml.xsd"/>
         <get src="http://wsdl-crt.int.sabre.com/wsdl/usg/xmldsig-core-schema.xsd" dest="target/common_schemas/xmldsig-core-schema.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/ServicesPlatform/built-ins/STL2_Payload_v02_01.xsd" dest="target/common_schemas/STL2_Payload_v02_01.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/ServicesPlatform/built-ins/STL2_MsgCommon_v02_01.xsd" dest="target/common_schemas/STL2_MsgCommon_v02_01.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/ServicesPlatform/built-ins/sp_eab_common.xsd" dest="target/common_schemas/sp_eab_common.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/ServicesPlatform/built-ins/sp_common.xsd" dest="target/common_schemas/sp_common.xsd"/>
+        <get src="http://wsdl-crt.int.sabre.com/sabreXML1.0.00/pnrservices/OpenReservation.1.1.0.xsd" dest="target/common_schemas/OpenReservation.1.1.0.xsd"/>
 
 
     </target>
@@ -87,10 +105,9 @@
 
     <target name="copy-common-schemas" >
 
-        <copy_common_schemas todir="target/wsdls/EnhancedAirBookRQ" />
-        <copy_common_schemas todir="target/wsdls/EnhancedAirBookRQ"/>
-        <copy_common_schemas todir="target/wsdls/PassengerDetailsRQ"/>
-        <copy_common_schemas todir="target/wsdls/TravelItineraryReadLLSRQ"/>
+        <copy_common_schemas todir="target/wsdls/EnhancedAirBookRQ/built-ins"/>
+        <copy_common_schemas todir="target/wsdls/PassengerDetailsRQ/built-ins"/>
+        <copy_common_schemas todir="target/wsdls/TravelItineraryReadRQ"/>
         <copy_common_schemas todir="target/wsdls/AirSeatLLSRQ"/>
         <copy_common_schemas todir="target/wsdls/OTA_AirAvailLLSRQ"/>
         <copy_common_schemas todir="target/wsdls/SessionCloseRQ"/>
@@ -100,7 +117,7 @@
 
     <!--    DOWNLOAD LOW LEVEL SERVICES' SECHEMAS    -->
 
-    <target name="download-lls-schemas" >
+    <target name="download-swso-schemas" >
 
         <download_swso_schemas servicename="EnhancedAirBook" serviceversion="${EnhancedAirBookRQVersion}" />
         <download_swso_schemas servicename="PassengerDetails" serviceversion="${PassengerDetailsRQVersion}" />
@@ -109,10 +126,10 @@
 
     <!--    DOWNLOAD ORCHESTRATED SERVICES SCHEMAS  -->
 
-    <target name="download-swso-schemas" >
+    <target name="download-lls-schemas" >
 
         <download_sws_schemas servicename="OTA_AirAvailLLS" serviceversion="${OTA_AirAvailLLSRQVersion}" />
-        <download_sws_schemas servicename="TravelItineraryReadLLS" serviceversion="${TravelItineraryReadLLSRQVersion}" />
+        <download_pnr_schemas servicename="TravelItineraryRead" serviceversion="${TravelItineraryReadLLSRQVersion}" />
 
     </target>
 

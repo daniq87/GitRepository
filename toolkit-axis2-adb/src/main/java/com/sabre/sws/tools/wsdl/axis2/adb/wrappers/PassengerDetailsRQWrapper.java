@@ -45,17 +45,13 @@ public class PassengerDetailsRQWrapper extends PassengerDetailsServiceStub {
         PassengerDetailsHelper helper = new PassengerDetailsHelper();
 
         PassengerDetailsRQ requestBody = helper.getRequestBody(configuration);
+        requestBody.setIgnoreOnError( false );
+        requestBody.setHaltOnError( true );
         MessageHeader header = helper.getMessageHeaderInstance( configuration );
-        PassengerDetailsServiceStub.Security3 security = helper.getSecurityInstance( configuration );
-
-        // IgnoreOnError = false
-        IgnoreOnError_type0 ignoreOnError = new IgnoreOnError_type0();
-        ignoreOnError.setInd( false );
-        requestBody.setIgnoreOnError( ignoreOnError );
+        Security security = helper.getSecurityInstance( configuration );
 
         // MiscSegmentSellRQ
         MiscSegmentSellRQ_type0 miscSegmentSellRQ = new MiscSegmentSellRQ_type0();
-        miscSegmentSellRQ.setHaltOnError( true );
         MiscSegment_type0 miscSeg = new MiscSegment_type0();
         miscSeg.setType( Type_type0.Factory.fromValue( "OTH" ) );
         miscSeg.setText("RETENTION SEGMENT");
@@ -80,10 +76,8 @@ public class PassengerDetailsRQWrapper extends PassengerDetailsServiceStub {
 
         // PostProcessing
         PostProcessing_type0 postProcessing = new PostProcessing_type0();
-        postProcessing.setHaltOnError( true );
         postProcessing.setRedisplayReservation( true );
         EndTransactionRQ_type0 endTransactionRQ = new EndTransactionRQ_type0();
-        endTransactionRQ.setHaltOnError( true );
         EndTransaction_type0 endTransaction = new EndTransaction_type0();
         endTransaction.setInd( "true" );
         Source_type0 source = new Source_type0();
@@ -96,7 +90,6 @@ public class PassengerDetailsRQWrapper extends PassengerDetailsServiceStub {
 
         // PriceQuoteInfo
         PriceQuoteInfo_type0 priceQuoteInfo = new PriceQuoteInfo_type0();
-        priceQuoteInfo.setHaltOnError( true );
         Link_type0 link = new Link_type0();
         link.setNameNumber( "1.1" );
         link.setRecord( "1" );
@@ -109,7 +102,6 @@ public class PassengerDetailsRQWrapper extends PassengerDetailsServiceStub {
         SpecialReqDetails_type0 specialReqDet = new SpecialReqDetails_type0();
 
         AddRemarkRQ_type0 addRemark = new AddRemarkRQ_type0();
-        addRemark.setHaltOnError( true );
 
         RemarkInfo_type0 remarkInfo = new RemarkInfo_type0();
 
@@ -171,7 +163,6 @@ public class PassengerDetailsRQWrapper extends PassengerDetailsServiceStub {
         // SpecialServiceDetails
 
         SpecialServiceRQ_type0 specialServiceReq = new SpecialServiceRQ_type0();
-        specialServiceReq.setHaltOnError( true );
         SpecialServiceInfo_type0 specialServiceInfo = new SpecialServiceInfo_type0();
         SecureFlight_type0 secureFlight = new SecureFlight_type0();
         secureFlight.setSSR_Code( "DOCS" );
@@ -201,7 +192,7 @@ public class PassengerDetailsRQWrapper extends PassengerDetailsServiceStub {
         TravelItineraryAddInfoRQ_type0 travelItineraryAddInfoRQ = new TravelItineraryAddInfoRQ_type0();
         AgencyInfo_type0 agencyInfo = new AgencyInfo_type0();
         Ticketing_type0 ticketing = new Ticketing_type0();
-        ticketing.setTicketType( TicketType_type0.Factory.fromValue( "7TAW" ) );
+        ticketing.setTicketType( "7TAW" );
         agencyInfo.setTicketing( ticketing );
         travelItineraryAddInfoRQ.setAgencyInfo( agencyInfo );
 

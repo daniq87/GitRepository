@@ -31,9 +31,9 @@ public class PassengerDetailsHelper {
         return instance;
     }
 
-    public PassengerDetailsServiceStub.Security3 getSecurityInstance( IConfigurationProvider configuration ) {
+    public PassengerDetailsServiceStub.Security getSecurityInstance( IConfigurationProvider configuration ) {
 
-        PassengerDetailsServiceStub.Security3 instance = new PassengerDetailsServiceStub.Security3();
+        PassengerDetailsServiceStub.Security instance = new PassengerDetailsServiceStub.Security();
 
         instance.setBinarySecurityToken( SessionManager.getInstance().getToken() );
         return instance;
@@ -75,7 +75,7 @@ public class PassengerDetailsHelper {
 
         // Set SERVICE element
         PassengerDetailsServiceStub.Service_type2 service_type2 = new PassengerDetailsServiceStub.Service_type2();
-        service_type2.setString( actionString );
+        service_type2.setString( "" );
         service_type2.setType( toNonEmptyString( Util.getServiceTypeString() ) );
 
         instance.setService( service_type2 );
@@ -103,9 +103,9 @@ public class PassengerDetailsHelper {
 
     public PassengerDetailsServiceStub.PassengerDetailsRQ getRequestBody( IConfigurationProvider configuration ) {
         PassengerDetailsServiceStub.PassengerDetailsRQ requestBody = new PassengerDetailsServiceStub.PassengerDetailsRQ();
-        requestBody.setVersion( versionString );
-
-        requestBody.setVersion( versionString );
+        PassengerDetailsServiceStub.Version_type0 version = new PassengerDetailsServiceStub.Version_type0();
+        version.setVersion_type0( versionString );
+        requestBody.setVersion( version );
         return requestBody;
     }
 

@@ -117,11 +117,7 @@
                                     <wsdl>${project.parent.basedir}/target/wsdls/SessionCreateRQ/SessionCreateRQ.wsdl</wsdl>
                                 </wsdlOption>
                                 <wsdlOption>
-                                    <wsdl>${project.parent.basedir}/target/wsdls/TravelItineraryReadLLSRQ/TravelItineraryReadLLS${TravelItineraryReadLLSRQVersion}RQ.wsdl</wsdl>
-                                    <extraargs>
-                                        <extraarg>-b</extraarg>
-                                        <extraarg>${project.basedir}/custom-bindings/travel-itinerary-custom-binding.jxb</extraarg>
-                                    </extraargs>
+                                    <wsdl>${project.parent.basedir}/target/wsdls/TravelItineraryReadRQ/TravelItineraryReadRQ${TravelItineraryReadLLSRQVersion}.wsdl</wsdl>
                                 </wsdlOption>
                                 <wsdlOption>
                                     <wsdl>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailLLSRQVersion}RQ.wsdl</wsdl>

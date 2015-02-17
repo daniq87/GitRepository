@@ -105,36 +105,10 @@
                                 <wsdlFile>SessionCreateRQ/SessionCreateRQ.wsdl</wsdlFile>
                                 <wsdlFile>SessionCloseRQ/SessionCloseRQ.wsdl</wsdlFile>
                                 <wsdlFile>OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailLLSRQVersion}RQ.wsdl</wsdlFile>
+                                <wsdlFile>TravelItineraryReadRQ/TravelItineraryReadRQ${TravelItineraryReadLLSRQVersion}.wsdl</wsdlFile>
                             </wsdlFiles>
                         </configuration>
                     </execution>
-
-                    <execution>
-                        <id>travel-itinerary-schemas</id>
-                        <goals>
-                            <goal>wsimport</goal>
-                        </goals>
-                        <configuration>
-                            <bindingFiles>
-                                <bindingFile>travel-itinerary-custom-binding.jxb</bindingFile>
-                            </bindingFiles>
-                            <wsdlFiles>
-                                <wsdlFile>TravelItineraryReadLLSRQ/TravelItineraryReadLLS${TravelItineraryReadLLSRQVersion}RQ.wsdl</wsdlFile>
-                            </wsdlFiles>
-                        </configuration>
-                    </execution>
-
-                    <!--<execution>
-                        <id>ota-air-avail-schemas</id>
-                        <goals>
-                            <goal>wsimport</goal>
-                        </goals>
-                        <configuration>
-                            <wsdlFiles>
-                                    <wsdlFile>OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailLLSRQVersion}RQ.wsdl</wsdlFile>
-                            </wsdlFiles>
-                        </configuration>
-                    </execution>-->
 
                     <execution>
                         <id>enhanced-air-book-schemas</id>

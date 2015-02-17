@@ -174,7 +174,7 @@ public class AirAvailWrapper extends OTA_AirAvailServiceStub {
 
         AirAvailHelper helper = new AirAvailHelper();
 
-        Security7 security = helper.getSecuirityInstance( configuration );
+        Security3 security = helper.getSecuirityInstance( configuration );
         MessageHeader header = helper.getMessageHeaderInstance( configuration );
 
         OTA_AirAvailRQ requestBody = getSampleRequestBody( requestType );

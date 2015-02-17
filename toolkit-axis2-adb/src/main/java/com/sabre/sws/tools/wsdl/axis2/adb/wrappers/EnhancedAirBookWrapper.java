@@ -43,7 +43,7 @@ public class EnhancedAirBookWrapper extends EnhancedAirBookServiceStub {
 
         EnhancedAirBookHelper helper = new EnhancedAirBookHelper();
 
-        Security1 secuirty = helper.getSecurityInstance( configuration );
+        Security secuirty = helper.getSecurityInstance( configuration );
         MessageHeader header = helper.getMessageHeaderInstance( configuration );
         EnhancedAirBookRQ requestBody = helper.getRequestBody( configuration );
 

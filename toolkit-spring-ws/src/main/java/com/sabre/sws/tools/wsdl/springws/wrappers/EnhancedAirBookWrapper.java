@@ -47,6 +47,7 @@ public class EnhancedAirBookWrapper extends WebServiceGatewaySupport {
     private EnhancedAirBookRQ getRequestBody() {
 
         EnhancedAirBookRQ requestBody = new EnhancedAirBookRQ();
+        requestBody.setHaltOnError( false );
         requestBody.setVersion( ServicesVersionsProvider.getEnhancedAirBookVersion() );
 
         requestBody.setOTAAirBookRQ( getOTAAirBookRQ() );
@@ -59,7 +60,6 @@ public class EnhancedAirBookWrapper extends WebServiceGatewaySupport {
     private EnhancedAirBookRQ.OTAAirBookRQ getOTAAirBookRQ() {
 
         EnhancedAirBookRQ.OTAAirBookRQ airBookRQ = new EnhancedAirBookRQ.OTAAirBookRQ();
-        airBookRQ.setHaltOnError( false );
 
         EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation originDestinationInformation = new EnhancedAirBookRQ.OTAAirBookRQ.OriginDestinationInformation();
         originDestinationInformation.getFlightSegment().add( getFlightSegment() );
@@ -103,7 +103,6 @@ public class EnhancedAirBookWrapper extends WebServiceGatewaySupport {
     private EnhancedAirBookRQ.OTAAirPriceRQ getOTAAirPriceRQ() {
 
         EnhancedAirBookRQ.OTAAirPriceRQ airPriceRQ = new EnhancedAirBookRQ.OTAAirPriceRQ();
-        airPriceRQ.setHaltOnError( true );
 
         EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation priceRequestInformation = new EnhancedAirBookRQ.OTAAirPriceRQ.PriceRequestInformation();
         priceRequestInformation.setRetain( true );

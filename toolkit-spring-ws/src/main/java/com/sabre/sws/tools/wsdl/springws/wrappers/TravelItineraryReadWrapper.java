@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class TravelItineraryReadWrapper extends WebServiceGatewaySupport {
 
-    private static final String actionString = "TravelItineraryReadLLSRQ";
+    private static final String actionString = "TravelItineraryReadRQ";
     private static final String versionString = ServicesVersionsProvider.getTravelItineraryVersion();
 
     private List<ClientInterceptor> interceptors = new ArrayList<>();
@@ -50,9 +50,9 @@ public class TravelItineraryReadWrapper extends WebServiceGatewaySupport {
         body.setVersion(versionString);
 
         TravelItineraryReadRQ.MessagingDetails details = new TravelItineraryReadRQ.MessagingDetails();
-        TravelItineraryReadRQ.MessagingDetails.Transaction transaction = new TravelItineraryReadRQ.MessagingDetails.Transaction();
-        transaction.setCode( "PNR" );
-        details.getTransaction().add( transaction );
+        TravelItineraryReadRQ.MessagingDetails.SubjectAreas subjectAreas = new TravelItineraryReadRQ.MessagingDetails.SubjectAreas();
+        subjectAreas.getSubjectArea().add( "PNR" );
+        details.setSubjectAreas(subjectAreas);
         body.setMessagingDetails( details );
 
         TravelItineraryReadRQ.UniqueID uid = new TravelItineraryReadRQ.UniqueID();

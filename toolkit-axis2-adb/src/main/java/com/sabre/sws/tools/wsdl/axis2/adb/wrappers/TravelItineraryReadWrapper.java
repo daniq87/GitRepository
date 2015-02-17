@@ -46,7 +46,7 @@ public class TravelItineraryReadWrapper extends TravelItineraryReadServiceStub {
         TravelItineraryReadRS responseBody;
 
         TravelItineraryReadRQ requestBody;
-        TravelItineraryReadServiceStub.Security5 security;
+        Security1 security;
         MessageHeader header;
 
         TravelItineraryHelper helper = new TravelItineraryHelper();
@@ -71,15 +71,14 @@ public class TravelItineraryReadWrapper extends TravelItineraryReadServiceStub {
         instance.setVersion(ServicesVersionsProvider.getTravelItineraryVersion());
 
         MessagingDetails_type0 msgDetails = new MessagingDetails_type0();
-        Transaction_type0 transaction = new Transaction_type0();
-        Code_type0 code = Code_type0.PNR;
-        transaction.setCode( code );
+        SubjectAreas_type0 subjectAreas = new SubjectAreas_type0();
+        subjectAreas.addSubjectArea( "PNR" );
 
-        msgDetails.addTransaction( transaction );
+        msgDetails.setSubjectAreas(subjectAreas);
 
         instance.setMessagingDetails(msgDetails);
 
-        TravelItineraryReadServiceStub.Security5 security;
+        TravelItineraryReadServiceStub.Security1 security;
         MessageHeader header;
 
         TravelItineraryHelper helper = new TravelItineraryHelper();

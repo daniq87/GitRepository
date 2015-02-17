@@ -34,9 +34,9 @@ public class EnhancedAirBookHelper {
         return instance;
     }
 
-    public Security1 getSecurityInstance( IConfigurationProvider configuration ) {
+    public Security getSecurityInstance( IConfigurationProvider configuration ) {
 
-        Security1 instance = new Security1();
+        Security instance = new Security();
 
         instance.setBinarySecurityToken( SessionManager.getInstance().getToken() );
         return instance;
@@ -60,7 +60,7 @@ public class EnhancedAirBookHelper {
         To_type0 to_type0 = new To_type0();
         PartyId_type0 toParty = new PartyId_type0();
         toParty.setString( Util.getToString() );
-        to_type0.addPartyId( partyId_type0 );
+        to_type0.addPartyId( toParty );
 
         instance.setTo( to_type0 );
 
@@ -76,7 +76,7 @@ public class EnhancedAirBookHelper {
 
         // Set SERVICE element
         Service_type2 service_type2 = new Service_type2();
-        service_type2.setString( actionString );
+        service_type2.setString( "" );
         service_type2.setType( toNonEmptyString( Util.getServiceTypeString() ) );
 
         instance.setService( service_type2 );
@@ -105,15 +105,16 @@ public class EnhancedAirBookHelper {
     public EnhancedAirBookRQ getRequestBody( IConfigurationProvider configuration ) {
 
         EnhancedAirBookRQ instance = new EnhancedAirBookRQ();
+        instance.setHaltOnError( true );
 
-        instance.setVersion( versionString );
+        Version_type0 version = new Version_type0();
+        version.setVersion_type0( versionString );
+        instance.setVersion( version );
 
         // Create and populate OTA_AirBookRQ
         OTA_AirBookRQ_type0 airBookRQ = new OTA_AirBookRQ_type0();
         OriginDestinationInformation_type0 originDestInfo = new OriginDestinationInformation_type0();
         FlightSegment_type1 flightSegment = new FlightSegment_type1();
-
-        airBookRQ.setHaltOnError( false );
 
         DestinationLocation_type0 destLocation = new DestinationLocation_type0();
         Equipment_type1 equipment = new Equipment_type1();
@@ -147,7 +148,6 @@ public class EnhancedAirBookHelper {
 
         //  Create and populate OTA_AirPriceRQ
         OTA_AirPriceRQ_type0 airPriceRQ = new OTA_AirPriceRQ_type0();
-        airPriceRQ.setHaltOnError( true );
 
         PriceRequestInformation_type0 priceRequestInfo = new PriceRequestInformation_type0();
         priceRequestInfo.setRetain( true );

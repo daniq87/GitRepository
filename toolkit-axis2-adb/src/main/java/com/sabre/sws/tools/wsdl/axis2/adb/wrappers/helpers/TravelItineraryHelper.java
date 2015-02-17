@@ -25,7 +25,7 @@ import static com.sabre.sws.tools.wsdl.stubs.adb.TravelItineraryReadServiceStub.
 public class TravelItineraryHelper {
 
 
-    private final static String actionString = "TravelItineraryReadLLSRQ";
+    private final static String actionString = "TravelItineraryReadRQ";
     private final static String versionString = ServicesVersionsProvider.getTravelItineraryVersion();
 
     public NonEmptyString toNonEmptyString( String param ) {
@@ -34,8 +34,8 @@ public class TravelItineraryHelper {
         return instance;
     }
 
-    public TravelItineraryReadServiceStub.Security5 getSecuirityInstance( IConfigurationProvider configuration ) {
-        TravelItineraryReadServiceStub.Security5 instance = new TravelItineraryReadServiceStub.Security5();
+    public Security1 getSecuirityInstance( IConfigurationProvider configuration ) {
+        TravelItineraryReadServiceStub.Security1 instance = new TravelItineraryReadServiceStub.Security1();
         instance.setBinarySecurityToken(SessionManager.getInstance().getToken());
 
         return instance;
@@ -105,11 +105,10 @@ public class TravelItineraryHelper {
         instance.setVersion( versionString );
 
         MessagingDetails_type0 msgDetails = new MessagingDetails_type0();
-        Transaction_type0 transaction = new Transaction_type0();
-        Code_type0 code = Code_type0.PNR;
-        transaction.setCode( code );
+        SubjectAreas_type0 subjectAreas = new SubjectAreas_type0();
+        subjectAreas.addSubjectArea( "PNR" );
 
-        msgDetails.addTransaction( transaction );
+        msgDetails.setSubjectAreas(subjectAreas);
 
         instance.setMessagingDetails( msgDetails );
         UniqueID_type0 uid = new UniqueID_type0();

@@ -135,7 +135,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <packageName>com.sabre.sws.tools.wsdl.stubs.adb</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/EnhancedAirBookRQ/EnhancedAirBook2.5.0RQ.wsdl</wsdlFile>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/EnhancedAirBookRQ/EnhancedAirBook3.0.0RQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
                             <!--<flattenFiles>true</flattenFiles>-->
@@ -152,7 +152,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <packageName>com.sabre.sws.tools.wsdl.stubs.adb</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/PassengerDetailsRQ/PassengerDetails2.2.1RQ.wsdl</wsdlFile>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/PassengerDetailsRQ/PassengerDetails3.0.0RQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
                             <!--<flattenFiles>true</flattenFiles>-->
@@ -170,7 +170,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <packageName>com.sabre.sws.tools.wsdl.stubs.adb</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/TravelItineraryReadLLSRQ/TravelItineraryReadLLS2.0.0RQ.wsdl</wsdlFile>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/TravelItineraryReadRQ/TravelItineraryReadRQ3.5.0.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
                             <!--<flattenFiles>true</flattenFiles>-->
@@ -186,7 +186,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <packageName>com.sabre.sws.tools.wsdl.stubs.adb</packageName>
-                            <wsdlFile>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS2.1.1RQ.wsdl</wsdlFile>
+                            <wsdlFile>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS2.3.0RQ.wsdl</wsdlFile>
                             <databindingName>adb</databindingName>
                             <outputDirectory>target/generated-sources/stubs</outputDirectory>
                             <!--<flattenFiles>true</flattenFiles>-->

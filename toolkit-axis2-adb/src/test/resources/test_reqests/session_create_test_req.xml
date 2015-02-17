@@ -37,16 +37,16 @@
     <Security mustUnderstand="0">
         <UsernameToken>
             <Username>
-                7971
+                XXXX
             </Username>
             <Password>
-                SWS2010
+                XXXXXXX
             </Password>
             <Organization>
-                7TZA
+                XXXX
             </Organization>
             <Domain>
-                DEFAULT
+                XXXXXXX
             </Domain>
         </UsernameToken>
     </Security>
@@ -54,7 +54,7 @@
 <Body>
 <SessionCreateRQ returnContextID="false">
     <POS>
-        <Source PseudoCityCode="7TZA">
+        <Source PseudoCityCode="XXXX">
         </Source>
     </POS>
 </SessionCreateRQ>
