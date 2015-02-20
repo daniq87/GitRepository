@@ -5,7 +5,7 @@
 
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <title>Web Services frameworks for Sabre&reg; Web Services</title>
+    <title>Web Services frameworks for Sabre SOAP API</title>
 </head>
 
 <body>
@@ -56,10 +56,9 @@
     <span class="header">Overview</span>
     <p>
         This document describes some of the popular frameworks and tools for creating web services applications and
-        binding data and compares their suitability to work with Sabre&reg; Web Services. There is also a brief
-        guide on how to use each framework to build Sabre&reg; Web Services client application and a list of
-        problems that one may encounter when developing it. To see the working sample implementation of Sabre
-        Web Services client in each described technology, please refer to <a href="sample_client_documentation.html">sample project</a> supplied by Sabre
+        binding data and compares their suitability to work with Sabre SOAP API. There is also a brief
+        guide on how to use each framework to build Sabre SOAP API client application and a list of
+        problems that one may encounter when developing it. To see the working sample implementation of Sabre SOAP API client in each described technology, please refer to <a href="sample_client_documentation.html">sample project</a> supplied by Sabre
         Web Services team. It may be used as an example on how to use each framework or an application template.
 
         <br /><br/>
@@ -84,7 +83,7 @@
         <p>
             JAXB data binding is a powerful tool with good customization capabilities, due to custom bindings mechanism.
             Thanks to that, if default behavior causes any problems, it may be easily changed. JAXB is a commercial standard
-            for Java XML binding and is a recommended tool for working with Sabre&reg; Web Services.
+            for Java XML binding and is a recommended tool for working with Sabre SOAP API.
         </p>
 
         <!-- Using -->
@@ -130,7 +129,7 @@
             In this case, along with schemas and WSDL files, custom bindings (in form of .jxb files) should
             be delivered (via proper execution parameter). <br /><br />
 
-            Some of Sabre&reg; Web services will require specyfing custom JAXB binding file during schema compilation. This is
+            Some of Sabre SOAP API will require specyfing custom JAXB binding file during schema compilation. This is
             because some schemas contain nested types with the same name as one of outer elements. JAXB compiles each
             complex type into a public static inner class and there cannot be two such classes with the same name.
             However, this may solved easily. The custom binding file has a form of a XML file (although the file
@@ -187,9 +186,9 @@
         <a name="jaxb-known-issues-anchor"></a>
         <span class="bold"> Summary </span><br/>
         <p>
-            Currently, there are no major issues concerning the use of CXF/JAXB tools with Sabre&reg; Web Services, that can't be solved
+            Currently, there are no major issues concerning the use of CXF/JAXB tools with Sabre SOAP API, that can't be solved
             with a little or no effort (which usually boils down to creating custom binding file).
-            Therefore, <span class="reccommended"> JAXB is a recommended data binding tool to work with Sabre&reg; Web Services in Java language.</span>
+            Therefore, <span class="reccommended"> JAXB is a recommended data binding tool to work with Sabre SOAP API in Java language.</span>
         </p>
 
     </div>
@@ -220,7 +219,7 @@
         <a name="adb-execution-requirements-anchor"></a>
         <span class="bold"> Execution requirements </span><br/>
         <p>
-            As Sabre&reg; Web Services definitions (provided in the form of WSDL files) use corresponding types and data
+            As Sabre SOAP API definitions (provided in the form of WSDL files) use corresponding types and data
             structures, proper XML Schema files must be provided in the same location as the WSDL file.
             It includes common schemas for SOAP communication protocol and request/response object pairs definition
             (available at <a href="http://developer.sabre.com">Sabre&reg; Dev Studio</a>).
@@ -261,7 +260,7 @@
             be implemented for each service stub causing code repetition, or a header factory method using reflection
             and generic return type may be introduced, which would be difficult and error-prone. <br/><br />
             Because of the facts mentioned above, <span class="warning">ADB is not a recommended databinding framework
-            for working with Sabre&reg; Web Services.</span>
+            for working with Sabre SOAP API.</span>
         </p>
 
     </div>
@@ -280,7 +279,7 @@
             In this case, classes are not generated per service, but rather per namespace. It eliminates the code duplication problem,
             causing code to be clearer and easier to use. <br />
             However, XMLBeans framework has another significant problem, which may cause it impossible to use with some of the
-            Sabre&reg; Web Services (described in separate section). One should keep that in mind when deciding to use XMLBeans,
+            Sabre SOAP API (described in separate section). One should keep that in mind when deciding to use XMLBeans,
             because at some point being unable to consume specific Sabre&reg; Web Service may block development of whole application.
         </p>
 
@@ -339,7 +338,7 @@
         <span class="bold"> Summary </span><br/>
         <p>
             Although using XMLBeans data binding results in more clear and easy-to-use code, it has a serious issue,
-            which makes it almost impossible to use with some of the Sabre&reg; Web Services. <br /> <br />
+            which makes it almost impossible to use with some of the Sabre SOAP API. <br /> <br />
 
             To reflect the structure of XML Schema Definition, XMLBeans creates a series of nested interfaces.
             Each nested type will have a corresponding nested interface. The problem is, that at compile time the Java compiler
@@ -354,7 +353,7 @@
             make such nested class/interface impossible to compile, as the Java compiler will not be able to save compiled
             file on disk. There is no possibility to use any custom binding or change XMLBeans behavior in way that would
             allow generating Java stubs from deeply nested schemas. Therefore it is not possible to use XMLBeans with some of
-            the Sabre&reg; Web Services, that contain deeply nested schemas (e.g. EnhancedAirBook, PassengerDetailsRQ, TravelItineraryLLSRQ),
+            the Sabre SOAP API, that contain deeply nested schemas (e.g. EnhancedAirBook, PassengerDetailsRQ, TravelItineraryLLSRQ),
             when using any common file system. On the other hand, changing operating system or switching to niche filesystem
             just to use one particular XML binding framework (while there are many others) seems to be an exaggeration. <br /><br />
 
@@ -375,7 +374,7 @@
             data binding framework for web services application.<br/><br />-->
 
             Because of the facts mentioned above, <span class="warning">XMLBeans is not a recommended databinding framework
-    for working with Sabre&reg; Web Services neither.</span>
+    for working with Sabre SOAP API neither.</span>
         </p>
 
     </div>
@@ -603,7 +602,7 @@
     <a name="wsimport-known-issues-anchor"></a>
     <span class="bold"> Summary </span><br/>
     <p>
-        Currently wsimport causes no troubles when used to consume Sabre&reg; Web Services. It is a JAX-WS implementation,
+        Currently wsimport causes no troubles when used to consume Sabre SOAP API. It is a JAX-WS implementation,
         which is a widely used standard. It also uses JAXB data binding, which is portable, popular and well-documented.
     </p>
 
@@ -625,7 +624,7 @@
             In general, it provides same functionality as Axis2, which means the ability to send, process and receive messages,
             both to and from services. Similarly, CXF allows user to develop both client and server side application.
             It uses <span class="italic">contract-first</span> approach, which means creation of service implementation code based on service definition
-            (in form ow WSDL files and schema definition). What it means for Sabre&reg; Web Services consumer, is that Java client
+            (in form ow WSDL files and schema definition). What it means for Sabre SOAP API consumer, is that Java client
             code can be generated easily based on WSDL and XSD files, available on
             <a href="http://developer.sabre.com">Sabre&reg; Dev Studio</a>.
             <br />
@@ -647,7 +646,7 @@
             as it requires the least configuration effort. Dependencies that need to be placed in POM in order to
             use Apache CXF are described <a href="http://cxf.apache.org/docs/using-cxf-with-maven.html">in project's documentation</a>. <br/><br />
 
-            Generally, using CXF to develop Sabre&reg; Web Services client application boils down to two separate things:
+            Generally, using CXF to develop Sabre SOAP API client application boils down to two separate things:
             generating all the necessery Java classes from service definition in WSDL file (using CXF code generation feature)
             and using CXF's classes in your client code to make web services call. <br />
 
@@ -710,7 +709,7 @@
             <br /><br />
             The next step is to create a client, which will utilize generated classes to access web services.
             This process requires a bit of knowledge about how the CXF framework works. This will be covered here briefly. To see
-            a full working example, please refer to the <a href="sample_client_documentation.html">sample project</a>, provided by Sabre&reg; Web Services Team
+            a full working example, please refer to the <a href="sample_client_documentation.html">sample project</a>, provided by Sabre SOAP API Team
             (<span class="code">toolkit-cxf-jaxb</span> module).
             <br /><br />
             CXF generates two main data types (JAX-WS asrtifacts) for each service defined in WSDL file:
@@ -750,7 +749,7 @@
 
         After implementing logic to create requests and handle respones, one must define interceptors for services. Interceptors
         are necessary to get access to full SOAP envelope. Invoking methods on port class allows only to see response body,
-        which is not enough information to successfully consume Sabre&reg; Web Services. Typically, one would like to
+        which is not enough information to successfully consume Sabre SOAP API. Typically, one would like to
         access the data in SOAP envelope and header. Interceptors allow exactly to do that.
         <br/>
         In the <a href="sample_client_documentation.html">sample project</a>, interceptor classes are derived from
@@ -846,7 +845,7 @@
             to <span class="code">PATH</span> system variable will allow to run Axis2-related scripts easily. <br /><br />
             Using Axis2 as Maven dependency will be no surprise for Maven users. For information about versioning and
             dependencies, see <a href="http://mvnrepository.com/artifact/org.apache.axis2">Maven repository site</a>.
-            To see a working example with full set of dependencies, check <a href="sample_client_documentation.html">sample project</a>, provided by Sabre&reg; Web Services Team.
+            To see a working example with full set of dependencies, check <a href="sample_client_documentation.html">sample project</a>, provided by Sabre SOAP API Team.
         </p>
 
         <!-- Typical flow in particular framework -->
@@ -1016,7 +1015,7 @@
     <span class="bold"> Developing client in detail </span><br/>
     <p>
         When using Spring WS, only schema definitions are required, for developer takes care of creating the message.
-        In fact, the minimal set of schemas required to consume Sabre&reg; Web Services consists of request and response
+        In fact, the minimal set of schemas required to consume Sabre SOAP API consists of request and response
         definitions for each service and schemas of security and message headers to build the envelope.
         <br />
         These files should be then compiled to Java classes. <a href="sample_client_documentation.html">sample project</a> uses JAXB2 Maven plugin to achieve this.
@@ -1076,12 +1075,12 @@
         Callbacks mechanism allows developer to manipulate the message content after it was created, but before it is
         send. Send methods described above have overloaded versions that take one Callback
         parameter. Since Spring WS leaves construction of a message to the developer, it is a good point to
-        add all necessary headers into SOAP message. Sabre&reg; Web Services require two custom headers:
+        add all necessary headers into SOAP message. Sabre SOAP API require two custom headers:
         <span class="code">eb:MessageHeader</span> and <span class="code">wsse:Security</span>.
         They can be easily inserted in SOAP Envelope using callback. Callback must implement <span class="code">
             org.springframework.ws.client.core.WebServiceMessageCallback</span> interface and thus implement
         <span class="code">void doWithMessage(WebServiceMessage webServiceMessage)</span> method.
-        The snippet below shows how to use this to compose correct message to work with Sabre&reg; Web Services:
+        The snippet below shows how to use this to compose correct message to work with Sabre SOAP API:
     </p>
 
     <!-- HTML generated using hilite.me --><div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
@@ -1121,7 +1120,7 @@
 
 
     <p>
-        The <a href="sample_client_documentation.html">sample project</a> uses this approach to create SOAP envelope and invoke Sabre&reg; Web Services.
+        The <a href="sample_client_documentation.html">sample project</a> uses this approach to create SOAP envelope and invoke Sabre SOAP API.
     </p>
 
     <p>
@@ -1188,7 +1187,7 @@
         objects. In that case the marshaller bean must contain information about all used classes and packages.
         It means that all names and identifiers used in JAXB annotations have to be unique. To achieve that,
         code generation tool should be executed with care and may require extensive configuration
-        to avoid names duplication (as Sabre&reg; Web Services schemas share many common data structures in every service).
+        to avoid names duplication (as Sabre SOAP API schemas share many common data structures in every service).
     </p>
 
     </div>
