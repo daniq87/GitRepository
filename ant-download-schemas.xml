@@ -129,7 +129,7 @@
     <target name="download-lls-schemas" >
 
         <download_sws_schemas servicename="OTA_AirAvailLLS" serviceversion="${OTA_AirAvailLLSRQVersion}" />
-        <download_pnr_schemas servicename="TravelItineraryRead" serviceversion="${TravelItineraryReadLLSRQVersion}" />
+        <download_pnr_schemas servicename="TravelItineraryRead" serviceversion="${TravelItineraryReadRQVersion}" />
 
     </target>
 

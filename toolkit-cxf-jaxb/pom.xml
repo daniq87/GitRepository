@@ -117,7 +117,7 @@
                                     <wsdl>${project.parent.basedir}/target/wsdls/SessionCreateRQ/SessionCreateRQ.wsdl</wsdl>
                                 </wsdlOption>
                                 <wsdlOption>
-                                    <wsdl>${project.parent.basedir}/target/wsdls/TravelItineraryReadRQ/TravelItineraryReadRQ${TravelItineraryReadLLSRQVersion}.wsdl</wsdl>
+                                    <wsdl>${project.parent.basedir}/target/wsdls/TravelItineraryReadRQ/TravelItineraryReadRQ${TravelItineraryReadRQVersion}.wsdl</wsdl>
                                 </wsdlOption>
                                 <wsdlOption>
                                     <wsdl>${project.parent.basedir}/target/wsdls/OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailLLSRQVersion}RQ.wsdl</wsdl>
