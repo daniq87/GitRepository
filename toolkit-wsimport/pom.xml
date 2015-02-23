@@ -105,7 +105,7 @@
                                 <wsdlFile>SessionCreateRQ/SessionCreateRQ.wsdl</wsdlFile>
                                 <wsdlFile>SessionCloseRQ/SessionCloseRQ.wsdl</wsdlFile>
                                 <wsdlFile>OTA_AirAvailLLSRQ/OTA_AirAvailLLS${OTA_AirAvailLLSRQVersion}RQ.wsdl</wsdlFile>
-                                <wsdlFile>TravelItineraryReadRQ/TravelItineraryReadRQ${TravelItineraryReadLLSRQVersion}.wsdl</wsdlFile>
+                                <wsdlFile>TravelItineraryReadRQ/TravelItineraryReadRQ${TravelItineraryReadRQVersion}.wsdl</wsdlFile>
                             </wsdlFiles>
                         </configuration>
                     </execution>

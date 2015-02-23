@@ -31,7 +31,7 @@ public class ServicesVersionsProvider {
             properties.load( inputStream );
 
             OTA_AIR_AVAIL_VERSION = properties.getProperty( "OTA_AirAvailLLSRQVersion" );
-            TRAVEL_ITINERARY_VERSION = properties.getProperty( "TravelItineraryReadLLSRQVersion" );
+            TRAVEL_ITINERARY_VERSION = properties.getProperty( "TravelItineraryReadRQVersion" );
             ENHANCED_AIR_BOOK_VERSION = properties.getProperty( "EnhancedAirBookRQVersion" );
             PASSENGER_DETAILS_VERSION = properties.getProperty( "PassengerDetailsRQVersion" );
 
